@@ -1,0 +1,198 @@
+﻿video#bgvid {
+position: fixed;
+top: 50%;
+left: 50%;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+z-index: -100;
+-webkit-transform: translateX(-50%) translateY(-50%);
+transform: translateX(-50%) translateY(-50%);
+background: url(/appData/videos/CloudFly.jpg) no-repeat;
+background-size: cover;
+}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, hr, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figure, figcaption, hgroup, menu, footer, header, main, nav, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  
+}
+video { display: block; }
+
+@media screen and (max-device-width: 800px) {
+body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center center fixed; }
+#bgvid { display: none; }
+}
+.main-header {
+    text-align: center;
+}
+/*@*style="width: 1900px;height: 387px; overflow: hidden !important"*@*/
+/*JEZU PO 3 TYGODNIACH ODNALAZLEM WLASCIWA KONFIGURACJE JEDNAK O 2 w NOCY MOZNA COS JESZCZE ZROBIC*/ 
+.imageContainer {
+    margin: 0; 
+    height: 387px; /* change it to your value*/
+    width: 100%; /* or use fixed width*/
+    background: transparent url('') no-repeat center;
+    overflow: hidden; 
+}
+.imageContainerMyFooter {
+    margin: 0; 
+    height: 630px; /* change it to your value*/
+    width: 100%; /* or use fixed width*/
+    background: transparent url('') no-repeat center;
+    overflow: hidden; 
+}
+
+/*testy*/
+.menu-box {
+  margin-bottom: 10px;
+}
+.dropdown-menu-center {
+  left: 50%;
+  right: auto;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
+/*NAVBAR*/
+.menu {
+    position:absolute;
+    top:470px;
+    width:100%;
+}
+.fixed {
+    position:fixed;
+    top:0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+   
+}
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+/*navpils centerowanie*/ 
+.wrapper {
+  width: 92.72727272727273%;
+  margin: 0 auto;
+}
+.navHeaderColor {
+    color: white;
+}
+.ng-hide {
+  /* this is just another form of hiding an element */
+  display: block!important;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+/*nowy select wbr miare ok*/ 
+select {
+    margin: 50px;
+    border: 1px solid #111;
+    background: transparent;
+    width: 150px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    height: 34px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.hidden{
+     opacity:0;
+}
+.visible{
+     opacity:1;
+}

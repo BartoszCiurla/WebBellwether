@@ -1,0 +1,5 @@
+﻿Co trzeba dodać po ukończeniu edycji/dodawania cech 
+1)ngAnimate przejscia stron *
+2)animacje na scrollu w gameintegration*
+3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt *
+*priorytet 

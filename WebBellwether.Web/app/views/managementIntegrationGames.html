@@ -1,0 +1,166 @@
+﻿<div class="container">
+    <h1 style="text-align: center">
+        <button class="btn btn-success" data-toggle="collapse" data-target="#AdminPanel"><span class="glyphicon glyphicon-sort"></span> {{translation.MoreFunction}}</button>
+    </h1>
+    <div id="AdminPanel" class="panel-collapse collapse">
+        <div style="text-align: center">
+            <div ng-hide="!integrationGamePanel">
+                <button class="btn btn-success" ng-click="changeIntegrationGamePanel()"><span class="glyphicon glyphicon-refresh"></span> {{translation.AddIntegrationGame}}</button>
+            </div>
+            <div ng-hide="integrationGamePanel">
+                <button class="btn btn-success" ng-click="changeIntegrationGamePanel()"><span class="glyphicon glyphicon-refresh"></span> {{translation.ManagementIntegrationGameFeatures}}</button>
+            </div>
+        </div>
+        <!--<div class="row">-->
+        <div class="col-md-6" ng-hide="integrationGamePanel">
+            <h1>{{translation.NewGame}}</h1>
+            <form name="addGame" novalidate ng-submit="newGame(gameModel)">
+                <div class="form-group">
+                    <label for="language">{{translation.Language}}</label>
+                    <select id="language" class="form-control" required data-ng-model="gameModel.language" data-ng-change="getGameDescription(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
+                        <option value=''>{{translation.SelectLanguageForTheGame}}</option>
+                    </select>
+                </div>
+
+                trzeba tutaj jeszcze dodać opcje która pozwoli w latwy sposób dodawać gre dla kilku jezykow
+
+                <input type="text" class="form-control" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
+                <textarea style="margin-top: 20px" class="form-control" rows="14" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+                <div class="form-group">
+                    <label for="gameCategory">{{translation.GameCategory}}</label>
+                    <select id="gameCategory" class="form-control" required data-ng-model="gameModel.gameCategory" data-ng-options="category.id as category.gameCategoryName for category in gameCategories">
+                        <option value=''>{{translation.SelectCategoryForGame}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paceOfPlay">{{translation.PaceOfPlay}}</label>
+                    <select id="paceOfPlay" class="form-control" required data-ng-model="gameModel.paceOfPlay" data-ng-options="paceOfPlay.id as paceOfPlay.paceOfPlayName for paceOfPlay in paceOfPlays">
+                        <option value=''>{{translation.SelectPaceOfTheGame}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfPlayer">{{translation.NumberOfPlayer}}</label>
+                    <select id="numberOfPlayer" class="form-control" required data-ng-model="gameModel.numberOfPlayer" data-ng-options="numberOfPlayer.id as numberOfPlayer.numberOfPlayerName for numberOfPlayer in numberOfPlayers">
+                        <option value=''>{{translation.SelectNumberOfPlayerForTheGame}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="preparationFun">{{translation.PreparationFun}}</label>
+                    <select id="preparationFun" class="form-control" required data-ng-model="gameModel.preparationFun" data-ng-options="preparationFun.id as preparationFun.preparationFunName for preparationFun in preparationFuns">
+                        <option value=''>{{translation.SelectPreparationGame}}</option>
+                    </select>
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="glyphicon glyphicon-save"></span> {{translation.AddGame}}</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-md-6" ng-hide="!integrationGamePanel">
+            <!--LANG FOR INTEGRATION GAMES-->
+            <h1>{{translation.GameFeatures}}</h1>
+            <div class="form-group">
+                <label for="language">{{translation.Language}}</label>
+                <select id="language" class="form-control" required data-ng-model="gameFeature.language" data-ng-change="getGameFeatures(gameFeature.language.id)" data-ng-options="language.languageName for language in languages">
+                    <option value=''>{{translation.ChooseLanguage}}</option>
+                </select>
+            </div>
+
+            <!--GAME FEATURES-->
+            <label style="text-align: left;margin-bottom: 10px" ng-hide="gameFeatures[0].gameFeatureTemplateName == null">
+                {{translation.FeatureDescription}}
+            </label>
+            <div class="has-error">
+                <div class="checkbox">
+                    <label style="font-weight: bold">
+                        <input required data-ng-model="required1.val1" value="{{required1.val}}" type="checkbox" id="checkboxWarning" />
+                        {{translation.IKnowWhatIAmDoing}}
+                    </label>
+                </div>
+            </div>
+            <div ng-repeat="gameFeature in gameFeatures">
+                <div class="form-inline">
+                    <form class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
+                        <input ng-disabled=" required1.val1 == null" type="text" class="form-control" required data-ng-model="gameFeature.gameFeatureName" />
+                        <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
+                        <label ng-hide="gameFeature.gameFeatureTemplateName == null">
+                            {{gameFeature.gameFeatureTemplateName}}
+                        </label>
+                    </form>
+                </div>
+            </div>
+
+            <!--GAME FEATURES DETAILS-->
+            <h1>{{translation.FeaturesDetails}}</h1>
+            <div class="form-group">
+                <label for="details">{{translation.Details}}</label>
+                <select id="details" class="form-control" data-ng-model="gameFeature.featureId" data-ng-change="fillGameFeatureDetails(gameFeature.featureId)" data-ng-options="gameFeature.id as gameFeature.gameFeatureName for gameFeature in gameFeatures">
+                    <option value=''>{{translation.SelectDetail}}</option>
+                </select>
+            </div>
+            <div class="has-error">
+                <div class="checkbox">
+                    <label style="font-weight: bold">
+                        <input required data-ng-model="required2.val1" value="{{required1.val}}" type="checkbox" id="checkboxWarning" />
+                        {{translation.IKnowWhatIAmDoing}}
+                    </label>
+                </div>
+            </div>
+            <!--TEMPLATE-->
+            <!--<div ng-repeat="gameFeature in gameFeatures">
+                <div class="form-inline">
+                    <form class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
+                        <input ng-disabled=" required1.val1 == null" type="text" class="form-control" required data-ng-model="gameFeature.gameFeatureName" />
+                        <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
+                        <label ng-hide="gameFeature.gameFeatureTemplateName == null">
+                            {{gameFeature.gameFeatureTemplateName}}
+                        </label>
+                    </form>
+                </div>
+            </div>-->
+            <!--TEMPLATE-->
+            <div ng-repeat="gameFeatureDetail in gameFeatureDetails">
+                <div class="form-inline">
+                    <form class="form-group" name="gfdForm{{gameFeatureDetail.key}}" novalidate ng-submit="editGameFeatureDetail(gameFeature,gameFeatureDetail)">
+                        <input ng-disabled="!gameFeatureDetail.value.length || required2.val1 == null" type="text" class="form-control" required data-ng-model="gameFeatureDetail.value" />
+                        <button class="btn btn-warning" ng-disabled="gfdForm{{gameFeatureDetail.key}}.$invalid || !gameFeatureDetail.value.length || required2.val1 == null">{{translation.Save}}</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <form class="form-inline" name="newGameFeatureDetail" novalidate ng-submit="newFeatureDetail(gameFeature)">
+                <input type="text" class="form-control"  required data-ng-model="gameFeature.newFeatureName" />
+                <button class="btn btn-primary" type="submit" ng-disabled="newGameFeatureDetail.$invalid">dodaj nowa podkategorie</button>
+            </form>
+        </div>
+        <!--</div>-->
+    </div>
+    <!--</div>
+    <div class="container">-->
+    <!--<div class="row">-->
+    <div ng-repeat="g in integrationGames">
+        <div class="col-md-6">
+            <div>
+                <div>
+                    <div>
+                        <h1>{{g.gameName}}</h1>
+                        <p>{{g.gameDetails}}</p>
+                        <p></p>
+                        <p>{{g.gameCategory}}</p>
+                        <p>{{g.paceOfPlay}}</p>
+                        <p>{{g.preparationFun}}</p>
+                        <p>{{g.numberOfPlayer}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</div>
+
+
+
+
+
