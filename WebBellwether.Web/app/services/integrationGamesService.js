@@ -19,14 +19,20 @@
                 });
             };
 
+            var putGameFeatureDetail = function(gameFeatureDetail) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeatureDetail', gameFeatureDetail).then(function (response) {
+                    return response;
+                });
+            }
+
             var getIntegrationGames = function (languageid) {
                 return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGames/?language=' + languageid).then(function (results) {
                     return results;
                 });
             };
 
-            var getGameDescription = function (languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetGameDescription/?language=' + languageid).then(function (results) {
+            var getGameFeatureDetails = function (languageid) {
+                return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatureDetails/?language=' + languageid).then(function (results) {
                     return results;
                 });
             };
@@ -39,9 +45,10 @@
 
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
             integrationGamesServiceFactory.IntegrationGames = getIntegrationGames;
-            integrationGamesServiceFactory.GameDescription = getGameDescription;
+            integrationGamesServiceFactory.GameFeatureDetails = getGameFeatureDetails;
             integrationGamesServiceFactory.GameFeatures = getGameFeatures;
             integrationGamesServiceFactory.PutGameFeature = putGameFeature;
+            integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
 
             return integrationGamesServiceFactory;
 

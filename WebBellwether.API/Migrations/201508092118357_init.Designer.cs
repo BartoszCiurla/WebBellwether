@@ -13,7 +13,7 @@ namespace WebBellwether.API.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201507310027477_init"; }
+            get { return "201508092118357_init"; }
         }
         
         string IMigrationMetadata.Source

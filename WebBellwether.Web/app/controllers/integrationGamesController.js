@@ -58,8 +58,8 @@
                 });
             };
 
-            $scope.getGameDescription = function (lang) {
-                integrationGamesService.GameDescription(lang).then(function (results) {
+            $scope.getGameFeatureDetails = function (lang) {
+                integrationGamesService.GameFeatureDetails(lang).then(function (results) {
                     console.log("blad? to jakies zarty kur..");
                     $scope.gameCategories = results.data['gameCategories'];
                     $scope.numberOfPlayers = results.data['numberOfPlayers'];
@@ -78,25 +78,25 @@
                 switch (parseInt(featureId)) {
                     case 1:
                         angular.forEach($scope.gameCategories, function (item) {
-                            $scope.gameFeatureDetails.push({ key: item.id, value: item.gameCategoryName });
+                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.gameCategoryName, TemplateName: item.gameCategoryTemplateName });
                         });
                         break;
                     case 2:
                         $scope.gameFeatureDetails = [];
                         angular.forEach($scope.paceOfPlays, function (item) {
-                            $scope.gameFeatureDetails.push({ key: item.id, value: item.paceOfPlayName });
+                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.paceOfPlayName,TemplateName: item.paceOfPlayTemplateName });
                         });
                         break;
                     case 3:
                         $scope.gameFeatureDetails = [];
                         angular.forEach($scope.numberOfPlayers, function (item) {
-                            $scope.gameFeatureDetails.push({ key: item.id, value: item.numberOfPlayerName });
+                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.numberOfPlayerName,TemplateName:item.numberOfPlayerTemplateName });
                         });
                         break;
                     case 4:
                         $scope.gameFeatureDetails = [];
                         angular.forEach($scope.preparationFuns, function (item) {
-                            $scope.gameFeatureDetails.push({ key: item.id, value: item.preparationFunName });
+                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.preparationFunName,TemplateName: item.preparationFunTemplateName });
                         });
                         break;
                     default:
@@ -127,17 +127,18 @@
             $scope.editGameFeatureDetail = function (gameFeature, gfd) {
                 var gameFeatureDetail = {
                     Id: gameFeature.featureId,
-                    GameFeatureDetailId: gfd.key,
-                    GameFeature: gfd.value,
+                    GameFeatureDetailId: gfd.Id,
+                    GameFeatureDetailName: gfd.Name,
                     Language: gameFeature.language.languageName,
                     LanguageId: gameFeature.language.id
                 };
+                integrationGamesService.PutGameFeatureDetail(gameFeatureDetail);
                 console.log(gameFeatureDetail);
             };
 
 
             $scope.getGameFeatures = function (lang) {
-                $scope.getGameDescription(lang);
+                $scope.getGameFeatureDetails(lang);
                 integrationGamesService.GameFeatures(lang).then(function (results) {
                     $scope.gameFeatures = results.data;
                     console.log("get game features");
@@ -147,7 +148,7 @@
 
             };
             //get on load , but i must change this value when i want add game in another language
-            $scope.getGameDescription($scope.selectedLanguage);
+            $scope.getGameFeatureDetails($scope.selectedLanguage);
             $scope.getIntegrationGames($scope.selectedLanguage);
 
 

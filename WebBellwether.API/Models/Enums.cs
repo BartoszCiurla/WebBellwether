@@ -11,7 +11,8 @@
         GameAdded,
         ThisGameExistsInDb,
         GameFeatureEdited,
-        GameFeatureNotExists
+        GameFeatureNotExists,
+        GameFeatureDetailEdited
 
     };
 }

@@ -102,29 +102,20 @@
             <div class="has-error">
                 <div class="checkbox">
                     <label style="font-weight: bold">
-                        <input required data-ng-model="required2.val1" value="{{required1.val}}" type="checkbox" id="checkboxWarning" />
+                        <input required data-ng-model="required2.val1" value="{{required1.val}}" type="checkbox"/>
                         {{translation.IKnowWhatIAmDoing}}
                     </label>
                 </div>
             </div>
-            <!--TEMPLATE-->
-            <!--<div ng-repeat="gameFeature in gameFeatures">
-                <div class="form-inline">
-                    <form class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
-                        <input ng-disabled=" required1.val1 == null" type="text" class="form-control" required data-ng-model="gameFeature.gameFeatureName" />
-                        <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
-                        <label ng-hide="gameFeature.gameFeatureTemplateName == null">
-                            {{gameFeature.gameFeatureTemplateName}}
-                        </label>
-                    </form>
-                </div>
-            </div>-->
-            <!--TEMPLATE-->
+
             <div ng-repeat="gameFeatureDetail in gameFeatureDetails">
                 <div class="form-inline">
-                    <form class="form-group" name="gfdForm{{gameFeatureDetail.key}}" novalidate ng-submit="editGameFeatureDetail(gameFeature,gameFeatureDetail)">
-                        <input ng-disabled="!gameFeatureDetail.value.length || required2.val1 == null" type="text" class="form-control" required data-ng-model="gameFeatureDetail.value" />
-                        <button class="btn btn-warning" ng-disabled="gfdForm{{gameFeatureDetail.key}}.$invalid || !gameFeatureDetail.value.length || required2.val1 == null">{{translation.Save}}</button>
+                    <form class="form-group" name="gfdForm{{gameFeatureDetail.Id}}" novalidate ng-submit="editGameFeatureDetail(gameFeature,gameFeatureDetail)">
+                        <input ng-disabled="!gameFeatureDetail.Name.length || required2.val1 == null" type="text" class="form-control" required data-ng-model="gameFeatureDetail.Name" />
+                        <button class="btn btn-danger" ng-disabled="gfdForm{{gameFeatureDetail.Id}}.$invalid || !gameFeatureDetail.Name.length || required2.val1 == null">{{translation.Save}}</button>
+                        <label ng-hide="gameFeatureDetail.TemplateName == null">
+                            {{gameFeatureDetail.TemplateName}}
+                        </label>
                     </form>
                 </div>
             </div>

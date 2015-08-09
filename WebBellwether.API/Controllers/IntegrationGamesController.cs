@@ -24,10 +24,10 @@ namespace WebBellwether.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("GetGameDescription")]
-        public IHttpActionResult GetGameDescription(int language)
+        [Route("GetGameFeatureDetails")]
+        public IHttpActionResult GetGameFeatureDetails(int language)
         {
-            return Ok(_repo.GetGameDescription(language));
+            return Ok(_repo.GetGameFeatureDetails(language));
         }
 
         [Authorize]
@@ -47,6 +47,13 @@ namespace WebBellwether.API.Controllers
             return Ok();
         }
 
+        [Authorize]
+        [Route("PostGameFeatureDetail")]
+        public IHttpActionResult PostGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
+        {
+            return Ok();
+        }
+
         [AllowAnonymous]
         [Route("GetIntegrationGames")]
         public IHttpActionResult GetIntegrationGames(int language)//tutaj bedzie treba przesyłać id jezyka ... 
@@ -62,3 +69,7 @@ namespace WebBellwether.API.Controllers
         }
     }
 }
+
+//mój aktualny problem to Visual Studio 2015 CTP - Javascript support missing
+//https://social.msdn.microsoft.com/Forums/sqlserver/en-US/f3693b97-7fb1-4b9a-9953-1970b767a407/visual-studio-2015-ctp-javascript-support-missing?forum=visualstudiogeneral
+//

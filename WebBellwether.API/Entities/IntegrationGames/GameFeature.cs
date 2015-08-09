@@ -11,8 +11,10 @@ namespace WebBellwether.API.Entities.IntegrationGames
         public GameFeature()
         {
             GameFeatureLanguages = new Collection<GameFeatureLanguage>();
+            GameFeatureDetails = new Collection<GameFeatureDetail>();
         }
         public int Id { get; set; }
         public virtual ICollection<GameFeatureLanguage> GameFeatureLanguages { get; set; }
+        public virtual ICollection<GameFeatureDetail> GameFeatureDetails { get; set; } 
     }
 }

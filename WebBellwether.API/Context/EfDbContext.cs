@@ -21,16 +21,12 @@ namespace WebBellwether.API.Context
         //intergration games 
         public DbSet<IntegrationGame> IntegrationGames { get; set; }
         public DbSet<IntegrationGameLanguage> IntegrationGameLanguages { get; set; }
-        public DbSet<GameCategory> GameCategories { get; set; }
-        public DbSet<GameCategoryLanguage> GameCategoryLanguages { get; set; }
-        public DbSet<NumberOfPlayer> NumberOfPlayers { get; set; }
-        public DbSet<NumberOfPlayerLanguage> NumberOfPlayerLanguages { get; set; }
-        public DbSet<PaceOfPlay> PaceOfPlays { get; set; }
-        public DbSet<PaceOfPlayLanguage> PaceOfPlayLanguages { get; set; }
-        public DbSet<PreparationFun> PreparationFuns { get; set; }
-        public DbSet<PreparationFunLanguage> PreparationFunLanguages { get; set; }
         public DbSet<GameFeature> GameFeatures { get; set; }
         public DbSet<GameFeatureLanguage> GameFeatureLanguages { get; set; }
+
+
+        public DbSet<GameFeatureDetail> GameFeatureDetails { get; set; }
+        public DbSet<GameFeatureDetailLanguage> GameFeatureDetailLanguages { get; set; }
         //intergration games 
 
         //translation    

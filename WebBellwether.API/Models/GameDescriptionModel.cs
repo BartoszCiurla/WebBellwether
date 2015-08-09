@@ -24,6 +24,7 @@ namespace WebBellwether.API.Models
     {
         public int Id { get; set; }
         public string GameCategoryName { get; set; }
+        public string GameCategoryTemplateName { get; set; }
         public int LanguageId { get; set; }
         public string Language { get; set; }
     }
@@ -32,6 +33,7 @@ namespace WebBellwether.API.Models
     {
         public int Id { get; set; }
         public string NumberOfPlayerName { get; set; }
+        public string NumberOfPlayerTemplateName { get; set; }
         public int LanguageId { get; set; }
         public string Language { get; set; }
     }
@@ -40,6 +42,7 @@ namespace WebBellwether.API.Models
     {
         public int Id { get; set; }
         public string PaceOfPlayName { get; set; }
+        public string PaceOfPlayTemplateName { get; set; }
         public int LanguageId { get; set; }
         public string Language { get; set; }
     }
@@ -47,8 +50,8 @@ namespace WebBellwether.API.Models
     public class PreparationFunModel
     {
         public int Id { get; set; }
-
         public string PreparationFunName { get; set; }
+        public string PreparationFunTemplateName { get; set; }
         public int LanguageId { get; set; }
         public string Language { get; set; }
     }
