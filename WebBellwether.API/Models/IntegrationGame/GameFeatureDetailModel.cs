@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebBellwether.API.Models
+﻿namespace WebBellwether.API.Models.IntegrationGame
 {
     public class GameFeatureDetailModel
     {
-        public int Id { get; set; }//gamefeature id 
+        public int Id { get; set; }//gamefeaturedetaillanguageid
         public int GameFeatureDetailId { get; set; }//detail id 
+        public int GameFeatureId { get; set; } 
         public string GameFeatureDetailName { get; set; }
         public string GameFeatureDetailTemplateName { get; set; }
         public string Language { get; set; }

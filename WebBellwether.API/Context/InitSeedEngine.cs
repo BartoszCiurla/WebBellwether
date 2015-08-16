@@ -15,17 +15,7 @@ namespace WebBellwether.API.Context
             context.SaveChanges();
             var myLanguages = context.Languages.ToList();
             if (!context.GameFeatures.Any())
-                context.GameFeatures.AddRange(NewInitSeed.BuildGameFeatures(myLanguages));
-            //if (!context.GameCategories.Any())
-            //    context.GameCategories.AddRange(InitSeed.BuildGameCategories(myLanguages));
-            //if (!context.NumberOfPlayers.Any())
-            //    context.NumberOfPlayers.AddRange(InitSeed.BuildNumberOfPlayers(myLanguages));
-            //if (!context.PaceOfPlays.Any())
-            //    context.PaceOfPlays.AddRange(InitSeed.BuildPaceOfPlays(myLanguages));
-            //if (!context.PreparationFuns.Any())
-            //    context.PreparationFuns.AddRange(InitSeed.BuildPreparationFuns(myLanguages));
-            //if (!context.GameFeatures.Any())
-            //    context.GameFeatures.AddRange(InitSeed.BuildGameFeatures(myLanguages));
+                context.GameFeatures.AddRange(InitSeed.BuildGameFeatures(myLanguages));
         }
     }
 }

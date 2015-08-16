@@ -8,7 +8,7 @@
             var integrationGamesServiceFactory = {};
 
             var postIntegrationGame = function (gameModel) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', gameModel).then(function (response) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', JSON.stringify(gameModel)).then(function (response) {
                     return response;
                 });
             };

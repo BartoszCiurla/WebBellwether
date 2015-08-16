@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using WebBellwether.API.Context;
 using WebBellwether.API.Entities.IntegrationGames;
+using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
+using WebBellwether.API.Models.IntegrationGame;
 
 namespace WebBellwether.API.Repositories
 {
@@ -18,55 +21,100 @@ namespace WebBellwether.API.Repositories
         public List<IntegrationGameModel> GetIntegrationGames(int language)
         {
             var games = new List<IntegrationGameModel>();
-            _ctx.IntegrationGameLanguages.Where(x => x.LanguageId == language).ToList().ForEach(x => games.Add(new IntegrationGameModel
+            var entity = _ctx.IntegrationGameDetails.Where(x => x.Language.Id == language).ToList();
+            entity.ForEach(x =>
             {
-                //general id for game IMPORTANT not detail id
-                Id = x.IntegrationGame.Id,
-                GameName = x.GameName,
-                GameDetails = x.GameDetails,
-                GameCategoryId = x.GameCategoryId,
-                GameCategory = x.GameCategory,
-                PaceOfPlayId = x.PaceOfPlayId,
-                PaceOfPlay = x.PaceOfPlay,
-                NumberOfPlayerId = x.NumberOfPlayerId,
-                NumberOfPlayer = x.NumberOfPlayer,
-                PreparationFunId = x.PreparationFunId,
-                PreparationFun = x.PreparationFun,
-                LanguageId = x.LanguageId,
-                Language = x.Language
-            }));
-            return games;
-
-        }
-        public ResultState InsertIntegrationGame(IntegrationGameModel game)
-        {
-            var entity = new IntegrationGame { CreationDate = DateTime.UtcNow };
-            entity.IntegrationGameLanguages.Add(new IntegrationGameLanguage
-            {
-                GameName = game.GameName,
-                GameDetails = game.GameDetails,
-                GameCategory = game.GameCategory,
-                GameCategoryId = game.GameCategoryId,
-                NumberOfPlayer = game.NumberOfPlayer,
-                NumberOfPlayerId = game.NumberOfPlayerId,
-                PaceOfPlay = game.PaceOfPlay,
-                PaceOfPlayId = game.PaceOfPlayId,
-                PreparationFun = game.PreparationFun,
-                PreparationFunId = game.PreparationFunId,
-                Language = game.Language,
-                LanguageId = game.LanguageId
+                games.Add(new IntegrationGameModel
+                {
+                    Id = x.IntegrationGame.Id,
+                    Language = x.Language,
+                    GameName = x.IntegrationGameName,
+                    GameDescription = x.IntegrationGameDescription,
+                    IntegrationGameDetailModels = FillGameDetailModel(x.Id) //i take id from integrationgamedetails
+                });
             });
+            return games;
+        }
+
+        private List<IntegrationGameDetailModel> FillGameDetailModel(int integrationGameDetailId) //i must take data for detail because datail can have many languages 
+        {
+            List<IntegrationGameDetailModel> result = new List<IntegrationGameDetailModel>();
+            _ctx.IntegrationGameFeatures.Where(x=>x.IntegrationGameDetail.Id == integrationGameDetailId)
+                .ToList()
+                .ForEach(z =>
+                {
+                    result.Add(new IntegrationGameDetailModel
+                    {
+                        Id = z.GameFeatureDetailLanguage.Id,
+                        GameFeatureId = z.GameFeatureLanguage.Id,
+                        GameFeatureName = z.GameFeatureLanguage.GameFeatureName,
+                        GameFeatureDetailName = z.GameFeatureDetailLanguage.GameFeatureDetailName
+                    });
+                });
+
+            return result;
+        } 
+
+
+
+        public ResultState InsertIntegrationGame(NewIntegrationGameModel game)
+        {
+            IntegrationGame entity = new IntegrationGame
+            {
+                CreationDate = DateTime.UtcNow,
+                IntegrationGameDetails = new List<IntegrationGameDetail>
+                {
+                    new IntegrationGameDetail
+                    {
+                        Language = GetLanguage(game.Language.Id),
+                        IntegrationGameName = game.GameName,
+                        IntegrationGameDescription = game.GameDetails,
+                        IntegrationGameFeatures = GetGameFeaturesTest(game.Features,game.Language.Id)
+                    }
+                }
+            };
             _ctx.IntegrationGames.Add(entity);
-            _ctx.SaveChanges();
+            _ctx.SaveChanges();                  
             return ResultState.GameAdded;
         }
+
+        //this function must go to static class , because this is f...
+        private Language GetLanguage(int id)
+        {
+            return _ctx.Languages.FirstOrDefault(x => x.Id == id);
+        }
+
+        private List<IntegrationGameFeature> GetGameFeaturesTest(int[] features,int language)
+        {
+            //its very important features == gameFeatureDetail.id not gamefeaturedetaillanguages.id i must use language to take good record 
+            //first part , take feature detail
+            var result = new List<IntegrationGameFeature>();
+            features.ToList().ForEach(x =>
+            {
+                var entity = _ctx.GameFeatureDetailLanguages.FirstOrDefault(z => z.GameFeatureDetail.Id == x && z.LanguageId ==language);
+                result.Add(new IntegrationGameFeature {GameFeatureDetailLanguage = entity});
+            });
+            //second part ,take feature
+            result.ForEach(x =>
+            {
+                var entity =
+                    _ctx.GameFeatureLanguages.FirstOrDefault(
+                        z =>
+                            z.LanguageId == x.GameFeatureDetailLanguage.LanguageId &&
+                            z.GameFeature.Id == x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id);               
+                x.GameFeatureLanguage = entity;
+            });
+            return result;
+        } 
+
 
         public ResultState PutGameFeature(GameFeatureModel gameFeatureModel)
         {
             var entity =
                 _ctx.GameFeatureLanguages.FirstOrDefault(
                     x => x.GameFeature.Id == gameFeatureModel.Id && x.LanguageId == gameFeatureModel.LanguageId);
-            if (entity != null) entity.GameFeatureName = gameFeatureModel.GameFeatureName;
+            if (entity != null)
+                entity.GameFeatureName = gameFeatureModel.GameFeatureName;
             _ctx.SaveChanges();
             return ResultState.GameFeatureEdited;
         }
@@ -74,12 +122,17 @@ namespace WebBellwether.API.Repositories
         public ResultState PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
             ResultState result = ResultState.GameFeatureDetailEdited;
-
-
+            //first step i update basic rekord with new name 
+            var entity =
+                _ctx.GameFeatureDetailLanguages.FirstOrDefault(
+                    x => x.Id == gameFeatureDetailModel.Id && x.LanguageId == gameFeatureDetailModel.LanguageId);
+            if (entity != null)
+                entity.GameFeatureDetailName = gameFeatureDetailModel.GameFeatureDetailName;
+            //second step i update all integration games 
 
             return result;
         }
-
+        
 
 
         public List<GameFeatureModel> GetGameFeatures(int language)
@@ -100,9 +153,11 @@ namespace WebBellwether.API.Repositories
             var gameFeatureDetails = new List<GameFeatureDetailModel>();
             _ctx.GameFeatureDetailLanguages.Where(x => x.LanguageId == language).ToList().ForEach(x =>
             {
-                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.GameFeatureDetail.GameFeature.Id, GameFeatureDetailId = x.Id, GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language, LanguageId = x.LanguageId });
+                //warning id is gamefeaturedetaillanguages id 
+                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.Id, GameFeatureDetailId = x.GameFeatureDetail.Id, GameFeatureId = x.GameFeatureDetail.GameFeature.Id,GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language, LanguageId = x.LanguageId });
             });
 
+            //works for language <> en
             BuildFeaturesDetailsTemplate(language, gameFeatureDetails);
 
             return gameFeatureDetails;
@@ -124,33 +179,6 @@ namespace WebBellwether.API.Repositories
             }
         }
 
-        //not be used 
-        //public GameDescriptionModel GetGameDescription(int language)
-        //{
-        //var gameDescription = new GameDescriptionModel();
-
-        //var gameDescription = new GameDescriptionModel();
-        //_ctx.GameCategoryLanguages.Where(x => x.LanguageId == language)
-        //    .ToList()
-        //    .ForEach(z => gameDescription.GameCategories.Add(new GameCategoryModel { Id = z.GameCategory.Id, Language = z.Language, LanguageId = z.LanguageId, GameCategoryName = z.GameCategoryName }));
-
-        //_ctx.NumberOfPlayerLanguages.Where(x => x.LanguageId == language)
-        //    .ToList()
-        //    .ForEach(z => gameDescription.NumberOfPlayers.Add(new NumberOfPlayerModel { Id = z.NumberOfPlayer.Id, Language = z.Language, LanguageId = z.LanguageId, NumberOfPlayerName = z.NumberOfPlayerName }));
-
-        //_ctx.PaceOfPlayLanguages.Where(x => x.LanguageId == language)
-        //    .ToList()
-        //    .ForEach(z => gameDescription.PaceOfPlays.Add(new PaceOfPlayModel { Id = z.PaceOfPlay.Id, Language = z.Language, LanguageId = z.LanguageId, PaceOfPlayName = z.PaceOfPlayName }));
-
-        //_ctx.PreparationFunLanguages.Where(x => x.LanguageId == language)
-        //    .ToList()
-        //    .ForEach(z => gameDescription.PreparationFuns.Add(new PreparationFunModel { Id = z.PreparationFun.Id, Language = z.Language, LanguageId = z.LanguageId, PreparationFunName = z.PreparationFunName }));
-
-        //works for language <> en
-        //BuildFeaturesDetailsTemplate(language, gameDescription);
-
-        //return gameDescription;
-        //}
 
         private void BuildFeaturesDetailsTemplate(int language, List<GameFeatureDetailModel> gameFeatureDetailModels)
         {
@@ -164,52 +192,12 @@ namespace WebBellwether.API.Repositories
                         .ToList()
                         .ForEach(x => gameFeatureDetailModels.ForEach(z =>
                          {
-                             if (x.GameFeatureDetail.GameFeature.Id == z.Id)
+                             if (z.GameFeatureDetailId == x.GameFeatureDetail.Id)
                                  z.GameFeatureDetailTemplateName = x.GameFeatureDetailName;
                          }));
                 }
 
-            }
-            //var checkIsExists = _ctx.Languages.FirstOrDefault(x => x.LanguageName == "English");
-            //if (checkIsExists != null)
-            //{
-            //    int enId = checkIsExists.Id;
-            //    if (enId != language) // then i build template features for edit 
-            //    {
-            //        _ctx.GameCategoryLanguages.Where(x => x.LanguageId == enId)
-            //            .ToList()
-            //            .ForEach(x => gameDescriptionModel.GameCategories.ForEach(z =>
-            //            {
-            //                if (z.Id == x.GameCategory.Id)
-            //                    z.GameCategoryTemplateName = x.GameCategoryName;
-            //            }));
-
-            //        _ctx.NumberOfPlayerLanguages.Where(x => x.LanguageId == enId)
-            //            .ToList()
-            //            .ForEach(x => gameDescriptionModel.NumberOfPlayers.ForEach(z =>
-            //            {
-            //                if (z.Id == x.NumberOfPlayer.Id)
-            //                    z.NumberOfPlayerTemplateName = x.NumberOfPlayerName;
-            //            }));
-
-            //        _ctx.PaceOfPlayLanguages.Where(x => x.LanguageId == language)
-            //            .ToList()
-            //            .ForEach(x => gameDescriptionModel.PaceOfPlays.ForEach(z =>
-            //            {
-            //                if (z.Id == x.PaceOfPlay.Id)
-            //                    z.PaceOfPlayTemplateName = x.PaceOfPlayName;
-            //            }));
-
-            //        _ctx.PreparationFunLanguages.Where(x => x.LanguageId == language)
-            //            .ToList()
-            //            .ForEach(x => gameDescriptionModel.PreparationFuns.ForEach(z =>
-            //            {
-            //                if (z.Id == x.PreparationFun.Id)
-            //                    z.PreparationFunTemplateName = x.PreparationFunName;
-            //            }));
-            //    }
-
-            //}
+            }        
         }
     }
 }

@@ -10,10 +10,10 @@ namespace WebBellwether.API.Entities.IntegrationGames
     {
         public IntegrationGame()
         {
-            IntegrationGameLanguages = new Collection<IntegrationGameLanguage>();
+            IntegrationGameDetails = new Collection<IntegrationGameDetail>();
         }
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }
-        public virtual ICollection<IntegrationGameLanguage> IntegrationGameLanguages { get; set; } 
+        public virtual ICollection<IntegrationGameDetail> IntegrationGameDetails { get; set; } 
     }
 }

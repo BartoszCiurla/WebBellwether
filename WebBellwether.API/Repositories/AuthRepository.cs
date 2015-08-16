@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using WebBellwether.API.Context;
 using WebBellwether.API.Entities;
 using WebBellwether.API.Models;
+using WebBellwether.API.Models.Auth;
 
 namespace WebBellwether.API.Repositories
 {

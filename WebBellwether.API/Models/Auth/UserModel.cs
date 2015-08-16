@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
-namespace WebBellwether.API.Models
+namespace WebBellwether.API.Models.Auth
 {
     public class UserModel
     {

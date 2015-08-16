@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
 using WebBellwether.API.Models;
+using WebBellwether.API.Models.Auth;
 using WebBellwether.API.Repositories;
 using WebBellwether.API.Results;
 

@@ -11,13 +11,8 @@
                 }
             };
 
+            var indexedFeatures = [];
             $scope.integrationGames = [];
-            $scope.gameCategories = '';
-            $scope.numberOfPlayers = '';
-            $scope.paceOfPlays = '';
-            $scope.preparationFuns = '';
-            $scope.gameFeatures = {};
-            $scope.selectedGameFeatureId = '';
             $scope.gameFeatureDetails = [];
 
             function getByProperty(propertyName, propertyValue, collection) {
@@ -38,70 +33,45 @@
             };
 
             $scope.newGame = function (gameModel) {
-                var integrationGameModel = {
+               // console.log(gameModel);
+                var newIntegrationGameModel =
+                {
+                    Language: gameModel.language,
                     GameName: gameModel.gameName,
                     GameDetails: gameModel.gameDetails,
-                    GameCategoryId: gameModel.gameCategory,
-                    GameCategory: getByProperty('id', gameModel.gameCategory, $scope.gameCategories).gameCategoryName,
-                    PaceOfPlayId: gameModel.paceOfPlay,
-                    PaceOfPlay: getByProperty('id', gameModel.paceOfPlay, $scope.paceOfPlays).paceOfPlayName,
-                    NumberOfPlayerId: gameModel.numberOfPlayer,
-                    NumberOfPlayer: getByProperty('id', gameModel.numberOfPlayer, $scope.numberOfPlayers).numberOfPlayerName,
-                    PreparationFunId: gameModel.preparationFun,
-                    PreparationFun: getByProperty('id', gameModel.preparationFun, $scope.preparationFuns).preparationFunName,
-                    LanguageId: gameModel.language.id,
-                    Language: gameModel.language.languageName
-                }
-                integrationGamesService.AddNewIntegrationGame(integrationGameModel).then(function (results) {
+                    Features: []
+                };
+                angular.forEach(gameModel.features, function(x) {
+                    newIntegrationGameModel.Features.push(x);
+                });
+                console.log(newIntegrationGameModel);
+                integrationGamesService.AddNewIntegrationGame(newIntegrationGameModel).then(function (results) {
                     gameModel = '';
-                    console.log("post new integration game");
+                    //console.log("post new integration game");
                 });
             };
+
+            $scope.featuresToFilter = function () {
+                indexedFeatures = [];
+                return $scope.gameFeatureDetails;
+            }
+
+            $scope.filterFeatures = function (feature) {
+                var featureIsNew = indexedFeatures.indexOf(feature.gameFeatureId) == -1;
+                if (featureIsNew) {
+                    indexedFeatures.push(feature.gameFeatureId);
+                }
+                return featureIsNew;
+            }
+            //dziwna opcja 
+
 
             $scope.getGameFeatureDetails = function (lang) {
                 integrationGamesService.GameFeatureDetails(lang).then(function (results) {
-                    console.log("blad? to jakies zarty kur..");
-                    $scope.gameCategories = results.data['gameCategories'];
-                    $scope.numberOfPlayers = results.data['numberOfPlayers'];
-                    $scope.paceOfPlays = results.data["paceOfPlays"];
-                    $scope.preparationFuns = results.data["preparationFuns"];
-                    console.log("get game details model");
-                    $scope.fillGameFeatureDetails($scope.selectedGameFeatureId);
+                    $scope.gameFeatureDetails = results.data; 
                     console.log("fill game feature details");
                 });
-            };
-
-            $scope.fillGameFeatureDetails = function (featureId) {
-                $scope.gameFeatureDetails = [];
-                $scope.selectedGameFeatureId = featureId;
-
-                switch (parseInt(featureId)) {
-                    case 1:
-                        angular.forEach($scope.gameCategories, function (item) {
-                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.gameCategoryName, TemplateName: item.gameCategoryTemplateName });
-                        });
-                        break;
-                    case 2:
-                        $scope.gameFeatureDetails = [];
-                        angular.forEach($scope.paceOfPlays, function (item) {
-                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.paceOfPlayName,TemplateName: item.paceOfPlayTemplateName });
-                        });
-                        break;
-                    case 3:
-                        $scope.gameFeatureDetails = [];
-                        angular.forEach($scope.numberOfPlayers, function (item) {
-                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.numberOfPlayerName,TemplateName:item.numberOfPlayerTemplateName });
-                        });
-                        break;
-                    case 4:
-                        $scope.gameFeatureDetails = [];
-                        angular.forEach($scope.preparationFuns, function (item) {
-                            $scope.gameFeatureDetails.push({ Id: item.id, Name: item.preparationFunName,TemplateName: item.preparationFunTemplateName });
-                        });
-                        break;
-                    default:
-                }
-            };
+            };        
 
             $scope.newFeatureDetail = function (gameFeature) {
                 var gameFeatureDetail = {
@@ -124,14 +94,7 @@
                 //tutaj jeszcze można się pokosić o jakaś wiadomość dla usera 
             };
 
-            $scope.editGameFeatureDetail = function (gameFeature, gfd) {
-                var gameFeatureDetail = {
-                    Id: gameFeature.featureId,
-                    GameFeatureDetailId: gfd.Id,
-                    GameFeatureDetailName: gfd.Name,
-                    Language: gameFeature.language.languageName,
-                    LanguageId: gameFeature.language.id
-                };
+            $scope.editGameFeatureDetail = function (gameFeatureDetail) {
                 integrationGamesService.PutGameFeatureDetail(gameFeatureDetail);
                 console.log(gameFeatureDetail);
             };

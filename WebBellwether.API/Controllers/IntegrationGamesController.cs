@@ -9,6 +9,7 @@ using WebBellwether.API.Context;
 using WebBellwether.API.Entities.IntegrationGames;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
+using WebBellwether.API.Models.IntegrationGame;
 using WebBellwether.API.Repositories;
 
 namespace WebBellwether.API.Controllers
@@ -32,9 +33,9 @@ namespace WebBellwether.API.Controllers
 
         [Authorize]
         [Route("PostIntegrationGame")]
-        public IHttpActionResult PostIntegrationGame(IntegrationGameModel game)
+        public IHttpActionResult PostIntegrationGame(NewIntegrationGameModel gameModel)
         {
-            _repo.InsertIntegrationGame(game);
+            _repo.InsertIntegrationGame(gameModel);
             return Ok();
         }
 
@@ -51,6 +52,8 @@ namespace WebBellwether.API.Controllers
         [Route("PostGameFeatureDetail")]
         public IHttpActionResult PostGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
+            //oczywiście tutaj moża by obsłużyc tego resultstata zwracanego z repo ale to w przyszłości przy refaktoryzacji
+            _repo.PutGameFeatureDetail(gameFeatureDetailModel);
             return Ok();
         }
 
@@ -69,7 +72,3 @@ namespace WebBellwether.API.Controllers
         }
     }
 }
-
-//mój aktualny problem to Visual Studio 2015 CTP - Javascript support missing
-//https://social.msdn.microsoft.com/Forums/sqlserver/en-US/f3693b97-7fb1-4b9a-9953-1970b767a407/visual-studio-2015-ctp-javascript-support-missing?forum=visualstudiogeneral
-//
