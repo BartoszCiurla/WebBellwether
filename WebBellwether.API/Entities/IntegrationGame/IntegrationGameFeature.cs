@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebBellwether.API.Entities.IntegrationGames
+﻿namespace WebBellwether.API.Entities.IntegrationGame
 {
     public class IntegrationGameFeature
     {

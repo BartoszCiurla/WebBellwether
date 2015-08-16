@@ -3,3 +3,9 @@
 2)animacje na scrollu w gameintegration*
 3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt *
 *priorytet 
+
+
+Aktualne problemy :
+1)$Http.put nie dziala - zastapiony postem na obecna chwilę .
+2)w jaki sposób informowanie usera o wyniku operacji obecnie mam funkcje getclass + oraz uzycie zmiennej resultState -> integrationGamesController bardzo zle rozwiazanie
+3)

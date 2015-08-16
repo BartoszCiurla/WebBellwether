@@ -3,6 +3,9 @@
         .module('webBellwether')
         .controller('integrationGamesController', ['$scope', 'integrationGamesService', function ($scope, integrationGamesService) {
             $scope.integrationGamePanel = false;
+            $scope.resultStateGameFeature = '';
+            $scope.resultStateGameFeatureDetail = '';
+            $scope.resultStateNewGame = '';
             $scope.changeIntegrationGamePanel = function () {
                 if ($scope.integrationGamePanel) {
                     $scope.integrationGamePanel = false;
@@ -28,12 +31,12 @@
 
             $scope.getIntegrationGames = function (lang) {
                 integrationGamesService.IntegrationGames(lang).then(function (results) {
+                    $scope.integrationGames = [];
                     $scope.integrationGames = results.data;
                 });
             };
 
             $scope.newGame = function (gameModel) {
-               // console.log(gameModel);
                 var newIntegrationGameModel =
                 {
                     Language: gameModel.language,
@@ -46,8 +49,14 @@
                 });
                 console.log(newIntegrationGameModel);
                 integrationGamesService.AddNewIntegrationGame(newIntegrationGameModel).then(function (results) {
-                    gameModel = '';
-                    //console.log("post new integration game");
+                        console.log(results);
+                        $scope.resultStateNewGame = 1;
+                        $scope.getIntegrationGames($scope.selectedLanguage);
+                },
+                function(results) {
+                    $scope.resultStateNewGame = 2;
+                    $scope.getIntegrationGames($scope.selectedLanguage);
+                    console.log(results);
                 });
             };
 
@@ -63,8 +72,6 @@
                 }
                 return featureIsNew;
             }
-            //dziwna opcja 
-
 
             $scope.getGameFeatureDetails = function (lang) {
                 integrationGamesService.GameFeatureDetails(lang).then(function (results) {
@@ -81,22 +88,53 @@
                     Language: gameFeature.language.languageName,
                     LanguageId: gameFeature.language.id
                 };
+                //BRAK OBSLUGI PUKI CO
                 console.log(gameFeatureDetail);
+            };
+
+            $scope.getClass = function (id, id2) {
+                //for gameFeature
+                if (id > 0) {
+                    if (id === $scope.resultStateGameFeature)
+                        return 'success';
+                    if (id + 999 === $scope.resultStateGameFeature)
+                        return 'error';
+                }
+                //for gameFeatureDetail
+                if (id2 > 0) {
+                    if (id2 === $scope.resultStateGameFeatureDetail)
+                        return 'success';
+                    if (id2 + 999 === $scope.resultStateGameFeatureDetail)
+                        return 'error';
+                }
+                return '';
             };
 
             $scope.editGameFeature = function (gameFeature) {
                 var gameFeatureModel = {
                     Id: gameFeature.id,
                     GameFeatureName: gameFeature.gameFeatureName,
-                    LanguageId:gameFeature.languageId,
+                    LanguageId:gameFeature.languageId
             };
-                integrationGamesService.PutGameFeature(gameFeatureModel);
-                //tutaj jeszcze można się pokosić o jakaś wiadomość dla usera 
+                integrationGamesService.PutGameFeature(gameFeatureModel).then(function (response) {
+                        console.log(response);
+                        $scope.resultStateGameFeature = gameFeature.id;
+                    },
+                function (response) {
+                    console.log(response);
+                    $scope.resultStateGameFeature = gameFeature.id + 999;
+                });
             };
 
             $scope.editGameFeatureDetail = function (gameFeatureDetail) {
-                integrationGamesService.PutGameFeatureDetail(gameFeatureDetail);
-                console.log(gameFeatureDetail);
+                integrationGamesService.PutGameFeatureDetail(gameFeatureDetail).then(function(response) {
+                    console.log(response);
+                    $scope.resultStateGameFeatureDetail = gameFeatureDetail.id;
+                },
+                function(response) {
+                    console.log(response);
+                    $scope.resultStateGameFeatureDetail = gameFeatureDetail.id + 999;
+                });
             };
 
 

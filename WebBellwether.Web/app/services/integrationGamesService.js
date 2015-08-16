@@ -19,10 +19,11 @@
                 });
             };
 
-            var putGameFeatureDetail = function(gameFeatureDetail) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeatureDetail', gameFeatureDetail).then(function (response) {
+            var putGameFeatureDetail = function (gameFeatureDetail) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeatureDetail/', gameFeatureDetail).then(function (response) {
                     return response;
                 });
+
             }
 
             var getIntegrationGames = function (languageid) {

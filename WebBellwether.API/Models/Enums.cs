@@ -5,14 +5,4 @@
         JavaScript = 0,
         NativeConfidential = 1
     };
-
-    public enum ResultState
-    {
-        GameAdded,
-        ThisGameExistsInDb,
-        GameFeatureEdited,
-        GameFeatureNotExists,
-        GameFeatureDetailEdited
-
-    };
 }

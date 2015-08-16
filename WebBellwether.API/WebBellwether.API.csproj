@@ -167,43 +167,19 @@
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
-    <Compile Include="Entities\IntegrationGames\GameFeature.cs" />
-    <Compile Include="Entities\IntegrationGames\GameFeatureDetail.cs" />
-    <Compile Include="Entities\IntegrationGames\GameFeatureDetailLanguage.cs" />
-    <Compile Include="Entities\IntegrationGames\GameFeatureLanguage.cs" />
-    <Compile Include="Entities\IntegrationGames\IntegrationGame.cs" />
-    <Compile Include="Entities\IntegrationGames\IntegrationGameDetail.cs" />
-    <Compile Include="Entities\IntegrationGames\IntegrationGameFeature.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguage.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureLanguage.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGame.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGameDetail.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGameFeature.cs" />
     <Compile Include="Entities\Translations\Language.cs" />
     <Compile Include="Function\Helper.cs" />
     <Compile Include="Entities\Client.cs" />
-    <Compile Include="Migrations\201508092118357_init.cs" />
-    <Compile Include="Migrations\201508092118357_init.Designer.cs">
-      <DependentUpon>201508092118357_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508092210472_test.cs" />
-    <Compile Include="Migrations\201508092210472_test.Designer.cs">
-      <DependentUpon>201508092210472_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508150949336_integrationGame v1.0.cs" />
-    <Compile Include="Migrations\201508150949336_integrationGame v1.0.Designer.cs">
-      <DependentUpon>201508150949336_integrationGame v1.0.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508151002308_integrationGame v1.1.cs" />
-    <Compile Include="Migrations\201508151002308_integrationGame v1.1.Designer.cs">
-      <DependentUpon>201508151002308_integrationGame v1.1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508151013204_integrationGame v1.2.cs" />
-    <Compile Include="Migrations\201508151013204_integrationGame v1.2.Designer.cs">
-      <DependentUpon>201508151013204_integrationGame v1.2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508151015502_integrationGame v1.3.cs" />
-    <Compile Include="Migrations\201508151015502_integrationGame v1.3.Designer.cs">
-      <DependentUpon>201508151015502_integrationGame v1.3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508151046572_integrationGame v1.4.cs" />
-    <Compile Include="Migrations\201508151046572_integrationGame v1.4.Designer.cs">
-      <DependentUpon>201508151046572_integrationGame v1.4.cs</DependentUpon>
+    <Compile Include="Migrations\201508161151084_init.cs" />
+    <Compile Include="Migrations\201508161151084_init.Designer.cs">
+      <DependentUpon>201508161151084_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -225,6 +201,7 @@
     <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Repositories\IntegrationGamesRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Results\ResultState.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,26 +223,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508092118357_init.resx">
-      <DependentUpon>201508092118357_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508092210472_test.resx">
-      <DependentUpon>201508092210472_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508150949336_integrationGame v1.0.resx">
-      <DependentUpon>201508150949336_integrationGame v1.0.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508151002308_integrationGame v1.1.resx">
-      <DependentUpon>201508151002308_integrationGame v1.1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508151013204_integrationGame v1.2.resx">
-      <DependentUpon>201508151013204_integrationGame v1.2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508151015502_integrationGame v1.3.resx">
-      <DependentUpon>201508151015502_integrationGame v1.3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508151046572_integrationGame v1.4.resx">
-      <DependentUpon>201508151046572_integrationGame v1.4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508161151084_init.resx">
+      <DependentUpon>201508161151084_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,13 +7,13 @@ namespace WebBellwether.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class integrationGamev11 : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(integrationGamev11));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201508151002308_integrationGame v1.1"; }
+            get { return "201508161151084_init"; }
         }
         
         string IMigrationMetadata.Source

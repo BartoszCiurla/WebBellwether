@@ -54,13 +54,6 @@ E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\Syste
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\System.Web.WebPages.Deployment.xml
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\System.Web.WebPages.Razor.xml
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.init.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.test.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.integrationGamev10.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.integrationGamev11.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.integrationGamev12.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.integrationGamev13.resources
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.integrationGamev14.resources
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csproj.GenerateResource.Cache
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.dll
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.pdb
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csprojResolveAssemblyReference.cache

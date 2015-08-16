@@ -5,12 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using WebBellwether.API.Context;
-using WebBellwether.API.Entities.IntegrationGames;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 using WebBellwether.API.Models.IntegrationGame;
 using WebBellwether.API.Repositories;
+using WebBellwether.API.Results;
 
 namespace WebBellwether.API.Controllers
 {
@@ -24,47 +25,54 @@ namespace WebBellwether.API.Controllers
             _repo = new IntegrationGamesRepository(_ctx);
         }
 
-        [AllowAnonymous]
+        [System.Web.Http.AllowAnonymous]
         [Route("GetGameFeatureDetails")]
         public IHttpActionResult GetGameFeatureDetails(int language)
         {
             return Ok(_repo.GetGameFeatureDetails(language));
         }
 
-        [Authorize]
+        [System.Web.Http.Authorize]
         [Route("PostIntegrationGame")]
         public IHttpActionResult PostIntegrationGame(NewIntegrationGameModel gameModel)
         {
-            _repo.InsertIntegrationGame(gameModel);
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if(_repo.InsertIntegrationGame(gameModel) == ResultState.GameAdded)
+                return Ok();
+            return BadRequest();
         }
 
-        [Authorize]
+        [System.Web.Http.Authorize]
         [Route("PostGameFeature")]
         public IHttpActionResult PostGameFeature(GameFeatureModel gameFeatureModel)
         {
-            //oczywiście tutaj moża by obsłużyc tego resultstata zwracanego z repo ale to w przyszłości przy refaktoryzacji
-            _repo.PutGameFeature(gameFeatureModel);
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (_repo.PutGameFeature(gameFeatureModel) == ResultState.GameFeatureEdited)
+                return Ok(gameFeatureModel);
+            return NotFound();
         }
 
-        [Authorize]
+        [System.Web.Http.Authorize]
         [Route("PostGameFeatureDetail")]
         public IHttpActionResult PostGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
-            //oczywiście tutaj moża by obsłużyc tego resultstata zwracanego z repo ale to w przyszłości przy refaktoryzacji
-            _repo.PutGameFeatureDetail(gameFeatureDetailModel);
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (_repo.PutGameFeatureDetail(gameFeatureDetailModel) == ResultState.GameFeatureDetailEdited)
+                return Ok(gameFeatureDetailModel);
+            return NotFound();
         }
 
-        [AllowAnonymous]
+        [System.Web.Http.AllowAnonymous]
         [Route("GetIntegrationGames")]
         public IHttpActionResult GetIntegrationGames(int language)//tutaj bedzie treba przesyłać id jezyka ... 
         {
             return Ok(_repo.GetIntegrationGames(language));
         }
 
-        [AllowAnonymous]
+        [System.Web.Http.AllowAnonymous]
         [Route("GetGameFeatures")]
         public IHttpActionResult GetGameFeatures(int language)//tutaj bedzie treba przesyłać id jezyka ... 
         {

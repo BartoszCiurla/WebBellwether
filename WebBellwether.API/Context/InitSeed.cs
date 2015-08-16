@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
-using WebBellwether.API.Entities.IntegrationGames;
+using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 
 namespace WebBellwether.API.Context
@@ -18,12 +18,10 @@ namespace WebBellwether.API.Context
                 new Language
                 {
                     LanguageName = "English",
-                    // ShortLanguageName = "en"
                 },
                 new Language
                 {
                     LanguageName = "Polish",
-                    // ShortLanguageName = "pl"
                 },
             };
         }
@@ -42,14 +40,13 @@ namespace WebBellwether.API.Context
                     new GameFeatureLanguage
                     {
                         GameFeatureName = "Category game",
-                        Language = en.LanguageName,
-                        LanguageId = en.Id
+                        Language = en
+                        
                     },
                     new GameFeatureLanguage
                     {
                         GameFeatureName = "Kategoria zabawy",
-                        Language = pl.LanguageName,
-                        LanguageId = pl.Id
+                        Language = pl
                     }
                 },
                 GameFeatureDetails = new Collection<GameFeatureDetail>
@@ -61,14 +58,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Integration",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Integracja",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -79,14 +74,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Concentration",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Koncentracja",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -97,14 +90,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Creativity",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Kreatywność",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -115,14 +106,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Gone to group",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Podział na grupy",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -133,14 +122,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Let us learn to",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Poznajmy się",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -151,14 +138,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Team work",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Praca w grupie",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -169,14 +154,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Discharge energy",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Rozładowanie energii",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -187,14 +170,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Competition",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Współzawodnictwo",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -205,14 +186,12 @@ namespace WebBellwether.API.Context
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Dexterity",
-                                LanguageId = en.Id,
-                                Language = en.LanguageName
+                                Language = en
                             },
                             new GameFeatureDetailLanguage
                             {
                                 GameFeatureDetailName = "Zręczność",
-                                LanguageId = pl.Id,
-                                Language = pl.LanguageName
+                                Language = pl
                             },
                         }
                     },
@@ -227,14 +206,12 @@ namespace WebBellwether.API.Context
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Pace of play",
-                            Language = en.LanguageName,
-                            LanguageId = en.Id
+                            Language = en
                         },
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Tempo zabawy",
-                            Language = pl.LanguageName,
-                            LanguageId = pl.Id
+                            Language = pl
                         }
                     },
                     GameFeatureDetails = new Collection<GameFeatureDetail>
@@ -246,14 +223,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Dynamic",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Dynamiczne",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         },
@@ -264,14 +239,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Static",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Statyczne",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         },
@@ -282,14 +255,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName= "Living",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Żywe",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         }
@@ -305,14 +276,12 @@ namespace WebBellwether.API.Context
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Number of player",
-                            Language = en.LanguageName,
-                            LanguageId = en.Id
+                            Language = en
                         },
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Liczba graczy",
-                            Language = pl.LanguageName,
-                            LanguageId = pl.Id
+                            Language = pl
                         }
                     },
                     GameFeatureDetails = new Collection<GameFeatureDetail>
@@ -324,14 +293,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Optional",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Dowolna",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         },
@@ -342,14 +309,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "More than 20",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName= "Powyżej 20",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         }
@@ -364,14 +329,12 @@ namespace WebBellwether.API.Context
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Preparation fun",
-                            Language = en.LanguageName,
-                            LanguageId = en.Id
+                            Language = en
                         },
                         new GameFeatureLanguage
                         {
                             GameFeatureName = "Przygotowanie zabawy",
-                            Language = pl.LanguageName,
-                            LanguageId = pl.Id
+                            Language = pl
                         }
                     },
                     GameFeatureDetails = new Collection<GameFeatureDetail>
@@ -383,14 +346,12 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Lack",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Brak",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         },
@@ -401,13 +362,11 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName= "Minimum",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 {GameFeatureDetailName = "Minimalne",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         },
@@ -418,13 +377,11 @@ namespace WebBellwether.API.Context
                                 new GameFeatureDetailLanguage
                                 {
                                     GameFeatureDetailName = "Required",
-                                    LanguageId = en.Id,
-                                    Language = en.LanguageName
+                                    Language = en
                                 },
                                 new GameFeatureDetailLanguage
                                 { GameFeatureDetailName = "Wymagane",
-                                    LanguageId = pl.Id,
-                                    Language = pl.LanguageName
+                                    Language = pl
                                 },
                             }
                         }

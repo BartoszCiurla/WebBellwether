@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using WebBellwether.API.Context;
-using WebBellwether.API.Entities.IntegrationGames;
+using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 using WebBellwether.API.Models.IntegrationGame;
+using WebBellwether.API.Results;
 
 namespace WebBellwether.API.Repositories
 {
@@ -59,6 +60,9 @@ namespace WebBellwether.API.Repositories
 
         public ResultState InsertIntegrationGame(NewIntegrationGameModel game)
         {
+            //probably i set here multiple language insert game 
+            if (_ctx.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGameName.Contains(game.GameName)) != null)
+                return ResultState.ThisGameExistsInDb;    
             IntegrationGame entity = new IntegrationGame
             {
                 CreationDate = DateTime.UtcNow,
@@ -91,7 +95,7 @@ namespace WebBellwether.API.Repositories
             var result = new List<IntegrationGameFeature>();
             features.ToList().ForEach(x =>
             {
-                var entity = _ctx.GameFeatureDetailLanguages.FirstOrDefault(z => z.GameFeatureDetail.Id == x && z.LanguageId ==language);
+                var entity = _ctx.GameFeatureDetailLanguages.FirstOrDefault(z => z.GameFeatureDetail.Id == x && z.Language.Id ==language);
                 result.Add(new IntegrationGameFeature {GameFeatureDetailLanguage = entity});
             });
             //second part ,take feature
@@ -100,7 +104,7 @@ namespace WebBellwether.API.Repositories
                 var entity =
                     _ctx.GameFeatureLanguages.FirstOrDefault(
                         z =>
-                            z.LanguageId == x.GameFeatureDetailLanguage.LanguageId &&
+                            z.Language.Id == x.GameFeatureDetailLanguage.Language.Id &&
                             z.GameFeature.Id == x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id);               
                 x.GameFeatureLanguage = entity;
             });
@@ -112,25 +116,24 @@ namespace WebBellwether.API.Repositories
         {
             var entity =
                 _ctx.GameFeatureLanguages.FirstOrDefault(
-                    x => x.GameFeature.Id == gameFeatureModel.Id && x.LanguageId == gameFeatureModel.LanguageId);
-            if (entity != null)
-                entity.GameFeatureName = gameFeatureModel.GameFeatureName;
+                    x => x.GameFeature.Id == gameFeatureModel.Id && x.Language.Id == gameFeatureModel.LanguageId);
+            if (entity == null)
+                return ResultState.GameFeatureNotExists;
+            entity.GameFeatureName = gameFeatureModel.GameFeatureName;
             _ctx.SaveChanges();
             return ResultState.GameFeatureEdited;
         }
 
         public ResultState PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
-            ResultState result = ResultState.GameFeatureDetailEdited;
-            //first step i update basic rekord with new name 
             var entity =
                 _ctx.GameFeatureDetailLanguages.FirstOrDefault(
-                    x => x.Id == gameFeatureDetailModel.Id && x.LanguageId == gameFeatureDetailModel.LanguageId);
-            if (entity != null)
-                entity.GameFeatureDetailName = gameFeatureDetailModel.GameFeatureDetailName;
-            //second step i update all integration games 
-
-            return result;
+                    x => x.Id == gameFeatureDetailModel.Id && x.Language.Id == gameFeatureDetailModel.LanguageId);
+            if (entity == null)
+                return ResultState.GameFeatureDetailNotExists;
+            entity.GameFeatureDetailName = gameFeatureDetailModel.GameFeatureDetailName;
+            _ctx.SaveChanges();
+            return ResultState.GameFeatureDetailEdited;
         }
         
 
@@ -139,7 +142,7 @@ namespace WebBellwether.API.Repositories
         {
             //id for header , gamefeaturename for details
             var gameFeatures = new List<GameFeatureModel>();
-            _ctx.GameFeatureLanguages.Where(x => x.LanguageId == language).ToList().ForEach(x => gameFeatures.Add(new GameFeatureModel { Id = x.GameFeature.Id, GameFeatureName = x.GameFeatureName, LanguageId = language }));
+            _ctx.GameFeatureLanguages.Where(x => x.Language.Id == language).ToList().ForEach(x => gameFeatures.Add(new GameFeatureModel { Id = x.GameFeature.Id, GameFeatureName = x.GameFeatureName, LanguageId = language }));
 
             //works for language <> en
             BuildFeaturesTemplate(language, gameFeatures);
@@ -151,10 +154,10 @@ namespace WebBellwether.API.Repositories
         public List<GameFeatureDetailModel> GetGameFeatureDetails(int language)
         {
             var gameFeatureDetails = new List<GameFeatureDetailModel>();
-            _ctx.GameFeatureDetailLanguages.Where(x => x.LanguageId == language).ToList().ForEach(x =>
+            _ctx.GameFeatureDetailLanguages.Where(x => x.Language.Id == language).ToList().ForEach(x =>
             {
                 //warning id is gamefeaturedetaillanguages id 
-                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.Id, GameFeatureDetailId = x.GameFeatureDetail.Id, GameFeatureId = x.GameFeatureDetail.GameFeature.Id,GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language, LanguageId = x.LanguageId });
+                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.Id, GameFeatureDetailId = x.GameFeatureDetail.Id, GameFeatureId = x.GameFeatureDetail.GameFeature.Id,GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language.LanguageName, LanguageId = x.Language.Id });
             });
 
             //works for language <> en
@@ -171,7 +174,7 @@ namespace WebBellwether.API.Repositories
             {
                 int enId = checkIsExists.Id;
                 if (enId != language) // then i build template features     
-                    _ctx.GameFeatureLanguages.Where(x => x.LanguageId == enId).ToList().ForEach(x => gameFeatures.ForEach(z =>
+                    _ctx.GameFeatureLanguages.Where(x => x.Language.Id == enId).ToList().ForEach(x => gameFeatures.ForEach(z =>
                     {
                         if (z.Id == x.GameFeature.Id)
                             z.GameFeatureTemplateName = x.GameFeatureName;
@@ -188,7 +191,7 @@ namespace WebBellwether.API.Repositories
                 int enId = checkIsExists.Id;
                 if (enId != language) // then i build template features for edit 
                 {
-                    _ctx.GameFeatureDetailLanguages.Where(x => x.LanguageId == enId)
+                    _ctx.GameFeatureDetailLanguages.Where(x => x.Language.Id == enId)
                         .ToList()
                         .ForEach(x => gameFeatureDetailModels.ForEach(z =>
                          {

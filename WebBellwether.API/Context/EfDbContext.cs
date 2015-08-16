@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebBellwether.API.Entities;
-using WebBellwether.API.Entities.IntegrationGames;
+using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 
