@@ -54,32 +54,70 @@ namespace WebBellwether.API.Repositories
                 });
 
             return result;
-        } 
+        }
 
-
-
-        public ResultState InsertIntegrationGame(NewIntegrationGameModel game)
+        private ResultState CheckNewGameLanguage(NewIntegrationGameModel game)
         {
-            //probably i set here multiple language insert game 
-            if (_ctx.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGameName.Contains(game.GameName)) != null)
-                return ResultState.ThisGameExistsInDb;    
+            if (
+                _ctx.IntegrationGameDetails.FirstOrDefault(
+                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Id) == null)
+                return ResultState.GameCanBeAdded;
+            return ResultState.GameHaveTranslationForThisLanguage;
+        }
+
+        private ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
+        {
             IntegrationGame entity = new IntegrationGame
             {
                 CreationDate = DateTime.UtcNow,
                 IntegrationGameDetails = new List<IntegrationGameDetail>
                 {
-                    new IntegrationGameDetail
-                    {
-                        Language = GetLanguage(game.Language.Id),
-                        IntegrationGameName = game.GameName,
-                        IntegrationGameDescription = game.GameDetails,
-                        IntegrationGameFeatures = GetGameFeaturesTest(game.Features,game.Language.Id)
-                    }
+                   BuildIntegrationGameDetail(game)
                 }
             };
             _ctx.IntegrationGames.Add(entity);
-            _ctx.SaveChanges();                  
-            return ResultState.GameAdded;
+            _ctx.SaveChanges();
+            var integrationGameDetail = _ctx.IntegrationGameDetails.SingleOrDefault(x => x.IntegrationGameName.Contains(game.GameName));
+            int integrationGameId = 0;
+            if (integrationGameDetail != null)
+            {
+                integrationGameId=
+                    integrationGameDetail
+                        .IntegrationGame.Id;
+            }
+            return new ResultStateContainer {ResultState = ResultState.GameAdded,Value = integrationGameId};
+        }
+
+        private IntegrationGameDetail BuildIntegrationGameDetail(NewIntegrationGameModel game)
+        {
+            return new IntegrationGameDetail
+            {
+                Language = GetLanguage(game.Language.Id),
+                IntegrationGameName = game.GameName,
+                IntegrationGameDescription = game.GameDetails,
+                IntegrationGameFeatures = GetGameFeatures(game.Features, game.Language.Id)
+            };
+        }
+
+        private ResultStateContainer InsertSeveralLanguageGame(NewIntegrationGameModel game)
+        {
+            //if game have id i must check exists game for game language
+            if (CheckNewGameLanguage(game) != ResultState.GameCanBeAdded)
+                return new ResultStateContainer {ResultState = ResultState.GameHaveTranslationForThisLanguage , Value = game.Id};
+            var entity = _ctx.IntegrationGames.SingleOrDefault(x => x.Id == game.Id);
+            entity?.IntegrationGameDetails.Add(BuildIntegrationGameDetail(game));
+            _ctx.SaveChanges();
+            return new ResultStateContainer {ResultState = ResultState.SeveralLanguageGameAdded ,Value = game.Id};
+        }
+
+        public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
+        {
+            //probably i set here multiple language insert game 
+            if (_ctx.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGameName.Contains(game.GameName)) != null)
+                return new ResultStateContainer{ResultState = ResultState.ThisGameExistsInDb,Value = game.Id};
+            if (game.Id == 0)
+                return InsertSingleLanguageGame(game);
+            return InsertSeveralLanguageGame(game);                   
         }
 
         //this function must go to static class , because this is f...
@@ -88,7 +126,7 @@ namespace WebBellwether.API.Repositories
             return _ctx.Languages.FirstOrDefault(x => x.Id == id);
         }
 
-        private List<IntegrationGameFeature> GetGameFeaturesTest(int[] features,int language)
+        private List<IntegrationGameFeature> GetGameFeatures(int[] features,int language)
         {
             //its very important features == gameFeatureDetail.id not gamefeaturedetaillanguages.id i must use language to take good record 
             //first part , take feature detail

@@ -7,6 +7,9 @@
         GameFeatureEdited,
         GameFeatureNotExists,
         GameFeatureDetailEdited,
-        GameFeatureDetailNotExists
+        GameFeatureDetailNotExists,
+        GameCanBeAdded,
+        GameHaveTranslationForThisLanguage,
+        SeveralLanguageGameAdded
     }
 }

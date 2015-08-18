@@ -38,9 +38,21 @@ namespace WebBellwether.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if(_repo.InsertIntegrationGame(gameModel) == ResultState.GameAdded)
-                return Ok();
-            return BadRequest();
+            //this is stupid but works ehm this don't work i must return id ffss 
+            ResultStateContainer result = _repo.InsertIntegrationGame(gameModel);
+            switch (result.ResultState)
+            {
+                case ResultState.GameAdded:
+                    return Ok(result.Value);//standard 
+                case ResultState.ThisGameExistsInDb:
+                    return BadRequest();//if game name exists in db
+                case ResultState.SeveralLanguageGameAdded:
+                    return Ok(result.Value); //standard user can add more game translation
+                case ResultState.GameHaveTranslationForThisLanguage:
+                    return BadRequest(result.Value.ToString()); // if game have translation for language
+                default:
+                    return BadRequest();
+            }
         }
 
         [System.Web.Http.Authorize]

@@ -14,6 +14,7 @@
         <!--<div class="row">-->
         <div class="col-md-6" ng-hide="integrationGamePanel">
             <h1>{{translation.NewGame}}</h1>
+            <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
             <form name="addGame" novalidate ng-submit="newGame(gameModel)">
                 <div class="form-group">
                     <label for="language">{{translation.Language}}</label>
@@ -23,11 +24,22 @@
                 </div>
 
                 <div ng-hide="gameModel.language == null">
+                    <label>{{translation.SeveralLanguagesDescription}}</label>
+                    <div class="has-error">
+                        <div class="checkbox">
+                            <label style="font-weight: bold">
+                                <input data-ng-model="severalLanguagesForGame" type="checkbox"/>
+                                {{translation.GameForSeveralLanguages}}
+                            </label>
+                        </div>
+                    </div>
+
+
                     <!--GAME NAME-->
                     <input type="text" class="form-control" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus/>
 
                     <!--GAME DESCRIPTION-->
-                    <textarea style="margin-top: 20px" class="form-control" rows="14" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+                    <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
 
                     <!--code below is f...-->
                     <!--GAME FEATURES-->
@@ -62,11 +74,19 @@
                     <div style="text-align: center">
                         <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="glyphicon glyphicon-save"></span> {{translation.AddGame}}</button>
                     </div>
+                    <!--USER NOTIFICATION FOR INSERT GAME-->
+                    <!--DESCRIPTION IN INTEGRATIOMGAMESCONTROLLER -> AddNewIntegrationGame-->
                     <div ng-show="resultStateNewGame == 1">
                         <h1 class="text-center" style="color: #60a917">{{translation.GameAdded}} </h1>
                     </div>
                     <div ng-show="resultStateNewGame == 2">
                         <h1 class="text-center" style="color: #ce352c">{{translation.GameExists}}</h1>
+                    </div>
+                    <div ng-show="resultStateNewGame == 3">
+                        <h1 class="text-center" style="color: #60a917">{{translation.SeveralLanguageGameAdded}} </h1>
+                    </div>
+                    <div ng-show="resultStateNewGame == 4">
+                        <h1 class="text-center" style="color: #ce352c">{{translation.SeveralLanguageGameError}}</h1>
                     </div>
                 </div>
 

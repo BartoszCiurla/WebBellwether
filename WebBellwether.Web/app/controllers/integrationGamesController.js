@@ -1,11 +1,13 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('integrationGamesController', ['$scope', 'integrationGamesService', function ($scope, integrationGamesService) {
+        .controller('integrationGamesController', ['$scope','$timeout', 'integrationGamesService', function ($scope,$timeout, integrationGamesService) {
             $scope.integrationGamePanel = false;
             $scope.resultStateGameFeature = '';
             $scope.resultStateGameFeatureDetail = '';
             $scope.resultStateNewGame = '';
+            $scope.severalLanguagesForGame = false;
+            $scope.gameIdForSeveralLanguages = '';
             $scope.changeIntegrationGamePanel = function () {
                 if ($scope.integrationGamePanel) {
                     $scope.integrationGamePanel = false;
@@ -48,15 +50,37 @@
                     newIntegrationGameModel.Features.push(x);
                 });
                 console.log(newIntegrationGameModel);
+
+                //Handling for game several languages
+                if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
+                    newIntegrationGameModel.ID = $scope.gameIdForSeveralLanguages;
+                } else { // this else must be on click in checkbox , current idea is f..
+                    $scope.gameIdForSeveralLanguages = '';
+                }
+
                 integrationGamesService.AddNewIntegrationGame(newIntegrationGameModel).then(function (results) {
                         console.log(results);
-                        $scope.resultStateNewGame = 1;
+                        
+                        //Handling for game several languages
+                        if ($scope.severalLanguagesForGame) {
+                            $scope.gameIdForSeveralLanguages = results.data;
+                            $scope.resultStateNewGame = 3;//several language game success
+                        } else {
+                            $scope.resultStateNewGame = 1;//single language game success
+                        }
+                        startTimer();
                         $scope.getIntegrationGames($scope.selectedLanguage);
                 },
                 function(results) {
-                    $scope.resultStateNewGame = 2;
-                    $scope.getIntegrationGames($scope.selectedLanguage);
-                    console.log(results);
+                    
+                    //Handling for game several languages
+                    if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
+                        $scope.gameIdForSeveralLanguages = (results.data);
+                        $scope.resultStateNewGame = 4; //several language game error
+                    } else {
+                        $scope.resultStateNewGame = 2;//single language game error
+                    }
+                    startTimer();
                 });
             };
 
@@ -152,6 +176,11 @@
             $scope.getGameFeatureDetails($scope.selectedLanguage);
             $scope.getIntegrationGames($scope.selectedLanguage);
 
-
+            var startTimer = function () {
+                var timer = $timeout(function () {
+                    $timeout.cancel(timer);
+                    $scope.resultStateNewGame = '';
+                }, 4000);
+            }
         }]);
 })();
