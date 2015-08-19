@@ -60,7 +60,7 @@ namespace WebBellwether.API.Repositories
         {
             if (
                 _ctx.IntegrationGameDetails.FirstOrDefault(
-                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Id) == null)
+                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language.Id) == null)
                 return ResultState.GameCanBeAdded;
             return ResultState.GameHaveTranslationForThisLanguage;
         }

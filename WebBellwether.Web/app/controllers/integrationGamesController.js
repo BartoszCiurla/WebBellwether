@@ -16,6 +16,16 @@
                 }
             };
 
+            $scope.setSeveralLanguage = function() {
+                if ($scope.severalLanguagesForGame) {
+                    $scope.severalLanguagesForGame = false;
+                    $scope.gameIdForSeveralLanguages = '';
+                }
+                else {
+                    $scope.severalLanguagesForGame = true;
+                }
+            };
+
             var indexedFeatures = [];
             $scope.integrationGames = [];
             $scope.gameFeatureDetails = [];
@@ -54,9 +64,7 @@
                 //Handling for game several languages
                 if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
                     newIntegrationGameModel.ID = $scope.gameIdForSeveralLanguages;
-                } else { // this else must be on click in checkbox , current idea is f..
-                    $scope.gameIdForSeveralLanguages = '';
-                }
+                } 
 
                 integrationGamesService.AddNewIntegrationGame(newIntegrationGameModel).then(function (results) {
                         console.log(results);
@@ -75,7 +83,7 @@
                     
                     //Handling for game several languages
                     if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
-                        $scope.gameIdForSeveralLanguages = (results.data);
+                        $scope.gameIdForSeveralLanguages =parseInt(results.data.message);
                         $scope.resultStateNewGame = 4; //several language game error
                     } else {
                         $scope.resultStateNewGame = 2;//single language game error

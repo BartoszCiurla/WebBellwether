@@ -45,7 +45,7 @@ namespace WebBellwether.API.Controllers
                 case ResultState.GameAdded:
                     return Ok(result.Value);//standard 
                 case ResultState.ThisGameExistsInDb:
-                    return BadRequest();//if game name exists in db
+                    return BadRequest(result.Value.ToString());//if game name exists in db
                 case ResultState.SeveralLanguageGameAdded:
                     return Ok(result.Value); //standard user can add more game translation
                 case ResultState.GameHaveTranslationForThisLanguage:
