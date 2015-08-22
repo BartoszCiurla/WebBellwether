@@ -9,29 +9,31 @@
     <link href="content/css/loading-bar.min.css" rel="stylesheet" />
     <link href="content/css/font-awesome.min.css" rel="stylesheet" />
     <link href="content/css/social-buttons.css" rel="stylesheet" />
-
+    <link href="content/css/animation.css" rel="stylesheet"/>
+    <!--<link href="content/css/test.css" rel="stylesheet" />-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body data-ng-app="webBellwether" data-ng-controller="translationController">
-    <!--<video autoplay loop poster="/appData/videos/CloudFly.jpg" id="bgvid">
+    <video autoplay loop poster="/appData/videos/CloudFly.jpg" id="bgvid">
 
         <source src="/appData/videos/CloudFly.webm" type="video/webm">
 
         <source src="/appData/videos/CloudFly.mp4" type="video/mp4">
 
-    </video>-->
+    </video>
     <div data-ng-controller="indexController" role="navigation">
 
         <!--Header-->
-        <div ng-include src="'/app/views/header.html'"></div>
+        <!--<div ng-include src="'/app/views/header.html'"></div>-->
 
         <!--Content-->
-        <div class="container" data-ng-view=""></div>
-
-        <!--Footer-->
-        <div>
-            <div ng-include src="'/app/views/footer.html'"></div>
+        <div class="container">
+            <div class="page {{transitionState}}" data-ng-view></div>
         </div>
+        <!--Footer-->
+        <!--<div>
+            <div ng-include src="'/app/views/footer.html'"></div>
+        </div>-->
     </div>
 
 
@@ -42,10 +44,10 @@
     <script src="scripts/angular-resource.min.js"></script>
     <script src="scripts/angular-route.min.js"></script>
     <script src="scripts/angular-local-storage.min.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
     <script src="scripts/angular-animate.min.js"></script>
     <script src="scripts/metro.min.js"></script>
-    <script src="scripts/loading-bar.min.js"></script>
-
+    <!--<script src="scripts/angular-route-animation-manager.js"></script>-->
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
     <script src="app/routeAnimate.js"></script>
@@ -72,7 +74,7 @@
     <!-- Load custom filters -->
     <!-- Load custom directives -->
 
-    
+
 
     <script type="text/javascript">
         //scrollowany nav
@@ -84,7 +86,7 @@
                 $('.menu').removeClass('fixed');
             }
         });
-       
+
 
     </script>
 </body>

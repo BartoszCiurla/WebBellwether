@@ -1,7 +1,8 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('integrationGamesController', ['$scope','$timeout', 'integrationGamesService', function ($scope,$timeout, integrationGamesService) {
+        .controller('integrationGamesController', ['$scope','$timeout', 'integrationGamesService', function ($scope, $timeout, integrationGamesService) {
+            //$scope.pageClass = 'page-about';
             $scope.integrationGamePanel = false;
             $scope.resultStateGameFeature = '';
             $scope.resultStateGameFeatureDetail = '';

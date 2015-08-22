@@ -28,7 +28,7 @@
                     <div class="has-error">
                         <div class="checkbox">
                             <label style="font-weight: bold">
-                                <input ng-click="setSeveralLanguage()" type="checkbox"/>
+                                <input ng-click="setSeveralLanguage()" type="checkbox" />
                                 {{translation.GameForSeveralLanguages}}
                             </label>
                         </div>
@@ -36,7 +36,7 @@
 
 
                     <!--GAME NAME-->
-                    <input type="text" class="form-control" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus/>
+                    <input type="text" class="form-control" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
 
                     <!--GAME DESCRIPTION-->
                     <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
@@ -126,7 +126,7 @@
                         <option value=''>{{translation.SelectPreparationGame}}</option>
                     </select>
                 </div>-->
-               
+
             </form>
         </div>
 
@@ -156,7 +156,7 @@
                 <div ng-repeat="gameFeature in gameFeatures">
                     <div class="form-inline">
                         <form class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
-                            <input ng-class="getClass(gameFeature.id,0)" ng-disabled=" required1.val1 == null" type="text" class="form-control" required data-ng-model="gameFeature.gameFeatureName"/>
+                            <input ng-class="getClass(gameFeature.id,0)" ng-disabled=" required1.val1 == null" type="text" class="form-control" required data-ng-model="gameFeature.gameFeatureName" />
                             <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
                             <label ng-hide="gameFeature.gameFeatureTemplateName == null">
                                 {{gameFeature.gameFeatureTemplateName}}

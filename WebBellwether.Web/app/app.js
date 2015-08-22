@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('webBellwether', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ngResource']);
+    angular.module('webBellwether', ['ngRoute', 'LocalStorageModule', 'ngResource', 'angular-loading-bar', 'ngAnimate']);
 })();
 
 
@@ -31,5 +31,3 @@
             authService.fillAuthData();
         }]);
 })();
-
-

@@ -8,4 +8,4 @@
 Aktualne problemy :
 1)$Http.put nie dziala - zastapiony postem na obecna chwilę .
 2)w jaki sposób informowanie usera o wyniku operacji obecnie mam funkcje getclass + oraz uzycie zmiennej resultState -> integrationGamesController bardzo zle rozwiazanie
-3)
+3)brak odświeżania listy zabaw po zmianie kategorii lub podkategorii (sam moge to naprawić!)

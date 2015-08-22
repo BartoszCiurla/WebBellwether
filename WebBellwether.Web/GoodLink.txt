@@ -158,3 +158,17 @@ http://vitalets.github.io/checklist-model/ jak by trzeba robić listę checkbox�
 
 http://jsfiddle.net/EsdQB/5/ jak zrobić zeby coś było inline 
 
+
+
+TERAZ TYLKO ANIMACJE RESZTA PROJEKTU TO PESTKA NA OBECNYM POZIOMIE 
+http://augus.github.io/ngAnimate/ COŚ ALE MAŁO ...
+
+https://docs.angularjs.org/api/ngRoute/directive/ngView po przeczytaniu tego można coś nawet zczaic
+
+http://dfsq.github.io/ngView-animation-effects/app/#/page/2 tutaj są wszystkie ciekawe animacje 
+
+http://plnkr.co/edit/vECalSypioxL1sFFTjjt?p=preview tutaj sposób w jaki można je obsługiwać za pomoco routingu 
+
+https://github.com/yairhaimo/angular-route-animation-manager/blob/master/demo/angular-route-animation-manager.js
+
+http://plnkr.co/edit/vECalSypioxL1sFFTjjt?p=preview

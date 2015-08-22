@@ -57,4 +57,3 @@ E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csproj.GenerateResource.Cache
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.dll
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.pdb
-E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csprojResolveAssemblyReference.cache
