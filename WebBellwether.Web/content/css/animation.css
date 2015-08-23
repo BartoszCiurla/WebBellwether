@@ -1,11 +1,14 @@
-﻿.page        {
-    bottom:0; 
-    position:absolute; 
-    text-align:center;
-    top:0;  
-    width:100%; 
+﻿.page {
+    /*bottom: 0;
+    position: absolute;*/
+    text-align: center;
+    top: 0;
+    width: 100%;
+    height: 0;
+	transition: height 0.8s ease-in-out;
 }
-.ng-enter {
+
+/*.ng-enter {
     animation: scaleUp 0.5s both ease-in;
     z-index: 8888;
 }
@@ -13,31 +16,34 @@
 .ng-leave {
     animation: slideOutLeft 0.5s both ease-in;
     z-index: 9999;
-}
+}*/
 /*slide + pop in*/
 .slide-pop {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100%;    
 }
 
     .slide-pop.ng-enter,
     .slide-pop.ng-leave {
         -webkit-transition: all 1s linear;
         transition: all 1s linear;
+        position: absolute;
     }
 
     .slide-pop.ng-enter {
         opacity: 0;
         -webkit-transform: scale(.5);
         transform: scale(.5);
+        position: absolute;
     }
 
     .slide-pop.ng-enter-active {
         opacity: 1;
         -webkit-transform: scale(1);
         transform: scale(1);
+        position: relative;
     }
 
     .slide-pop.ng-leave {
@@ -49,6 +55,7 @@
         left: -100%;
         opacity: 0;
     }
+
 
 .reverse .page.slide-pop.ng-enter {
     opacity: .5;
@@ -157,9 +164,9 @@
 }
 
 .page-rON.ng-enter {
-    -webkit-animation: slideInUp 0.5s both ease-in;
-    -moz-animation: slideInUp 0.5s both ease-in;
-    animation: slideInUp 0.5s both ease-in;
+    -webkit-animation: slideInRight 0.5s both ease-in;
+    -moz-animation: slideInRight 0.5s both ease-in;
+    animation: slideInRight 0.5s both ease-in;
 }
 
 /* rotate and fall */
@@ -356,3 +363,5 @@
         opacity: 0;
     }
 }
+
+

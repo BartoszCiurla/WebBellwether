@@ -207,6 +207,7 @@ namespace WebBellwether.API.Repositories
 
         private void BuildFeaturesTemplate(int language, List<GameFeatureModel> gameFeatures)
         {
+            //this is not good i use statis language name ... 
             var checkIsExists = _ctx.Languages.FirstOrDefault(x => x.LanguageName == "English");
             if (checkIsExists != null)
             {

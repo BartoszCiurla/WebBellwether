@@ -172,3 +172,12 @@ http://plnkr.co/edit/vECalSypioxL1sFFTjjt?p=preview tutaj sposób w jaki można 
 https://github.com/yairhaimo/angular-route-animation-manager/blob/master/demo/angular-route-animation-manager.js
 
 http://plnkr.co/edit/vECalSypioxL1sFFTjjt?p=preview
+
+
+jak rozwiązać problem z footerem : http://stackoverflow.com/questions/28674463/angularjs-ng-enter-animation-affects-positioning-of-footer
+http://onehungrymind.com/ng-animate-first-look-with-angularjs-wizard/ nadal nie wiem jak to zrobić !!
+
+http://plnkr.co/edit/hNFF2TToFf2Rux4v96QL?p=preview rozwiązanie 1 ale nie działa u mnie tak jak bym chciał 
+
+http://stackoverflow.com/questions/30074558/animating-ui-view-without-positionabsolute coś tutaj mam http://jsfiddle.net/Lxhn1csc/
+caly problem związany jest z tym ze do animacji musze mieć position absolute ... a jak to mam to footer nachodzi na kontent ...

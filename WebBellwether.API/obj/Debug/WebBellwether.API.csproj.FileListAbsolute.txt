@@ -53,6 +53,7 @@ E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\Syste
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\System.Web.WebPages.xml
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\System.Web.WebPages.Deployment.xml
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\bin\System.Web.WebPages.Razor.xml
+E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csprojResolveAssemblyReference.cache
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.Migrations.init.resources
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.csproj.GenerateResource.Cache
 E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.API\obj\Debug\WebBellwether.API.dll
