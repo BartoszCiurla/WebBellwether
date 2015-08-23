@@ -21,35 +21,28 @@
         <source src="/appData/videos/CloudFly.mp4" type="video/mp4">
 
     </video>
-    <div data-ng-controller="indexController" role="navigation">
+    <div  data-ng-controller="indexController" role="navigation">
+
         <!--<!--Header-->
         <div ng-include src="'/app/views/header.html'"></div>
 
         <!--Content-->
         <div class="container">
-            <div class="page {{transitionState}}" ng-view></div>
+            <div class="page {{transitionState}}" ng-view fix-position-absolute></div>
         </div>
 
-        <!--here i have problem because uder i have position relative content ... !-->
         <!--Footer-->
-
-        <!--<footer style="float: inherit;position: relative">
-            <div>
-                <div class="imageContainerMyFooter" style="background-image: url(/appData/images/footer/113.png)"></div>
-            </div>
-        </footer>-->
-        <div style="margin-top: 50px">
+        <div>
             <div ng-include src="'/app/views/footer.html'"></div>
         </div>
-
     </div>
 
 
-<!-- Must be here -->
-<!--UWAGA DOKONALEM TUTAJ WYBORU NOWA WERSJA ANGULARA LUB LOSOWE ANIMACJE PRZY WCHODZENIU DO MODUŁÓW
-OD WERSJI 1.2.13 NIE DZIALA NG-ENTER JEZELI WPROWADZE KLASE Z KONTROLLERA LUB PODCZAS ROUTECHANGESTART-->
-    <!--UWAGA JUZ MOZNA TO ZROBIĆ PODCZAS EWENTU NP ROUTECHANGESTART SERWIS DO WYWALENIA--> 
-<script src="scripts/jquery-2.1.4.min.js"></script>
+    <!-- Must be here -->
+    <!--UWAGA DOKONALEM TUTAJ WYBORU NOWA WERSJA ANGULARA LUB LOSOWE ANIMACJE PRZY WCHODZENIU DO MODUŁÓW
+    OD WERSJI 1.2.13 NIE DZIALA NG-ENTER JEZELI WPROWADZE KLASE Z KONTROLLERA LUB PODCZAS ROUTECHANGESTART-->
+    <!--UWAGA JUZ MOZNA TO ZROBIĆ PODCZAS EWENTU NP ROUTECHANGESTART SERWIS DO WYWALENIA-->
+    <script src="scripts/jquery-2.1.4.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/angular-resource.min.js"></script>
@@ -58,11 +51,12 @@ OD WERSJI 1.2.13 NIE DZIALA NG-ENTER JEZELI WPROWADZE KLASE Z KONTROLLERA LUB PO
     <script src="scripts/loading-bar.min.js"></script>
     <script src="scripts/angular-animate.min.js"></script>
     <script src="scripts/metro.min.js"></script>
-
+<!--<script src="scripts/angular-ui-router.min.js"></script>-->
 
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
     <script src="app/routeAnimate.js"></script>
+    <!--<script src="app/newRouteAnimate.js"></script>-->
     <!-- Load services -->
     <script src="app/services/authInterceptorService.js?v=2"></script>
     <script src="app/services/authService.js?v=2"></script>

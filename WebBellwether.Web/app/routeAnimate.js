@@ -84,8 +84,8 @@
                         return 'page-rON';
                     }
                 };
-
-                $rootScope.transitionState = 'slide-pop'; //getRandomAnimation();
+                $('footer').addClass("hide"); //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)
+                $rootScope.transitionState = 'page-rON';              
                 //aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 
                 //bede je dodawal tylko na potrzeby animacji i w czasie ich trwania gdy bede mail stan active ustawiam relative 
                 //mimo wszystko nie dziala to zbyt dobrze bo na 1 sekunde widac footer ... juz poprawione 
@@ -96,30 +96,24 @@
 })();
 
 
-//(function () {
-//    angular
-//        .module('webBellwether')
-//        .directive("fixPositionAbsolute", ["$document", "$window", function($document, $window) {
-//            return {
-//                restrict: "A",
-//                link: function($scope, element) {
-//                    // Fleg to determine if the directive has loaded before
-//                    var hasLoaded;
-//                    // DOM representation of the Angular element
-//                    var domElement = element[0];
-//                    $scope.$on("$routeChangeSuccess", function() {
-//                        console.log(domElement);
-//                        // Get the computed height of the ui-view and assign it to the directive element
-//                        domElement.style.height = $window.getComputedStyle($document[0].querySelector("ng-view")).height;
-//                        // After the first height change, add a class to enable animations from now on
-//                        if(!hasLoaded) {
-//                            domElement.classList.add("auto-height");
-//                            hasLoaded = true;
-//                        }
-//                    });
-//                }
-//            };
-//        }]);
-//
-
+(function() {
+    angular
+        .module('webBellwether')
+        .directive("fixPositionAbsolute", [
+            "$rootScope", "$document", "$window", function ( $rootScope,$document, $window) {
+                return {
+                    restrict: "A",
+                    link: function ($rootScope) {
+                        //najprostrze rozwiązania bywają najlepszymi 
+                        //w przyszlości mozna by się zastanowić nad porobieniem takich opoznien czasowych w zaleznosci od kontentu 
+                        $rootScope.$on("$routeChangeSuccess", function () {
+                            setTimeout(function () {
+                                $('footer').removeClass("hide");
+                            },1500);
+                        });
+                    }
+                };
+            }
+        ]);
+})();
        

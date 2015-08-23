@@ -3,7 +3,7 @@
 2)animacje na scrollu w gameintegration*
 3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt *
 *priorytet 
-4)doszedł nowy problem pozycjonowanie footera (animacji lekko mi popsuły)
+
 
 
 Aktualne problemy :

@@ -1,11 +1,8 @@
 ﻿.page {
-    /*bottom: 0;
-    position: absolute;*/
-    text-align: center;
+     text-align: center;
     top: 0;
     width: 100%;
-    height: 0;
-	transition: height 0.8s ease-in-out;
+    position: relative;
 }
 
 /*.ng-enter {
@@ -36,7 +33,7 @@
         opacity: 0;
         -webkit-transform: scale(.5);
         transform: scale(.5);
-        position: absolute;
+        position: absolute
     }
 
     .slide-pop.ng-enter-active {
@@ -57,32 +54,6 @@
     }
 
 
-.reverse .page.slide-pop.ng-enter {
-    opacity: .5;
-    left: -100%;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-}
-
-.reverse .page.slide-pop.ng-enter-active {
-    opacity: 1;
-    left: 0;
-}
-
-.reverse .page.slide-pop.ng-leave {
-    opacity: .5;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    left: 0;
-    right: 0;
-}
-
-.reverse .page.slide-pop.ng-leave-active {
-    opacity: 0;
-    -webkit-transform: scale(.5);
-    transform: scale(.5);
-}
-
 /*fade input/out*/
 .fade {
     top: 0;
@@ -96,10 +67,12 @@
     .fade.ng-leave {
         -webkit-transition: all 1s ease;
         transition: all 1s ease;
+        position: absolute
     }
 
     .fade.ng-enter {
         opacity: 0;
+        position: absolute
     }
 
     .fade.ng-enter-active {
@@ -108,10 +81,12 @@
 
     .fade.ng-leave {
         opacity: 1;
+        position: absolute;
     }
 
     .fade.ng-leave-active {
         opacity: 0;
+        position: absolute;
     }
 
 .page.ng-leave {
@@ -132,12 +107,17 @@
     -moz-animation: rotateFall 1s both ease-in;
     transform-origin: 0% 0%;
     animation: rotateFall 1s both ease-in;
+    position: absolute;
 }
 
 .page-rotateFall.ng-enter {
     -webkit-animation: scaleUp 0.5s both ease-in;
     -moz-animation: scaleUp 0.5s both ease-in;
     animation: scaleUp 0.5s both ease-in;
+    position: absolute
+}
+.page-rotateFall.ng-enter-active {
+    position: relative;
 }
 
 /* slideInRight ------------------------ */
@@ -145,14 +125,18 @@
     -webkit-animation: slideOutLeft 0.5s both ease-in;
     -moz-animation: slideOutLeft 0.5s both ease-in;
     animation: slideOutLeft 0.5s both ease-in;
+    position: absolute;
 }
 
 .page-slideInRight.ng-enter {
     -webkit-animation: slideInRight 0.5s both ease-in;
     -moz-animation: slideInRight 0.5s both ease-in;
     animation: slideInRight 0.5s both ease-in;
+    position: absolute;
 }
-
+.page-slideInRight.ng-enter-active {
+    position: relative;
+}
 /* rON ---------------------- */
 .page-rON.ng-leave {
     -webkit-transform-origin: 50% 50%;
@@ -161,12 +145,17 @@
     -moz-animation: rotateOutNewspaper .5s both ease-in;
     transform-origin: 50% 50%;
     animation: rotateOutNewspaper .5s both ease-in;
+    position: absolute;
 }
 
 .page-rON.ng-enter {
     -webkit-animation: slideInRight 0.5s both ease-in;
     -moz-animation: slideInRight 0.5s both ease-in;
     animation: slideInRight 0.5s both ease-in;
+    position: absolute;
+}
+.page-rON.ng-enter-active {
+    position: relative;
 }
 
 /* rotate and fall */
