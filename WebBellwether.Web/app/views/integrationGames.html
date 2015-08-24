@@ -1,17 +1,11 @@
 ﻿<div class="container">
     <div ng-repeat="g in integrationGames">
-        <div class="col-md-6">
-            <div>
-                <div>
-                    <div>
-                        <h1>{{g.gameName}}</h1>
-                        <p>{{g.gameDescription}}</p>
-                        <p></p>
-                        <div ng-repeat="gf in g.integrationGameDetailModels">
-                            <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="animatedParent col-md-6">
+            <h1 class="animated bounceIn">{{g.gameName}}</h1>
+            <p class="animated lightSpeedInLeft">{{g.gameDescription}}</p>
+            <p></p>
+            <div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
+                <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
             </div>
         </div>
     </div>

@@ -85,7 +85,7 @@
                     }
                 };
                 $('footer').addClass("hide"); //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)
-                $rootScope.transitionState = 'page-rON';              
+                $rootScope.transitionState = getRandomAnimation();
                 //aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 
                 //bede je dodawal tylko na potrzeby animacji i w czasie ich trwania gdy bede mail stan active ustawiam relative 
                 //mimo wszystko nie dziala to zbyt dobrze bo na 1 sekunde widac footer ... juz poprawione 

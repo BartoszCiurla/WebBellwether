@@ -182,3 +182,19 @@ http://plnkr.co/edit/hNFF2TToFf2Rux4v96QL?p=preview rozwiązanie 1 ale nie dzia�
 http://stackoverflow.com/questions/30074558/animating-ui-view-without-positionabsolute coś tutaj mam http://jsfiddle.net/Lxhn1csc/
 caly problem związany jest z tym ze do animacji musze mieć position absolute ... a jak to mam to footer nachodzi na kontent ...
 Po przerobieniu routingu nadal jest problem nic to nei dało tylko czas stracony ...
+
+
+http://www.thepetedesign.com/demos/fullpagenav_demo.html ciekawy patent 
+
+
+OGARNIETE PIEKNA SPRAWA
+******************************************************************************************************************
+to musi dzialać http://jackonthe.net/css3animateit/examples.php   https://github.com/Jack-McCourt/css3-animate-it
+******************************************************************************************************************
+
+tutaj też niezle daja rade 
+https://github.com/mpalpha/animate-scroll   https://github.com/mpalpha/animate-scroll
+
+
+http://lwiesel.github.io/jquery-fadethis/ również się powinno nadać 
+

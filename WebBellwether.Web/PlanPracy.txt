@@ -1,12 +1,15 @@
 ﻿Co trzeba dodać po ukończeniu edycji/dodawania cech 
 1)ngAnimate przejscia stron * X zrobione
 2)animacje na scrollu w gameintegration*
-3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt *
+3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt * X mozna zrobić ale jednak słabiutko to działa zbyt dużo już mam elementow które w tym przeszkadzaja
 *priorytet 
-
+4)starsza wersja angulara nie działa zbyt dobrze dla hide + li w sensie zostaje wolna przestrzen zamiast dać następny element , trzeba sie tym zając 
+jak skończe pukt 3 oraz 2
 
 
 Aktualne problemy :
 1)$Http.put nie dziala - zastapiony postem na obecna chwilę .
 2)w jaki sposób informowanie usera o wyniku operacji obecnie mam funkcje getclass + oraz uzycie zmiennej resultState -> integrationGamesController bardzo zle rozwiazanie
 3)brak odświeżania listy zabaw po zmianie kategorii lub podkategorii (sam moge to naprawić!)
+4)uwaga viewportchecker wywalony
+5)podczas testów odnalazłem problem związany z position absolute podczas animacji outnewspaper

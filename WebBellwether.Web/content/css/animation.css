@@ -140,11 +140,11 @@
 /* rON ---------------------- */
 .page-rON.ng-leave {
     -webkit-transform-origin: 50% 50%;
-    -webkit-animation: rotateOutNewspaper .5s both ease-in;
+    -webkit-animation: rotateOutNewspaper 0.5s both ease-in;
     -moz-transform-origin: 50% 50%;
-    -moz-animation: rotateOutNewspaper .5s both ease-in;
+    -moz-animation: rotateOutNewspaper 0.5s both ease-in;
     transform-origin: 50% 50%;
-    animation: rotateOutNewspaper .5s both ease-in;
+    animation: rotateOutNewspaper 0.5s both ease-in;
     position: absolute;
 }
 
@@ -352,5 +352,8 @@
         opacity: 0;
     }
 }
-
-
+.block {
+        height:300px;
+    background: pink;
+        margin-bottom: 20px;
+    }
