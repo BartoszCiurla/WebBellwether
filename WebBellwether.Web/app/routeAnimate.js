@@ -68,37 +68,36 @@
         .run(function ($rootScope, $location) {
             
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
-               
-
                 $('footer').addClass("hide"); //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)             
 //aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 
                 //bede je dodawal tylko na potrzeby animacji i w czasie ich trwania gdy bede mail stan active ustawiam relative 
                 //mimo wszystko nie dziala to zbyt dobrze bo na 1 sekunde widac footer ... juz poprawione 
             });
-            $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
-                // $rootScope.transitionState = getRandomAnimation();
-                function getRandomAnimation() {
-                    var rnd = Math.floor((Math.random() * 6) + 1);
-                    switch (rnd) {
-                        case 1:
-                            return 'slide-pop';
-                        case 2:
-                            return 'page-slideInRight';
-                        case 3:
-                            return 'page-rON';
-                        case 4:
-                            return 'page-rotateFall';
-                        case 5:
-                            return 'fade';
-                        default:
-                            return 'page-rON';
-                    }
-                };
+
+            function getRandomAnimation() {
+                var rnd = Math.floor((Math.random() * 5) + 1);
+                switch (rnd) {
+                    case 1:
+                        return 'slide-pop';
+                    case 2:
+                        return 'page-slideInRight';
+                    case 3:
+                        return 'page-rON';
+                    case 4:
+                        return 'page-rotateFall';
+                    case 5:
+                        return 'fade';
+                    default:
+                        return 'page-rON';
+                }
+            };
+
+            $rootScope.$on("$routeChangeSuccess", function (event, next, current) {             
                 $('#myView').removeClass();
                 $('#myView').addClass('page');
                 $('#myView').addClass(getRandomAnimation());
             });
-
+          
         });
 })();
 

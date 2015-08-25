@@ -22,81 +22,81 @@ function getVF(n, opt_precision) {
 $provide.value("$locale", {
   "DATETIME_FORMATS": {
     "AMPMS": [
-      "dopoledne",
-      "odpoledne"
+      "dopo\u0142dnja",
+      "w\u00f3tpo\u0142dnja"
     ],
     "DAY": [
-      "ned\u011ble",
-      "pond\u011bl\u00ed",
-      "\u00fater\u00fd",
-      "st\u0159eda",
-      "\u010dtvrtek",
-      "p\u00e1tek",
+      "nje\u017aela",
+      "p\u00f3nje\u017aele",
+      "wa\u0142tora",
+      "srjoda",
+      "stw\u00f3rtk",
+      "p\u011btk",
       "sobota"
     ],
     "ERANAMES": [
-      "p\u0159. n. l.",
-      "n. l."
+      "p\u015bed Kristusowym naro\u017aenim",
+      "p\u00f3 Kristusowem naro\u017aenju"
     ],
     "ERAS": [
-      "p\u0159. n. l.",
-      "n. l."
+      "p\u015b.Chr.n.",
+      "p\u00f3 Chr.n."
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
-      "ledna",
-      "\u00fanora",
-      "b\u0159ezna",
-      "dubna",
-      "kv\u011btna",
-      "\u010dervna",
-      "\u010dervence",
-      "srpna",
-      "z\u00e1\u0159\u00ed",
-      "\u0159\u00edjna",
-      "listopadu",
-      "prosince"
+      "januara",
+      "februara",
+      "m\u011brca",
+      "apryla",
+      "maja",
+      "junija",
+      "julija",
+      "awgusta",
+      "septembra",
+      "oktobra",
+      "nowembra",
+      "decembra"
     ],
     "SHORTDAY": [
-      "ne",
-      "po",
-      "\u00fat",
-      "st",
-      "\u010dt",
-      "p\u00e1",
-      "so"
+      "nje",
+      "p\u00f3n",
+      "wa\u0142",
+      "srj",
+      "stw",
+      "p\u011bt",
+      "sob"
     ],
     "SHORTMONTH": [
-      "led",
-      "\u00fano",
-      "b\u0159e",
-      "dub",
-      "kv\u011b",
-      "\u010dvn",
-      "\u010dvc",
-      "srp",
-      "z\u00e1\u0159",
-      "\u0159\u00edj",
-      "lis",
-      "pro"
+      "jan.",
+      "feb.",
+      "m\u011br.",
+      "apr.",
+      "maj.",
+      "jun.",
+      "jul.",
+      "awg.",
+      "sep.",
+      "okt.",
+      "now.",
+      "dec."
     ],
     "WEEKENDRANGE": [
       5,
       6
     ],
-    "fullDate": "EEEE d. MMMM y",
+    "fullDate": "EEEE, d. MMMM y",
     "longDate": "d. MMMM y",
-    "medium": "d. M. y H:mm:ss",
-    "mediumDate": "d. M. y",
+    "medium": "d.M.y H:mm:ss",
+    "mediumDate": "d.M.y",
     "mediumTime": "H:mm:ss",
-    "short": "dd.MM.yy H:mm",
-    "shortDate": "dd.MM.yy",
+    "short": "d.M.yy H:mm",
+    "shortDate": "d.M.yy",
     "shortTime": "H:mm"
   },
   "NUMBER_FORMATS": {
-    "CURRENCY_SYM": "K\u010d",
+    "CURRENCY_SYM": "\u20ac",
     "DECIMAL_SEP": ",",
-    "GROUP_SEP": "\u00a0",
+    "GROUP_SEP": ".",
     "PATTERNS": [
       {
         "gSize": 3,
@@ -122,7 +122,7 @@ $provide.value("$locale", {
       }
     ]
   },
-  "id": "cs-cz",
-  "pluralCat": function(n, opt_precision) {  var i = n | 0;  var vf = getVF(n, opt_precision);  if (i == 1 && vf.v == 0) {    return PLURAL_CATEGORY.ONE;  }  if (i >= 2 && i <= 4 && vf.v == 0) {    return PLURAL_CATEGORY.FEW;  }  if (vf.v != 0) {    return PLURAL_CATEGORY.MANY;  }  return PLURAL_CATEGORY.OTHER;}
+  "id": "dsb-de",
+  "pluralCat": function(n, opt_precision) {  var i = n | 0;  var vf = getVF(n, opt_precision);  if (i == 1 && vf.v == 0) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
 });
 }]);
