@@ -1,13 +1,11 @@
-﻿2)poprawki na edycji gier/cech
-http://jsfiddle.net/danield770/YvCHW/4231/ custome select 
-http://ianlunn.github.io/Hover/ fajne animacje do boxów musze któreś z nich urzyć 
-3)edycja gier 
+﻿3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
 4)styl w gry/edycja gier
 5)nowy moduł dodawanie nowych jezykow /edycja obecnych (plik json) tutaj bedzie ciezko w sumie to bedzie trzeba przez serwis chyba edytować i dodawać nowy
+
 6)poprawa navbara estetyka animacje przy rozwijaniu przemyslenie jego sensu 
 http://bootsnipp.com/snippets/featured/fancy-navbar-login-sign-in-form
 http://bootsnipp.com/snippets/featured/advanced-dropdown-search
-7)konieczna przebudowana samego logowania bo obecnie jest zle 
+7)konieczna przebudowana samego logowania bo obecnie jest zle uwaga jak bede sie tym zajmowal to w znacznym stopniu musze sie skupic na metru ui css
 
 **)Gdy bede robił paralaxa to chce tam takie coś http://codepen.io/Lewitje/full/BNNJjo/
 **)Dopisanie nowych animacji http://dfsq.github.io/ngView-animation-effects/app/#/code trzeba to tylko przerobić tak zeby działało u mnie . pestka 
@@ -44,3 +42,7 @@ chce mieć button ze strzalka wstecz dalej gdy najedziesz na niego ma byc prev n
   http://ngmodules.org/modules/Angular-Paging
   TRZEBA NA SPOKOJNIE MOZE JUTRO DZISIAJ NIC KURWA NIE IDZIE 
   https://dribbble.com/shots/1551729-Light-Pagination-Animation
+
+2)poprawki na edycji gier/cech
+http://jsfiddle.net/danield770/YvCHW/4231/ custome select 
+http://ianlunn.github.io/Hover/ fajne animacje do boxów musze któreś z nich urzyć 

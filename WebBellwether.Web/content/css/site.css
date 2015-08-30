@@ -65,7 +65,7 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     position:fixed;
     top:0;
     z-index: 9999;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
    
 }
 #login-dp{

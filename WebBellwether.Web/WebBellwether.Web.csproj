@@ -114,6 +114,7 @@
     <Content Include="app\controllers\integrationGamesController.js" />
     <Content Include="app\controllers\jokesController.js" />
     <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\managementIntegrationGamesController.js" />
     <Content Include="app\controllers\ordersController.js" />
     <Content Include="app\controllers\photoGalleryController.js" />
     <Content Include="app\controllers\refreshController.js" />

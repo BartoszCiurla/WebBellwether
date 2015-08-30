@@ -37,6 +37,38 @@ namespace WebBellwether.API.Repositories
             return games;
         }
 
+        public List<IntegrationGameModel> GetIntegrationGamesWithAvailableLanguages(int language)
+        {
+            List<Language> languages = _ctx.Languages.ToList();            
+            var games = new List<IntegrationGameModel>();
+            var entity = _ctx.IntegrationGameDetails.Where(x => x.Language.Id == language).ToList();
+            entity.ForEach(x =>
+            {
+                games.Add(new IntegrationGameModel
+                {
+                    Id = x.IntegrationGame.Id,
+                    Language = x.Language,
+                    GameName = x.IntegrationGameName,
+                    GameDescription = x.IntegrationGameDescription,
+                    IntegrationGameDetailModels = FillGameDetailModel(x.Id), //i take id from integrationgamedetails
+                    GameTranslations = FillAvailableTranslation(x.IntegrationGame.Id,languages)                   
+                });
+            });
+            return games;
+        }
+
+        private List<AvailableLanguage> FillAvailableTranslation(int gameId,List<Language> allLanguages)
+        {
+            var translation = new List<AvailableLanguage>();
+            _ctx.IntegrationGameDetails.Where(x => x.IntegrationGame.Id == gameId).ToList().ForEach(z=>translation.Add(new AvailableLanguage {Language = z.Language,HasTranslation = true}));
+            allLanguages.ForEach(x =>
+            {
+                if(translation.FirstOrDefault(y=>y.Language.Id ==x.Id) == null)
+                    translation.Add(new AvailableLanguage {Language = x,HasTranslation = false});
+            });
+            return translation;
+        }
+
         private List<IntegrationGameDetailModel> FillGameDetailModel(int integrationGameDetailId) //i must take data for detail because datail can have many languages 
         {
             List<IntegrationGameDetailModel> result = new List<IntegrationGameDetailModel>();

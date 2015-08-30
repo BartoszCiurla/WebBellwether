@@ -182,6 +182,7 @@
       <DependentUpon>201508161151084_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />

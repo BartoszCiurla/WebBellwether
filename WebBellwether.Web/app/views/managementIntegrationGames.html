@@ -1,4 +1,5 @@
 ﻿<div class="container">
+    <h1>{{translation.ManagementGames}}</h1>
     <h1 style="text-align: center">
         <button class="btn btn-success" data-toggle="collapse" data-target="#AdminPanel"><span class="glyphicon glyphicon-sort"></span> {{translation.MoreFunction}}</button>
     </h1>
@@ -76,17 +77,19 @@
                     </div>
                     <!--USER NOTIFICATION FOR INSERT GAME-->
                     <!--DESCRIPTION IN INTEGRATIOMGAMESCONTROLLER -> AddNewIntegrationGame-->
-                    <div ng-show="resultStateNewGame == 1">
-                        <h1 class="text-center" style="color: #60a917">{{translation.GameAdded}} </h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 2">
-                        <h1 class="text-center" style="color: #ce352c">{{translation.GameExists}}</h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 3">
-                        <h1 class="text-center" style="color: #60a917">{{translation.SeveralLanguageGameAdded}} </h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 4">
-                        <h1 class="text-center" style="color: #ce352c">{{translation.SeveralLanguageGameError}}</h1>
+                    <div class="animatedParent">
+                        <div ng-show="resultStateNewGame == 1">
+                            <h1 class="text-center animated bounceIn" style="color: #60a917; background-color: black;">{{translation.GameAdded}} </h1>
+                        </div>
+                        <div ng-show="resultStateNewGame == 2">
+                            <h1 class="text-center animated bounceIn" style="color: #ce352c; background-color: black;">{{translation.GameExists}}</h1>
+                        </div>
+                        <div ng-show="resultStateNewGame == 3">
+                            <h1 class="text-center animated bounceIn" style="color: #60a917; background-color: black;">{{translation.SeveralLanguageGameAdded}} </h1>
+                        </div>
+                        <div ng-show="resultStateNewGame == 4">
+                            <h1 class="text-center animated bounceIn" style="color: #ce352c">{{translation.SeveralLanguageGameError}}</h1>
+                        </div>
                     </div>
                 </div>             
             </form>
@@ -182,7 +185,16 @@
             </div>
         </div>
     </div>
-    <!--</div>-->
+    <!--PAGER CONTROL-->
+    <!--<div class="text-center">
+        <nav>
+            <ul class="pager">
+                <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
+                <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
+                <li ng-hide="currentPage >= integrationGames.length/pageSize - 1;" ng-click="currentPage=currentPage+1;goToTop()"><a href="">{{translation.Next}}</a></li>
+            </ul>
+        </nav>
+    </div>-->
 </div>
 
 

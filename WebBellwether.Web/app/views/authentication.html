@@ -1,4 +1,11 @@
 ﻿<div data-ng-controller="authSwitchController">
+    <div class="input-control modern text iconic">
+        <input type="text" data-ng-model="loginData.userName">
+        <span class="label">{{translation.Login}}</span>
+        <span class="informer">{{translation.Name}}</span>
+        <span class="placeholder">Input login</span>
+        <span class="icon mif-user"></span>
+    </div>
     <div ng-hide="registration" class="{{ asPageClass }}">
         <form role="form" data-ng-controller="loginController">
             <div class="row">
@@ -6,9 +13,26 @@
                     &nbsp;
                 </div>
                 <div class="col-md-4">
-                    <h3 class="form-login-heading">{{translation.Login}}</h3>
-                    <input type="text" class="form-control" placeholder={{translation.Name}} data-ng-model="loginData.userName" required autofocus>
-                    <input type="password" class="form-control" placeholder={{translation.Password}} data-ng-model="loginData.password" required>
+                    <!--only test-->
+                    <!--<h3 class="form-login-heading">{{translation.Login}}</h3>-->
+                    <div class="input-control modern text iconic">
+                        <input type="text" data-ng-model="loginData.userName">
+                        <span class="label">{{translation.Login}}</span>
+                        <span class="informer">{{translation.Name}}</span>
+                        <span class="placeholder">Input login</span>
+                        <span class="icon mif-user"></span>
+                    </div>
+
+                    <div class="input-control modern password iconic" data-role="input">
+                        <input type="password" data-ng-model="loginData.password">
+                        <span class="label">You password</span>
+                        <span class="informer">Please enter you password</span>
+                        <span class="placeholder">Input password</span>
+                        <span class="icon mif-lock"></span>
+                        <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+                    </div>
+                    <!--<input type="text" class="form-control" placeholder={{translation.Name}} data-ng-model="loginData.userName" required autofocus>-->
+                    <!--<input type="password" class="form-control" placeholder={{translation.Password}} data-ng-model="loginData.password" required>-->
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong>{{translation.URT}}</strong>
@@ -47,10 +71,10 @@
     </div>
     <form>
         <div ng-hide="!registration">
-            {{translation.HaveAccount}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.SignIn}} />
+            {{translation.HaveAccount}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.SignIn}}/>
         </div>
         <div ng-hide="registration">
-            {{translation.NewHere}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.JoinUs}} />
+            {{translation.NewHere}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.JoinUs}}/>
         </div>
     </form>
 </div>

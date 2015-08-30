@@ -84,6 +84,13 @@ namespace WebBellwether.API.Controllers
             return Ok(_repo.GetIntegrationGames(language));
         }
 
+        [System.Web.Http.Authorize]
+        [Route("GetIntegrationGamesWithAvailableLanguage")]
+        public IHttpActionResult GetIntegrationGamesWithAvailableLanguage(int language)
+        {
+            return Ok(_repo.GetIntegrationGamesWithAvailableLanguages(language));
+        }
+
         [System.Web.Http.AllowAnonymous]
         [Route("GetGameFeatures")]
         public IHttpActionResult GetGameFeatures(int language)//tutaj bedzie treba przesyłać id jezyka ... 
