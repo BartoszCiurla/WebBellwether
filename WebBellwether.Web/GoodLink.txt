@@ -95,12 +95,8 @@ http://ionicframework.com/docs/components/#grid-explicit  fajna strona z stylami
 http://lorenzofox3.github.io/smart-table-website/ paginacja i sredni grid 
 http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-grid-system.php tez mozna sprawdzić 
 
-http://www.bootply.com/mYknBc8IHD kafelki troche inne ale raczej się nie skuszę 
-
-
 https://thegrid.io/ nawet fajnei zrobione 
 
-http://www.sitepoint.com/understanding-css-grid-systems/ koniecznie sprawdz 
 
 
 genialny template WELCOME I W SUMIE WSZEDZIEGDZIE BEDEMIAL FORMULARZE http://designscrazed.org/css-html-login-form-templates/ ->http://codepen.io/Lewitje/full/BNNJjo/

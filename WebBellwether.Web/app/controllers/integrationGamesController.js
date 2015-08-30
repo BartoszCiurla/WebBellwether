@@ -2,6 +2,16 @@
     angular
         .module('webBellwether')
         .controller('integrationGamesController', ['$scope', '$timeout', 'integrationGamesService', function ($scope, $timeout, integrationGamesService) {
+            $scope.currentPage = 0;
+            $scope.pageSize = 12;
+            $scope.goToTop = function() {
+                window.scrollTo(0, 470);
+            };
+            $scope.numberOfPages = function () {
+                return Math.ceil($scope.integrationGames.length / $scope.pageSize);
+            }
+
+
             $scope.integrationGamePanel = false;
             $scope.resultStateGameFeature = '';
             $scope.resultStateGameFeatureDetail = '';

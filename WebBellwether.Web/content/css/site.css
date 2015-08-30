@@ -175,24 +175,3 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
   left: -9999px;
 }
 
-/*nowy select wbr miare ok*/ 
-select {
-    margin: 50px;
-    border: 1px solid #111;
-    background: transparent;
-    width: 150px;
-    padding: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    height: 34px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.hidden{
-     opacity:0;
-}
-.visible{
-     opacity:1;
-}

@@ -1,13 +1,26 @@
 ﻿<div class="container">
-    <div ng-repeat="g in integrationGames">
-        <div class="animatedParent col-md-6">
-            <h1 class="animated bounceIn">{{g.gameName}}</h1>
-            <p class="animated lightSpeedInLeft">{{g.gameDescription}}</p>
-            <p></p>
-            <div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
-                <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
+    <div class="row">
+        <div ng-repeat="g in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <div class="animatedParent col-md-6">
+                <h1 class="animated bounceIn">{{g.gameName}}</h1>
+                <p class="animated lightSpeedInLeft">{{g.gameDescription}}</p>
+                <p></p>
+                <div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
+                    <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
+                </div>
             </div>
         </div>
     </div>
+    <!--PAGER CONTROL-->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <nav>
+                <ul class="pager">
+                    <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
+                    <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
+                    <li ng-hide="currentPage >= integrationGames.length/pageSize - 1;" ng-click="currentPage=currentPage+1;goToTop()"><a href="">{{translation.Next}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
-

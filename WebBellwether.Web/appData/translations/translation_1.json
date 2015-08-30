@@ -64,5 +64,7 @@
   "GameForSeveralLanguages": "Game for several languages",
   "ForSeveralLanguages": "for several languages",
   "SeveralLanguageGameAdded": "You can add another translation",
-  "SeveralLanguageGameError": "The game has already this translation"
+  "SeveralLanguageGameError": "The game has already this translation",
+  "Previous": "Previous",
+  "Next": "Next"
 }

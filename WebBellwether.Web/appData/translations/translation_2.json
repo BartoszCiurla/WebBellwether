@@ -64,5 +64,7 @@
   "GameForSeveralLanguages": "Gra dla wielu języków",
   "ForSeveralLanguages": "dla wielu języków",
   "SeveralLanguageGameAdded": "Możesz dodać kolejną translację",
-  "SeveralLanguageGameError": "Gra posiada już taką translację"
+  "SeveralLanguageGameError": "Gra posiada już taką translację",
+  "Previous": "Wstecz",
+  "Next": "Dalej"
 }

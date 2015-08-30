@@ -1,10 +1,18 @@
-﻿Co trzeba dodać po ukończeniu edycji/dodawania cech 
-1)ngAnimate przejscia stron * X zrobione
-2)animacje na scrollu w gameintegration*
-3)animacje na scrolu na headzie + footerze bardzo fajny to da efekt * X mozna zrobić ale jednak słabiutko to działa zbyt dużo już mam elementow które w tym przeszkadzaja
-*priorytet 
-4)starsza wersja angulara nie działa zbyt dobrze dla hide + li w sensie zostaje wolna przestrzen zamiast dać następny element , trzeba sie tym zając 
-jak skończe pukt 3 oraz 2
+﻿2)poprawki na edycji gier/cech
+http://jsfiddle.net/danield770/YvCHW/4231/ custome select 
+http://ianlunn.github.io/Hover/ fajne animacje do boxów musze któreś z nich urzyć 
+3)edycja gier 
+4)styl w gry/edycja gier
+5)nowy moduł dodawanie nowych jezykow /edycja obecnych (plik json) tutaj bedzie ciezko w sumie to bedzie trzeba przez serwis chyba edytować i dodawać nowy
+6)poprawa navbara estetyka animacje przy rozwijaniu przemyslenie jego sensu 
+http://bootsnipp.com/snippets/featured/fancy-navbar-login-sign-in-form
+http://bootsnipp.com/snippets/featured/advanced-dropdown-search
+
+
+**)Gdy bede robił paralaxa to chce tam takie coś http://codepen.io/Lewitje/full/BNNJjo/
+**)Dopisanie nowych animacji http://dfsq.github.io/ngView-animation-effects/app/#/code trzeba to tylko przerobić tak zeby działało u mnie . pestka 
+
+bardzo fajny styl http://douglasmenezes.com/wp/blog/
 
 
 Aktualne problemy :
@@ -13,3 +21,26 @@ Aktualne problemy :
 3)brak odświeżania listy zabaw po zmianie kategorii lub podkategorii (sam moge to naprawić!)
 4)uwaga viewportchecker wywalony
 5)podczas testów odnalazłem problem związany z position absolute podczas animacji outnewspaper
+
+
+
+
+
+
+
+
+
+Zrobione ale mozna jeszcze coś tam grzebnąć :
+1)paginacja gry/edycja gier
+https://angular-ui.github.io/bootstrap/
+http://plnkr.co/edit/UIWIeDSKIK4bG96eoJmt?p=preview
+http://plnkr.co/edit/81fPZxpnOQnIHQgp957q?p=preview
+https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination mimo wszystko tutaj jest najlepsza opcja (ale dzisiaj juz nie mam sily na to ...)
+chce mieć button ze strzalka wstecz dalej gdy najedziesz na niego ma byc prev next na pulpicie mam skrypty do tego a tutaj całośc na stronce http://codyhouse.co/demo/pagination/index.html#0   http://codyhouse.co/redirect/?resource=css-pagination
+ $scope.pageChanged = function() {
+     window.location.hash = '#top';
+	 <a name="top"></a>
+  };
+  http://ngmodules.org/modules/Angular-Paging
+  TRZEBA NA SPOKOJNIE MOZE JUTRO DZISIAJ NIC KURWA NIE IDZIE 
+  https://dribbble.com/shots/1551729-Light-Pagination-Animation
