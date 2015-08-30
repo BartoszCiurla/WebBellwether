@@ -175,3 +175,15 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
   left: -9999px;
 }
 
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+    /*background-color:  #00ccff !important;*/
+    background-color: #999999 !important;
+    border-radius: 0;
+    height: 47px !important;
+      
+}
+.nav > li {
+    height: 47px !important;
+}

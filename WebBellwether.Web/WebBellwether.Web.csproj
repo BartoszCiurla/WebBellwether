@@ -140,7 +140,6 @@
     <Content Include="app\views\jokes.html" />
     <Content Include="app\views\managementIntegrationGames.html" />
     <Content Include="app\views\managementJokes.html" />
-    <Content Include="app\views\oldHeader.html" />
     <Content Include="app\views\orders.html" />
     <Content Include="app\views\photoGallery.html" />
     <Content Include="app\views\refresh.html" />

@@ -1,7 +1,7 @@
 ﻿<header class="main-header">
     <h1>
         <a href="#/">
-            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px"/>
+            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />
         </a>
     </h1>
 
@@ -11,24 +11,18 @@
             {{translation.HaveFun}} {{authentication.userName}}
         </div>
     </div>
-   
     <div class="menu">
-        <div style="height: 50px!important">
-            <div style="text-align: center">          
-                <ul class="nav nav-pills" style="display: inline-block">
-                    <li><a href="#/home" class="navHeaderColor">Home</a></li>
+        <div style="height: 50px !important">
+            <div style="text-align: center;height: 50px !important">
+                <ul class="nav nav-pills" style="display: inline-block;height:  50px !important">
                     <li>
-                        <div class="navHeaderColor">{{translation.Language}}</div>
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
-                            <div class="dropdown-menu dropdown-menu-center " role="menu" style="background: rgba(255, 255, 255, .9); max-width: 200px !important">
+                        <a href="#/home" style="text-decoration: none ; color: darkorchid; border-radius: 0;"><span class="mif-home mif-2x"></span>Home</a>
+                    </li>
+                    <li>
+                        <a href="" style="text-decoration: none; color:crimson" data-toggle="dropdown"><span class="mif-bubble mif-2x"></span>{{translation.Language}}</a>
+                        <div class="dropdown-menu dropdown-menu-center " role="menu" style="background: rgba(255, 255, 255, .9); max-width: 200px !important">
+                            <div class="dropdown dropdown-lg">
                                 <form class=" form-horizontal" role="form">
-                                    <!--<section>
-                                        <select class="form-control" data-ng-change="translate(selectedLanguage)" data-ng-model="selectedLanguage">
-                                            <option value="en">English</option>
-                                            <option value="pl">Polish</option>
-                                        </select>
-                                    </section>-->
                                     <select class="form-control" data-ng-model="selectedLanguage" data-ng-change="translate(selectedLanguage)" data-ng-options="language.id as language.languageName for language in languages">
                                         <option value=''>{{translation.ChooseLanguage}}</option>
                                     </select>
@@ -37,78 +31,69 @@
                         </div>
                     </li>
                     <li>
-                        <div class="col-md-12">
-                            <div class="navHeaderColor">{{translation.Search}}</div>
+                        <a href="" style="text-decoration: none;color: darkorange" data-toggle="dropdown"><span class="mif-search mif-2x"></span>{{translation.Search}}</a>
+                        <div class="dropdown-menu dropdown-menu-center" role="menu" style="background: rgba(255, 255, 255, .9)">
                             <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
-                                <div class="dropdown-menu dropdown-menu-center" role="menu" style="background:rgba(255,255,255,.9)">
-                                    <form class=" form-horizontal" role="form">
-                                        <div class="form-group">
-                                            <div class="input-group" id="adv-search">
-                                                <input type="text" class="form-control" placeholder="Search for snippets" />
-                                                <div class="input-group-btn">
-                                                    <div class="btn-group" role="group">
-                                                    </div>
+                                <form class=" form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="input-group" id="adv-search">
+                                            <input type="text" class="form-control" placeholder="Search for snippets" />
+                                            <div class="input-group-btn">
+                                                <div class="btn-group" role="group">
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="filter">Filter by</label>
-                                            <select class="form-control">
-                                                <option value="0" selected>Sie zobaczy</option>
-                                                <option value="1">Featured</option>
-                                                <option value="2">Most popular</option>
-                                                <option value="3">Top rated</option>
-                                                <option value="4">Most commented</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contain">Author</label>
-                                            <input class="form-control" type="text" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contain">Contains the words</label>
-                                            <input class="form-control" type="text" />
-                                        </div>
-                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                    </form>
-                                </div>
+                                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filter">Filter by</label>
+                                        <select class="form-control">
+                                            <option value="0" selected>Sie zobaczy</option>
+                                            <option value="1">Featured</option>
+                                            <option value="2">Most popular</option>
+                                            <option value="3">Top rated</option>
+                                            <option value="4">Most commented</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contain">Author</label>
+                                        <input class="form-control" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contain">Contains the words</label>
+                                        <input class="form-control" type="text" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </form>
                             </div>
                         </div>
                     </li>
                     <li data-ng-hide="authentication.userName != 'Admin'">
-                        <div class="col-md-12">
-                            <div class="navHeaderColor">{{translation.Tools}}</div>
+                        <a href="" style="text-decoration: none;color: white" data-toggle="dropdown"><span class="mif-wrench mif-2x"></span>{{translation.Tools}}</a>
+                        <div class="dropdown-menu dropdown-menu-center" role="menu" style="text-align: center; background: rgba(255, 255, 255, .9)">
                             <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
-                                <div class="dropdown-menu dropdown-menu-center" role="menu" style="text-align: center; background:rgba(255,255,255,.9)">
-
-                                    <div class="list-group">
-                                        <a href="#/managementIntegrationGames" class="list-group-item">{{translation.ManagementGames}}</a>
-                                        <a href="#/managementJokes" class="list-group-item">{{translation.ManagementJokes}}</a>
-                                        <a href="#/tokens" class="list-group-item">{{translation.ManagementAccounts}}</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> 
-                    </li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()" style="color:white;font-weight: bold">{{translation.LogOut}}</a></li>
-                    <li data-ng-hide="authentication.isAuth">
-                        <div class="col-md-12">
-                            <div class="navHeaderColor">{{translation.Login}}</div>
-                            <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
-                                <div class="dropdown-menu dropdown-menu-center" role="menu" style="text-align: center; background:rgba(255,255,255,.9)">
-
-                                    <div ng-include src="'/app/views/authentication.html'"></div>
-
+                                <div class="list-group">
+                                    <a href="#/managementIntegrationGames" class="list-group-item">{{translation.ManagementGames}}</a>
+                                    <a href="#/managementJokes" class="list-group-item">{{translation.ManagementJokes}}</a>
+                                    <a href="#/tokens" class="list-group-item">{{translation.ManagementAccounts}}</a>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    
+                    <li data-ng-hide="!authentication.isAuth">
+                        <a href="" style="text-decoration: none;color: chartreuse" data-ng-click="logOut()">
+                            <span style="" class="mif-exit mif-2x"></span>{{translation.LogOut}}
+                        </a>
+                    </li>
+                    <li data-ng-hide="authentication.isAuth">
+                        <a href="" style="text-decoration: none;color: chartreuse" data-toggle="dropdown"><span class="mif-enter mif-2x"></span>{{translation.Login}}</a>
+                        <div class="dropdown-menu dropdown-menu-center" role="menu" style="text-align: center; background: rgba(255, 255, 255, .9)">
+                            <div class="dropdown dropdown-lg">
+                                <!--I MUST DO SOLID REFORGE AND MINIMALIZATION FOR THIS--> 
+                                <div style="width: 350px" ng-include src="'/app/views/authentication.html'"></div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

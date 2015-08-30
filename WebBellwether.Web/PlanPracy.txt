@@ -7,7 +7,7 @@ http://ianlunn.github.io/Hover/ fajne animacje do boxów musze któreś z nich u
 6)poprawa navbara estetyka animacje przy rozwijaniu przemyslenie jego sensu 
 http://bootsnipp.com/snippets/featured/fancy-navbar-login-sign-in-form
 http://bootsnipp.com/snippets/featured/advanced-dropdown-search
-
+7)konieczna przebudowana samego logowania bo obecnie jest zle 
 
 **)Gdy bede robił paralaxa to chce tam takie coś http://codepen.io/Lewitje/full/BNNJjo/
 **)Dopisanie nowych animacji http://dfsq.github.io/ngView-animation-effects/app/#/code trzeba to tylko przerobić tak zeby działało u mnie . pestka 

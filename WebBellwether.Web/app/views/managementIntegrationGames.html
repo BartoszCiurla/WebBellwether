@@ -12,7 +12,7 @@
             </div>
         </div>
         <!--<div class="row">-->
-        <div class="col-md-6" ng-hide="integrationGamePanel">
+        <div class="col-md-6" style="text-align: left" ng-hide="integrationGamePanel">
             <h1>{{translation.NewGame}}</h1>
             <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
             <form name="addGame" novalidate ng-submit="newGame(gameModel)">
@@ -88,49 +88,11 @@
                     <div ng-show="resultStateNewGame == 4">
                         <h1 class="text-center" style="color: #ce352c">{{translation.SeveralLanguageGameError}}</h1>
                     </div>
-                </div>
-
-                <!--<div ng-repeat="(key,value) in gameFeatureDetails | groupBy:'gameFeatureId'">
-                    group id {{key}}
-                    <div class="form-group">
-                        {{value.gameFeatureDetail.gameFeatureId}}
-                        {{value.gameFeatureDetail.gameFeatureDetailName}}
-                        {{value.gameFeatureId}}
-                        {{value.gameFeatureDetailName}}
-                        <select class="form-control" required data-ng-model="{{value.gameFeatureId}}" data-ng-options="gf.gameFeatureDetailName gf in value">
-                            <option value=''>{{translation.SelectCategoryForGame}}</option>
-                        </select>
-                    </div>
-                </div>-->
-                <!--<div class="form-group">
-                    <label for="gameCategory">{{translation.GameCategory}}</label>
-                    <select id="gameCategory" class="form-control" required data-ng-model="gameModel.gameCategory" data-ng-options="category.id as category.gameCategoryName for category in gameCategories">
-                        <option value=''>{{translation.SelectCategoryForGame}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="paceOfPlay">{{translation.PaceOfPlay}}</label>
-                    <select id="paceOfPlay" class="form-control" required data-ng-model="gameModel.paceOfPlay" data-ng-options="paceOfPlay.id as paceOfPlay.paceOfPlayName for paceOfPlay in paceOfPlays">
-                        <option value=''>{{translation.SelectPaceOfTheGame}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="numberOfPlayer">{{translation.NumberOfPlayer}}</label>
-                    <select id="numberOfPlayer" class="form-control" required data-ng-model="gameModel.numberOfPlayer" data-ng-options="numberOfPlayer.id as numberOfPlayer.numberOfPlayerName for numberOfPlayer in numberOfPlayers">
-                        <option value=''>{{translation.SelectNumberOfPlayerForTheGame}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="preparationFun">{{translation.PreparationFun}}</label>
-                    <select id="preparationFun" class="form-control" required data-ng-model="gameModel.preparationFun" data-ng-options="preparationFun.id as preparationFun.preparationFunName for preparationFun in preparationFuns">
-                        <option value=''>{{translation.SelectPreparationGame}}</option>
-                    </select>
-                </div>-->
-
+                </div>             
             </form>
         </div>
 
-        <div class="col-md-6" ng-hide="!integrationGamePanel">
+        <div class="col-md-6" style="text-align: left" ng-hide="!integrationGamePanel">
             <!--LANG FOR INTEGRATION GAMES-->
             <h1>{{translation.GameFeatures}}</h1>
             <div class="form-group">
@@ -197,12 +159,6 @@
                         </form>
                     </div>
                 </div>
-
-
-                <!--<form class="form-inline" name="newGameFeatureDetail" novalidate ng-submit="newFeatureDetail(gameFeature)">
-                    <input type="text" class="form-control" required data-ng-model="gameFeature.newFeatureName" />
-                    <button class="btn btn-primary" type="submit" ng-disabled="newGameFeatureDetail.$invalid">dodaj nowa podkategorie</button>
-                </form>-->
             </div>
         </div>
         <!--</div>-->
