@@ -5,6 +5,21 @@
 
             $scope.savedSuccessfully = false;
             $scope.message = "";
+            var messageTimer = function () {
+                var timer = $timeout(function () {
+                    $timeout.cancel(timer);
+                    $scope.message = '';
+                }, 4000);
+            };
+
+            var startTimer = function () {
+                var timer = $timeout(function () {
+                    $timeout.cancel(timer);
+                    sharedService.prepForPublish(false);
+                    console.log($scope.message.toString());
+                    $scope.message = '';
+                }, 2000);
+            }
 
             $scope.registration = {
                 userName: "",
@@ -34,17 +49,11 @@
                          }
                      }
                      $scope.message = "Failed to register user due to:" + errors.join(' ');
+                     messageTimer();
                  });
             };
 
-            var startTimer = function () {
-                var timer = $timeout(function () {
-                    $timeout.cancel(timer);
-                    sharedService.prepForPublish(false);
-                    console.log($scope.message.toString());
-                    $scope.message = '';
-                }, 2000);
-            }
+            
 
         }]);
 })();

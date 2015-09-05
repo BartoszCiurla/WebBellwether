@@ -1,7 +1,7 @@
 ﻿<header class="main-header">
     <h1>
         <a href="#/">
-            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />
+            <img class='rotator animation' src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />
         </a>
     </h1>
     <div class="imageContainer" style="background-image: url(/appData/images/header/23nR.png)">
@@ -12,18 +12,18 @@
     
     <div class="menu">
         <div class="container">
-            <div class="app-bar darcula" data-role="appbar">
+            <div class="app-bar myDarcula" data-role="appbar">
                 <ul class="app-bar-menu">
                     <!--HOME-->
                     <li data-flexorderorigin="0" data-flexorder="0" class="">
-                        <a href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home</a>
+                        <a style="text-decoration: none ; color: darkorchid;" href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home</a>
                     </li>
                     <!--LANGUAGES-->
                     <li data-flexorderorigin="1" data-flexorder="2" class="">
-                        <a href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</a>
+                        <a style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</a>
                         <ul class="d-menu" data-role="dropdown">
                             <li ng-repeat="language in languages">
-                                <a href="" ng-click="translate(language.id)">{{language.languageName}}</a>
+                                <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage] " href="" ng-model="language.id" ng-click="translate(language.id)">{{language.languageName}}</a>
                             </li>
                         </ul>
                     </li>                 
@@ -62,7 +62,7 @@
                 </ul>
                 <!--SEARCH-->
                 <div class="app-bar-element">
-                    <a class="dropdown-toggle fg-white"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
+                    <a style="text-decoration: none;color: darkorange" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <form class=" form-horizontal" role="form">
@@ -101,17 +101,17 @@
                 </div>
                 <!--AUTHENTICATION-->
                 <div data-ng-hide="!authentication.isAuth" class="app-bar-element place-right">
-                    <a href="" class="fg-white" data-ng-click="logOut()">
+                    <a style="text-decoration: none;color: chartreuse" data-ng-click="logOut()">
                         <span style="" class="mif-exit mif-ani-shuttle"></span>{{translation.LogOut}}
                     </a>                
                 </div>
 
                 <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
-                    <a class="dropdown-toggle fg-white"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</a>
+                    <a style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</a>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <!--FOR REBUILD--> 
-                            <div style="width: 500px" ng-include src="'/app/views/authentication.html'"></div>
+                            <div ng-include src="'/app/views/authentication.html'"></div>
                         </div>
                     </div>
                 </div>
@@ -120,66 +120,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--<div class="app-bar myDarkula" data-role="appbar">
-        <a class="app-bar-element branding">Metro UI CSS</a>
-        <span class="app-bar-divider"></span>
-        <ul class="app-bar-menu">
-            <li data-flexorderorigin="0" data-flexorder="1"><a href="">Home</a></li>
-            <li data-flexorderorigin="1" data-flexorder="2">
-                <a href="" class="dropdown-toggle">Products</a>
-                <ul class="d-menu" data-role="dropdown">
-                    <li><a href="">Windows 10</a></li>
-                    <li><a href="">Spa
-rtan</a></li>
-                    </a></li>
-                    pa
-                    <li><a href="">Outlook</a></li>
-                    <li><a href="">Office 2015</a></li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="" class="dropdown-toggle">Other Products</a>
-                        <ul class="d-menu" data-role="dropdown">
-                            <li><a href="">Internet Explorer 10</a></li>
-                            <li><a href="">Skype</a></li>
-                            <li><a href="">Surface</a></li>
-                            <
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li data-flexorderorigin="2" data-flexorder="3">
-                <a href="" class="dropdown-toggle">Support</a>
-                <ul class="d-menu" data-role="dropdown">
-                    <li><a href="">About</a></li>
-                    
-
-                    <li><a href="">Contacts</a></li>
-                    <li><a href="">Community forum</a></li>
-                    <li>
-                        <a href="" class="dropdown-toggle">Support</a>
-                        <ul class="d-menu" data-role="dropdown">
-                            <li><a href="" class="dropdown-toggle">About</a></li>
-                            <li><a href="">Contacts</a></li>
-                            <li><a href="">Community forum</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li data-flexorderorigin="3" data-flexorder="4"><a href="">Help</a></li>
-        </ul>
-
-
-        <div class="app-bar-pullbutton automatic" style="display: none;"></div>
-        <div style="width: 0;"></div>
-        <nav class="app-bar-pullmenu  flexstyle-app-bar-menu" style="display: none;">
-            <ul class="app-bar-pullmenubar  app-bar-menu"></ul>
-        </nav>
-    </div>-->
-
-
-
 
     <!--<div class="menu">
         <div style="height: 50px !important">

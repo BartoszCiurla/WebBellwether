@@ -1,80 +1,88 @@
 ﻿<div data-ng-controller="authSwitchController">
-    <div class="input-control modern text iconic">
-        <input type="text" data-ng-model="loginData.userName">
-        <span class="label">{{translation.Login}}</span>
-        <span class="informer">{{translation.Name}}</span>
-        <span class="placeholder">Input login</span>
-        <span class="icon mif-user"></span>
-    </div>
-    <div ng-hide="registration" class="{{ asPageClass }}">
+    <div ng-show="!registration" class="{{ asPageClass }}">
         <form role="form" data-ng-controller="loginController">
-            <div class="row">
-                <div class="col-md-2">
-                    &nbsp;
-                </div>
-                <div class="col-md-4">
-                    <!--only test-->
-                    <!--<h3 class="form-login-heading">{{translation.Login}}</h3>-->
-                    <div class="input-control modern text iconic">
-                        <input type="text" data-ng-model="loginData.userName">
-                        <span class="label">{{translation.Login}}</span>
-                        <span class="informer">{{translation.Name}}</span>
-                        <span class="placeholder">Input login</span>
-                        <span class="icon mif-user"></span>
-                    </div>
+            <h1>{{translation.Login}}</h1>
+            <div class="input-control modern text iconic" data-role="imput">
+                <input type="text" data-ng-model="loginData.userName">
+                <span class="label">{{translation.YourLogin}}</span>
+                <span class="informer">{{translation.EnterYourLogin}}</span>
+                <span class="placeholder">{{translation.YourLogin}}</span>
+                <span class="icon mif-user"></span>
+            </div>
 
-                    <div class="input-control modern password iconic" data-role="input">
-                        <input type="password" data-ng-model="loginData.password">
-                        <span class="label">You password</span>
-                        <span class="informer">Please enter you password</span>
-                        <span class="placeholder">Input password</span>
-                        <span class="icon mif-lock"></span>
-                        <button class="button helper-button reveal"><span class="mif-looks"></span></button>
-                    </div>
-                    <!--<input type="text" class="form-control" placeholder={{translation.Name}} data-ng-model="loginData.userName" required autofocus>-->
-                    <!--<input type="password" class="form-control" placeholder={{translation.Password}} data-ng-model="loginData.password" required>-->
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong>{{translation.URT}}</strong>
-                        </label>
-                    </div>
-                    <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="login()">{{translation.Login}}</button>
-                    <div data-ng-hide="message == ''" class="alert alert-danger">
-                        {{message}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h3 class="form-login-heading">{{translation.SocialLogins}}</h3>
-                    <p>{{translation.SocialLoginsDescription}}</p>
-                    <button class="btn btn-fb btn-block" type="button" data-ng-click="authExternalProvider('Facebook')"><i class="fa fa-facebook"></i>Facebook</button>
-                    <button class="btn btn-google-plus btn-block" type="button" data-ng-click="authExternalProvider('Google')"><i class="fa fa-google-plus"></i>Google+</button>
-                </div>
-                <div class="col-md-2">
-                    &nbsp;
+            <div class="input-control modern password iconic" data-role="input">
+                <input type="password" data-ng-model="loginData.password">
+                <span class="label">{{translation.YourPassword}}</span>
+                <span class="informer">{{translation.EnterYourPassword}}</span>
+                <span class="placeholder">{{translation.YourPassword}}</span>
+                <span class="icon mif-lock"></span>
+            </div>
+            <div style="margin-top: 10px">
+                <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="login()">{{translation.Login}}</button>
+                <div data-ng-hide="message == ''" class="alert alert-danger">
+                    {{message}}
                 </div>
             </div>
+
+            <h4>{{translation.SocialLogins}}</h4>
+            <div class="inline-block">
+                <button class="btn btn-facebook" type="button" data-ng-click="authExternalProvider('Facebook')"><span class="mif-facebook mif-ani-heartbeat"></span>Facebook</button>
+                <button class="btn btn-google-plus" type="button" data-ng-click="authExternalProvider('Google')"><span class="mif-google-plus mif-ani-shuttle"></span>Google+</button>
+            </div>
+            <!--<div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong>{{translation.URT}}</strong>
+                </label>
+            </div>-->           
         </form>
     </div>
 
-    <div ng-hide="!registration" class="{{ asPageClass }}">
-        <form class="form-login" role="form" data-ng-controller="signupController">
-            <h2 class="form-login-heading">{{translation.Register}}</h2>
-            <input type="text" class="form-control" placeholder={{translation.Name}} data-ng-model="registration.userName" required autofocus>
-            <input type="password" class="form-control" placeholder={{translation.Password}} data-ng-model="registration.password" required>
-            <input type="password" class="form-control" placeholder={{translation.ConfirmPassword}} data-ng-model="registration.confirmPassword" required>
-            <button class="btn btn-lg btn-info btn-block" type="submit" data-ng-click="signUp()">{{translation.Submit}}</button>
-            <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
-                {{message}}
+    <div ng-show="registration"  class="{{ asPageClass }}">
+        <form role="form" data-ng-controller="signupController">
+            <h1 class="form-login-heading">{{translation.Register}}</h1>
+
+            <div class="input-control modern text iconic">
+                <input type="text" data-ng-model="registration.userName" required>
+                <span class="label">{{translation.YourLogin}}</span>
+                <span class="informer">{{translation.EnterYourLogin}}</span>
+                <span class="placeholder">{{translation.YourLogin}}</span>
+                <span class="icon mif-user "></span>
+            </div>
+
+            <div class="input-control modern password iconic" data-role="input">
+                <input type="password" data-ng-model="registration.password" required>
+                <span class="label">{{translation.YourPassword}}</span>
+                <span class="informer">{{translation.EnterYourPassword}}</span>
+                <span class="placeholder">{{translation.YourPassword}}</span>
+                <span class="icon mif-lock"></span>
+            </div>
+
+            <div class="input-control modern password iconic" data-role="input">
+                <input type="password" data-ng-model="registration.confirmPassword" required>
+                <span class="label">{{translation.ConfirmPassword}}</span>
+                <span class="informer">{{translation.PleaseConfirmYourPassword}}</span>
+                <span class="placeholder">{{translation.ConfirmPassword}}</span>
+                <span class="icon mif-lock"></span>
+            </div>
+            <div style="margin-top: 10px">
+                <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="signUp()">{{translation.Submit}}</button>
+                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                    {{message}}
+                </div>
             </div>
         </form>
 
     </div>
     <form>
         <div ng-hide="!registration">
-            {{translation.HaveAccount}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.SignIn}}/>
+            <div class="inline-block">              
+                <button class="btn btn-success"  type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.HaveAccount}} {{translation.SignIn}}</button>
+            </div>
         </div>
         <div ng-hide="registration">
-            {{translation.NewHere}} <input type="button" data-ng-click="joinUs()" class="btn btn-lg btn-info btn-block" value={{translation.JoinUs}}/>
+            <div class="inline-block">
+                <button class="btn btn-success" type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.NewHere}} {{translation.JoinUs}}</button>
+            </div>
         </div>
     </form>
 </div>

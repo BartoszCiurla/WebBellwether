@@ -73,5 +73,10 @@
   "JokesEdition": "Edycja kawałów",
   "ManagementJokeFeatures": "Zarządzanie cechami kawałów",
   "AddLanguage": "Dodaj język",
-  "LanguagesEdition": "Edycja języków"
+  "LanguagesEdition": "Edycja języków",
+  "YourLogin": "Twój login",
+  "EnterYourLogin": "Proszę wprowadz swój login",
+  "YourPassword": "Twoje hasło",
+  "EnterYourPassword": "Proszę wprowadz swoje hasło",
+  "PleaseConfirmYourPassword": "Prosze potwierdz swoje hasło"
 }

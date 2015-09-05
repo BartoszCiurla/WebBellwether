@@ -73,6 +73,10 @@
   "JokesEdition": "Jokes edition",
   "ManagementJokeFeatures": "Management features jokes",
   "AddLanguage": "Add language",
-  "LanguagesEdition": "Languages edition"
-
+  "LanguagesEdition": "Languages edition",
+  "YourLogin": "Your login",
+  "EnterYourLogin": "Please enter your login",
+  "YourPassword": "Your password",
+  "EnterYourPassword": "Please enter your password",
+  "PleaseConfirmYourPassword": "Please confirm your password"
 }

@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings) {
+        .controller('loginController', ['$scope', '$location','$timeout', 'authService', 'ngAuthSettings', function ($scope, $location,$timeout, authService, ngAuthSettings) {
 
             $scope.loginData = {
                 userName: "",
@@ -10,6 +10,13 @@
             };
 
             $scope.message = "";
+
+            var messageTimer = function () {
+                var timer = $timeout(function () {
+                    $timeout.cancel(timer);
+                    $scope.message = "";
+                }, 4000);
+            };
 
             $scope.login = function () {
 
@@ -20,6 +27,7 @@
                 },
                  function (err) {
                      $scope.message = err.error_description;
+                     messageTimer();
                  });
             };
 
@@ -62,6 +70,7 @@
                         },
                      function (err) {
                          $scope.message = err.error_description;
+                         messageTimer();
                      });
                     }
 
