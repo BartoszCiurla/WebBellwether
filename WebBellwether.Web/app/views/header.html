@@ -4,14 +4,184 @@
             <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />
         </a>
     </h1>
-
-
     <div class="imageContainer" style="background-image: url(/appData/images/header/23nR.png)">
-        <div data-ng-hide="!authentication.isAuth" style="color: white; text-align: center; margin-top:300px;font-weight: bold">
+        <div data-ng-hide="!authentication.isAuth" style="color: white; text-align: center; margin-top: 300px; font-weight: bold">
             {{translation.HaveFun}} {{authentication.userName}}
         </div>
     </div>
+    
     <div class="menu">
+        <div class="container">
+            <div class="app-bar darcula" data-role="appbar">
+                <ul class="app-bar-menu">
+                    <!--HOME-->
+                    <li data-flexorderorigin="0" data-flexorder="0" class="">
+                        <a href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home</a>
+                    </li>
+                    <!--LANGUAGES-->
+                    <li data-flexorderorigin="1" data-flexorder="2" class="">
+                        <a href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</a>
+                        <ul class="d-menu" data-role="dropdown">
+                            <li ng-repeat="language in languages">
+                                <a href="" ng-click="translate(language.id)">{{language.languageName}}</a>
+                            </li>
+                        </ul>
+                    </li>                 
+                    <!--TOOLS-->
+                    <li data-ng-hide="authentication.userName != 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
+                        <a href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</a>
+                        <ul class="d-menu" data-role="dropdown" style="display: none;">
+                            <li>
+                                <a href="" class="dropdown-toggle">{{translation.ManagementGames}}</a>
+                                <ul class="d-menu" data-role="dropdown">
+                                    <li><a href="#/managementIntegrationGames">{{translation.AddGame}}</a></li>
+                                    <li><a href="">{{translation.GamesEdition}}</a></li>
+                                    <li><a href="">{{translation.ManagementIntegrationGameFeatures}}</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="" class="dropdown-toggle">{{translation.ManagementJokes}}</a>
+                                <ul class="d-menu" data-role="dropdown">
+                                    <li><a href="">{{translation.AddJoke}}</a></li>
+                                    <li><a href="">{{translation.JokesEdition}}</a></li>
+                                    <li><a href="">{{translation.ManagementJokeFeatures}}</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="" class="dropdown-toggle">{{translation.ManagementLanguages}}</a>
+                                <ul class="d-menu" data-role="dropdown">
+                                    <li><a href="">{{translation.AddLanguage}}</a></li>
+                                    <li><a href="">{{translation.LanguagesEdition}}</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#/tokens" class="dropdown-toggle">{{translation.ManagementAccounts}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--SEARCH-->
+                <div class="app-bar-element">
+                    <a class="dropdown-toggle fg-white"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
+                    <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
+                        <div class="padding20">
+                            <form class=" form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="input-group" id="adv-search">
+                                        <input type="text" class="form-control" placeholder="Search for snippets" />
+                                        <div class="input-group-btn">
+                                            <div class="btn-group" role="group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter">Filter by</label>
+                                    <select class="form-control">
+                                        <option value="0" selected>Sie zobaczy</option>
+                                        <option value="1">Featured</option>
+                                        <option value="2">Most popular</option>
+                                        <option value="3">Top rated</option>
+                                        <option value="4">Most commented</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contain">Author</label>
+                                    <input class="form-control" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="contain">Contains the words</label>
+                                    <input class="form-control" type="text" />
+                                </div>
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+                <!--AUTHENTICATION-->
+                <div data-ng-hide="!authentication.isAuth" class="app-bar-element place-right">
+                    <a href="" class="fg-white" data-ng-click="logOut()">
+                        <span style="" class="mif-exit mif-ani-shuttle"></span>{{translation.LogOut}}
+                    </a>                
+                </div>
+
+                <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
+                    <a class="dropdown-toggle fg-white"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</a>
+                    <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
+                        <div class="padding20">
+                            <!--FOR REBUILD--> 
+                            <div style="width: 500px" ng-include src="'/app/views/authentication.html'"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-bar-pullbutton automatic" style="display: none;"></div><div class="clearfix" style="width: 0;"></div><nav class="app-bar-pullmenu hidden flexstyle-app-bar-menu" style="display: none;"><ul class="app-bar-pullmenubar app-bar-menu hidden" style="display: none;"></ul></nav>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="app-bar myDarkula" data-role="appbar">
+        <a class="app-bar-element branding">Metro UI CSS</a>
+        <span class="app-bar-divider"></span>
+        <ul class="app-bar-menu">
+            <li data-flexorderorigin="0" data-flexorder="1"><a href="">Home</a></li>
+            <li data-flexorderorigin="1" data-flexorder="2">
+                <a href="" class="dropdown-toggle">Products</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="">Windows 10</a></li>
+                    <li><a href="">Spa
+rtan</a></li>
+                    </a></li>
+                    pa
+                    <li><a href="">Outlook</a></li>
+                    <li><a href="">Office 2015</a></li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="" class="dropdown-toggle">Other Products</a>
+                        <ul class="d-menu" data-role="dropdown">
+                            <li><a href="">Internet Explorer 10</a></li>
+                            <li><a href="">Skype</a></li>
+                            <li><a href="">Surface</a></li>
+                            <
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li data-flexorderorigin="2" data-flexorder="3">
+                <a href="" class="dropdown-toggle">Support</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="">About</a></li>
+                    
+
+                    <li><a href="">Contacts</a></li>
+                    <li><a href="">Community forum</a></li>
+                    <li>
+                        <a href="" class="dropdown-toggle">Support</a>
+                        <ul class="d-menu" data-role="dropdown">
+                            <li><a href="" class="dropdown-toggle">About</a></li>
+                            <li><a href="">Contacts</a></li>
+                            <li><a href="">Community forum</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li data-flexorderorigin="3" data-flexorder="4"><a href="">Help</a></li>
+        </ul>
+
+
+        <div class="app-bar-pullbutton automatic" style="display: none;"></div>
+        <div style="width: 0;"></div>
+        <nav class="app-bar-pullmenu  flexstyle-app-bar-menu" style="display: none;">
+            <ul class="app-bar-pullmenubar  app-bar-menu"></ul>
+        </nav>
+    </div>-->
+
+
+
+
+    <!--<div class="menu">
         <div style="height: 50px !important">
             <div style="text-align: center;height: 50px !important">
                 <ul class="nav nav-pills" style="display: inline-block;height:  50px !important">
@@ -89,7 +259,6 @@
                         <a href="" style="text-decoration: none;color: chartreuse" data-toggle="dropdown"><span class="mif-enter mif-2x"></span>{{translation.Login}}</a>
                         <div class="dropdown-menu dropdown-menu-center" role="menu" style="text-align: center; background: rgba(255, 255, 255, .9)">
                             <div class="dropdown dropdown-lg">
-                                <!--I MUST DO SOLID REFORGE AND MINIMALIZATION FOR THIS--> 
                                 <div style="width: 500px" ng-include src="'/app/views/authentication.html'"></div>
                             </div>
                         </div>
@@ -97,5 +266,5 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 </header>

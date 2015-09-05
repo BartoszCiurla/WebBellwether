@@ -33,6 +33,7 @@
   "ManagementGames": "Games management",
   "ManagementJokes": "Jokes management",
   "ManagementAccounts": "Account management",
+  "ManagementLanguages": "Languages management",
   "GameName": "Game name",
   "GameDetails": "Game details",
   "GameCategory": "Game category",
@@ -66,5 +67,12 @@
   "SeveralLanguageGameAdded": "You can add another translation",
   "SeveralLanguageGameError": "The game has already this translation",
   "Previous": "Previous",
-  "Next": "Next"
+  "Next": "Next",
+  "GamesEdition": "Games edition",
+  "AddJoke": "Add joke",
+  "JokesEdition": "Jokes edition",
+  "ManagementJokeFeatures": "Management features jokes",
+  "AddLanguage": "Add language",
+  "LanguagesEdition": "Languages edition"
+
 }

@@ -5,6 +5,7 @@
 6)poprawa navbara estetyka animacje przy rozwijaniu przemyslenie jego sensu 
 http://bootsnipp.com/snippets/featured/fancy-navbar-login-sign-in-form
 http://bootsnipp.com/snippets/featured/advanced-dropdown-search
+po wielu godzinach odnalazlem wystarczy zmienic zachowanie dla hidden i tyle , bezpieczniej bedzie zrobić hidden-metro i po problemie
 7)konieczna przebudowana samego logowania bo obecnie jest zle uwaga jak bede sie tym zajmowal to w znacznym stopniu musze sie skupic na metru ui css
 
 **)Gdy bede robił paralaxa to chce tam takie coś http://codepen.io/Lewitje/full/BNNJjo/

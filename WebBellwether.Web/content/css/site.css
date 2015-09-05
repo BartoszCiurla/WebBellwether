@@ -45,20 +45,21 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
 }
 
 /*testy*/
-.menu-box {
+/*.menu-box {
   margin-bottom: 10px;
-}
-.dropdown-menu-center {
+}*/
+/*.dropdown-menu-center {
   left: 50%;
   right: auto;
   text-align: center;
   transform: translate(-50%, 0);
-}
+}*/
 
 /*NAVBAR*/
 .menu {
-    position:absolute;
-    top:470px;
+    position: absolute;
+    z-index: 9999;
+    top:458px;
     width:100%;
 }
 .fixed {
@@ -66,9 +67,8 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     top:0;
     z-index: 9999;
     background: rgba(0, 0, 0, 0.7);
-   
 }
-#login-dp{
+/*#login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
     overflow:hidden;
@@ -160,13 +160,13 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     }
 }
 /*navpils centerowanie*/ 
-.wrapper {
+/*.wrapper {
   width: 92.72727272727273%;
   margin: 0 auto;
-}
-.navHeaderColor {
+}*/
+/*.navHeaderColor {
     color: white;
-}
+}*/
 .ng-hide {
   /* this is just another form of hiding an element */
   display: block!important;
@@ -175,15 +175,103 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
   left: -9999px;
 }
 
-.nav > li > a:hover,
+/*.nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
     /*background-color:  #00ccff !important;*/
-    background-color: #999999 !important;
+    /*background-color: #999999 !important;
     border-radius: 0;
     height: 47px !important;
       
-}
-.nav > li {
+}*/
+/*.nav > li {
     height: 47px !important;
+}*/
+
+
+
+
+.app-bar.myDarkula{
+    background-color: transparent;
+}
+.app-bar.myDarkula.app-bar-element:hover,
+.app-bar.myDarkula.app-bar-menu > li:hover,
+.app-bar.myDarkula.app-bar-menu > li > a:hover,
+.app-bar.myDarkula.app-bar-element:active,
+.app-bar.myDarkula.app-bar-menu > li:active,
+.app-bar.myDarkula.app-bar-menu > li > a:active {
+  background-color: transparent;
+}
+.app-bar.myDarkula.app-bar-divider {
+  background-color: #616162;
+}
+.app-bar.myDarkula.app-bar-element .d-menu,
+.app-bar.myDarkula.app-bar-menu > li .d-menu {
+  background-color: transparent;
+  border-color: transparent;
+}
+.app-bar.myDarkula.app-bar-element .d-menu li:not(.disabled) > a,
+.app-bar.myDarkula.app-bar-menu > li .d-menu li:not(.disabled) > a,
+.app-bar.myDarkula.app-bar-element .d-menu li > a,
+.app-bar.myDarkula.app-bar-menu > li .d-menu li > a {
+  background-color: transparent;
+  color: #ffffff;
+}
+.app-bar.myDarkula.app-bar-element .d-menu li:not(.disabled) > a:hover,
+.app-bar.myDarkula.app-bar-menu > li .d-menu li:not(.disabled) > a:hover,
+.app-bar.myDarkula.app-bar-element .d-menu li > a:hover,
+.app-bar.myDarkula.app-bar-menu > li .d-menu li > a:hover {
+  background-color: transparent;
+  color: #ffffff;
+}
+.app-bar.myDarkula.app-bar-element .d-menu li:hover > a,
+.app-bar.myDarkula.app-bar-menu > li .d-menu li:hover > a {
+  background-color: transparent;
+}
+.app-bar.myDarkula.app-bar-element .d-menu .divider,
+.app-bar.myDarkula.app-bar-menu > li .d-menu .divider {
+  background-color: #616162;
+}
+.app-bar.myDarkula.app-bar-element .d-menu .divider:hover,
+.app-bar.myDarkula.app-bar-menu > li .d-menu .divider:hover {
+  background-color: #616162;
+}
+.app-bar.myDarkula.app-bar-element .dropdown-toggle:before,
+.app-bar.myDarkula.app-bar-menu li .dropdown-toggle:before {
+  border-color: #ffffff;
+}
+.app-bar.myDarkula.app-bar-element.disabled,
+.app-bar.myDarkula.app-bar-menu li.disabled,
+.app-bar.myDarkula.app-bar-element:disabled,
+.app-bar.myDarkula.app-bar-menu li:disabled {
+  color: #555555;
+}
+.app-bar.myDarkula.app-bar-element.disabled a,
+.app-bar.myDarkula.app-bar-menu li.disabled a,
+.app-bar.myDarkula.app-bar-element:disabled a,
+.app-bar.myDarkula.app-bar-menu li:disabled a {
+  color: inherit !important;
+}
+.app-bar.myDarkula.app-bar-pullbutton:hover {
+  background-color: #1d1d1d;
+}
+.app-bar.myDarkula.app-bar-drop-container {
+  border: 2px solid #3c3f41;
+  background-color: #3c3f41;
+  color: #ffffff;
+}
+.app-bar.myDarkula.app-bar-drop-container:before {
+  background-color: #3c3f41;
+  border-color: #3c3f41;
+}
+.app-bar.myDarkula.app-bar-pullmenu .app-bar-menu {
+  border-top: 1px solid #616162;
+  background-color: #616162;
+}
+.app-bar.myDarkula.app-bar-pullmenu .app-bar-menu li:hover {
+  background-color: #3c3f41;
+}
+.app-bar.myDarkula.app-bar-pullmenu .app-bar-menu li:hover a {
+  background-color: #1d1d1d;
+  color: #ffffff;
 }
