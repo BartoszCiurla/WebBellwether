@@ -133,6 +133,7 @@
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\authentication.html" />
     <Content Include="app\views\bellwether.html" />
+    <Content Include="app\views\editGameFeatures.html" />
     <Content Include="app\views\footer.html" />
     <Content Include="app\views\guide.html" />
     <Content Include="app\views\header.html" />
@@ -141,6 +142,7 @@
     <Content Include="app\views\jokes.html" />
     <Content Include="app\views\managementIntegrationGames.html" />
     <Content Include="app\views\managementJokes.html" />
+    <Content Include="app\views\newGame.html" />
     <Content Include="app\views\orders.html" />
     <Content Include="app\views\photoGallery.html" />
     <Content Include="app\views\refresh.html" />

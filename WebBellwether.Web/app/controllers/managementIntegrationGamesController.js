@@ -12,19 +12,22 @@
             }
 
 
-            $scope.integrationGamePanel = false;
+            
             $scope.resultStateGameFeature = '';
             $scope.resultStateGameFeatureDetail = '';
             $scope.resultStateNewGame = '';
             $scope.severalLanguagesForGame = false;
             $scope.gameIdForSeveralLanguages = '';
-            $scope.changeIntegrationGamePanel = function () {
-                if ($scope.integrationGamePanel) {
-                    $scope.integrationGamePanel = false;
-                } else {
-                    $scope.integrationGamePanel = true;
-                }
-            };
+
+            //not used now 
+            //$scope.integrationGamePanel = false;
+            //$scope.changeIntegrationGamePanel = function () {
+            //    if ($scope.integrationGamePanel) {
+            //        $scope.integrationGamePanel = false;
+            //    } else {
+            //        $scope.integrationGamePanel = true;
+            //    }
+            //};
 
             $scope.setSeveralLanguage = function () {
                 if ($scope.severalLanguagesForGame) {
@@ -87,7 +90,6 @@
                         $scope.resultStateNewGame = 1;//single language game success
                     }
                     startTimer();
-                    $scope.getIntegrationGames($scope.selectedLanguage);
                 },
                 function (results) {
 

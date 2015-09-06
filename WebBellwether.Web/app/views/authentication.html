@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="authSwitchController">
-    <div ng-show="!registration" class="{{ asPageClass }}">
+    <div ng-show="!registration" class="{{ asPageClass }} authAni">
         <form role="form" data-ng-controller="loginController">
             <h1>{{translation.Login}}</h1>
             <div class="input-control modern text iconic" data-role="imput">
@@ -33,11 +33,11 @@
                 <label>
                     <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong>{{translation.URT}}</strong>
                 </label>
-            </div>-->           
+            </div>-->
         </form>
     </div>
 
-    <div ng-show="registration"  class="{{ asPageClass }}">
+    <div ng-show="registration" class="{{ asPageClass }} authAni">
         <form role="form" data-ng-controller="signupController">
             <h1 class="form-login-heading">{{translation.Register}}</h1>
 
@@ -75,8 +75,8 @@
     </div>
     <form>
         <div ng-hide="!registration">
-            <div class="inline-block">              
-                <button class="btn btn-success"  type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.HaveAccount}} {{translation.SignIn}}</button>
+            <div class="inline-block">
+                <button class="btn btn-success" type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.HaveAccount}} {{translation.SignIn}}</button>
             </div>
         </div>
         <div ng-hide="registration">

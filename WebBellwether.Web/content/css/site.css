@@ -58,13 +58,12 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     background: rgba(0, 0, 0, 0.7);
 }
 
-.ng-hide {
-  /* this is just another form of hiding an element */
+/*.ng-hide {
   display: block!important;
   position: absolute;
   top: -9999px;
   left: -9999px;
-}
+}*/
 
 
 /*navbar style*/ 

@@ -61,7 +61,7 @@
   "SelectDetail": "Wybierz detal",
   "GameAdded": "Gra dodana",
   "GameExists": "Gra o takiej nazwie już istnieje",
-  "SeveralLanguagesDescription": "Jeśli chcesz dodać grę dla kilku językow zaznacz opcje poniżej. Po wypełnieniu wymaganych pól dodaj gre a następnie zmień język i ponownie wypełnij nazwe oraz opis . Pamiętaj aby wyłączyć opcje po zakończeniu !",
+  "SeveralLanguagesDescription": "Jeśli chcesz dodać grę dla kilku językow zaznacz opcje poniżej. Po wypełnieniu wymaganych pól dodaj gre a następnie zmień język i ponownie wypełnij nazwe oraz opis , cechy gry dla kolejnej translacji zostoną automatycznie zmienione według ustawionego języka . Pamiętaj aby wyłączyć opcje po zakończeniu !",
   "GameForSeveralLanguages": "Gra dla wielu języków",
   "ForSeveralLanguages": "dla wielu języków",
   "SeveralLanguageGameAdded": "Możesz dodać kolejną translację",
