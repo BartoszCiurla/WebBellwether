@@ -4,62 +4,58 @@
         .config(function ($routeProvider) {
             $routeProvider.when("/home", {
                 controller: "homeController",
-                templateUrl: "/app/views/home.html"                    
+                templateUrl: "/app/home/home.html"                    
             });
             $routeProvider.when("/games", {
                 controller: "integrationGamesController",
-                templateUrl:"/app/views/integrationGames.html"
+                templateUrl:"/app/integrationGames/integrationGames.html"
             });
             $routeProvider.when("/managementIntegrationGames", {
                 controller: "managementIntegrationGamesController",
-                templateUrl: "/app/views/managementIntegrationGames.html"
+                templateUrl: "/app/integrationGames/managementIntegrationGames.html"
             });
             $routeProvider.when("/newGame", {
                 controller: "managementIntegrationGamesController",
-                templateUrl: "/app/views/newGame.html"
+                templateUrl: "/app/integrationGames/newGame.html"
             });
             $routeProvider.when("/editGameFeatures", {
                 controller: "managementIntegrationGamesController",
-                templateUrl: "/app/views/editGameFeatures.html"
+                templateUrl: "/app/integrationGames/editGameFeatures.html"
             });
             $routeProvider.when("/managementJokes", {
                 controller: "integrationGamesController",
-                templateUrl: "/app/views/managementJokes.html"
+                templateUrl: "/app/jokes/managementJokes.html"
             });
             $routeProvider.when("/bellwether", {
                 controller: "bellwetherController",
-                templateUrl: "/app/views/bellwether.html"
+                templateUrl: "/app/bellwether/bellwether.html"
             });
             $routeProvider.when("/jokes", {
                 controller:"jokesController",
-                templateUrl: "/app/views/jokes.html"
+                templateUrl: "/app/jokes/jokes.html"
             });
             $routeProvider.when("/photoGallery", {
                 controller:"photoGalleryController",
-                templateUrl: "/app/views/photoGallery.html"
+                templateUrl: "/app/photoGalleries/photoGallery.html"
             });
             $routeProvider.when("/guide", {
                 controller:"guideController",
-                templateUrl: "/app/views/guide.html"
-            });
-            $routeProvider.when("/orders", {
-                controller: "ordersController",
-                templateUrl: "/app/views/orders.html"
+                templateUrl: "/app/guide/guide.html"
             });
 
             $routeProvider.when("/refresh", {
                 controller: "refreshController",
-                templateUrl: "/app/views/refresh.html"
+                templateUrl: "/app/authorizations/refresh.html"
             });
 
             $routeProvider.when("/tokens", {
                 controller: "tokensManagerController",
-                templateUrl: "/app/views/tokens.html"
+                templateUrl: "/app/authorizations/tokens.html"
             });
 
             $routeProvider.when("/associate", {
                 controller: "associateController",
-                templateUrl: "/app/views/associate.html"
+                templateUrl: "/app/authorizations/associate.html"
             });
 
             $routeProvider.otherwise({ redirectTo: "/home" });

@@ -29,7 +29,7 @@
                     </li>                 
                     <!--TOOLS-->
                     <li data-ng-hide="authentication.userName != 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
-                        <a href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</a>
+                        <a style="text-decoration: none;" href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</a>
                         <ul class="d-menu" data-role="dropdown" style="display: none;">
                             <li>
                                 <a href="" class="dropdown-toggle">{{translation.ManagementGames}}</a>
@@ -62,7 +62,7 @@
                 </ul>
                 <!--SEARCH-->
                 <div class="app-bar-element">
-                    <a style="text-decoration: none;color: darkorange" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
+                    <a style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <form class=" form-horizontal" role="form">
@@ -111,7 +111,7 @@
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <!--FOR REBUILD--> 
-                            <div ng-include src="'/app/views/authentication.html'"></div>
+                            <div ng-include src="'/app/authorizations/authentication.html'"></div>
                         </div>
                     </div>
                 </div>

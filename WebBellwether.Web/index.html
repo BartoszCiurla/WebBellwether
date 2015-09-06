@@ -5,13 +5,13 @@
     <title>WebBellwether</title>
     <link href="content/css/bootstrap.min.css" rel="stylesheet" />
     <link href="content/css/site.css" rel="stylesheet" />
-    <link href="content/css/metro.min.css" rel="stylesheet"/>
+    <link href="content/css/metro.min.css" rel="stylesheet" />
     <link href="content/css/metro-icons.min.css" rel="stylesheet" />
     <link href="content/css/loading-bar.min.css" rel="stylesheet" />
     <link href="content/css/font-awesome.min.css" rel="stylesheet" />
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="content/css/animation.css" rel="stylesheet" />
-    <link href="content/css/animations.css" rel="stylesheet"/>
+    <link href="content/css/animations.css" rel="stylesheet" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
@@ -26,7 +26,7 @@
     <div data-ng-controller="indexController" role="navigation">
 
         <!--Header-->
-        <div ng-include src="'/app/views/header.html'"></div>
+        <div ng-include src="'/app/home/header.html'"></div>
 
         <!--Content-->
         <div class="container">
@@ -35,7 +35,7 @@
 
         <!--Footer-->
         <div style="margin-top: 50px;">
-            <div ng-include src="'/app/views/footer.html'"></div>
+            <div ng-include src="'/app/home/footer.html'"></div>
         </div>
     </div>
 
@@ -61,31 +61,29 @@
     <script src="app/routeAnimate.js"></script>
 
     <!-- Load services -->
-    <script src="app/services/authInterceptorService.js?v=2"></script>
-    <script src="app/services/authService.js?v=2"></script>
-    <script src="app/services/ordersService.js?v=2"></script>
-    <script src="app/services/tokensManagerService.js?v=2"></script>
-    <script src="app/services/translationService.js"></script>
-    <script src="app/services/sharedService.js"></script>
-    <script src="app/services/integrationGamesService.js"></script>
+    <script src="app/authorizations/authInterceptorService.js"></script>
+    <script src="app/authorizations/authService.js"></script>
+    <script src="app/authorizations/tokensManagerService.js"></script>
+    <script src="app/translations/translationService.js"></script>
+    <script src="app/home/sharedService.js"></script>
+    <script src="app/integrationGames/integrationGamesService.js"></script>
 
     <!-- Load controllers -->
-    <script src="app/controllers/indexController.js?v=2"></script>
-    <script src="app/controllers/homeController.js?v=2"></script>
-    <script src="app/controllers/loginController.js?v=2"></script>
-    <script src="app/controllers/signupController.js?v=2"></script>
-    <script src="app/controllers/ordersController.js?v=2"></script>
-    <script src="app/controllers/refreshController.js?v=2"></script>
-    <script src="app/controllers/tokensManagerController.js?v=2"></script>
-    <script src="app/controllers/associateController.js?v=2"></script>
-    <script src="app/controllers/translationController.js"></script>
-    <script src="app/controllers/authSwitchController.js"></script>
-    <script src="app/controllers/integrationGamesController.js"></script>
-    <script src="app/controllers/bellwetherController.js"></script>
-    <script src="app/controllers/guideController.js"></script>
-    <script src="app/controllers/jokesController.js"></script>
-    <script src="app/controllers/photoGalleryController.js"></script>
-    <script src="app/controllers/managementIntegrationGamesController.js"></script>
+<script src="app/home/indexController.js"></script>
+    <script src="app/home/homeController.js"></script>
+    <script src="app/authorizations/loginController.js"></script>
+    <script src="app/authorizations/signupController.js"></script>
+    <script src="app/authorizations/refreshController.js"></script>
+    <script src="app/authorizations/tokensManagerController.js"></script>
+    <script src="app/authorizations/associateController.js"></script>
+    <script src="app/translations/translationController.js"></script>
+    <script src="app/authorizations/authSwitchController.js"></script>
+    <script src="app/integrationGames/integrationGamesController.js"></script>
+    <script src="app/bellwether/bellwetherController.js"></script>
+    <script src="app/guide/guideController.js"></script>
+    <script src="app/jokes/jokesController.js"></script>
+    <script src="app/photoGalleries/photoGalleryController.js"></script>
+    <script src="app/integrationGames/managementIntegrationGamesController.js"></script>
     <!-- Load custom filters -->
     <script src="app/filters/customFilters.js"></script>
     <!-- Load custom directives -->
