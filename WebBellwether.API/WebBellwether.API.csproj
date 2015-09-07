@@ -165,7 +165,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IntegrationGamesController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
@@ -186,9 +185,10 @@
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
-    <Compile Include="Models\IntegrationGame\GameDescriptionModel.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureDetailModel.cs" />
+    <Compile Include="Models\IntegrationGame\templates\GameFeatureDetailTemplate.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureModel.cs" />
+    <Compile Include="Models\IntegrationGame\templates\GameFeatureTemplate.cs" />
     <Compile Include="Models\IntegrationGame\IntegrationGameDetailModel.cs" />
     <Compile Include="Models\IntegrationGame\IntegrationGameModel.cs" />
     <Compile Include="Models\IntegrationGame\NewIntegrationGameModel.cs" />
@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

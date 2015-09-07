@@ -14,12 +14,12 @@
                 controller: "managementIntegrationGamesController",
                 templateUrl: "/app/integrationGames/managementIntegrationGames.html"
             });
-            $routeProvider.when("/newGame", {
-                controller: "managementIntegrationGamesController",
-                templateUrl: "/app/integrationGames/newGame.html"
+            $routeProvider.when("/newGameManagement", {
+                controller: "newGameManagementController",
+                templateUrl: "/app/integrationGames/newGameManagement.html"
             });
             $routeProvider.when("/editGameFeatures", {
-                controller: "managementIntegrationGamesController",
+                controller: "editGameFeaturesController",
                 templateUrl: "/app/integrationGames/editGameFeatures.html"
             });
             $routeProvider.when("/managementJokes", {

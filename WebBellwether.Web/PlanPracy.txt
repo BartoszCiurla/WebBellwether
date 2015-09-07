@@ -1,4 +1,34 @@
 ﻿3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
+jak to ma z grubsza działać 
+-paginacja na np 14
+-mozliwa edycja listy gier z obecnym językiem + edycja cech (wazne zmiana cechy ma dzialac na wszystkie translacje mozna uzyc takiego jakby message boxa z metro) hmm czyli potrzebuje tutaj tez detale cech 
+-wyswietlene jakie translacje posiada gra w miare czytelny sposób 
+JA PIERDOLE ALE TO JEST ZPIERDOLONE 2 DNI ZAJMIE MI SAM REFORGE TEGO GÓWNA ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 4)styl w gry/edycja gier
 5)nowy moduł dodawanie nowych jezykow /edycja obecnych (plik json) tutaj bedzie ciezko w sumie to bedzie trzeba przez serwis chyba edytować i dodawać nowy
 
@@ -14,7 +44,7 @@ gotowy cały moduł gry + dodawanie gier przez usera a potem ich zatwierdzanie w
 
 
 7)konieczna przebudowana samego logowania bo obecnie jest zle uwaga jak bede sie tym zajmowal to w znacznym stopniu musze sie skupic na metru ui css
-
+8)repozytorium do gier wyglada juz dosc niepokojaco wydaje mi sie ze po zbudowaniu wzorcowego repozytorium dla kawałów powiniem zrobic solidny reforge (tam jest juz ponad 200 linii kodu a dojda jeszcze kolejne funkcje !)
 **)Gdy bede robił paralaxa to chce tam takie coś http://codepen.io/Lewitje/full/BNNJjo/
 **)Dopisanie nowych animacji http://dfsq.github.io/ngView-animation-effects/app/#/code trzeba to tylko przerobić tak zeby działało u mnie . pestka 
 

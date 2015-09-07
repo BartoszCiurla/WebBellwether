@@ -111,7 +111,10 @@
     <Content Include="app\guide\guideController.js" />
     <Content Include="app\home\homeController.js" />
     <Content Include="app\home\indexController.js" />
+    <Content Include="app\integrationGames\editGameFeaturesController.js" />
     <Content Include="app\integrationGames\integrationGamesController.js" />
+    <Content Include="app\integrationGames\newGameManagement.html" />
+    <Content Include="app\integrationGames\newGameManagementController.js" />
     <Content Include="app\jokes\jokesController.js" />
     <Content Include="app\authorizations\loginController.js" />
     <Content Include="app\integrationGames\managementIntegrationGamesController.js" />
@@ -140,7 +143,6 @@
     <Content Include="app\jokes\jokes.html" />
     <Content Include="app\integrationGames\managementIntegrationGames.html" />
     <Content Include="app\jokes\managementJokes.html" />
-    <Content Include="app\integrationGames\newGame.html" />
     <Content Include="app\photoGalleries\photoGallery.html" />
     <Content Include="app\authorizations\refresh.html" />
     <Content Include="app\authorizations\tokens.html" />

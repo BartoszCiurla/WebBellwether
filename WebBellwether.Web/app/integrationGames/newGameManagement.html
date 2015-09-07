@@ -31,30 +31,30 @@
                 <!--code below is f...-->
                 <!--GAME FEATURES-->
                 <div ng-repeat="featureDetail in featuresToFilter() | filter:filterFeatures" class="formAni">
-                        <label ng-hide="featureDetail.gameFeatureId != 1">
-                            {{translation.GameCategory}}
-                            {{test(1)}}
-                        </label>
-                        <label ng-hide="featureDetail.gameFeatureId != 2">
-                            {{translation.PaceOfPlay}}
-                            {{test(2)}}
-                        </label>
-                        <label ng-hide="featureDetail.gameFeatureId != 3">
-                            {{translation.NumberOfPlayer}}
-                            {{test(3)}}
-                        </label>
-                        <label ng-hide="featureDetail.gameFeatureId != 4">
-                            {{translation.PreparationFun}}
-                            {{test(4)}}
-                        </label>
-                        <select ng-disabled="gameIdForSeveralLanguages > 0" class="form-control" required data-ng-model="gameModel.features[$index]" data-ng-options="g.gameFeatureDetailId as g.gameFeatureDetailName for g in gameFeatureDetails | filter:{gameFeatureId: featureDetail.gameFeatureId}">
-                            <option value=''>
-                                {{featureDetail.gameFeatureId == 1 ? translation.SelectCategoryForGame : ''}}
-                                {{featureDetail.gameFeatureId == 2 ? translation.SelectPaceOfTheGame : ''}}
-                                {{featureDetail.gameFeatureId == 3 ? translation.SelectNumberOfPlayerForTheGame : ''}}
-                                {{featureDetail.gameFeatureId == 4 ? translation.SelectPreparationGame : ''}}
-                            </option>
-                        </select>
+                    <label ng-hide="featureDetail.gameFeatureId != 1">
+                        {{translation.GameCategory}}
+                        {{test(1)}}
+                    </label>
+                    <label ng-hide="featureDetail.gameFeatureId != 2">
+                        {{translation.PaceOfPlay}}
+                        {{test(2)}}
+                    </label>
+                    <label ng-hide="featureDetail.gameFeatureId != 3">
+                        {{translation.NumberOfPlayer}}
+                        {{test(3)}}
+                    </label>
+                    <label ng-hide="featureDetail.gameFeatureId != 4">
+                        {{translation.PreparationFun}}
+                        {{test(4)}}
+                    </label>
+                    <select ng-disabled="gameIdForSeveralLanguages > 0" class="form-control" required data-ng-model="gameModel.features[$index]" data-ng-options="g.gameFeatureDetailId as g.gameFeatureDetailName for g in gameFeatureDetails | filter:{gameFeatureId: featureDetail.gameFeatureId}">
+                        <option value=''>
+                            {{featureDetail.gameFeatureId == 1 ? translation.SelectCategoryForGame : ''}}
+                            {{featureDetail.gameFeatureId == 2 ? translation.SelectPaceOfTheGame : ''}}
+                            {{featureDetail.gameFeatureId == 3 ? translation.SelectNumberOfPlayerForTheGame : ''}}
+                            {{featureDetail.gameFeatureId == 4 ? translation.SelectPreparationGame : ''}}
+                        </option>
+                    </select>
                 </div>
 
                 <!--SAVE GAME-->
