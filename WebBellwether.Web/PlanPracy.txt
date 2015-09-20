@@ -1,11 +1,24 @@
-﻿3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
+﻿PRIO 
+NADSZEDŁ CZAS ABY ZROBIC GETA DANYCH Z SERWISU W PRZYPADKU GDY ZMIENAIM JEZYK BO PUKI CO JEST Z TYM CHUJNIA 
+
+3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
 jak to ma z grubsza działać 
 -paginacja na np 14
 -mozliwa edycja listy gier z obecnym językiem + edycja cech (wazne zmiana cechy ma dzialac na wszystkie translacje mozna uzyc takiego jakby message boxa z metro) hmm czyli potrzebuje tutaj tez detale cech 
 -wyswietlene jakie translacje posiada gra w miare czytelny sposób 
 JA PIERDOLE ALE TO JEST ZPIERDOLONE 2 DNI ZAJMIE MI SAM REFORGE TEGO GÓWNA ...
+na tym się bawiłem 
+http://www.codeproject.com/Articles/990492/RESTful-Day-sharp-Enterprise-Level-Application
+podzial na serwis getowy i setowy 
+nowy pomysl osobne unitwork dla kazdego modułu (mniejsze zależności)
+
+to wyglada ciekawie http://codereview.stackexchange.com/questions/85741/identity-repository-pattern-with-unit-of-work
+-DO TEGO TRZEBA:
+A)POLEPSZYC LISTE GIER + WYSWIETLANIE STANU JEZYKOWEGO 
+B)OBSLUZYC SELECTA ZASTANAWIAM SIE CZY BY NIE OD RAZU NIE POBRAC WSZYSTKICH DOSTEPNYCH TRANSLACJI 
 
 
+tu masz jak zrobić otwierające się drzwi http://jsfiddle.net/9zsdN/1/
 
 
 

@@ -186,9 +186,7 @@
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureDetailModel.cs" />
-    <Compile Include="Models\IntegrationGame\templates\GameFeatureDetailTemplate.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureModel.cs" />
-    <Compile Include="Models\IntegrationGame\templates\GameFeatureTemplate.cs" />
     <Compile Include="Models\IntegrationGame\IntegrationGameDetailModel.cs" />
     <Compile Include="Models\IntegrationGame\IntegrationGameModel.cs" />
     <Compile Include="Models\IntegrationGame\NewIntegrationGameModel.cs" />
@@ -198,12 +196,19 @@
     <Compile Include="Providers\GoogleAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
-    <Compile Include="Repositories\Abstract\IRepository.cs" />
     <Compile Include="Repositories\AuthRepository.cs" />
-    <Compile Include="Repositories\IntegrationGamesRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\Test.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Results\ResultState.cs" />
     <Compile Include="Results\ResultStateContainer.cs" />
+    <Compile Include="Services\IntegrationGameService\Abstract\IIntegrationGameService.cs" />
+    <Compile Include="Services\IntegrationGameService\Abstract\IManagementFeaturesService.cs" />
+    <Compile Include="Services\IntegrationGameService\Abstract\IManagementIntegrationGamesService.cs" />
+    <Compile Include="Services\IntegrationGameService\IntegrationGameService.cs" />
+    <Compile Include="Services\IntegrationGameService\ManagementFeaturesService.cs" />
+    <Compile Include="Services\IntegrationGameService\ManagementIntegrationGamesService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

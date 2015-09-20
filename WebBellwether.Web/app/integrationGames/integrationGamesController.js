@@ -4,6 +4,7 @@
         .controller('integrationGamesController', ['$scope', '$timeout', 'integrationGamesService', function ($scope, $timeout, integrationGamesService) {
             $scope.currentPage = 0;
             $scope.pageSize = 12;
+            $scope.integrationGames = [];
             $scope.goToTop = function () {
                 window.scrollTo(0, 470);
             };

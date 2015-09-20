@@ -3,6 +3,7 @@
     public enum ResultState
     {
         GameAdded,
+        GameAddFailure,
         ThisGameExistsInDb,
         GameFeatureEdited,
         GameFeatureNotExists,

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
+using System.Web;
 using WebBellwether.API.Context;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
@@ -11,10 +11,10 @@ using WebBellwether.API.Results;
 
 namespace WebBellwether.API.Repositories
 {
-    public class IntegrationGamesRepository //: IRepository<Game>
+    public class Test
     {
         private readonly EfDbContext _ctx;
-        public IntegrationGamesRepository(EfDbContext ctx)
+        public Test(EfDbContext ctx)
         {
             _ctx = ctx;
         }
@@ -39,7 +39,7 @@ namespace WebBellwether.API.Repositories
 
         public List<IntegrationGameModel> GetIntegrationGamesWithAvailableLanguages(int language)
         {
-            List<Language> languages = _ctx.Languages.ToList();            
+            List<Language> languages = _ctx.Languages.ToList();
             var games = new List<IntegrationGameModel>();
             var entity = _ctx.IntegrationGameDetails.Where(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
@@ -51,20 +51,20 @@ namespace WebBellwether.API.Repositories
                     GameName = x.IntegrationGameName,
                     GameDescription = x.IntegrationGameDescription,
                     IntegrationGameDetailModels = FillGameDetailModel(x.Id), //i take id from integrationgamedetails
-                    GameTranslations = FillAvailableTranslation(x.IntegrationGame.Id,languages)                   
+                    GameTranslations = FillAvailableTranslation(x.IntegrationGame.Id, languages)
                 });
             });
             return games;
         }
 
-        private List<AvailableLanguage> FillAvailableTranslation(int gameId,List<Language> allLanguages)
+        private List<AvailableLanguage> FillAvailableTranslation(int gameId, List<Language> allLanguages)
         {
             var translation = new List<AvailableLanguage>();
-            _ctx.IntegrationGameDetails.Where(x => x.IntegrationGame.Id == gameId).ToList().ForEach(z=>translation.Add(new AvailableLanguage {Language = z.Language,HasTranslation = true}));
+            _ctx.IntegrationGameDetails.Where(x => x.IntegrationGame.Id == gameId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
             allLanguages.ForEach(x =>
             {
-                if(translation.FirstOrDefault(y=>y.Language.Id ==x.Id) == null)
-                    translation.Add(new AvailableLanguage {Language = x,HasTranslation = false});
+                if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
+                    translation.Add(new AvailableLanguage { Language = x, HasTranslation = false });
             });
             return translation;
         }
@@ -72,7 +72,7 @@ namespace WebBellwether.API.Repositories
         private List<IntegrationGameDetailModel> FillGameDetailModel(int integrationGameDetailId) //i must take data for detail because datail can have many languages 
         {
             List<IntegrationGameDetailModel> result = new List<IntegrationGameDetailModel>();
-            _ctx.IntegrationGameFeatures.Where(x=>x.IntegrationGameDetail.Id == integrationGameDetailId)
+            _ctx.IntegrationGameFeatures.Where(x => x.IntegrationGameDetail.Id == integrationGameDetailId)
                 .ToList()
                 .ForEach(z =>
                 {
@@ -113,11 +113,11 @@ namespace WebBellwether.API.Repositories
             int integrationGameId = 0;
             if (integrationGameDetail != null)
             {
-                integrationGameId=
+                integrationGameId =
                     integrationGameDetail
                         .IntegrationGame.Id;
             }
-            return new ResultStateContainer {ResultState = ResultState.GameAdded,Value = integrationGameId};
+            return new ResultStateContainer { ResultState = ResultState.GameAdded, Value = integrationGameId };
         }
 
         private IntegrationGameDetail BuildIntegrationGameDetail(NewIntegrationGameModel game)
@@ -135,21 +135,21 @@ namespace WebBellwether.API.Repositories
         {
             //if game have id i must check exists game for game language
             if (CheckNewGameLanguage(game) != ResultState.GameCanBeAdded)
-                return new ResultStateContainer {ResultState = ResultState.GameHaveTranslationForThisLanguage , Value = game.Id};
+                return new ResultStateContainer { ResultState = ResultState.GameHaveTranslationForThisLanguage, Value = game.Id };
             var entity = _ctx.IntegrationGames.SingleOrDefault(x => x.Id == game.Id);
             entity?.IntegrationGameDetails.Add(BuildIntegrationGameDetail(game));
             _ctx.SaveChanges();
-            return new ResultStateContainer {ResultState = ResultState.SeveralLanguageGameAdded ,Value = game.Id};
+            return new ResultStateContainer { ResultState = ResultState.SeveralLanguageGameAdded, Value = game.Id };
         }
 
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
         {
             //probably i set here multiple language insert game 
             if (_ctx.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGameName.Contains(game.GameName)) != null)
-                return new ResultStateContainer{ResultState = ResultState.ThisGameExistsInDb,Value = game.Id};
+                return new ResultStateContainer { ResultState = ResultState.ThisGameExistsInDb, Value = game.Id };
             if (game.Id == 0)
                 return InsertSingleLanguageGame(game);
-            return InsertSeveralLanguageGame(game);                   
+            return InsertSeveralLanguageGame(game);
         }
 
         //this function must go to static class , because this is f...
@@ -158,15 +158,15 @@ namespace WebBellwether.API.Repositories
             return _ctx.Languages.FirstOrDefault(x => x.Id == id);
         }
 
-        private List<IntegrationGameFeature> GetGameFeatures(int[] features,int language)
+        private List<IntegrationGameFeature> GetGameFeatures(int[] features, int language)
         {
             //its very important features == gameFeatureDetail.id not gamefeaturedetaillanguages.id i must use language to take good record 
             //first part , take feature detail
             var result = new List<IntegrationGameFeature>();
             features.ToList().ForEach(x =>
             {
-                var entity = _ctx.GameFeatureDetailLanguages.FirstOrDefault(z => z.GameFeatureDetail.Id == x && z.Language.Id ==language);
-                result.Add(new IntegrationGameFeature {GameFeatureDetailLanguage = entity});
+                var entity = _ctx.GameFeatureDetailLanguages.FirstOrDefault(z => z.GameFeatureDetail.Id == x && z.Language.Id == language);
+                result.Add(new IntegrationGameFeature { GameFeatureDetailLanguage = entity });
             });
             //second part ,take feature
             result.ForEach(x =>
@@ -175,11 +175,11 @@ namespace WebBellwether.API.Repositories
                     _ctx.GameFeatureLanguages.FirstOrDefault(
                         z =>
                             z.Language.Id == x.GameFeatureDetailLanguage.Language.Id &&
-                            z.GameFeature.Id == x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id);               
+                            z.GameFeature.Id == x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id);
                 x.GameFeatureLanguage = entity;
             });
             return result;
-        } 
+        }
 
 
         public ResultState PutGameFeature(GameFeatureModel gameFeatureModel)
@@ -205,7 +205,7 @@ namespace WebBellwether.API.Repositories
             _ctx.SaveChanges();
             return ResultState.GameFeatureDetailEdited;
         }
-        
+
 
 
         public List<GameFeatureModel> GetGameFeatures(int language)
@@ -227,7 +227,7 @@ namespace WebBellwether.API.Repositories
             _ctx.GameFeatureDetailLanguages.Where(x => x.Language.Id == language).ToList().ForEach(x =>
             {
                 //warning id is gamefeaturedetaillanguages id 
-                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.Id, GameFeatureDetailId = x.GameFeatureDetail.Id, GameFeatureId = x.GameFeatureDetail.GameFeature.Id,GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language.LanguageName, LanguageId = x.Language.Id });
+                gameFeatureDetails.Add(new GameFeatureDetailModel { Id = x.Id, GameFeatureDetailId = x.GameFeatureDetail.Id, GameFeatureId = x.GameFeatureDetail.GameFeature.Id, GameFeatureDetailName = x.GameFeatureDetailName, Language = x.Language.LanguageName, LanguageId = x.Language.Id });
             });
 
             //works for language <> en
@@ -265,13 +265,13 @@ namespace WebBellwether.API.Repositories
                     _ctx.GameFeatureDetailLanguages.Where(x => x.Language.Id == enId)
                         .ToList()
                         .ForEach(x => gameFeatureDetailModels.ForEach(z =>
-                         {
-                             if (z.GameFeatureDetailId == x.GameFeatureDetail.Id)
-                                 z.GameFeatureDetailTemplateName = x.GameFeatureDetailName;
-                         }));
+                        {
+                            if (z.GameFeatureDetailId == x.GameFeatureDetail.Id)
+                                z.GameFeatureDetailTemplateName = x.GameFeatureDetailName;
+                        }));
                 }
 
-            }        
+            }
         }
     }
 }

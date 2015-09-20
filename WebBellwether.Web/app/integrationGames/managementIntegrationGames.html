@@ -8,7 +8,12 @@
                 <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="templateGameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
                 <!--code below is f...-->
                 <!--GAME FEATURES-->
-               
+                <div ng-repeat="feature in gameFeatures">
+                    <label>{{feature.gameFeatureName}}</label>    
+                    <select class="form-control" data-ng-model="templateGameModel.test" data-ng-options="fss.gameFeatureDetailName for fss in feature.gameFeatureDetailModels">
+                        
+                    </select>
+                </div>               
 
                 <!--SAVE GAME-->
                 <div style="text-align: center">

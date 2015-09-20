@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebBellwether.API.Models.IntegrationGame
 {
@@ -11,5 +12,6 @@ namespace WebBellwether.API.Models.IntegrationGame
         public string GameFeatureName { get; set; }
         [Required]
         public int LanguageId { get; set; }
+        public List<GameFeatureDetailModel> GameFeatureDetailModels { get; set; } 
     }
 }
