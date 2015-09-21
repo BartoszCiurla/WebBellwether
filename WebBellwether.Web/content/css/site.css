@@ -27,6 +27,22 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
 .main-header {
     text-align: center;
 }
+
+/*DEFINICJE KOLOROW*/ 
+.color-myChartreuse {
+  color: chartreuse !important;
+}
+.color-myCrimson {
+  color: crimson !important;
+}
+.bg-myTransparentBlack {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.myMarginLeft3px {
+    margin-left: 4px;
+    margin-right: -2px;
+}
 /*@*style="width: 1900px;height: 387px; overflow: hidden !important"*@*/
 /*JEZU PO 3 TYGODNIACH ODNALAZLEM WLASCIWA KONFIGURACJE JEDNAK O 2 w NOCY MOZNA COS JESZCZE ZROBIC*/ 
 .imageContainer {

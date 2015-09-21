@@ -1,17 +1,16 @@
 ﻿<div class="container">
     <h1>{{translation.ManagementGames}}</h1>
-    <!--TEMPLATE GAME-->
     <div class="col-md-4">
         <form novalidate ng-submit="newGame(gameModel)">
             <div class="formAni">
                 <input type="text" class="form-control" required data-ng-model="templateGameModel.gameName" placeholder={{translation.GameName}}/>
                 <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="templateGameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
-                <!--code below is f...-->
+
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
                     <label>{{feature.gameFeatureName}}</label>    
                     <select class="form-control" data-ng-model="templateGameModel.test" data-ng-options="fss.gameFeatureDetailName for fss in feature.gameFeatureDetailModels">
-                        
+                        <option value=''>{{translation.PleaseSelectGame}}</option>
                     </select>
                 </div>               
 
@@ -28,16 +27,22 @@
         
     </div>
 
-    <!--GAME LIST--> 
+    <!--GAME LIST-->
     <div class="col-md-4">
-        <div ng-repeat="g in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div>
-                {{g.gameName}}
-                <!--<p>{{g.gameDescription}}</p>
-                <p></p>
-                <div ng-repeat="gf in g.integrationGameDetailModels">
-                    <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
-                </div>-->
+        <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <div class="row">
+                <label>
+                    {{integrationGame.gameName}}
+                </label>
+                <div>
+                    <div ng-repeat="al in integrationGame.gameTranslations">
+                        <div >
+                            <h4>
+                                <span style="margin-left: 4px" ng-class="al.hasTranslation ? 'label label-success' : 'label label-danger'"><span class={{al.language.languageFlag}}></span>{{al.language.languageShortName}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!--PAGER CONTROL-->

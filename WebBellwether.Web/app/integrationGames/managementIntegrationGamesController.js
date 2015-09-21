@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', function ($scope, $timeout, integrationGamesService) {
+        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService','sharedService', function ($scope, $timeout, integrationGamesService,sharedService) {
             //pagination
             $scope.currentPage = 0;
             $scope.pageSize = 14;
@@ -32,6 +32,13 @@
             //base init
             $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
             $scope.getGameFeatuesModelWithDetails($scope.selectedLanguage);
+            // ********************
+
+            //when language change 
+            $scope.$on('languageChange', function () {
+                $scope.getIntegrationGamesWithLanguages(sharedService.sharedmessage);
+                $scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
+            });
             // ********************
         }]);
 })();

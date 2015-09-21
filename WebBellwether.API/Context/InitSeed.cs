@@ -18,10 +18,14 @@ namespace WebBellwether.API.Context
                 new Language
                 {
                     LanguageName = "English",
+                    LanguageShortName = "GB",
+                    LanguageFlag = "flag-icon flag-icon-gb"
                 },
                 new Language
                 {
                     LanguageName = "Polish",
+                    LanguageShortName = "PL",
+                    LanguageFlag = "flag-icon flag-icon-pl"
                 },
             };
         }

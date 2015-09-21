@@ -180,6 +180,14 @@
     <Compile Include="Migrations\201508161151084_init.Designer.cs">
       <DependentUpon>201508161151084_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509212034390_new col.cs" />
+    <Compile Include="Migrations\201509212034390_new col.Designer.cs">
+      <DependentUpon>201509212034390_new col.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509212152105_flag.cs" />
+    <Compile Include="Migrations\201509212152105_flag.Designer.cs">
+      <DependentUpon>201509212152105_flag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -232,6 +240,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508161151084_init.resx">
       <DependentUpon>201508161151084_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509212034390_new col.resx">
+      <DependentUpon>201509212034390_new col.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509212152105_flag.resx">
+      <DependentUpon>201509212152105_flag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

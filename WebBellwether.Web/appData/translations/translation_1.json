@@ -78,5 +78,6 @@
   "EnterYourLogin": "Please enter your login",
   "YourPassword": "Your password",
   "EnterYourPassword": "Please enter your password",
-  "PleaseConfirmYourPassword": "Please confirm your password"
+  "PleaseConfirmYourPassword": "Please confirm your password",
+  "PleaseSelectGame": "Please select game"
 }

@@ -1,7 +1,4 @@
-﻿PRIO 
-NADSZEDŁ CZAS ABY ZROBIC GETA DANYCH Z SERWISU W PRZYPADKU GDY ZMIENAIM JEZYK BO PUKI CO JEST Z TYM CHUJNIA 
-
-3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
+﻿3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
 jak to ma z grubsza działać 
 -paginacja na np 14
 -mozliwa edycja listy gier z obecnym językiem + edycja cech (wazne zmiana cechy ma dzialac na wszystkie translacje mozna uzyc takiego jakby message boxa z metro) hmm czyli potrzebuje tutaj tez detale cech 
