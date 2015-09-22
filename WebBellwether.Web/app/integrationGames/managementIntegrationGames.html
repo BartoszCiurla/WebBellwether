@@ -3,8 +3,8 @@
     <div class="col-md-4">
         <form novalidate ng-submit="newGame(gameModel)">
             <div class="formAni">
-                <input type="text" class="form-control" required data-ng-model="templateGameModel.gameName" placeholder={{translation.GameName}}/>
-                <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="templateGameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+                <input type="text" class="form-control" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}}/>
+                <textarea style="margin-top: 20px" class="form-control" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
@@ -30,16 +30,14 @@
     <!--GAME LIST-->
     <div class="col-md-4">
         <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div class="row">
-                <label>
+            <div class="row myFormColor" ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
                     {{integrationGame.gameName}}
-                </label>
                 <div>
-                    <div ng-repeat="al in integrationGame.gameTranslations">
-                        <div >
-                            <h4>
+                    <div ng-repeat="al in integrationGame.gameTranslations" class="inline-block">
+                        <div>
+                            <h5>
                                 <span style="margin-left: 4px" ng-class="al.hasTranslation ? 'label label-success' : 'label label-danger'"><span class={{al.language.languageFlag}}></span>{{al.language.languageShortName}}</span>
-                            </h4>
+                            </h5>
                         </div>
                     </div>
                 </div>

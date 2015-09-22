@@ -4,9 +4,17 @@
         .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService','sharedService', function ($scope, $timeout, integrationGamesService,sharedService) {
             //pagination
             $scope.currentPage = 0;
-            $scope.pageSize = 14;
+            $scope.pageSize = 10;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.integrationGames.length / $scope.pageSize);
+            }
+            $scope.selectedGame = '';
+            $scope.setSelectGame = function (selected) {
+                if (selected.id == $scope.selectedGame.id) {
+                    $scope.selectedGame = '';
+                } else {
+                    $scope.selectedGame = selected;
+                }                
             }
             // ********************
 
@@ -40,5 +48,7 @@
                 $scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
             });
             // ********************
+
+      
         }]);
 })();
