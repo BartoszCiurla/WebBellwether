@@ -1,11 +1,11 @@
-﻿<div class="text-center">
+﻿<div class="text-center" ng-init="gameModel.language = languages[selectedLanguage]">
     <div class="col-md-6 col-md-offset-3">
         <h1>{{translation.NewGame}}</h1>
         <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
         <form name="addGame" novalidate ng-submit="newGame(gameModel)">
             <div>
                 <label for="language">{{translation.Language}}</label>
-                <select id="language" class="form-control" required data-ng-model="gameModel.language" data-ng-change="getGameFeatureDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
+                <select id="language" class="form-control myFormColor" required data-ng-model="gameModel.language" data-ng-change="getGameFeatureDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
                     <option value=''>{{translation.SelectLanguageForTheGame}}</option>
                 </select>
             </div>
@@ -23,10 +23,10 @@
 
 
                 <!--GAME NAME-->
-                <input type="text" class="form-control" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
+                <input type="text" class="form-control myFormColor" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
 
                 <!--GAME DESCRIPTION-->
-                <textarea style="margin-top: 20px" class="form-control" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--code below is f... destrony and create new system-->
                 <!--GAME FEATURES-->
@@ -47,7 +47,7 @@
                         {{translation.PreparationFun}}
                         {{test(4)}}
                     </label>
-                    <select ng-disabled="gameIdForSeveralLanguages > 0" class="form-control" required data-ng-model="gameModel.features[$index]" data-ng-options="g.gameFeatureDetailId as g.gameFeatureDetailName for g in gameFeatureDetails | filter:{gameFeatureId: featureDetail.gameFeatureId}">
+                    <select ng-disabled="gameIdForSeveralLanguages > 0" class="form-control myFormColor" required data-ng-model="gameModel.features[$index]" data-ng-options="g.gameFeatureDetailId as g.gameFeatureDetailName for g in gameFeatureDetails | filter:{gameFeatureId: featureDetail.gameFeatureId}">
                         <option value=''>
                             {{featureDetail.gameFeatureId == 1 ? translation.SelectCategoryForGame : ''}}
                             {{featureDetail.gameFeatureId == 2 ? translation.SelectPaceOfTheGame : ''}}

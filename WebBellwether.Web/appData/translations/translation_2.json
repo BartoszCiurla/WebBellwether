@@ -41,6 +41,8 @@
   "NumberOfPlayer": "Liczba graczy",
   "PreparationFun": "Przygotowanie zabawy",
   "AddGame": "Dodaj grę",
+  "SaveGame": "Zapisz grę",
+  "DeleteGame": "Usuń grę",
   "Details": "Detale",
   "GameFeature": "Detale gry",
   "MoreFunction": "Więcej funkcji",

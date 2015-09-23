@@ -41,6 +41,8 @@
   "NumberOfPlayer": "Number of player",
   "PreparationFun": "Preparation fun",
   "AddGame": "Add game",
+  "SaveGame": "Save game",
+  "DeleteGame": "Delete game",
   "Details": "Details",
   "GameFeature": "Game details",
   "MoreFunction": "More function",

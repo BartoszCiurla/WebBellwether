@@ -1,23 +1,29 @@
 ﻿<div class="container">
     <h1>{{translation.ManagementGames}}</h1>
-    <div class="col-md-4">
-        <form novalidate ng-submit="newGame(gameModel)">
-            <div class="formAni">
-                <input type="text" class="form-control" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}}/>
-                <textarea style="margin-top: 20px" class="form-control" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+    <div class="col-md-4 formAni">
+        <form name="saveGame">
+            <div class="">
+                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}}/>
+                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
                     <label>{{feature.gameFeatureName}}</label>    
-                    <select class="form-control" data-ng-model="templateGameModel.test" data-ng-options="fss.gameFeatureDetailName for fss in feature.gameFeatureDetailModels">
+                    <select class="form-control myFormColor" required data-ng-model="selectedGame.integrationGameDetailModels[$index].id" data-ng-options="gfdm.id as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
                         <option value=''>{{translation.PleaseSelectGame}}</option>
                     </select>
                 </div>               
 
                 <!--SAVE GAME-->
                 <div style="text-align: center">
-                    <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="mif-checkmark"></span> {{translation.AddGame}}</button>
+                    <button class="btn btn-success btn-block" type="submit" ng-click="saveGame(selectedGame)" ng-disabled="saveGame.$invalid"><span class="mif-checkmark"></span> {{translation.SaveGame}}</button>
                 </div>
+
+                <!--DELETE GAME-->
+                <div style="text-align: center">
+                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteGame(selectedGame)" ng-disabled="selectedGame == ''"><span class="mif-checkmark"></span> {{translation.DeleteGame}}</button>
+                </div>
+
             </div>
         </form>
     </div>
