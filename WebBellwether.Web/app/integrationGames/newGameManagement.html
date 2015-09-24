@@ -1,11 +1,11 @@
-﻿<div class="text-center" ng-init="gameModel.language = languages[selectedLanguage]">
+﻿<div class="text-center">
     <div class="col-md-6 col-md-offset-3">
         <h1>{{translation.NewGame}}</h1>
         <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
         <form name="addGame" novalidate ng-submit="newGame(gameModel)">
             <div>
                 <label for="language">{{translation.Language}}</label>
-                <select id="language" class="form-control myFormColor" required data-ng-model="gameModel.language" data-ng-change="getGameFeatureDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
+                <select id="language" class="form-control myFormColor" ng-init="gameModel.language = languages[selectedLanguage - 1]; getGameFeatureDetails(gameModel.language.id)" required data-ng-model="gameModel.language" data-ng-change="getGameFeatureDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
                     <option value=''>{{translation.SelectLanguageForTheGame}}</option>
                 </select>
             </div>

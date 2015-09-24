@@ -1,10 +1,10 @@
-﻿<div class="container" ng-init ="gameFeature.language=languages[selectedLanguage]">
+﻿<div class="container">
     <div class="col-md-6">
         <!--LANG FOR INTEGRATION GAMES-->
         <h1>{{translation.GameFeatures}}</h1>
         <div class="inline-block">
             <label for="language">{{translation.Language}}</label>
-            <select id="language" class="form-control myFormColor" required data-ng-model="gameFeature.language" data-ng-change="getGameFeatures(gameFeature.language.id)" data-ng-options="language.languageName for language in languages">
+            <select id="language" class="form-control myFormColor" ng-init="gameFeature.language = languages[selectedLanguage - 1]; getGameFeatures(gameFeature.language.id)" required data-ng-model="gameFeature.language" data-ng-change="getGameFeatures(gameFeature.language.id)" data-ng-options="language.languageName for language in languages">
                 <option value=''>{{translation.ChooseLanguage}}</option>
             </select>
         </div>
