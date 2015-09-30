@@ -52,6 +52,15 @@ namespace WebBellwether.API.Controllers
                     return BadRequest();
             }
         }
+        [Authorize]
+        [Route("PostEditIntegrationGame")]
+        public IHttpActionResult PostEditIntegrationGame(IntegrationGameModel integrationGame)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            _service.PutIntegrationGame(integrationGame);
+            return Ok();
+        }
 
         [Authorize]
         [Route("PostGameFeature")]

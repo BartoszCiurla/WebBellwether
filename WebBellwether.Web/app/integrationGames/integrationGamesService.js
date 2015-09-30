@@ -25,6 +25,13 @@
                 });
 
             }
+
+            var putIntegrationGame = function (integrationGame) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostEditIntegrationGame/', integrationGame).then(function (x) {
+                    return x;
+                });
+            }
+
             var getIntegrationGamesWithAvailableLanguages = function(languageid) {
                 return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGamesWithAvailableLanguage/?language=' + languageid).then(function (x) {
                     return x;
@@ -58,6 +65,7 @@
             integrationGamesServiceFactory.IntegrationGamesWithAvailableLanguages = getIntegrationGamesWithAvailableLanguages;
             integrationGamesServiceFactory.GameFeatureDetails = getGameFeatureDetails;
             integrationGamesServiceFactory.GameFeatures = getGameFeatures;
+            integrationGamesServiceFactory.PutIntegrationGame = putIntegrationGame;
             integrationGamesServiceFactory.PutGameFeature = putGameFeature;
             integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
 

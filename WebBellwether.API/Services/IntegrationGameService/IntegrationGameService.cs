@@ -69,7 +69,8 @@ namespace WebBellwether.API.Services.IntegrationGameService
             {
                 games.Add(new IntegrationGameModel
                 {
-                    Id = x.IntegrationGame.Id,
+                    Id = x.IntegrationGame.Id, // this is global id 
+                    IntegrationGameId = x.Id, // id for translation
                     Language = x.Language,
                     GameName = x.IntegrationGameName,
                     GameDescription = x.IntegrationGameDescription,
@@ -79,6 +80,13 @@ namespace WebBellwether.API.Services.IntegrationGameService
             });
             return games;
         }
+
+        public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
+        {
+            integrationGame.GameTranslations = FillAvailableTranslation(integrationGame.Id, _unitOfWork.LanguageRepository.GetAll().ToList());
+            return _managementIntegrationGamesService.PutIntegrationGame(integrationGame);
+        }
+
         public ResultState PutGameFeature(GameFeatureModel gameFeatureModel)
         {
             return _managementFeaturesService.PutGameFeature(gameFeatureModel);
@@ -115,8 +123,10 @@ namespace WebBellwether.API.Services.IntegrationGameService
                     result.Add(new IntegrationGameDetailModel
                     {
                         Id = z.GameFeatureDetailLanguage.Id,
-                        GameFeatureId = z.GameFeatureLanguage.Id,
+                        GameFeatureId = z.GameFeatureLanguage.GameFeature.Id,
+                        GameFeatureLanguageId = z.GameFeatureLanguage.Id,
                         GameFeatureName = z.GameFeatureLanguage.GameFeatureName,
+                        GameFeatureDetailId = z.GameFeatureDetailLanguage.GameFeatureDetail.Id,
                         GameFeatureDetailName = z.GameFeatureDetailLanguage.GameFeatureDetailName
                     });
                 });

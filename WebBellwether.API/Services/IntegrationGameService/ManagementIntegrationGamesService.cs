@@ -10,7 +10,7 @@ using WebBellwether.API.Services.IntegrationGameService.Abstract;
 
 namespace WebBellwether.API.Services.IntegrationGameService
 {
-    public class ManagementIntegrationGamesService:IManagementIntegrationGamesService
+    public class ManagementIntegrationGamesService : IManagementIntegrationGamesService
     {
         private readonly UnitOfWork _unitOfWork;
         public ManagementIntegrationGamesService(UnitOfWork unitOfWork)
@@ -73,6 +73,40 @@ namespace WebBellwether.API.Services.IntegrationGameService
             });
             return result;
         }
+
+        public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
+        {
+            //the code below is highly complex not touch
+            var entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
+            if (entity != null)
+            {
+                entity.IntegrationGameName = integrationGame.GameName;
+                entity.IntegrationGameDescription = integrationGame.GameDescription;
+                _unitOfWork.Save();
+                integrationGame.GameTranslations.ForEach(x =>
+                {
+                    if (x.HasTranslation)
+                    {
+                        entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id).FirstOrDefault();
+                        integrationGame.IntegrationGameDetailModels.ForEach(g =>
+                        {
+                            //var test = _unitOfWork.GameFeatureDetailLanguageRepository.GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
+                            //var test2 = entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId);
+                            //test2.GameFeatureDetailLanguage = test;
+                            entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId)
+                            .GameFeatureDetailLanguage = _unitOfWork.GameFeatureDetailLanguageRepository
+                            .GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
+                        });
+                        _unitOfWork.Save();
+                        entity = null;
+                    }
+                });                
+                return ResultState.GameAdded;
+            }
+            return ResultState.GameAdded;
+        }
+
+
         public Language GetLanguage(int id)
         {
             return _unitOfWork.LanguageRepository.Get(x => x.Id == id);

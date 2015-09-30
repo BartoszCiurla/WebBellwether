@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService','sharedService', function ($scope, $timeout, integrationGamesService,sharedService) {
+        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', function ($scope, $timeout, integrationGamesService, sharedService) {
             //pagination
             $scope.currentPage = 0;
             $scope.pageSize = 10;
@@ -14,8 +14,8 @@
                     $scope.selectedGame = '';
                 } else {
                     $scope.selectedGame = selected;
-                }                
-            }
+                }
+            };
             // ********************
 
             //integration games
@@ -24,17 +24,45 @@
                 integrationGamesService.IntegrationGamesWithAvailableLanguages(lang).then(function (x) {
                     $scope.integrationGames = [];
                     $scope.integrationGames = x.data;
+                    $scope.setGameTranslationAfterLanguageChange();                    
+                });
+            };
+
+            $scope.setGameTranslationAfterLanguageChange = function () {
+                if ($scope.selectedGame != '') {
+                    $scope.integrationGames.forEach(function (o) {
+                        if (o.id == $scope.selectedGame.id && o.language.id == $scope.selectedLanguage) {
+                            $scope.selectedGame = o;
+                            return;
+                        }
+                    });
+                    if ($scope.selectedGame.language.id != $scope.selectedLanguage)
+                        $scope.selectedGame = '';
+                }
+            }
+            // ********************
+
+            //edit integration games
+            $scope.editGame = function (selectedGame) {
+                integrationGamesService.PutIntegrationGame(selectedGame).then(function (x) {
+                    //tutaj trzeba by jeszcze obsluzyc jakies informowanie usera 
                 });
             };
             // ********************
 
+            //delete integration games
+            $scope.deleteGame = function (selectedGame) {
+                var dialog = $('#dialog3').data('dialog');
+                dialog.open();
+            }
+
             //game features 
             $scope.gameFeatures = [];
-            $scope.getGameFeatuesModelWithDetails = function(lang) {
+            $scope.getGameFeatuesModelWithDetails = function (lang) {
                 integrationGamesService.GameFeatuesModelWithDetails(lang).then(function (x) {
                     $scope.gameFeatures = x.data;
                 });
-            }            
+            };
             // ********************
 
             //base init
@@ -45,10 +73,10 @@
             //when language change 
             $scope.$on('languageChange', function () {
                 $scope.getIntegrationGamesWithLanguages(sharedService.sharedmessage);
-                $scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
+                $scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);              
             });
             // ********************
 
-      
+
         }]);
 })();
