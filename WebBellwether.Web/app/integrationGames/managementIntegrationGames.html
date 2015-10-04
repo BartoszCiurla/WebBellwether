@@ -3,16 +3,16 @@
     <div class="col-md-4 formAni">
         <form name="saveGame">
             <div class="">
-                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}}/>
+                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}} />
                 <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
-                    <label>{{feature.gameFeatureName}}</label>    
+                    <label>{{feature.gameFeatureName}}</label>
                     <select class="form-control myFormColor" required data-ng-model="selectedGame.integrationGameDetailModels[$index].gameFeatureDetailId" data-ng-options="gfdm.gameFeatureDetailId as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
                         <option value=''>{{translation.PleaseSelectGame}}</option>
                     </select>
-                </div>               
+                </div>
 
                 <!--SAVE GAME-->
                 <div style="text-align: center">
@@ -21,7 +21,7 @@
 
                 <!--DELETE GAME-->
                 <div style="text-align: center">
-                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteGame(selectedGame)" ng-disabled="selectedGame == ''"><span class="mif-checkmark"></span> {{translation.DeleteGame}}</button>
+                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteDialog()" ng-disabled="selectedGame == ''"><span class="mif-checkmark"></span> {{translation.DeleteGame}}</button>
                 </div>
 
             </div>
@@ -30,14 +30,14 @@
 
     <!--NEW TRANSLATION OR EDIT-->
     <div class="col-md-4">
-        
+
     </div>
 
     <!--GAME LIST-->
     <div class="col-md-4">
         <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
             <div class="row myFormColor" ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
-                    {{integrationGame.gameName}}
+                {{integrationGame.gameName}}
                 <div>
                     <div ng-repeat="al in integrationGame.gameTranslations" class="inline-block">
                         <div>
@@ -60,13 +60,14 @@
             </nav>
         </div>
     </div>
-    <div data-role="dialog" id="dialog3" class="text-center dialog success" data-close-button="true" data-type="success">
-        <h1>Simple dialog</h1>
-        <p>
-            Dialog :: Metro UI CSS - The front-end framework for developing projects on the web in Windows Metro Style
-        </p>
+    <div data-role="dialog" id="deleteDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
+        <h1>{{translation.DeleteTheGame}} :</h1>
+        <h1>{{selectedGame.gameName}}</h1>
+        <div>
+            <button class="btn btn-warning" ng-click="deleteGame(selectedGame,false)" ng-disabled="selectedGame == ''">{{translation.RemoveMainTranslation}}</button>
+            <button class="btn btn-danger" ng-click="deleteGame(selectedGame,true)" ng-hide="selectedGame == '' || countGameTranslation(selectedGame) < 2">{{translation.RemoveAllTranslation}}</button>
+        </div>
         <span class="dialog-close-button"></span>
-
     </div>
 </div>
 

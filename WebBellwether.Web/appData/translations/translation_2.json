@@ -81,5 +81,8 @@
   "YourPassword": "Twoje hasło",
   "EnterYourPassword": "Proszę wprowadz swoje hasło",
   "PleaseConfirmYourPassword": "Prosze potwierdz swoje hasło",
-  "PleaseSelectGame": "Proszę wybierz grę"
+  "PleaseSelectGame": "Proszę wybierz grę",
+  "DeleteTheGame": "Usuwanie gry",
+  "RemoveMainTranslation": "Usuń główną translację",
+  "RemoveAllTranslation": "Usuń wszystkie translacje"
 }

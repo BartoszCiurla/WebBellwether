@@ -61,6 +61,13 @@ namespace WebBellwether.API.Controllers
             _service.PutIntegrationGame(integrationGame);
             return Ok();
         }
+        [Authorize]
+        [Route("PostDeleteIntegrationGame")]
+        public IHttpActionResult PostDeleteIntegrationGame(IntegrationGameModel integrationGame)
+        {
+            _service.DeleteIntegratiomGame(integrationGame);
+            return Ok();
+        }
 
         [Authorize]
         [Route("PostGameFeature")]

@@ -80,7 +80,10 @@ namespace WebBellwether.API.Services.IntegrationGameService
             });
             return games;
         }
-
+        public ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame)
+        {
+            return _managementIntegrationGamesService.DeleteIntegratiomGame(integrationGame);
+        }
         public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
         {
             integrationGame.GameTranslations = FillAvailableTranslation(integrationGame.Id, _unitOfWork.LanguageRepository.GetAll().ToList());

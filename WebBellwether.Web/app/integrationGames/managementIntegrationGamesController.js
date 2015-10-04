@@ -51,10 +51,34 @@
             // ********************
 
             //delete integration games
-            $scope.deleteGame = function (selectedGame) {
-                var dialog = $('#dialog3').data('dialog');
+            $scope.deleteDialog = function () {
+                var dialog = $('#deleteDialog').data('dialog');
                 dialog.open();
             }
+            $scope.countGameTranslation = function (selectedGame) {
+                var result = 0;
+                selectedGame.gameTranslations.forEach(function (x) {
+                    if (x.hasTranslation)
+                        result++;
+                })
+                return result;
+            }
+            $scope.deleteGame = function (selectedGame, removeAllTranslation) {
+                var dialog = $('#deleteDialog').data('dialog');
+                dialog.close();
+                if (removeAllTranslation)
+                    selectedGame.temporarySeveralTranslationDelete = removeAllTranslation;
+                integrationGamesService.DeleteIntegrationGame(selectedGame).then(function (x) {
+                    $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
+                    //after delete i must refresh all list 
+                });
+
+
+                
+
+
+            };
+            // ********************
 
             //game features 
             $scope.gameFeatures = [];

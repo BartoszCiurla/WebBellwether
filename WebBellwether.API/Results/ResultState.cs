@@ -4,6 +4,10 @@
     {
         GameAdded,
         GameAddFailure,
+        GameTranslationNotExists,
+        GameFeatureTranslationNotExists,
+        RemoveGameError,
+        GameRemoved,
         ThisGameExistsInDb,
         GameFeatureEdited,
         GameFeatureNotExists,

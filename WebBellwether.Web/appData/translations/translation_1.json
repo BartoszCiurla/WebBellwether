@@ -81,5 +81,8 @@
   "YourPassword": "Your password",
   "EnterYourPassword": "Please enter your password",
   "PleaseConfirmYourPassword": "Please confirm your password",
-  "PleaseSelectGame": "Please select game"
+  "PleaseSelectGame": "Please select game",
+  "DeleteTheGame": "Delete the game",
+  "RemoveMainTranslation": "Remove main translation",
+  "RemoveAllTranslation": "Remove all translation"
 }

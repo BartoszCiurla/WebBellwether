@@ -25,6 +25,11 @@
                 });
 
             }
+            var deleteIntegrationGame = function (integrationGame) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostDeleteIntegrationGame/', integrationGame).then(function (x) {
+                    return x;
+                })
+            }
 
             var putIntegrationGame = function (integrationGame) {
                 return $http.post(serviceBase + 'api/IntegrationGames/PostEditIntegrationGame/', integrationGame).then(function (x) {
@@ -68,6 +73,7 @@
             integrationGamesServiceFactory.PutIntegrationGame = putIntegrationGame;
             integrationGamesServiceFactory.PutGameFeature = putGameFeature;
             integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
+            integrationGamesServiceFactory.DeleteIntegrationGame = deleteIntegrationGame;
 
             return integrationGamesServiceFactory;
 

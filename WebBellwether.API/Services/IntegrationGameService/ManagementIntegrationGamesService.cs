@@ -73,6 +73,71 @@ namespace WebBellwether.API.Services.IntegrationGameService
             });
             return result;
         }
+        public ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame)
+        {
+            try
+            {
+                if (integrationGame.TemporarySeveralTranslationDelete)
+                {
+                    var gameFeatureEntity = _unitOfWork.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.IntegrationGame.Id == integrationGame.Id);
+                    if (gameFeatureEntity != null)
+                        gameFeatureEntity.ToList().ForEach(x =>
+                        {
+                            //delete game feature
+                            _unitOfWork.IntegrationGameFeatureRepository.Delete(x);
+                        });
+                    var gameEntity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == integrationGame.Id);
+                    if (gameEntity != null)
+                        gameEntity.ToList().ForEach(x =>
+                        {
+                            //delete game detail 
+                            _unitOfWork.IntegrationGameDetailRepository.Delete(x);
+                        });
+                    var mainGameEntity = _unitOfWork.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
+                    if (gameEntity != null)
+                        //delete main game
+                        _unitOfWork.IntegrationGameRepository.Delete(mainGameEntity);
+                    _unitOfWork.Save();
+                    return new ResultStateContainer { ResultState = ResultState.GameRemoved };
+                }
+                else
+                {
+                    var gameEntity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
+                    if (gameEntity == null)
+                        return new ResultStateContainer { ResultState= ResultState.GameTranslationNotExists};
+                    var gameFeatureEntity = _unitOfWork.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.Id == gameEntity.Id);
+                    if (gameFeatureEntity == null)
+                        return new ResultStateContainer { ResultState = ResultState.GameFeatureTranslationNotExists };
+                    int gameTranslationCount = 0;
+                    integrationGame.GameTranslations.ForEach(x =>
+                    {
+                        if (x.HasTranslation)
+                            gameTranslationCount++;
+                    });
+                    //delete game feature
+                    gameFeatureEntity.ToList().ForEach(x =>
+                    {
+                        _unitOfWork.IntegrationGameFeatureRepository.Delete(x);
+                    });
+                    //delete game detail 
+                    _unitOfWork.IntegrationGameDetailRepository.Delete(gameEntity);
+                    if (gameTranslationCount == 1)//have only one translation , can delete main id for game 
+                    {
+                        var mainGameEntity = _unitOfWork.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
+                        if(mainGameEntity != null)
+                            //delete main game
+                            _unitOfWork.IntegrationGameRepository.Delete(mainGameEntity);
+                    }
+                    _unitOfWork.Save();
+                    return new ResultStateContainer { ResultState = ResultState.GameRemoved };
+                }
+            }
+            catch (Exception e)
+            {
+                return new ResultStateContainer { ResultState = ResultState.RemoveGameError, Value = e };
+            }
+            
+        }
 
         public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
         {
@@ -90,9 +155,6 @@ namespace WebBellwether.API.Services.IntegrationGameService
                         entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id).FirstOrDefault();
                         integrationGame.IntegrationGameDetailModels.ForEach(g =>
                         {
-                            //var test = _unitOfWork.GameFeatureDetailLanguageRepository.GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
-                            //var test2 = entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId);
-                            //test2.GameFeatureDetailLanguage = test;
                             entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId)
                             .GameFeatureDetailLanguage = _unitOfWork.GameFeatureDetailLanguageRepository
                             .GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
