@@ -84,5 +84,7 @@
   "PleaseSelectGame": "Please select game",
   "DeleteTheGame": "Delete the game",
   "RemoveMainTranslation": "Remove main translation",
-  "RemoveAllTranslation": "Remove all translation"
+  "RemoveAllTranslation": "Remove all translation",
+  "Success": "Success",
+  "Failure": "Niepowodzenie"
 }

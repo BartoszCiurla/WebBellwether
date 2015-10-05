@@ -2,12 +2,24 @@
     angular
         .module('webBellwether')
         .controller('newGameManagementController', ['$scope', '$timeout', 'integrationGamesService', function ($scope, $timeout, integrationGamesService) {
+            //timer for user notification
             var startTimer = function () {
                 var timer = $timeout(function () {
                     $timeout.cancel(timer);
+                    if ($scope.resultStateNewGame == 1 | $scope.resultStateNewGame == 3) {
+                        var dialog = $('#successDialog').data('dialog');
+                        dialog.close();
+                    }
+                    else {
+                        var dialog = $('#failDialog').data('dialog');
+                        dialog.close();
+                    }
                     $scope.resultStateNewGame = '';
+                    
                 }, 4000);
             };
+            
+            //insert game and notify user 
             $scope.resultStateGameFeature = '';
             $scope.resultStateGameFeatureDetail = '';
             $scope.resultStateNewGame = '';
@@ -22,8 +34,6 @@
                     $scope.severalLanguagesForGame = true;
                 }
             };
-            var indexedFeatures = [];
-            $scope.gameFeatureDetails = [];
 
             $scope.newGame = function (gameModel) {
                 var newIntegrationGameModel =
@@ -53,6 +63,9 @@
                     } else {
                         $scope.resultStateNewGame = 1;//single language game success
                     }
+                    //get dialog and open it 
+                    var dialog = $('#successDialog').data('dialog');
+                    dialog.open();   
                     startTimer();
                 },
                 function (results) {
@@ -64,30 +77,24 @@
                     } else {
                         $scope.resultStateNewGame = 2;//single language game error
                     }
+                    var dialog = $('#failDialog').data('dialog');
+                    dialog.open();
                     startTimer();
                 });
             };
+            // ********************
 
-            $scope.featuresToFilter = function () {
-                indexedFeatures = [];
-                return $scope.gameFeatureDetails;
-            }
-
-            $scope.filterFeatures = function (feature) {
-                var featureIsNew = indexedFeatures.indexOf(feature.gameFeatureId) == -1;
-                if (featureIsNew) {
-                    indexedFeatures.push(feature.gameFeatureId);
-                }
-                return featureIsNew;
-            }
-
-            $scope.getGameFeatureDetails = function (lang) {
-                integrationGamesService.GameFeatureDetails(lang).then(function (results) {
-                    $scope.gameFeatureDetails = results.data;
-                    console.log("fill game feature details");
+            //game features 
+            $scope.gameFeatures = [];
+            $scope.getGameFeatuesModelWithDetails = function (lang) {
+                integrationGamesService.GameFeatuesModelWithDetails(lang).then(function (x) {
+                    $scope.gameFeatures = x.data;
                 });
             };
+            // ********************
 
-            $scope.getGameFeatureDetails($scope.selectedLanguage);
+            //base init
+            $scope.getGameFeatuesModelWithDetails($scope.selectedLanguage);
+            // ********************
         }]);
 })();

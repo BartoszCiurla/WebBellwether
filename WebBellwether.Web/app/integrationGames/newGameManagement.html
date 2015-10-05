@@ -1,83 +1,80 @@
-﻿<div class="text-center">
-    <div class="col-md-6 col-md-offset-3">
-        <h1>{{translation.NewGame}}</h1>
-        <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
-        <form name="addGame" novalidate ng-submit="newGame(gameModel)">
-            <div>
-                <label for="language">{{translation.Language}}</label>
-                <select id="language" class="form-control myFormColor" ng-init="gameModel.language = languages[selectedLanguage - 1]; getGameFeatureDetails(gameModel.language.id)" required data-ng-model="gameModel.language" data-ng-change="getGameFeatureDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
-                    <option value=''>{{translation.SelectLanguageForTheGame}}</option>
-                </select>
-            </div>
-
-            <div ng-hide="gameModel.language == null" class="formAni">
-                <label>{{translation.SeveralLanguagesDescription}}</label>
-                <div class="has-error">
-                    <div class="checkbox">
-                        <label style="font-weight: bold">
-                            <input ng-click="setSeveralLanguage()" type="checkbox" />
-                            {{translation.GameForSeveralLanguages}}
-                        </label>
-                    </div>
-                </div>
-
-
-                <!--GAME NAME-->
-                <input type="text" class="form-control myFormColor" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
-
-                <!--GAME DESCRIPTION-->
-                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
-
-                <!--code below is f... destrony and create new system-->
-                <!--GAME FEATURES-->
-                <div ng-repeat="featureDetail in featuresToFilter() | filter:filterFeatures" class="formAni">
-                    <label ng-hide="featureDetail.gameFeatureId != 1">
-                        {{translation.GameCategory}}
-                        {{test(1)}}
-                    </label>
-                    <label ng-hide="featureDetail.gameFeatureId != 2">
-                        {{translation.PaceOfPlay}}
-                        {{test(2)}}
-                    </label>
-                    <label ng-hide="featureDetail.gameFeatureId != 3">
-                        {{translation.NumberOfPlayer}}
-                        {{test(3)}}
-                    </label>
-                    <label ng-hide="featureDetail.gameFeatureId != 4">
-                        {{translation.PreparationFun}}
-                        {{test(4)}}
-                    </label>
-                    <select ng-disabled="gameIdForSeveralLanguages > 0" class="form-control myFormColor" required data-ng-model="gameModel.features[$index]" data-ng-options="g.gameFeatureDetailId as g.gameFeatureDetailName for g in gameFeatureDetails | filter:{gameFeatureId: featureDetail.gameFeatureId}">
-                        <option value=''>
-                            {{featureDetail.gameFeatureId == 1 ? translation.SelectCategoryForGame : ''}}
-                            {{featureDetail.gameFeatureId == 2 ? translation.SelectPaceOfTheGame : ''}}
-                            {{featureDetail.gameFeatureId == 3 ? translation.SelectNumberOfPlayerForTheGame : ''}}
-                            {{featureDetail.gameFeatureId == 4 ? translation.SelectPreparationGame : ''}}
-                        </option>
+﻿<div class="container">
+    <div class="text-center">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>{{translation.NewGame}}</h1>
+            <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
+            <form name="addGame" novalidate ng-submit="newGame(gameModel)">
+                <div>
+                    <label for="language">{{translation.Language}}</label>
+                    <select id="language" class="form-control myFormColor" ng-init="gameModel.language = languages[selectedLanguage - 1]; getGameFeatuesModelWithDetails(gameModel.language.id)" required data-ng-model="gameModel.language" data-ng-change="getGameFeatuesModelWithDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
+                        <option value=''>{{translation.SelectLanguageForTheGame}}</option>
                     </select>
                 </div>
 
-                <!--SAVE GAME-->
-                <div style="text-align: center">
-                    <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="mif-checkmark"></span> {{translation.AddGame}}</button>
+                <div ng-hide="gameModel.language == null" class="formAni">
+                    <label>{{translation.SeveralLanguagesDescription}}</label>
+                    <div class="has-error">
+                        <div class="checkbox">
+                            <label style="font-weight: bold">
+                                <input ng-click="setSeveralLanguage()" type="checkbox" />
+                                {{translation.GameForSeveralLanguages}}
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--GAME NAME-->
+                    <input type="text" class="form-control myFormColor" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
+
+                    <!--GAME DESCRIPTION-->
+                    <textarea style="margin-top: 20px" class="form-control myFormColor" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+
+                    <!--GAME FEATURES-->
+                    <div ng-repeat="feature in gameFeatures" class="formAni">
+                        <label>{{feature.gameFeatureName}}</label>
+                        <select class="form-control myFormColor" ng-disabled="gameIdForSeveralLanguages != ''" required data-ng-model="gameModel.features[$index]" data-ng-options="gfdm.gameFeatureDetailId as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                            <option value=''>{{translation.PleaseSelectGame}}</option>
+                        </select>
+                    </div>
+
+                    <!--SAVE GAME-->
+                    <div style="text-align: center">
+                        <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="mif-checkmark"></span> {{translation.AddGame}}</button>
+                    </div>                  
                 </div>
-                <!--USER NOTIFICATION FOR INSERT GAME-->
-                <!--DESCRIPTION IN INTEGRATIOMGAMESCONTROLLER -> AddNewIntegrationGame-->
-                <div>
-                    <div ng-show="resultStateNewGame == 1">
-                        <h1 class="text-center" style="color: #60a917;">{{translation.GameAdded}} </h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 2">
-                        <h1 class="text-center" style="color: #ce352c;">{{translation.GameExists}}</h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 3">
-                        <h1 class="text-center" style="color: #60a917;">{{translation.SeveralLanguageGameAdded}} </h1>
-                    </div>
-                    <div ng-show="resultStateNewGame == 4">
-                        <h1 class="text-center" style="color: #ce352c">{{translation.SeveralLanguageGameError}}</h1>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+    </div>
+    <!--USER NOTIFICATION FOR INSERT GAME-->
+    <!--DESCRIPTION IN INTEGRATIOMGAMESCONTROLLER -> AddNewIntegrationGame-->
+    <!--SUCCESS DIALOG-->
+    <div data-role="dialog" id="successDialog" class=" dialog success" data-close-button="true" data-type="success">
+        <h1>{{translation.Success}}</h1>
+        <div ng-show="resultStateNewGame == 1">
+            <p>
+                {{translation.GameAdded}}               
+            </p>
+        </div>
+        <div ng-show="resultStateNewGame == 3">
+            <p>
+                {{translation.SeveralLanguageGameAdded}}               
+            </p>
+        </div>
+        <span class="dialog-close-button"></span>
+    </div>
+
+    <!--FAIL DIALOG-->
+    <div data-role="dialog" id="failDialog" class=" dialog alert" data-close-button="true" data-type="alert">
+        <h1>{{translation.Failure}}</h1>
+        <div ng-show="resultStateNewGame == 2">
+            <p>
+                {{translation.GameExists}}
+            </p>
+        </div>
+        <div ng-show="resultStateNewGame == 4">
+            <p>
+                {{translation.SeveralLanguageGameError}}
+            </p>
+        </div>
+        <span class="dialog-close-button"></span>
     </div>
 </div>
