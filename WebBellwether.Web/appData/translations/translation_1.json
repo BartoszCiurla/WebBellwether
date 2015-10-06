@@ -86,5 +86,9 @@
   "RemoveMainTranslation": "Remove main translation",
   "RemoveAllTranslation": "Remove all translation",
   "Success": "Success",
-  "Failure": "Niepowodzenie"
+  "Failure": "Niepowodzenie",
+  "GameFeatureEdited": "Cecha gry została edytowana",
+  "GameFeatureDetailEdited": "Detal cechy gry został edytowany",
+  "GameFeatueNotEdited": "Cecha gry nie została edytowana",
+  "GameFeatureDetailNotEdited": "Detal cechy gry nie został edytowany"
 }

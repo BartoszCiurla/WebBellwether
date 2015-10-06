@@ -65,7 +65,18 @@ namespace WebBellwether.API.Controllers
         [Route("PostDeleteIntegrationGame")]
         public IHttpActionResult PostDeleteIntegrationGame(IntegrationGameModel integrationGame)
         {
-            _service.DeleteIntegratiomGame(integrationGame);
+            ResultStateContainer result = _service.DeleteIntegratiomGame(integrationGame);
+            switch (result.ResultState)
+            {
+                case ResultState.GameRemoved:
+                    return Ok();
+                case ResultState.GameTranslationNotExists:
+                    break;
+                case ResultState.GameFeatureTranslationNotExists:
+                    break;
+                case ResultState.RemoveGameError:
+                    return BadRequest(result.Value.ToString());
+            }
             return Ok();
         }
 

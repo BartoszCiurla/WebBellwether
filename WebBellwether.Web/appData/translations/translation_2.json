@@ -86,5 +86,9 @@
   "RemoveMainTranslation": "Usuń główną translację",
   "RemoveAllTranslation": "Usuń wszystkie translacje",
   "Success": "Sukces",
-  "Failure": "Niepowodzenie"
+  "Failure": "Niepowodzenie",
+  "GameFeatureEdited": "Feature game was edited",
+  "GameFeatureDetailEdited": "Retail features of the game was edited",
+  "GameFeatueNotEdited": "Feature game has not been edited",
+  "GameFeatureDetailNotEdited": "Retail features of the game has not been edited"
 }

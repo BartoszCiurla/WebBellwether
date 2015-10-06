@@ -44,37 +44,4 @@
             </form>
         </div>
     </div>
-    <!--USER NOTIFICATION FOR INSERT GAME-->
-    <!--DESCRIPTION IN INTEGRATIOMGAMESCONTROLLER -> AddNewIntegrationGame-->
-    <!--SUCCESS DIALOG-->
-    <div data-role="dialog" id="successDialog" class=" dialog success" data-close-button="true" data-type="success">
-        <h1>{{translation.Success}}</h1>
-        <div ng-show="resultStateNewGame == 1">
-            <p>
-                {{translation.GameAdded}}               
-            </p>
-        </div>
-        <div ng-show="resultStateNewGame == 3">
-            <p>
-                {{translation.SeveralLanguageGameAdded}}               
-            </p>
-        </div>
-        <span class="dialog-close-button"></span>
-    </div>
-
-    <!--FAIL DIALOG-->
-    <div data-role="dialog" id="failDialog" class=" dialog alert" data-close-button="true" data-type="alert">
-        <h1>{{translation.Failure}}</h1>
-        <div ng-show="resultStateNewGame == 2">
-            <p>
-                {{translation.GameExists}}
-            </p>
-        </div>
-        <div ng-show="resultStateNewGame == 4">
-            <p>
-                {{translation.SeveralLanguageGameError}}
-            </p>
-        </div>
-        <span class="dialog-close-button"></span>
-    </div>
 </div>

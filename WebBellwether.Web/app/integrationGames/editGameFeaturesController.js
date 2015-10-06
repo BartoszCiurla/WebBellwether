@@ -53,20 +53,18 @@
                     console.log(response);
                     $scope.resultStateGameFeature = gameFeature.id;
                     $.Notify({
-                        caption: 'Success',
-                        content: 'Game feature edited',
-                        type: 'success',
-                        keepOpen: true
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.GameFeatureEdited,
+                        type: 'success',          
                     });
                 },
                 function (response) {
                     console.log(response);
                     $scope.resultStateGameFeature = gameFeature.id + 999;
                     $.Notify({
-                        caption: 'warning',
-                        content: 'Game feature not edited',
+                        caption: $scope.translation.Failure,
+                        content: $scope.translation.GameFeatueNotEdited,
                         type: 'warning',
-                        keepOpen: true
                     });
                 });
             };
@@ -76,10 +74,9 @@
                     console.log(response);
                     $scope.resultStateGameFeatureDetail = gameFeatureDetail.id;
                     $.Notify({
-                        caption: 'Success',
-                        content: 'Game feature detail edited',
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.GameFeatureDetailEdited,
                         type: 'success',
-                        keepOpen: true
                     });
 
                 },
@@ -87,10 +84,9 @@
                     console.log(response);
                     $scope.resultStateGameFeatureDetail = gameFeatureDetail.id + 999;
                     $.Notify({
-                        caption: 'warning',
-                        content: 'Game feature detail not edited',
+                        caption: $scope.translation.Failure,
+                        content: $scope.translation.GameFeatureDetailNotEdited,
                         type: 'warning',
-                        keepOpen: true
                     });
                 });
             };

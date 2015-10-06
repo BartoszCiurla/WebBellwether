@@ -6,16 +6,7 @@
             var startTimer = function () {
                 var timer = $timeout(function () {
                     $timeout.cancel(timer);
-                    if ($scope.resultStateNewGame == 1 | $scope.resultStateNewGame == 3) {
-                        var dialog = $('#successDialog').data('dialog');
-                        dialog.close();
-                    }
-                    else {
-                        var dialog = $('#failDialog').data('dialog');
-                        dialog.close();
-                    }
-                    $scope.resultStateNewGame = '';
-                    
+                    $scope.resultStateNewGame = '';                   
                 }, 4000);
             };
             
@@ -52,7 +43,7 @@
                 if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
                     newIntegrationGameModel.ID = $scope.gameIdForSeveralLanguages;
                 }
-
+                var userNotification = '';
                 integrationGamesService.AddNewIntegrationGame(newIntegrationGameModel).then(function (results) {
                     console.log(results);
 
@@ -60,13 +51,16 @@
                     if ($scope.severalLanguagesForGame) {
                         $scope.gameIdForSeveralLanguages = results.data;
                         $scope.resultStateNewGame = 3;//several language game success
+                        userNotification = $scope.translation.SeveralLanguageGameAdded;
                     } else {
                         $scope.resultStateNewGame = 1;//single language game success
+                        userNotification = $scope.translation.GameAdded;
                     }
-                    //get dialog and open it 
-                    var dialog = $('#successDialog').data('dialog');
-                    dialog.open();   
-                    startTimer();
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: userNotification,
+                        type: 'success',
+                    });
                 },
                 function (results) {
 
@@ -74,11 +68,16 @@
                     if ($scope.severalLanguagesForGame && $scope.gameIdForSeveralLanguages > 0) {
                         $scope.gameIdForSeveralLanguages = parseInt(results.data.message);
                         $scope.resultStateNewGame = 4; //several language game error
+                        userNotification = $scope.translation.SeveralLanguageGameError;
                     } else {
                         $scope.resultStateNewGame = 2;//single language game error
+                        userNotification = $scope.translation.GameExists;
                     }
-                    var dialog = $('#failDialog').data('dialog');
-                    dialog.open();
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                    });
                     startTimer();
                 });
             };

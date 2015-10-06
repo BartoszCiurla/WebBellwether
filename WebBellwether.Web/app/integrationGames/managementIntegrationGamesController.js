@@ -71,12 +71,7 @@
                 integrationGamesService.DeleteIntegrationGame(selectedGame).then(function (x) {
                     $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
                     //after delete i must refresh all list 
-                });
-
-
-                
-
-
+                });               
             };
             // ********************
 
