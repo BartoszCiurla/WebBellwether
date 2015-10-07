@@ -85,10 +85,15 @@
   "DeleteTheGame": "Delete the game",
   "RemoveMainTranslation": "Remove main translation",
   "RemoveAllTranslation": "Remove all translation",
-  "Success": "Success",
-  "Failure": "Niepowodzenie",
-  "GameFeatureEdited": "Cecha gry została edytowana",
-  "GameFeatureDetailEdited": "Detal cechy gry został edytowany",
-  "GameFeatueNotEdited": "Cecha gry nie została edytowana",
-  "GameFeatureDetailNotEdited": "Detal cechy gry nie został edytowany"
+  "Success": "Succes",
+  "Failure": "Failure",
+  "GameFeatureEdited": "Feature game was edited",
+  "GameFeatureDetailEdited": "Retail features of the game was edited",
+  "GameFeatueNotEdited": "Feature game has not been edited",
+  "GameFeatureDetailNotEdited": "Retail features of the game has not been edited",
+  "SaveTranslation": "Save translation",
+  "DeleteTranslation": "Delete translation",
+  "HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal": "The main translation based on the currently selected language portal",
+  "OtherTranslationForTheCurrentlySelectedGameAndLanguage": "Other translations for the currently selected game and language",
+  "AutoCompleteGameFeaturesForLanguage": "Details of the game will be automatically translated into the current language to another translation"
 }

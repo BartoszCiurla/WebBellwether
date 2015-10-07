@@ -24,9 +24,16 @@ tu masz jak zrobić otwierające się drzwi http://jsfiddle.net/9zsdN/1/
 
 
 
+jak to opisać ... 
+
+główna translacja bazująca na aktualnie wybranym języku portalu
 
 
+Inne translacje dla aktualnie zaznaczonej gry i języka 
 
+detale gry zostaną automatycznie przetłumaczone na aktualnie wybrany język innej translacji
+
++ zapisz translacje + usuń translacje 
 
 
 

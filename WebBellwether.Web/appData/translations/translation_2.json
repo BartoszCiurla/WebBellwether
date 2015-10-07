@@ -87,8 +87,13 @@
   "RemoveAllTranslation": "Usuń wszystkie translacje",
   "Success": "Sukces",
   "Failure": "Niepowodzenie",
-  "GameFeatureEdited": "Feature game was edited",
-  "GameFeatureDetailEdited": "Retail features of the game was edited",
-  "GameFeatueNotEdited": "Feature game has not been edited",
-  "GameFeatureDetailNotEdited": "Retail features of the game has not been edited"
+  "GameFeatureEdited": "Cecha gry została edytowana",
+  "GameFeatureDetailEdited": "Detal cechy gry został edytowany",
+  "GameFeatueNotEdited": "Cecha gry nie została edytowana",
+  "GameFeatureDetailNotEdited": "Detal cechy gry nie został edytowany",
+  "SaveTranslation": "Zapisz translację",
+  "DeleteTranslation": "Usuń translację",
+  "HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal": "Głowna translacja bazująca na aktualnie wybranym języku portalu",
+  "OtherTranslationForTheCurrentlySelectedGameAndLanguage": "Inne translacje dla aktualnie zaznaczonej gry i języka",
+  "AutoCompleteGameFeaturesForLanguage": "Detale gry zostaną automatycznie przetłumaczone na aktualnie wybrany język innej translacji"
 }
