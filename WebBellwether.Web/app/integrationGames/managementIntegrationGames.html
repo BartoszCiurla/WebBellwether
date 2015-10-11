@@ -1,9 +1,9 @@
 ﻿<div class="container">
-    <h1>{{translation.ManagementGames}}</h1>
+    <h1 style="margin-bottom:20px">{{translation.ManagementGames}}</h1>
     <div class="col-md-4 formAni">
         <form name="saveGame">
             <div>
-                <label>{{translation.HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal}}</label>
+                <h2 style="text-align:left">{{translation.HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal}}</h2>
                 <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}} />
                 <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
 
@@ -32,38 +32,35 @@
     <!--NEW TRANSLATION OR EDIT-->
     <div class="col-md-4">
         <div ng-hide="selectedGame == ''">
+            <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedGameAndLanguage}}</h2>
 
-            <label>{{translation.OtherTranslationForTheCurrentlySelectedGameAndLanguage}}</label>
-            <div class="inline-block">
-                <button class="btn btn-info btn-block" type="submit" ng-click="" ng-disabled=""><span class="mif-checkmark"></span> Translate by google</button>
-                <select id="language" class="form-control myFormColor" required data-ng-model="selectedGameOtherTranslation.language" data-ng-change="" data-ng-options="language.languageName for language in languages | filter : {id: '!' + selectedGame.language.id}">
-                    <option value=''>{{translation.SelectLanguageForTheGame}}</option>
-                </select> 
-            </div>
-
-
-            <div ng-hide="selectedGameOtherTranslation.language == null" class="formAni">
-                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGameOtherTranslation.gameName" placeholder={{translation.GameName}} />
-                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGameOtherTranslation.gameDescription" placeholder={{translation.GameDetails}}></textarea>
-                <label>{{translation.AutoCompleteGameFeaturesForLanguage}}</label>
-                
-                <!--SAVE TRANSLATION-->
+            <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation.language.id" data-ng-options="language.id as language.languageName for language in languages | filter : {id: '!' + selectedGame.language.id}">
+                <option value=''>{{translation.SelectLanguageForTheGame}}</option>
+            </select>
+            <div ng-hide="languageForOtherTranslation.language == null" class="formAni">
+                <form name="otherGameTranslation">
+                    <input type="text" class="form-control myFormColor" required data-ng-model="selectedGameOtherTranslation.gameName" placeholder={{translation.GameName}} />
+                    <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGameOtherTranslation.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+                    <label style="margin-top:20px;margin-bottom:20px;text-align:left">{{translation.AutoCompleteGameFeaturesForLanguage}}</label>
+                </form>
                 <div style="text-align: center">
-                    <button class="btn btn-success btn-block" type="submit" ng-click="" ng-disabled=""><span class="mif-checkmark"></span> {{translation.SaveGame}}</button>
-                </div>
-
-                <!--DELETE TRANSLATION-->
-                <div style="text-align: center">
-                    <button class="btn btn-danger btn-block" type="submit" ng-click="" ng-disabled=""><span class="mif-checkmark"></span> {{translation.DeleteGame}}</button>
+                    <!--TRANSLATE GAME-->
+                    <button class="btn btn-default btn-block" ng-click=""><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                    <!--SAVE TRANSLATION-->
+                    <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherTranslation()" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
+                    <!--DELETE TRANSLATION-->
+                    <button class="btn btn-danger btn-block" type="submit" ng-click="" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
                 </div>
             </div>
+
         </div>
     </div>
 
     <!--GAME LIST-->
     <div class="col-md-4">
+        <h2 style="text-align:left">{{translation.ListOfGameIncludesAvailableTranslation}}</h2>
         <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div class="row myFormColor" ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
+            <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
                 {{integrationGame.gameName}}
                 <div>
                     <div ng-repeat="al in integrationGame.gameTranslations" class="inline-block">

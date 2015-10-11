@@ -22,6 +22,11 @@ namespace WebBellwether.API.Services.IntegrationGameService
             _managementIntegrationGamesService = new ManagementIntegrationGamesService(unitOfWork);
         }
 
+        public ResultStateContainer SaveOtherGameTranslation(IntegrationGameModel integrationGame)
+        {
+            return _managementIntegrationGamesService.SaveOtherGameTranslation(integrationGame);
+        }
+
         public List<IntegrationGameModel> GetIntegrationGames(int language)
         {
             var games = new List<IntegrationGameModel>();
@@ -38,6 +43,10 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 });
             });
             return games;
+        }
+        public IntegrationGameModel GetGameTranslation(int gameId,int languageId)
+        {
+            return _managementIntegrationGamesService.GetGameTranslation(gameId,languageId);
         }
 
         public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)

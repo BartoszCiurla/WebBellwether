@@ -61,6 +61,14 @@ namespace WebBellwether.API.Controllers
             _service.PutIntegrationGame(integrationGame);
             return Ok();
         }
+
+        [Authorize]
+        [Route("PostSaveOtherGameTranslation")]
+        public IHttpActionResult PostSaveOtherGameTranslation(IntegrationGameModel integrationGame)
+        {
+            return Ok(_service.SaveOtherGameTranslation(integrationGame));
+        }
+
         [Authorize]
         [Route("PostDeleteIntegrationGame")]
         public IHttpActionResult PostDeleteIntegrationGame(IntegrationGameModel integrationGame)
@@ -104,9 +112,16 @@ namespace WebBellwether.API.Controllers
 
         [AllowAnonymous]
         [Route("GetIntegrationGames")]
-        public IHttpActionResult GetIntegrationGames(int language)//tutaj bedzie treba przesyłać id jezyka ... 
+        public IHttpActionResult GetIntegrationGames(int language)
         {
             return Ok(_service.GetIntegrationGames(language));
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("GetIntegrationGameTranslation")]
+        public IHttpActionResult GetIntegrationGameTranslation(int id,int languageId)//here i have game main id and language id 
+        {
+           return Ok(_service.GetGameTranslation(id,languageId));
         }
 
         [Authorize]
@@ -118,7 +133,7 @@ namespace WebBellwether.API.Controllers
 
         [AllowAnonymous]
         [Route("GetGameFeatures")]
-        public IHttpActionResult GetGameFeatures(int language)//tutaj bedzie treba przesyłać id jezyka ... 
+        public IHttpActionResult GetGameFeatures(int language)
         {
             return Ok(_service.GetGameFeatures(language));
         }

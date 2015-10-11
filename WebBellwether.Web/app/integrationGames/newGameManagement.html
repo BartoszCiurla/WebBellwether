@@ -2,31 +2,34 @@
     <div class="text-center">
         <div class="col-md-6 col-md-offset-3">
             <h1>{{translation.NewGame}}</h1>
-            <h1 style="color: #ce352c" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
-            <form name="addGame" novalidate ng-submit="newGame(gameModel)">
+            <h1 style="color: #ce352c; text-align:left" class="formAni" ng-show="severalLanguagesForGame">{{translation.ForSeveralLanguages}} GameId = {{gameIdForSeveralLanguages}}</h1>
+            <form name="addGame">
+                <div ng-hide="gameModel.language == null" class="formAni">
+                    <h4 style="text-align:left">{{translation.SeveralLanguagesDescription}}</h4>
+                    <div class="has-error" style="text-align:left">
+                        <div class="checkbox">
+                            <label style="font-weight: bold;">
+                                <input ng-click="setSeveralLanguage()" type="checkbox" />
+                                {{translation.GameForSeveralLanguages}}
+                            </label>
+                        </div>
+                    </div>
+                    <h4 style="text-align:left" class="formAni" ng-show="severalLanguagesForGame">{{translation.TranslateByGoogleDescription}}</h4>
+                </div>
                 <div>
                     <label for="language">{{translation.Language}}</label>
                     <select id="language" class="form-control myFormColor" ng-init="gameModel.language = languages[selectedLanguage - 1]; getGameFeatuesModelWithDetails(gameModel.language.id)" required data-ng-model="gameModel.language" data-ng-change="getGameFeatuesModelWithDetails(gameModel.language.id)" data-ng-options="language.languageName for language in languages">
                         <option value=''>{{translation.SelectLanguageForTheGame}}</option>
                     </select>
                 </div>
-
                 <div ng-hide="gameModel.language == null" class="formAni">
-                    <label>{{translation.SeveralLanguagesDescription}}</label>
-                    <div class="has-error">
-                        <div class="checkbox">
-                            <label style="font-weight: bold">
-                                <input ng-click="setSeveralLanguage()" type="checkbox" />
-                                {{translation.GameForSeveralLanguages}}
-                            </label>
-                        </div>
-                    </div>
-
                     <!--GAME NAME-->
                     <input type="text" class="form-control myFormColor" required data-ng-model="gameModel.gameName" placeholder={{translation.GameName}} autofocus />
 
                     <!--GAME DESCRIPTION-->
                     <textarea style="margin-top: 20px" class="form-control myFormColor" rows="10" required data-ng-model="gameModel.gameDetails" placeholder={{translation.GameDetails}}></textarea>
+
+                    <h4 style="text-align:left" ng-show="gameIdForSeveralLanguages != ''" class="formAni">{{translation.AutoCompleteGameFeaturesForLanguage}}</h4>
 
                     <!--GAME FEATURES-->
                     <div ng-repeat="feature in gameFeatures" class="formAni">
@@ -38,8 +41,10 @@
 
                     <!--SAVE GAME-->
                     <div style="text-align: center">
-                        <button class="btn btn-primary btn-block" type="submit" ng-disabled="addGame.$invalid"><span class="mif-checkmark"></span> {{translation.AddGame}}</button>
-                    </div>                  
+                        <button class="btn btn-primary btn-block" type="submit" ng-click="newGame(gameModel)" ng-disabled="addGame.$invalid"><span class="mif-checkmark"></span> {{translation.AddGame}}</button>
+                        <!--TRANSLATE GAME-->
+                        <button class="btn btn-default btn-block" ng-click="" ng-show="gameIdForSeveralLanguages != ''"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                    </div>
                 </div>
             </form>
         </div>

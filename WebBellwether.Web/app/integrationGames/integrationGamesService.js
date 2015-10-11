@@ -24,18 +24,18 @@
                     return x;
                 });
 
-            }
+            };
             var deleteIntegrationGame = function (integrationGame) {
                 return $http.post(serviceBase + 'api/IntegrationGames/PostDeleteIntegrationGame/', integrationGame).then(function (x) {
                     return x;
                 })
-            }
+            };
 
             var putIntegrationGame = function (integrationGame) {
                 return $http.post(serviceBase + 'api/IntegrationGames/PostEditIntegrationGame/', integrationGame).then(function (x) {
                     return x;
                 });
-            }
+            };
 
             var getIntegrationGamesWithAvailableLanguages = function(languageid) {
                 return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGamesWithAvailableLanguage/?language=' + languageid).then(function (x) {
@@ -58,12 +58,24 @@
                 return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatures/?language=' + languageid).then(function (x) {
                     return x;
                 });
-            }
-            var getGameFeatuesModelWithDetails = function(languageid) {
+            };
+            var getGameFeatuesModelWithDetails = function (languageid) {
                 return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatuesModelWithDetails/?language=' + languageid).then(function (x) {
                     return x;
                 });
-            }
+            };
+            var getIntegrationGameTranslation = function (id,language) {
+                return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGameTranslation', { params: { id: id, languageId :language} }).then(function (x) {
+                    return x;
+                });
+            };
+
+            var postSaveOtherGameTranslation = function (integrationGame) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostSaveOtherGameTranslation/', integrationGame).then(function (x) {
+                    return x;
+                });
+            };
+
             integrationGamesServiceFactory.GameFeatuesModelWithDetails = getGameFeatuesModelWithDetails;
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
             integrationGamesServiceFactory.IntegrationGames = getIntegrationGames;
@@ -74,6 +86,8 @@
             integrationGamesServiceFactory.PutGameFeature = putGameFeature;
             integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
             integrationGamesServiceFactory.DeleteIntegrationGame = deleteIntegrationGame;
+            integrationGamesServiceFactory.GetIntegrationGameTranslation = getIntegrationGameTranslation;
+            integrationGamesServiceFactory.SaveOtherGameTranslation = postSaveOtherGameTranslation;
 
             return integrationGamesServiceFactory;
 

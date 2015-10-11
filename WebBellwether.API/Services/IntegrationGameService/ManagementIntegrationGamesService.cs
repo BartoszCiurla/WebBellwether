@@ -17,6 +17,31 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             _unitOfWork = unitOfWork;
         }
+        public IntegrationGameModel GetGameTranslation(int gameId,int languageId)
+        {
+            
+            var entity=_unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId && x.Language.Id == languageId).FirstOrDefault();
+            if (entity == null)
+                return null;
+            IntegrationGameModel integrationGame = new IntegrationGameModel {Id = gameId,GameName = entity.IntegrationGameName,GameDescription=entity.IntegrationGameDescription,Language = entity.Language,IntegrationGameId = entity.Id};
+            return integrationGame;
+        }
+
+        public ResultStateContainer SaveOtherGameTranslation(IntegrationGameModel integrationGame)
+        {
+            if (integrationGame.IntegrationGameId == 0) // new translation , 
+            {
+
+            }
+            else // edit translation , in this situacion i don't use features only edit name and description 
+            {
+
+            }
+            return null;
+
+        }
+
+
         public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
         {
             IntegrationGame entity = new IntegrationGame
@@ -29,7 +54,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
             };
             _unitOfWork.IntegrationGameRepository.Insert(entity);
             _unitOfWork.Save();
-            var integrationGameDetail = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).SingleOrDefault();
+            var integrationGameDetail = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).FirstOrDefault();
             int integrationGameId = 0;
             if (integrationGameDetail != null)
             {
@@ -141,6 +166,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
 
         public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
         {
+            //btw this code don't have user notification 
             //the code below is highly complex not touch
             var entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
             if (entity != null)
@@ -148,6 +174,8 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 entity.IntegrationGameName = integrationGame.GameName;
                 entity.IntegrationGameDescription = integrationGame.GameDescription;
                 _unitOfWork.Save();
+                if (integrationGame.GameTranslations.Count() == 0)
+                    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
                 integrationGame.GameTranslations.ForEach(x =>
                 {
                     if (x.HasTranslation)

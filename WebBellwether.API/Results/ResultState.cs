@@ -4,6 +4,7 @@
     {
         GameAdded,
         GameAddFailure,
+        GameTranslationAdded,
         GameTranslationNotExists,
         GameFeatureTranslationNotExists,
         RemoveGameError,

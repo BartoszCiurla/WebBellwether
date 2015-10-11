@@ -2,21 +2,57 @@
     angular
         .module('webBellwether')
         .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', function ($scope, $timeout, integrationGamesService, sharedService) {
-            //pagination
+            //pagination and set other game translation (get from api)
             $scope.currentPage = 0;
             $scope.pageSize = 10;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.integrationGames.length / $scope.pageSize);
             }
             $scope.selectedGame = '';
+            $scope.selectedGameOtherTranslation = '';
+            $scope.languageForOtherTranslation = '';
             $scope.setSelectGame = function (selected) {
                 if (selected.id == $scope.selectedGame.id) {
                     $scope.selectedGame = '';
+                    $scope.selectedGameOtherTranslation = '';
                 } else {
                     $scope.selectedGame = selected;
+                    $scope.getTranslationForGame();
+                                  
                 }
             };
+            $scope.getTranslationForGame = function () {
+                //check language on new translation 
+                if ($scope.languageForOtherTranslation.language != null) {
+                    //check available translation by language in selectedGame
+                    $scope.selectedGame.gameTranslations.forEach(function (o) {
+                        if (o.language.id == $scope.languageForOtherTranslation.language.id && o.hasTranslation) {
+                            $scope.selectedGameOtherTranslation.id = $scope.selectedGame.id;      
+                            integrationGamesService.GetIntegrationGameTranslation($scope.selectedGame.id, $scope.languageForOtherTranslation.language.id).then(function (x) {
+                                $scope.selectedGameOtherTranslation = x.data;
+                            });
+                            return;
+                        }
+                    });
+                }
+                $scope.selectedGameOtherTranslation = '';
+            }
             // ********************
+
+
+            //edit insert new translation
+            $scope.saveOtherTranslation = function () {
+                var integrationGame = {
+                    Id: $scope.selectedGame.id,
+                    IntegrationGameId :$scope.selectedGameOtherTranslation.integrationGameId,
+                    GameName : $scope.selectedGameOtherTranslation.gameName,
+                    GameDescription :$scope.selectedGameOtherTranslation.gameDescription,
+                    Language: $scope.languageForOtherTranslation.language,
+                    IntegrationGameDetailModels: $scope.selectedGame.integrationGameDetailModels
+                }
+                integrationGamesService.SaveOtherGameTranslation(integrationGame);
+            };
+
 
             //integration games
             $scope.integrationGames = [];
