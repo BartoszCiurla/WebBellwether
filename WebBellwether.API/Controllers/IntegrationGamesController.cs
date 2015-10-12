@@ -40,6 +40,7 @@ namespace WebBellwether.API.Controllers
             ResultStateContainer result = _service.InsertIntegrationGame(gameModel);
             switch (result.ResultState)
             {
+                //this i really stupid ... 
                 case ResultState.GameAdded:
                     return Ok(result.Value);//standard 
                 case ResultState.ThisGameExistsInDb:
@@ -48,6 +49,10 @@ namespace WebBellwether.API.Controllers
                     return Ok(result.Value); //standard user can add more game translation
                 case ResultState.GameHaveTranslationForThisLanguage:
                     return BadRequest(result.Value.ToString()); // if game have translation for language
+                case ResultState.GameTranslationEdited:
+                    return Ok(result.Value);
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
                 default:
                     return BadRequest();
             }
@@ -60,13 +65,6 @@ namespace WebBellwether.API.Controllers
                 return BadRequest(ModelState);
             _service.PutIntegrationGame(integrationGame);
             return Ok();
-        }
-
-        [Authorize]
-        [Route("PostSaveOtherGameTranslation")]
-        public IHttpActionResult PostSaveOtherGameTranslation(IntegrationGameModel integrationGame)
-        {
-            return Ok(_service.SaveOtherGameTranslation(integrationGame));
         }
 
         [Authorize]

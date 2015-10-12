@@ -37,7 +37,7 @@
             <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation.language.id" data-ng-options="language.id as language.languageName for language in languages | filter : {id: '!' + selectedGame.language.id}">
                 <option value=''>{{translation.SelectLanguageForTheGame}}</option>
             </select>
-            <div ng-hide="languageForOtherTranslation.language == null" class="formAni">
+            <div ng-hide="languageForOtherTranslation.language.id == null" class="formAni">
                 <form name="otherGameTranslation">
                     <input type="text" class="form-control myFormColor" required data-ng-model="selectedGameOtherTranslation.gameName" placeholder={{translation.GameName}} />
                     <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGameOtherTranslation.gameDescription" placeholder={{translation.GameDetails}}></textarea>

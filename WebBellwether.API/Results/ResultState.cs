@@ -16,6 +16,9 @@
         GameFeatureDetailNotExists,
         GameCanBeAdded,
         GameHaveTranslationForThisLanguage,
-        SeveralLanguageGameAdded
+        SeveralLanguageGameAdded,
+        GameTranslationEdited,
+        Error
+
     }
 }

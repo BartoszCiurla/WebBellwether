@@ -9,5 +9,6 @@ namespace WebBellwether.API.Results
     {
         public ResultState ResultState { get; set; }
         public object Value { get; set; }
+        public object SecondValue { get; set; }
     }
 }

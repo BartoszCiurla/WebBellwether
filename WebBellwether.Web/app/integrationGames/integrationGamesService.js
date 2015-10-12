@@ -8,7 +8,7 @@
             var integrationGamesServiceFactory = {};
 
             var postIntegrationGame = function (gameModel) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', JSON.stringify(gameModel)).then(function (x) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', gameModel).then(function (x) {
                     return x;
                 });
             };
@@ -70,12 +70,6 @@
                 });
             };
 
-            var postSaveOtherGameTranslation = function (integrationGame) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostSaveOtherGameTranslation/', integrationGame).then(function (x) {
-                    return x;
-                });
-            };
-
             integrationGamesServiceFactory.GameFeatuesModelWithDetails = getGameFeatuesModelWithDetails;
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
             integrationGamesServiceFactory.IntegrationGames = getIntegrationGames;
@@ -87,7 +81,6 @@
             integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
             integrationGamesServiceFactory.DeleteIntegrationGame = deleteIntegrationGame;
             integrationGamesServiceFactory.GetIntegrationGameTranslation = getIntegrationGameTranslation;
-            integrationGamesServiceFactory.SaveOtherGameTranslation = postSaveOtherGameTranslation;
 
             return integrationGamesServiceFactory;
 

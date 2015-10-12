@@ -17,31 +17,15 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             _unitOfWork = unitOfWork;
         }
-        public IntegrationGameModel GetGameTranslation(int gameId,int languageId)
+        public IntegrationGameModel GetGameTranslation(int gameId, int languageId)
         {
-            
-            var entity=_unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId && x.Language.Id == languageId).FirstOrDefault();
+
+            var entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId && x.Language.Id == languageId).FirstOrDefault();
             if (entity == null)
                 return null;
-            IntegrationGameModel integrationGame = new IntegrationGameModel {Id = gameId,GameName = entity.IntegrationGameName,GameDescription=entity.IntegrationGameDescription,Language = entity.Language,IntegrationGameId = entity.Id};
+            IntegrationGameModel integrationGame = new IntegrationGameModel { Id = gameId, GameName = entity.IntegrationGameName, GameDescription = entity.IntegrationGameDescription, Language = entity.Language, IntegrationGameId = entity.Id };
             return integrationGame;
         }
-
-        public ResultStateContainer SaveOtherGameTranslation(IntegrationGameModel integrationGame)
-        {
-            if (integrationGame.IntegrationGameId == 0) // new translation , 
-            {
-
-            }
-            else // edit translation , in this situacion i don't use features only edit name and description 
-            {
-
-            }
-            return null;
-
-        }
-
-
         public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
         {
             IntegrationGame entity = new IntegrationGame
@@ -129,7 +113,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 {
                     var gameEntity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
                     if (gameEntity == null)
-                        return new ResultStateContainer { ResultState= ResultState.GameTranslationNotExists};
+                        return new ResultStateContainer { ResultState = ResultState.GameTranslationNotExists };
                     var gameFeatureEntity = _unitOfWork.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.Id == gameEntity.Id);
                     if (gameFeatureEntity == null)
                         return new ResultStateContainer { ResultState = ResultState.GameFeatureTranslationNotExists };
@@ -149,7 +133,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
                     if (gameTranslationCount == 1)//have only one translation , can delete main id for game 
                     {
                         var mainGameEntity = _unitOfWork.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
-                        if(mainGameEntity != null)
+                        if (mainGameEntity != null)
                             //delete main game
                             _unitOfWork.IntegrationGameRepository.Delete(mainGameEntity);
                     }
@@ -161,7 +145,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
             {
                 return new ResultStateContainer { ResultState = ResultState.RemoveGameError, Value = e };
             }
-            
+
         }
 
         public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
@@ -174,8 +158,8 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 entity.IntegrationGameName = integrationGame.GameName;
                 entity.IntegrationGameDescription = integrationGame.GameDescription;
                 _unitOfWork.Save();
-                if (integrationGame.GameTranslations.Count() == 0)
-                    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
+                //if (integrationGame.GameTranslations.Count() == 0)
+                //    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
                 integrationGame.GameTranslations.ForEach(x =>
                 {
                     if (x.HasTranslation)
@@ -190,7 +174,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
                         _unitOfWork.Save();
                         entity = null;
                     }
-                });                
+                });
                 return ResultState.GameAdded;
             }
             return ResultState.GameAdded;
@@ -228,13 +212,31 @@ namespace WebBellwether.API.Services.IntegrationGameService
         }
         public ResultStateContainer InsertSeveralLanguageGame(NewIntegrationGameModel game)
         {
-            //if game have id i must check exists game for game language
-            if (CheckNewGameLanguage(game) != ResultState.GameCanBeAdded)
-                return new ResultStateContainer { ResultState = ResultState.GameHaveTranslationForThisLanguage, Value = game.Id };
-            var entity = _unitOfWork.IntegrationGameRepository.GetFirst(x => x.Id == game.Id);
-            entity?.IntegrationGameDetails.Add(BuildIntegrationGameDetail(game));
-            _unitOfWork.Save();
-            return new ResultStateContainer { ResultState = ResultState.SeveralLanguageGameAdded, Value = game.Id };
+            try
+            {
+                //if game have id i must check exists game for game language
+                if (game.IntegrationGameId != 0) // when i have this id i know this is edit 
+                {
+                    var entityToEdit = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == game.IntegrationGameId).FirstOrDefault();
+                    if (entityToEdit == null)
+                        return new ResultStateContainer { ResultState = ResultState.GameTranslationNotExists };
+
+                    entityToEdit.IntegrationGameName = game.GameName;
+                    entityToEdit.IntegrationGameDescription = game.GameDetails;
+                    _unitOfWork.Save();
+                    return new ResultStateContainer { ResultState = ResultState.GameTranslationEdited };
+                }
+                if (CheckNewGameLanguage(game) != ResultState.GameCanBeAdded)
+                    return new ResultStateContainer { ResultState = ResultState.GameHaveTranslationForThisLanguage, Value = game.Id };
+                var entity = _unitOfWork.IntegrationGameRepository.GetFirst(x => x.Id == game.Id);
+                entity?.IntegrationGameDetails.Add(BuildIntegrationGameDetail(game));
+                _unitOfWork.Save();
+                return new ResultStateContainer { ResultState = ResultState.SeveralLanguageGameAdded, Value = game.Id };
+            }
+            catch (Exception e)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
         }
         public ResultState CheckNewGameLanguage(NewIntegrationGameModel game)
         {
