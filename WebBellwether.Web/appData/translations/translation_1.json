@@ -102,5 +102,7 @@
   "AutoCompleteGameFeaturesForLanguage": "Details of the game will be automatically translated into the current language to another translation",
   "ListOfGameIncludesAvailableTranslation": "List of game with available translations",
   "TranslateByGoogle": "Translate by google",
-  "TranslateByGoogleDescription": "After add first translation we active translate by google function.But you must remember , the best algoritm dont swith the humam"
+  "TranslateByGoogleDescription": "After add first translation we active translate by google function.But you must remember , the best algoritm dont swith the humam",
+  "RemoveGameTranslation": "Remove game translation",
+  "Delete": "Delete"
 }

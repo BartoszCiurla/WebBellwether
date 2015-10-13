@@ -118,11 +118,12 @@ namespace WebBellwether.API.Services.IntegrationGameService
                     if (gameFeatureEntity == null)
                         return new ResultStateContainer { ResultState = ResultState.GameFeatureTranslationNotExists };
                     int gameTranslationCount = 0;
-                    integrationGame.GameTranslations.ForEach(x =>
-                    {
-                        if (x.HasTranslation)
-                            gameTranslationCount++;
-                    });
+                    if (integrationGame.GameTranslations != null) // when i have null here i know this is only translation
+                        integrationGame.GameTranslations.ForEach(x =>
+                        {
+                            if (x.HasTranslation)
+                                gameTranslationCount++;
+                        });
                     //delete game feature
                     gameFeatureEntity.ToList().ForEach(x =>
                     {
@@ -143,7 +144,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
             }
             catch (Exception e)
             {
-                return new ResultStateContainer { ResultState = ResultState.RemoveGameError, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
             }
 
         }

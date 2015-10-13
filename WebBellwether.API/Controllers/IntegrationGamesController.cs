@@ -75,12 +75,12 @@ namespace WebBellwether.API.Controllers
             switch (result.ResultState)
             {
                 case ResultState.GameRemoved:
-                    return Ok();
+                    return Ok(result);
                 case ResultState.GameTranslationNotExists:
-                    break;
+                    return BadRequest(result.Value.ToString()); 
                 case ResultState.GameFeatureTranslationNotExists:
-                    break;
-                case ResultState.RemoveGameError:
+                    return BadRequest(result.Value.ToString());
+                case ResultState.Error:
                     return BadRequest(result.Value.ToString());
             }
             return Ok();

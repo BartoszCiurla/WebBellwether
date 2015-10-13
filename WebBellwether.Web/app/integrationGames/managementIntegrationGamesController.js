@@ -135,14 +135,26 @@
                 })
                 return result;
             }
+            $scope.deleteTranslationDialog = function () {
+                var dialog = $('#deleteTranslationDialog').data('dialog');
+                dialog.open();
+            }
             $scope.deleteGame = function (selectedGame, removeAllTranslation) {
                 var dialog = $('#deleteDialog').data('dialog');
+                dialog.close();
+                dialog = $('#deleteTranslationDialog').data('dialog');
                 dialog.close();
                 if (removeAllTranslation)
                     selectedGame.temporarySeveralTranslationDelete = removeAllTranslation;
                 integrationGamesService.DeleteIntegrationGame(selectedGame).then(function (x) {
                     $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
+                    console.log(x.data.message)
+                    //tutaj jest jednak dupa bo musze mieć osobną funkcję do tego inaczej to nie zadziała ...powód np usuwanie translacji i potem odznaczenie 
+                    //jej z listy dostępnych tranlacji ... kurwa 
                     //after delete i must refresh all list 
+                },
+                function (results) {
+
                 });
             };
             // ********************

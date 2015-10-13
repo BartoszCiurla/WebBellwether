@@ -102,5 +102,8 @@
   "AutoCompleteGameFeaturesForLanguage": "Detale gry zostaną automatycznie przetłumaczone na aktualnie wybrany język innej translacji",
   "ListOfGameIncludesAvailableTranslation": "Lista gier zawierajaca dostepne translacje",
   "TranslateByGoogle": "Przetłumacz za pomocą google",
-  "TranslateByGoogleDescription": "Po dodaniu pierwszej translacji zostanie uaktywniona opcja przetłumacz za pomocą google translate.Pamiętaj jednak że żaden algorym nie zastąpi człowieka ... no chyba że pisał go autor tego portalu ;P "
+  "TranslateByGoogleDescription": "Po dodaniu pierwszej translacji zostanie uaktywniona opcja przetłumacz za pomocą google translate.Pamiętaj jednak że żaden algorym nie zastąpi człowieka ... no chyba że pisał go autor tego portalu ;P ",
+  "RemoveGameTranslation": "Usuwanie translacji gry",
+  "Delete": "Usuń"
+
 }
