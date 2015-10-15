@@ -21,6 +21,8 @@
 
                 }
             };
+
+
             $scope.getTranslationForGame = function () {
                 //check language on new translation 
                 if ($scope.languageForOtherTranslation.language != null) {
@@ -39,6 +41,19 @@
             }
             // ********************
 
+            //set mark in main game translations 
+            $scope.setTranslation = function (translationStatus) {
+                $scope.selectedGame.gameTranslations.forEach(function (x) {
+                    if (x.language.id == $scope.languageForOtherTranslation.language.id) {
+                        x.hasTranslation = translationStatus;
+                        //when translation status is false then i know translation not exists
+                        if (!translationStatus)
+                            $scope.selectedGameOtherTranslation = '';
+                    };
+
+                });
+            };
+            // ********************
 
             //edit insert new translation
             $scope.saveOtherTranslation = function () {
@@ -56,10 +71,10 @@
                 });
                 integrationGamesService.AddNewIntegrationGame(integrationGame).then(function (results) {
                     //success 
-                    $scope.selectedGame.gameTranslations.forEach(function (x) {
-                        if (x.language.id == integrationGame.Language.id)
-                            x.hasTranslation = true;
-                    })
+                    //mark translation
+                    $scope.setTranslation(true);
+                    $scope.getTranslationForGame();
+
                     if (integrationGame.IntegrationGameId == null) {
                         userNotification = $scope.translation.TranslationAdded;
                     }
@@ -118,9 +133,13 @@
             $scope.editGame = function (selectedGame) {
                 integrationGamesService.PutIntegrationGame(selectedGame).then(function (x) {
                     //tutaj trzeba by jeszcze obsluzyc jakies informowanie usera 
+                }, function (x) {
+
                 });
             };
             // ********************
+
+
 
             //delete integration games
             $scope.deleteDialog = function () {
@@ -139,10 +158,38 @@
                 var dialog = $('#deleteTranslationDialog').data('dialog');
                 dialog.open();
             }
+            $scope.deleteTranslation = function (selectedGameOtherTranslation) {
+                dialog = $('#deleteTranslationDialog').data('dialog');
+                dialog.close();
+                integrationGamesService.DeleteIntegrationGame(selectedGameOtherTranslation).then(function (x) {
+                    //mark translation false 
+                    $scope.setTranslation(false);
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.TranlastionRemoved,
+                        type: 'success',
+                    });
+                },
+               function (x) {
+                   var userNotification = '';
+                   console.log(x.data.message);
+                   if (x.data.message == "1")
+                       userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.GameTranslationNotExists;
+                   else if (x.data.message == "2")
+                       userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.GameFeaturesTranslationNotExists;
+                   else
+                       userNotification = $scope.translation.TranslationNotRemoved + " " + x.data.message;
+                   $.Notify({
+                       caption: $scope.translation.Failure,
+                       content: userNotification,
+                       type: 'alert',
+                   });
+               });
+
+            }
+
             $scope.deleteGame = function (selectedGame, removeAllTranslation) {
                 var dialog = $('#deleteDialog').data('dialog');
-                dialog.close();
-                dialog = $('#deleteTranslationDialog').data('dialog');
                 dialog.close();
                 if (removeAllTranslation)
                     selectedGame.temporarySeveralTranslationDelete = removeAllTranslation;

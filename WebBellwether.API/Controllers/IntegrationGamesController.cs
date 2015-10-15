@@ -63,7 +63,16 @@ namespace WebBellwether.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            _service.PutIntegrationGame(integrationGame);
+            ResultStateContainer result =  _service.PutIntegrationGame(integrationGame);
+            switch (result.ResultState)
+            {
+                case ResultState.GameRemoved:
+                    break;
+                case ResultState.GameNotExists:
+                    break;
+                case ResultState.Error:
+                    break;
+            }
             return Ok();
         }
 
@@ -77,9 +86,9 @@ namespace WebBellwether.API.Controllers
                 case ResultState.GameRemoved:
                     return Ok(result);
                 case ResultState.GameTranslationNotExists:
-                    return BadRequest(result.Value.ToString()); 
+                    return BadRequest("1"); 
                 case ResultState.GameFeatureTranslationNotExists:
-                    return BadRequest(result.Value.ToString());
+                    return BadRequest("2");
                 case ResultState.Error:
                     return BadRequest(result.Value.ToString());
             }

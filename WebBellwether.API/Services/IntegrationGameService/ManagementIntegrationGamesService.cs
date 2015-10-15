@@ -149,36 +149,44 @@ namespace WebBellwether.API.Services.IntegrationGameService
 
         }
 
-        public ResultState PutIntegrationGame(IntegrationGameModel integrationGame)
+        public ResultStateContainer PutIntegrationGame(IntegrationGameModel integrationGame)
         {
             //btw this code don't have user notification 
             //the code below is highly complex not touch
-            var entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
-            if (entity != null)
+            try
             {
-                entity.IntegrationGameName = integrationGame.GameName;
-                entity.IntegrationGameDescription = integrationGame.GameDescription;
-                _unitOfWork.Save();
-                //if (integrationGame.GameTranslations.Count() == 0)
-                //    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
-                integrationGame.GameTranslations.ForEach(x =>
+                var entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
+                if (entity != null)
                 {
-                    if (x.HasTranslation)
+                    entity.IntegrationGameName = integrationGame.GameName;
+                    entity.IntegrationGameDescription = integrationGame.GameDescription;
+                    _unitOfWork.Save();
+                    //if (integrationGame.GameTranslations.Count() == 0)
+                    //    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
+                    integrationGame.GameTranslations.ForEach(x =>
                     {
-                        entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id).FirstOrDefault();
-                        integrationGame.IntegrationGameDetailModels.ForEach(g =>
+                        if (x.HasTranslation)
                         {
-                            entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId)
-                            .GameFeatureDetailLanguage = _unitOfWork.GameFeatureDetailLanguageRepository
-                            .GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
-                        });
-                        _unitOfWork.Save();
-                        entity = null;
-                    }
-                });
-                return ResultState.GameAdded;
+                            entity = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id).FirstOrDefault();
+                            integrationGame.IntegrationGameDetailModels.ForEach(g =>
+                            {
+                                entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId)
+                                .GameFeatureDetailLanguage = _unitOfWork.GameFeatureDetailLanguageRepository
+                                .GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
+                            });
+                            _unitOfWork.Save();
+                            entity = null;
+                        }
+                    });
+                    return new ResultStateContainer { ResultState = ResultState.GameEdited };
+                }
+                return new ResultStateContainer { ResultState = ResultState.GameNotExists };
             }
-            return ResultState.GameAdded;
+            catch(Exception e)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+           
         }
 
 
