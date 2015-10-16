@@ -606,6 +606,7 @@
     <Content Include="app\authorizations\associateController.js" />
     <Content Include="app\authorizations\authSwitchController.js" />
     <Content Include="app\bellwether\bellwetherController.js" />
+    <Content Include="app\googleTranslate\googleTranslationServise.js" />
     <Content Include="app\guide\guideController.js" />
     <Content Include="app\home\homeController.js" />
     <Content Include="app\home\indexController.js" />

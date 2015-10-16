@@ -28,25 +28,33 @@ namespace WebBellwether.API.Services.IntegrationGameService
         }
         public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
         {
-            IntegrationGame entity = new IntegrationGame
+            try
             {
-                CreationDate = DateTime.UtcNow,
-                IntegrationGameDetails = new List<IntegrationGameDetail>
+                IntegrationGame entity = new IntegrationGame
+                {
+                    CreationDate = DateTime.UtcNow,
+                    IntegrationGameDetails = new List<IntegrationGameDetail>
                 {
                    BuildIntegrationGameDetail(game)
                 }
-            };
-            _unitOfWork.IntegrationGameRepository.Insert(entity);
-            _unitOfWork.Save();
-            var integrationGameDetail = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).FirstOrDefault();
-            int integrationGameId = 0;
-            if (integrationGameDetail != null)
-            {
-                integrationGameId =
-                    integrationGameDetail
-                        .IntegrationGame.Id;
+                };
+                _unitOfWork.IntegrationGameRepository.Insert(entity);
+                _unitOfWork.Save();
+                var integrationGameDetail = _unitOfWork.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).FirstOrDefault();
+                int integrationGameId = 0;
+                if (integrationGameDetail != null)
+                {
+                    integrationGameId =
+                        integrationGameDetail
+                            .IntegrationGame.Id;
+                }
+                return new ResultStateContainer { ResultState = ResultState.GameAdded, Value = integrationGameId };
             }
-            return new ResultStateContainer { ResultState = ResultState.GameAdded, Value = integrationGameId };
+            catch(Exception e)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+           
         }
         public IntegrationGameDetail BuildIntegrationGameDetail(NewIntegrationGameModel game)
         {
@@ -258,7 +266,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
         {
             //probably i set here multiple language insert game 
-            if (_unitOfWork.IntegrationGameDetailRepository.GetFirst(x => x.IntegrationGameName.Contains(game.GameName)) != null)
+            if (_unitOfWork.IntegrationGameDetailRepository.GetFirst(x => x.IntegrationGameName.Equals(game.GameName)) != null)
                 return new ResultStateContainer { ResultState = ResultState.ThisGameExistsInDb, Value = game.Id };
             if (game.Id == 0)
                 return InsertSingleLanguageGame(game);

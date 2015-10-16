@@ -63,6 +63,9 @@
   "SelectDetail": "Wybierz detal",
   "GameAdded": "Gra dodana",
   "GameExists": "Gra o takiej nazwie już istnieje",
+  "GameNotExists": "Gra nie istnieje",
+  "GameEdited": "Gra została edytowana",
+  "GameRemoved": "Gra została usunięta",
   "SeveralLanguagesDescription": "Jeśli chcesz dodać grę dla kilku językow zaznacz opcje poniżej. Po wypełnieniu wymaganych pól dodaj gre a następnie zmień język i ponownie wypełnij nazwe oraz opis , cechy gry dla kolejnej translacji zostoną automatycznie zmienione według ustawionego języka . Pamiętaj aby wyłączyć opcje po zakończeniu !",
   "GameForSeveralLanguages": "Gra dla wielu języków",
   "ForSeveralLanguages": "dla wielu języków",
@@ -108,6 +111,7 @@
   "TranslateByGoogle": "Przetłumacz za pomocą google",
   "TranslateByGoogleDescription": "Po dodaniu pierwszej translacji zostanie uaktywniona opcja przetłumacz za pomocą google translate.Pamiętaj jednak że żaden algorym nie zastąpi człowieka ... no chyba że pisał go autor tego portalu ;P ",
   "RemoveGameTranslation": "Usuwanie translacji gry",
-  "Delete": "Usuń"
+  "Delete": "Usuń",
+  "CriticalError": "Błąd krytyczny musisz debugować !!"
 
 }

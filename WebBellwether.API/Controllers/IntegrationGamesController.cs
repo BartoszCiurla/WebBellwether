@@ -54,7 +54,7 @@ namespace WebBellwether.API.Controllers
                 case ResultState.Error:
                     return BadRequest(result.Value.ToString());
                 default:
-                    return BadRequest();
+                    return BadRequest("CriticalError");
             }
         }
         [Authorize]
@@ -66,14 +66,15 @@ namespace WebBellwether.API.Controllers
             ResultStateContainer result =  _service.PutIntegrationGame(integrationGame);
             switch (result.ResultState)
             {
-                case ResultState.GameRemoved:
-                    break;
+                case ResultState.GameEdited:
+                    return Ok();
                 case ResultState.GameNotExists:
-                    break;
+                    return BadRequest("GameNotExists");
                 case ResultState.Error:
-                    break;
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
             }
-            return Ok();
         }
 
         [Authorize]
@@ -86,13 +87,14 @@ namespace WebBellwether.API.Controllers
                 case ResultState.GameRemoved:
                     return Ok(result);
                 case ResultState.GameTranslationNotExists:
-                    return BadRequest("1"); 
+                    return BadRequest("GameTranslationNotExists"); 
                 case ResultState.GameFeatureTranslationNotExists:
-                    return BadRequest("2");
+                    return BadRequest("GameFeatureTranslationNotExists");
                 case ResultState.Error:
                     return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
             }
-            return Ok();
         }
 
         [Authorize]

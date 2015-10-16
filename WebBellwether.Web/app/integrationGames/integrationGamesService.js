@@ -70,6 +70,13 @@
                 });
             };
 
+            var test = function () {
+                return $http.get('https://www.googleapis.com/language/translate/v2?key=' + '812053907175' + '&source=en&target=de&q=Hello%20world').then(function (x) {
+                    return x;
+                });
+            };
+
+            integrationGamesServiceFactory.Test = test;
             integrationGamesServiceFactory.GameFeatuesModelWithDetails = getGameFeatuesModelWithDetails;
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
             integrationGamesServiceFactory.IntegrationGames = getIntegrationGames;

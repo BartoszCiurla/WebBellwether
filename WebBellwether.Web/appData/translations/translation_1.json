@@ -63,6 +63,9 @@
   "SelectDetail": "Select detail",
   "GameAdded": "Game added",
   "GameExists": "Game with the same name already exists",
+  "GameNotExists": "Game not exists",
+  "GameEdited": "Game edited",
+  "GameRemoved": "Game removed",
   "SeveralLanguagesDescription": "If you want to add the game for several languages, select options below. After filling out the required fields add the game and then change the language and then fill in the name and description , features of the game for the next translation will automatically be changed according to the selected language . Remember to turn off the options at the end !",
   "GameForSeveralLanguages": "Game for several languages",
   "ForSeveralLanguages": "for several languages",
@@ -108,5 +111,6 @@
   "TranslateByGoogle": "Translate by google",
   "TranslateByGoogleDescription": "After add first translation we active translate by google function.But you must remember , the best algoritm dont swith the humam",
   "RemoveGameTranslation": "Remove game translation",
-  "Delete": "Delete"
+  "Delete": "Delete",
+  "CriticalError": "Critical error you must debug this !!"
 }

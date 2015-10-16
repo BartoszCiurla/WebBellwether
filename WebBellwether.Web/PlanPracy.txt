@@ -1,4 +1,6 @@
-﻿3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
+﻿1)PRIO JAK CHUJ JUTRO TO ZROBIE , I UZUJE TEGO PRAWDOPODOBNIE DARMOWE https://tech.yandex.com/translate/doc/dg/reference/getLangs-docpage/
+
+3)edycja gier (NAJPIERW NAPISZ KURWA CV) potem modyfikacja navbara nei ma co mieszac edycji gier z dodawaniem gier oraz ich edytowaniem + edytowaniem cech 
 jak to ma z grubsza działać 
 -paginacja na np 14
 -mozliwa edycja listy gier z obecnym językiem + edycja cech (wazne zmiana cechy ma dzialac na wszystkie translacje mozna uzyc takiego jakby message boxa z metro) hmm czyli potrzebuje tutaj tez detale cech 

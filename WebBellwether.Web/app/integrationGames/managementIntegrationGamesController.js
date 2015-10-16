@@ -2,6 +2,7 @@
     angular
         .module('webBellwether')
         .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', function ($scope, $timeout, integrationGamesService, sharedService) {
+            var userNotification = '';
             //pagination and set other game translation (get from api)
             $scope.currentPage = 0;
             $scope.pageSize = 10;
@@ -13,15 +14,23 @@
             $scope.languageForOtherTranslation = '';
             $scope.setSelectGame = function (selected) {
                 if (selected.id == $scope.selectedGame.id) {
-                    $scope.selectedGame = '';
-                    $scope.selectedGameOtherTranslation = '';
+                    $scope.resetSelectedGameOrTranslation(true, true);
                 } else {
                     $scope.selectedGame = selected;
                     $scope.getTranslationForGame();
-
                 }
             };
+            //test
+            $scope.Test = function () {
 
+                
+                //integrationGamesService.Test().then(function (x) {
+                //    console.log(x.data);
+                //}, function (x) {
+                //    console.log(x.data);
+                //});
+            };
+            //test
 
             $scope.getTranslationForGame = function () {
                 //check language on new translation 
@@ -37,9 +46,17 @@
                         }
                     });
                 }
-                $scope.selectedGameOtherTranslation = '';
+                $scope.resetSelectedGameOrTranslation(false, true);
             }
             // ********************
+
+            //reset selected game or translation true is reset 
+            $scope.resetSelectedGameOrTranslation = function (game, translation) {
+                if (game == true)
+                    $scope.selectedGame = '';
+                if (translation == true)
+                    $scope.selectedGameOtherTranslation = '';
+            }
 
             //set mark in main game translations 
             $scope.setTranslation = function (translationStatus) {
@@ -48,7 +65,7 @@
                         x.hasTranslation = translationStatus;
                         //when translation status is false then i know translation not exists
                         if (!translationStatus)
-                            $scope.selectedGameOtherTranslation = '';
+                            $scope.resetSelectedGameOrTranslation(false, true);
                     };
 
                 });
@@ -57,7 +74,7 @@
 
             //edit insert new translation
             $scope.saveOtherTranslation = function () {
-                var userNotification = ''
+                //var userNotification = ''
                 var integrationGame = {
                     Id: $scope.selectedGame.id,//general id 
                     IntegrationGameId: $scope.selectedGameOtherTranslation.integrationGameId, // id for translation
@@ -124,17 +141,32 @@
                         }
                     });
                     if ($scope.selectedGame.language.id != $scope.selectedLanguage)
-                        $scope.selectedGame = '';
+                        $scope.resetSelectedGameOrTranslation(true, false);
                 }
             }
             // ********************
 
             //edit integration games
-            $scope.editGame = function (selectedGame) {
+            $scope.editGame = function (selectedGame) {                
                 integrationGamesService.PutIntegrationGame(selectedGame).then(function (x) {
-                    //tutaj trzeba by jeszcze obsluzyc jakies informowanie usera 
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.GameEdited,
+                        type: 'success',
+                    });
                 }, function (x) {
-
+                    //var userNotification = '';
+                    if (x.data.message == "GameNotExists")
+                        userNotification = $scope.translation.GameNotExists;
+                    else if (x.data.message == "CriticalError")
+                        userNotification = $scope.translation.CriticalError;
+                    else
+                        userNotification = X.data.message; // handled error
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                    });
                 });
             };
             // ********************
@@ -194,14 +226,25 @@
                 if (removeAllTranslation)
                     selectedGame.temporarySeveralTranslationDelete = removeAllTranslation;
                 integrationGamesService.DeleteIntegrationGame(selectedGame).then(function (x) {
+                    $scope.resetSelectedGameOrTranslation(true, true);
                     $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
-                    console.log(x.data.message)
-                    //tutaj jest jednak dupa bo musze mieć osobną funkcję do tego inaczej to nie zadziała ...powód np usuwanie translacji i potem odznaczenie 
-                    //jej z listy dostępnych tranlacji ... kurwa 
-                    //after delete i must refresh all list 
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.GameRemoved,
+                        type: 'success',
+                    });
+                    
                 },
-                function (results) {
-
+                function (x) {
+                   // var userNotification = '';
+                    if (x.data.message == "GameTranslationNotExists")
+                        userNotification = $scope.translation.GameTranslationNotExists;
+                    else if (x.data.message == "GameFeatureTranslationNotExists")
+                        userNotification = $scope.translation.GameFeaturesTranslationNotExists;
+                    else if (x.data.message == "CriticalError")
+                        userNotification = $scope.translation.CriticalError;
+                    else
+                        userNotification = x.data.message; // handled error
                 });
             };
             // ********************

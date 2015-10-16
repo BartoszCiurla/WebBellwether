@@ -21,11 +21,7 @@
         GameCanBeAdded,
         GameHaveTranslationForThisLanguage,
         SeveralLanguageGameAdded,
-        GameTranslationEdited,
-        //w przyszłości beda uzywane tylko te 
-        Added,
-        NotExists,
+        GameTranslationEdited,       
         Error
-
     }
 }
