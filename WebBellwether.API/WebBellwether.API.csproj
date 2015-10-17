@@ -166,6 +166,7 @@
     <Compile Include="Controllers\IntegrationGamesController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Controllers\TranslationController.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguage.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Models\IntegrationGame\NewIntegrationGameModel.cs" />
     <Compile Include="Models\Auth\UserModel.cs" />
     <Compile Include="Models\IntegrationGame\SimpleIntegrationGame.cs" />
+    <Compile Include="Models\Translation\TranslationWebServiceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\GoogleAuthProvider.cs" />

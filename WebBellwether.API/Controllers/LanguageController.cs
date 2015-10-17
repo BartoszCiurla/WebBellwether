@@ -17,6 +17,6 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult Get()
         {
             return Ok(_ctx.Languages.ToList());
-        }
+        }  
     }
 }

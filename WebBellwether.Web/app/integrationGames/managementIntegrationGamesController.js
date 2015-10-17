@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', function ($scope, $timeout, integrationGamesService, sharedService) {
+        .controller('managementIntegrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'translateService', 'sharedService', function ($scope, $timeout, integrationGamesService, translateService, sharedService) {
             var userNotification = '';
             //pagination and set other game translation (get from api)
             $scope.currentPage = 0;
@@ -21,15 +21,36 @@
                 }
             };
             //test
-            $scope.Test = function () {
+            $scope.translateGame = function (currentLanguage, targetLanguage, gameName, gameDescription) {
+                //fast code for test 
+                var tempCurrentLang = '';
+                var tempTargetLang = '';
+                if (currentLanguage == 1)
+                    tempCurrentLang = 'en';
+                else
+                    tempCurrentLang = 'pl';
+                if (targetLanguage = 1)
+                    tempTargetLang = 'en';
+                else
+                    tempTargetLang = 'pl';
+                translateService.TranslateIntegrationGame(tempCurrentLang, tempTargetLang, gameName, gameDescription).then(function (x) {
+                    $scope.selectedGameOtherTranslation = {};
+                    $scope.selectedGameOtherTranslation.gameName = x.data.text[0];
+                    $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];
+                });
+            };
+            //$scope.Test = function (header,content) {
 
                 
-                //integrationGamesService.Test().then(function (x) {
-                //    console.log(x.data);
-                //}, function (x) {
-                //    console.log(x.data);
-                //});
-            };
+            //    integrationGamesService.Test(header,content).then(function (x) {
+            //        console.log(x.data);
+            //        $scope.selectedGameOtherTranslation = {};
+            //        $scope.selectedGameOtherTranslation.gameName = x.data.text[0];
+            //        $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];
+            //    }, function (x) {
+            //        console.log(x.data);
+            //    });
+            //};
             //test
 
             $scope.getTranslationForGame = function () {

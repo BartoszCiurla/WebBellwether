@@ -45,16 +45,9 @@
                 </form>
                 <div style="text-align: center">
                     <!--TRANSLATE GAME-->
-                    <button class="btn btn-default btn-block" ng-click="Test()"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                    <button class="btn btn-default btn-block" ng-click="translateGame(selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription)"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
                     <!--SAVE TRANSLATION-->
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherTranslation()" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
-
-                    <input type="text" name="text" />
-                    <a href=""  class=" say">Say it!</a>
-                    <!--<button class="say">Siema </button>-->
-                        <audio src="" class="speech" hidden></audio>
-
-
                     <!--DELETE TRANSLATION-->
                     <button class="btn btn-danger btn-block" type="submit" ng-click="deleteTranslationDialog()" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
                 </div>

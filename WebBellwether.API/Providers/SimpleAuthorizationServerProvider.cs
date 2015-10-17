@@ -87,6 +87,10 @@ namespace WebBellwether.API.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
+            //test teoretycznie powinno pomuc 
+            //frcontext.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "*" });
+            //test
+
             using (AuthRepository _repo = new AuthRepository())
             {
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);

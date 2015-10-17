@@ -14,6 +14,7 @@ using WebBellwether.API.Models;
 using WebBellwether.API.Models.Auth;
 using WebBellwether.API.Repositories;
 using WebBellwether.API.Results;
+using System.Collections.Generic;
 
 namespace WebBellwether.API.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebBellwether.API.Controllers
         public AccountController()
         {
             _repo = new AuthRepository();
-        }
+        }       
 
         // POST api/Account/Register
         [AllowAnonymous]

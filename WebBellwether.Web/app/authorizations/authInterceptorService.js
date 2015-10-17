@@ -1,19 +1,25 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .factory('authInterceptorService', ['$q', '$injector','$location', 'localStorageService', function ($q, $injector,$location, localStorageService) {
+        .factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService', function ($q, $injector, $location, localStorageService) {
 
             var authInterceptorServiceFactory = {};
 
             var _request = function (config) {
 
                 config.headers = config.headers || {};
-       
+
                 var authData = localStorageService.get('authorizationData');
                 if (authData) {
-                    config.headers.Authorization = 'Bearer ' + authData.token;
+                    //This option is for testing time
+                    var test = config.url.substr(0,17)
+                    if (angular.equals(test, 'https://translate'))
+                        console.log("Other service");
+                        //This option is for testing time
+                    else {
+                        config.headers.Authorization = 'Bearer ' + authData.token;
+                    }
                 }
-
                 return config;
             }
 

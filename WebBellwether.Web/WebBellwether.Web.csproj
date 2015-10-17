@@ -606,7 +606,6 @@
     <Content Include="app\authorizations\associateController.js" />
     <Content Include="app\authorizations\authSwitchController.js" />
     <Content Include="app\bellwether\bellwetherController.js" />
-    <Content Include="app\googleTranslate\googleTranslationServise.js" />
     <Content Include="app\guide\guideController.js" />
     <Content Include="app\home\homeController.js" />
     <Content Include="app\home\indexController.js" />
@@ -621,6 +620,7 @@
     <Content Include="app\authorizations\refreshController.js" />
     <Content Include="app\authorizations\signupController.js" />
     <Content Include="app\authorizations\tokensManagerController.js" />
+    <Content Include="app\translations\translateService.js" />
     <Content Include="app\translations\translationController.js" />
     <Content Include="app\filters\customFilters.js" />
     <Content Include="app\routeAnimate.js" />
