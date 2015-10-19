@@ -616,6 +616,9 @@
     <Content Include="app\jokes\jokesController.js" />
     <Content Include="app\authorizations\loginController.js" />
     <Content Include="app\integrationGames\managementIntegrationGamesController.js" />
+    <Content Include="app\jokes\jokesService.js" />
+    <Content Include="app\jokes\managementJokeCategories.html" />
+    <Content Include="app\jokes\managementJokeCategoriesController.js" />
     <Content Include="app\photoGalleries\photoGalleryController.js" />
     <Content Include="app\authorizations\refreshController.js" />
     <Content Include="app\authorizations\signupController.js" />

@@ -3,7 +3,7 @@ using System.Linq;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 using WebBellwether.API.Models.IntegrationGame;
-using WebBellwether.API.Repositories;
+using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.IntegrationGameService.Abstract;
 
@@ -11,11 +11,11 @@ namespace WebBellwether.API.Services.IntegrationGameService
 {
     public class IntegrationGameService:IIntegrationGameService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IntegrationGameUnitOfWork _unitOfWork;
         private readonly IManagementFeaturesService _managementFeaturesService;
         private readonly IManagementIntegrationGamesService _managementIntegrationGamesService;
 
-        public IntegrationGameService(UnitOfWork unitOfWork)
+        public IntegrationGameService(IntegrationGameUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _managementFeaturesService = new ManagementFeaturesService(unitOfWork);

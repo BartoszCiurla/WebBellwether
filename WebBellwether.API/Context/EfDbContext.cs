@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using WebBellwether.API.Entities;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
+using WebBellwether.API.Entities.Joke;
 
 namespace WebBellwether.API.Context
 {
@@ -28,8 +28,16 @@ namespace WebBellwether.API.Context
 
         public DbSet<GameFeatureDetail> GameFeatureDetails { get; set; }
         public DbSet<GameFeatureDetailLanguage> GameFeatureDetailLanguages { get; set; }
-  
+
         //intergration games 
+
+
+        //jokes
+        public DbSet<Joke> Jokes { get; set; }
+        public DbSet<JokeDetail> JokeDetails { get; set; }
+        public DbSet<JokeCategory> JokeCategories { get; set; }
+        public DbSet<JokeCategoryDetail> JokeCategoryDetails { get; set; }
+        //jokes
 
         //translation    
         public DbSet<Language> Languages { get; set; } 

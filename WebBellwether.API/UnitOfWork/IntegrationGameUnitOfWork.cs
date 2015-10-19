@@ -6,10 +6,11 @@ using System.Linq;
 using WebBellwether.API.Context;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
+using WebBellwether.API.Repositories;
 
-namespace WebBellwether.API.Repositories
+namespace WebBellwether.API.UnitOfWork
 {
-    public class UnitOfWork : IDisposable
+    public class IntegrationGameUnitOfWork:IDisposable
     {
         private readonly EfDbContext _context;
         private GenericRepository<IntegrationGame> _integrationGameRepository;
@@ -19,9 +20,9 @@ namespace WebBellwether.API.Repositories
         private GenericRepository<GameFeatureLanguage> _gameFeatureLanguageRepository;
         private GenericRepository<GameFeatureDetail> _gameFeatureDetailRepository;
         private GenericRepository<GameFeature> _gameFeatureRepository;
-        private GenericRepository<Language> _languageRepository; 
+        private GenericRepository<Language> _languageRepository;
 
-        public UnitOfWork()
+        public IntegrationGameUnitOfWork()
         {
             _context = new EfDbContext();
         }
@@ -56,7 +57,7 @@ namespace WebBellwether.API.Repositories
 
         public GenericRepository<Language> LanguageRepository
             => _languageRepository ??
-               (_languageRepository = new GenericRepository<Language>(_context)); 
+               (_languageRepository = new GenericRepository<Language>(_context));
 
         public void Save()
         {

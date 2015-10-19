@@ -60,7 +60,7 @@
     <div class="col-md-4">
         <h2 style="text-align:left">{{translation.ListOfGameIncludesAvailableTranslation}}</h2>
         <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
+            <div class="myFormColor"  ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
                 {{integrationGame.gameName}}
                 <div>
                     <div ng-repeat="al in integrationGame.gameTranslations" class="inline-block">

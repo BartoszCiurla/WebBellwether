@@ -4,14 +4,15 @@ using WebBellwether.API.Models.IntegrationGame;
 using WebBellwether.API.Repositories;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.IntegrationGameService.Abstract;
+using WebBellwether.API.UnitOfWork;
 
 namespace WebBellwether.API.Services.IntegrationGameService
 {
     public class ManagementFeaturesService : IManagementFeaturesService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IntegrationGameUnitOfWork _unitOfWork;
 
-        public ManagementFeaturesService(UnitOfWork unitOfWork)
+        public ManagementFeaturesService(IntegrationGameUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

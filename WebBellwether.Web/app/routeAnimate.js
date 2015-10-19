@@ -26,6 +26,10 @@
                 controller: "integrationGamesController",
                 templateUrl: "/app/jokes/managementJokes.html"
             });
+            $routeProvider.when("/managementJokeCategories", {
+                controller: "managementJokeCategoriesController",
+                templateUrl: "/app/jokes/managementJokeCategories.html"
+            });
             $routeProvider.when("/bellwether", {
                 controller: "bellwetherController",
                 templateUrl: "/app/bellwether/bellwether.html"
