@@ -21,7 +21,9 @@
         GameCanBeAdded,
         GameHaveTranslationForThisLanguage,
         SeveralLanguageGameAdded,
-        GameTranslationEdited,       
+        GameTranslationEdited,    
+        JokeCategoryExistsInDb,   
+        JokeCategoryAdded,
         Error
     }
 }

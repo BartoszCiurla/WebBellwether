@@ -10,8 +10,8 @@ namespace WebBellwether.API.Models.Joke
     {
         public int Id { get; set; }//global id
         public int JokeCategoryId { get; set; } //translate id 
-        public string JokeCategoryTemplateName { get; set; } //jako templete zawsze angielski na twardo
         public string JokeCategoryName { get; set; }
         public int LanguageId { get; set; }
+        public List<AvailableLanguage> JokeCategoryTranslations { get; set; }
     }
 }

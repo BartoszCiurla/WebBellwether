@@ -1,18 +1,64 @@
 ﻿<div class="container">
     <h1 style="margin-bottom:20px">{{translation.ManagementJokeCategories}}</h1>
-    zastanawiam się czy by nie zrobić tego tak jak mam edycje cech gier tylko ze wtedy nie będe wiedział jakie mam translacje na inne jezykie co jest 
-    dość zgubne 
+
     <div class="col-md-4">
-        <h2>Edycja na bazująym jezyku</h2>
+        <div class="authAni">
+            <!--NEW JOKE CATEGORY-->
+            <h2>{{translation.AddJokeCategory}}</h2>
+            <input type="text" class="form-control myFormColor" required data-ng-model="newJokeCategory.CategoryName" placeholder={{translation.CategoryName}} autofocus />
+
+            <!--INSERT JOKE CATEGORY-->
+            <div style="text-align: center">
+                <button class="btn btn-default btn-block" type="submit" ng-click="addJokeCategory(newJokeCategory.CategoryName,selectedLanguage)" ng-disabled="newJokeCategory.CategoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
+            </div>
+        </div>
+        <div class="authAni">
+            <h2>{{translation.EditJokeCategory}}</h2>
+            <!--EDIT SELECTED JOKE CATEGORY-->
+            <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategory.CategoryName" placeholder={{translation.CategoryName}} autofocus />
+
+            <!--SAVE SELECTED JOKE CATEGORY-->
+            <div style="text-align: center">
+                <button class="btn btn-success btn-block" type="submit" ng-click="" ng-disabled="selectedJokeCategory.CategoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
+            </div>
+            <!--DELETE SELECTED JOKE CATEGORY-->
+            <div style="text-align: center">
+                <button class="btn btn-danger btn-block" type="submit" ng-click="" ng-disabled="selectedJokeCategory.CategoryName == null"><span class="mif-checkmark"></span> {{translation.DeleteJokeCategory}}</button>
+            </div>
+        </div>
+        
     </div>
+    <!--NEW TRANSLATION OR EDIT-->
     <div class="col-md-4">
         <h2>Edycja na jezyku zaznaczonym</h2>
     </div>
+    <!--JOKE CATEGORIES LIST-->
     <div class="col-md-4">
-        <h2>lista categorii</h2>
-    </div>
-    <div class="col-md-4">
-        <h2>Dodaj nową categorie</h2>
+        <h2 style="text-align:left">{{translation.ListOfJokeCategoryIncludesAvailableTranslation}}</h2>
+        <div ng-repeat="jokeCategory in jokeCategories | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedJokeCategory.id == jokeCategory.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="">
+                {{jokeCategory.jokeCategoryName}}
+                <div>
+                    <div ng-repeat="al in jokeCategory.jokeCategoryTranslations" class="inline-block">
+                        <div>
+                            <h5>
+                                <span style="margin-left: 4px" ng-class="al.hasTranslation ? 'label label-success' : 'label label-danger'"><span class={{al.language.languageFlag}}></span>{{al.language.languageShortName}}</span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--PAGER CONTROL-->
+        <div class="text-center">
+            <nav>
+                <ul class="pager">
+                    <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
+                    <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
+                    <li ng-hide="currentPage >= integrationGames.length/pageSize - 1;" ng-click="currentPage=currentPage+1"><a href="">{{translation.Next}}</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 

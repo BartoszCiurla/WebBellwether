@@ -7,7 +7,10 @@
             $scope.currentPage = 0;
             $scope.pageSize = 10;
             $scope.numberOfPages = function () {
-                return Math.ceil($scope.integrationGames.length / $scope.pageSize);
+                if ($scope.integrationGames.length > 0)
+                    return Math.ceil($scope.integrationGames.length / $scope.pageSize);
+                else
+                    return 0;
             }
             $scope.selectedGame = '';
             $scope.selectedGameOtherTranslation = '';
@@ -141,7 +144,7 @@
                 })
 
             };
-
+            // ********************
 
             //integration games
             $scope.integrationGames = [];
@@ -279,18 +282,24 @@
             };
             // ********************
 
+
+            function initContent(language) {
+                $scope.getIntegrationGamesWithLanguages(language);
+                $scope.getGameFeatuesModelWithDetails(language);
+            };
             //base init
-            $scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
-            $scope.getGameFeatuesModelWithDetails($scope.selectedLanguage);
+            initContent($scope.selectedLanguage);
+            //$scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
+            //$scope.getGameFeatuesModelWithDetails($scope.selectedLanguage);
             // ********************
 
+          
             //when language change 
             $scope.$on('languageChange', function () {
-                $scope.getIntegrationGamesWithLanguages(sharedService.sharedmessage);
-                $scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
+                initContent(sharedService.sharedmessage);
+                //$scope.getIntegrationGamesWithLanguages(sharedService.sharedmessage);
+                //$scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
             });
             // ********************
-
-
         }]);
 })();

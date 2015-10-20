@@ -5,8 +5,6 @@
 
             var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
-            var integrationGamesServiceFactory = {};
-
             var postIntegrationGame = function (gameModel) {
                 return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', gameModel).then(function (x) {
                     return x;
@@ -80,7 +78,7 @@
                     return x;
                 });
             };
-
+            var integrationGamesServiceFactory = {};
             integrationGamesServiceFactory.Test = test;
             integrationGamesServiceFactory.GameFeatuesModelWithDetails = getGameFeatuesModelWithDetails;
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
