@@ -140,7 +140,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
                     });
                     //delete game detail 
                     _unitOfWork.IntegrationGameDetailRepository.Delete(gameEntity);
-                    if (gameTranslationCount == 1)//have only one translation , can delete main id for game 
+                    if (gameTranslationCount == 1)//have only one translation , can delete main id for game . Safe is safe ...
                     {
                         var mainGameEntity = _unitOfWork.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
                         if (mainGameEntity != null)

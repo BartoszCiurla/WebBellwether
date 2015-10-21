@@ -43,6 +43,47 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetJokeCategoriesWithAvailableLanguage(language));
         }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("GetJokeCategoryTranslation")]
+        public IHttpActionResult GetJokeCategoryTranslation(int id, int languageId)//here i have game main id and language id 
+        {
+            return Ok(_service.GetJokeCategoryTranslation(id,languageId));
+        }
+        [Authorize]
+        [Route("PostEditJokeCategory")]
+        public IHttpActionResult PostEditJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            ResultStateContainer result = _service.PutJokeCategory(jokeCategory);
+            switch (result.ResultState)
+            {
+                case ResultState.JokeCategoryEdited:
+                    return Ok();
+                case ResultState.JokeCategoryNotExistsInDb:
+                    return BadRequest("JokeCategoryNotExists");
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
+        }
+        [Authorize]
+        [Route("PostDeleteJokeCategory")]
+        public IHttpActionResult PostDeleteJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            ResultStateContainer result = _service.DeleteJokeCategory(jokeCategory);
+            switch (result.ResultState)
+            {
+                case ResultState.JokeCategoryDeleted:
+                    return Ok(result);
+                case ResultState.JokeCategoryTranslationNotExists:
+                    return BadRequest("JokeCategoryTranslationNotExists");
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
+        }
 
     }
 }

@@ -179,7 +179,6 @@
                         type: 'success',
                     });
                 }, function (x) {
-                    //var userNotification = '';
                     if (x.data.message == "GameNotExists")
                         userNotification = $scope.translation.GameNotExists;
                     else if (x.data.message == "CriticalError")
@@ -260,7 +259,6 @@
                     
                 },
                 function (x) {
-                   // var userNotification = '';
                     if (x.data.message == "GameTranslationNotExists")
                         userNotification = $scope.translation.GameTranslationNotExists;
                     else if (x.data.message == "GameFeatureTranslationNotExists")
@@ -269,6 +267,12 @@
                         userNotification = $scope.translation.CriticalError;
                     else
                         userNotification = x.data.message; // handled error
+
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                    });
                 });
             };
             // ********************

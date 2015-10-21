@@ -12,6 +12,7 @@ namespace WebBellwether.API.Models.Joke
         public int JokeCategoryId { get; set; } //translate id 
         public string JokeCategoryName { get; set; }
         public int LanguageId { get; set; }
+        public bool TemporarySeveralTranslationDelete { get; set; }
         public List<AvailableLanguage> JokeCategoryTranslations { get; set; }
     }
 }

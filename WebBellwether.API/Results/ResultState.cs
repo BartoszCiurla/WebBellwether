@@ -24,6 +24,10 @@
         GameTranslationEdited,    
         JokeCategoryExistsInDb,   
         JokeCategoryAdded,
+        JokeCategoryNotExistsInDb,
+        JokeCategoryEdited,
+        JokeCategoryTranslationNotExists,
+        JokeCategoryDeleted,
         Error
     }
 }

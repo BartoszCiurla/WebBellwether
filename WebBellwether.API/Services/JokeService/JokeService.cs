@@ -34,6 +34,18 @@ namespace WebBellwether.API.Services.JokeService
             });
             return jokes;
         }
+        public ResultStateContainer DeleteJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            return _managementJokeCategoryService.DeleteJokeCategory(jokeCategory);
+        }
+        public JokeCategoryModel GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
+        {
+            return _managementJokeCategoryService.GetJokeCategoryTranslation(jokeCategoryId, languageId);
+        }
+        public ResultStateContainer PutJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            return _managementJokeCategoryService.PutJokeCategory(jokeCategory);
+        }
         public List<JokeModel> GetJokesWithAvailableLanguages(int language)
         {
             List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList();
