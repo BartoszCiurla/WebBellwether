@@ -80,7 +80,18 @@ namespace WebBellwether.API.Services.JokeService
         }
         public ResultStateContainer InsertJokeCategory(JokeCategoryModel categoryModel)
         {
-            return _managementJokeCategoryService.InsertJokeCategory(categoryModel);
+            ResultStateContainer result = _managementJokeCategoryService.InsertJokeCategory(categoryModel);
+            if (result.ResultState == ResultState.JokeCategoryAdded)
+            {
+                var newJokeCategory = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategoryName == categoryModel.JokeCategoryName).FirstOrDefault();
+                categoryModel.Id = newJokeCategory.JokeCategory.Id;
+                categoryModel.JokeCategoryId = newJokeCategory.Id;
+                categoryModel.JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(categoryModel.Id, _unitOfWork.LanguageRepository.GetAll().ToList());
+                result.Value = categoryModel;
+                return result;
+            }
+            else
+                return result;
         }
         public List<JokeCategoryModel> GetJokeCategoriesWithAvailableLanguage(int language)
         {

@@ -27,9 +27,15 @@ namespace WebBellwether.API.Controllers
             switch (result.ResultState)
             {
                 case ResultState.JokeCategoryAdded:
-                    return Ok();
+                    return Ok(result.Value);
                 case ResultState.JokeCategoryExistsInDb:
                     return BadRequest("JokeCategoryExistsInDb");
+                case ResultState.JokeCategoryTranslationAdded:
+                    return Ok();
+                case ResultState.JokeCategoryTranslationEdited:
+                    return Ok();
+                case ResultState.JokeCategoryTranslationNotExists:
+                    return BadRequest();
                 case ResultState.Error:
                     return BadRequest(result.Value.ToString());
                 default:
@@ -52,6 +58,7 @@ namespace WebBellwether.API.Controllers
         }
         [Authorize]
         [Route("PostEditJokeCategory")]
+
         public IHttpActionResult PostEditJokeCategory(JokeCategoryModel jokeCategory)
         {
             ResultStateContainer result = _service.PutJokeCategory(jokeCategory);
@@ -61,6 +68,8 @@ namespace WebBellwether.API.Controllers
                     return Ok();
                 case ResultState.JokeCategoryNotExistsInDb:
                     return BadRequest("JokeCategoryNotExists");
+                case ResultState.ThisJokeCategoryExists:
+                    return BadRequest("ThisJokeCategoryExists");
                 case ResultState.Error:
                     return BadRequest(result.Value.ToString());
                 default:

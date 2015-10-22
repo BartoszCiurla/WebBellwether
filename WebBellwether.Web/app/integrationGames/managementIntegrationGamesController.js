@@ -226,11 +226,9 @@
                     });
                 },
                function (x) {
-                   var userNotification = '';
-                   console.log(x.data.message);
-                   if (x.data.message == "1")
+                   if (x.data.message == "GameTranslationNotExists")
                        userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.GameTranslationNotExists;
-                   else if (x.data.message == "2")
+                   else if (x.data.message == "GameFeatureTranslationNotExists")
                        userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.GameFeaturesTranslationNotExists;
                    else
                        userNotification = $scope.translation.TranslationNotRemoved + " " + x.data.message;

@@ -6,7 +6,7 @@
             var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
             var postJokeCategory = function (jokeCategory) {
-                return $http.post(serviceBase = 'api/Jokes/PostJokeCategory', jokeCategory).then(function (x) {
+                return $http.post(serviceBase + 'api/Jokes/PostJokeCategory', jokeCategory).then(function (x) {
                     return x;
                 });
             };

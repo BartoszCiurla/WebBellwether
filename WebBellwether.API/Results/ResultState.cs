@@ -28,6 +28,9 @@
         JokeCategoryEdited,
         JokeCategoryTranslationNotExists,
         JokeCategoryDeleted,
+        ThisJokeCategoryExists,
+        JokeCategoryTranslationEdited,
+        JokeCategoryTranslationAdded,
         Error
     }
 }

@@ -45,9 +45,9 @@
                     <!--TRANSLATE GAME-->
                     <button class="btn btn-default btn-block"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
                     <!--SAVE TRANSLATION-->
-                    <button class="btn btn-success btn-block" type="submit" ng-click="" ng-disabled="otherJokeCategoryTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
+                    <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherJokeCategoryTranslation()" ng-disabled="otherJokeCategoryTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
                     <!--DELETE TRANSLATION-->
-                    <button class="btn btn-danger btn-block" type="submit" ng-click="" ng-disabled="otherJokeCategoryTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
+                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteTranslationDialog()" ng-disabled="selectedJokeCategoryTranslation.jokeCategoryId == null"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
                 </div>
             </div>
 
@@ -88,6 +88,14 @@
         <div>
             <button class="btn btn-warning" ng-click="deleteJokeCategory(selectedJokeCategory,false)" ng-disabled="selectedJokeCategory == ''">{{translation.RemoveMainTranslation}}</button>
             <button class="btn btn-danger" ng-click="deleteJokeCategory(selectedJokeCategory,true)" ng-hide="selectedJokeCategory == '' || countJokeCategoryTranslation(selectedJokeCategory) < 2">{{translation.RemoveAllTranslation}}</button>
+        </div>
+        <span class="dialog-close-button"></span>
+    </div>
+    <div data-role="dialog" id="deleteTranslationDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
+        <h1>{{translation.RemoveJokeCategoryTranslation}} :</h1>
+        <h1>{{selectedJokeCategoryTranslation.jokeCategoryName}}</h1>
+        <div>
+            <button class="btn btn-warning" ng-click="deleteTranslation(selectedJokeCategoryTranslation)" ng-disabled="selectedJokeCategoryTranslation.jokeCategoryId == ''">{{translation.Delete}}</button>
         </div>
         <span class="dialog-close-button"></span>
     </div>

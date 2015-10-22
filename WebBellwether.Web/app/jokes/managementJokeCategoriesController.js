@@ -14,6 +14,7 @@
             }
             $scope.selectedJokeCategory = '';
             $scope.selectedJokeCategoryTranslation = '';
+            $scope.newJokeCategory = '';
             $scope.languageForOtherTranslation = '';
             $scope.setJokeCategory = function (selected) {
                 if (selected.id == $scope.selectedJokeCategory.id) {
@@ -31,12 +32,13 @@
                         if (x.language.id == $scope.languageForOtherTranslation.language.id && x.hasTranslation) {
                             $scope.selectedJokeCategoryTranslation.id = $scope.selectedJokeCategory.id;
                             jokesService.GetJokeCategoryTranslation($scope.selectedJokeCategory.id, $scope.languageForOtherTranslation.language.id).then(function (z) {
-                                $scope.selectedJokeCategoryTranslation = x.data;
+                                $scope.selectedJokeCategoryTranslation = z.data;
                             });
                             return;
                         }
                     });
                 }
+                $scope.resetSelectedJokeCategoryOrTranslation(false, true);
             };
             //edit joke category
             $scope.editJokeCategory = function (selectedJokeCategory) {
@@ -50,6 +52,8 @@
                 function (x) {
                     if (x.data.message == "JokeCategoryNotExists")
                         userNotification = $scope.translation.JokeCategoryNotExists;
+                    else if (x.data.message == "ThisJokeCategoryExists")
+                        userNotification = $scope.translation.ThisJokeCategoryExists;
                     else if (x.data.message == "CriticalError")
                         userNotification = $scope.translation.CriticalError;
                     else
@@ -80,11 +84,15 @@
             $scope.deleteJokeCategory = function (selectedJokeCategory, removeAllTranslation) {
                 var dialog = $('#deleteDialog').data('dialog');
                 dialog.close();
-                if(removeAllTranslation)
+                if (removeAllTranslation)
                     selectedJokeCategory.temporarySeveralTranslationDelete = removeAllTranslation;
                 jokesService.DeleteJokeCategory(selectedJokeCategory).then(function (x) {
+                    angular.forEach($scope.jokeCategories, function (x, index) {
+                        if (x.id == $scope.selectedJokeCategory.id) {
+                            $scope.jokeCategories.splice(index, 1);
+                        }
+                    });
                     $scope.resetSelectedJokeCategoryOrTranslation(true, true);
-                    $scope.getJokeCategoriesWithAvailableLanguage($scope.selectedLanguage);
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.JokeCategoryDeleted,
@@ -106,6 +114,32 @@
                     });
                 });
             };
+            $scope.deleteTranslationDialog = function () {
+                var dialog = $('#deleteTranslationDialog').data('dialog');
+                dialog.open();
+            };
+            $scope.deleteTranslation = function (selectedJokeCategoryTranslation) {
+                dialog = $('#deleteTranslationDialog').data('dialog');
+                dialog.close();
+                jokesService.DeleteJokeCategory(selectedJokeCategoryTranslation).then(function (x) {
+                    $scope.setTranslation(false);
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.TranlastionRemoved,
+                        type: 'success',
+                    });
+                },
+                function (x) {
+                    if (x.data.message == "JokeCategoryTranslationNotExists")
+                        userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.JokeCategoryTranslationNotExists;
+                        userNotification = $scope.translation.TranslationNotRemoved + " " + x.data.message;
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                    });
+                });                
+            };
 
             // ********************
 
@@ -119,7 +153,8 @@
                     JokeCategoryTranslations: []
                 }
                 jokesService.PostJokeCategory(jokeCategory).then(function (x) {
-                    initContent(selectedLanguage);
+                    $scope.jokeCategories.push(x.data);
+                    $scope.newJokeCategory = '';
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.JokeCategoryAdded,
@@ -135,6 +170,56 @@
                 });
             };
             // ********************
+            
+            //set mark in main joke category translations
+            $scope.setTranslation = function(translationStatus){
+                $scope.selectedJokeCategory.jokeCategoryTranslations.forEach(function(x){
+                    if(x.language.id == $scope.languageForOtherTranslation.language.id){
+                        x.hasTranslation = translationStatus;
+                        if(!translationStatus)
+                            $scope.resetSelectedJokeCategoryOrTranslation(false,true);
+                    };
+                });
+            };
+
+            //edit insert new translation 
+            $scope.saveOtherJokeCategoryTranslation = function () {
+                var jokeCategory = {
+                    Id: $scope.selectedJokeCategory.id,
+                    JokeCategoryId: $scope.selectedJokeCategoryTranslation.jokeCategoryId,
+                    JokeCategoryName: $scope.selectedJokeCategoryTranslation.jokeCategoryName,
+                    LanguageId: $scope.languageForOtherTranslation.language.id
+                };
+                jokesService.PostJokeCategory(jokeCategory).then(function (x) {
+                    $scope.setTranslation(true);
+                    $scope.getTranslationForJokeCategory();
+                    
+                    if (jokeCategory.jokeCategoryId == null) {
+                        userNotification = $scope.translation.TranslationAdded;
+                    } else {
+                        userNotification = $scope.translation.TranslationEdited;
+                    }
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: userNotification,
+                        type: 'success',
+                    });
+                },
+                function (x) {
+                    if (jokeCategory.jokeCategoryId == null) {
+                        userNotification = $scope.translation.TranslationNotAdded;
+                    }
+                    else
+                        userNotification = $scope.translation.TranslationNotEdited;
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                    });
+                });
+            };
+            // ********************
+
 
             //joke categories
             $scope.jokeCategories = [];
@@ -142,6 +227,7 @@
                 jokesService.GetJokeCategoriesWithAvailableLanguage(lang).then(function (x) {
                     $scope.jokeCategories = [];
                     $scope.jokeCategories = x.data;
+                    $scope.setJokeCategoryTranslationAfterLanguageChange();
                 });
             };
             $scope.setJokeCategoryTranslationAfterLanguageChange = function () {
