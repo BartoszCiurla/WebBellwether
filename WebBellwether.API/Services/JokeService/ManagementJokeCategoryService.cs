@@ -17,6 +17,16 @@ namespace WebBellwether.API.Services.JokeService
         {
             _unitOfWork = unitOfWork;
         }
+
+        public List<JokeCategoryModel> GetJokeCategories(int languageId)
+        {
+            List<JokeCategoryModel> result = new List<JokeCategoryModel>();
+            _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(z =>
+             {
+                 result.Add(new JokeCategoryModel { Id=z.JokeCategory.Id,JokeCategoryId =z.Id,JokeCategoryName =z.JokeCategoryName , LanguageId = z.Language.Id });
+             });
+            return result;
+        }
         public JokeCategoryModel GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
         {
             var entity = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategoryId && x.Language.Id == languageId).FirstOrDefault();
@@ -152,7 +162,7 @@ namespace WebBellwether.API.Services.JokeService
                 return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
             }
         }
-
+        //This function is often duplicated it a little disturbing . Do something with this 
         public Language GetLanguage(int id)
         {
             return _unitOfWork.LanguageRepository.Get(x => x.Id == id);

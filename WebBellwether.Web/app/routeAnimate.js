@@ -23,7 +23,7 @@
                 templateUrl: "/app/integrationGames/editGameFeatures.html"
             });
             $routeProvider.when("/managementJokes", {
-                controller: "integrationGamesController",
+                controller: "managementJokesController",
                 templateUrl: "/app/jokes/managementJokes.html"
             });
             $routeProvider.when("/managementJokeCategories", {

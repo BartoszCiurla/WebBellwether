@@ -235,6 +235,7 @@
     <Compile Include="Services\IntegrationGameService\ManagementIntegrationGamesService.cs" />
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
+    <Compile Include="Services\JokeService\ManagementJokeService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UnitOfWork\IntegrationGameUnitOfWork.cs" />
     <Compile Include="UnitOfWork\JokeUnitOfWork.cs" />

@@ -19,6 +19,30 @@ namespace WebBellwether.API.Controllers
         {
             _service = new JokeService(new JokeUnitOfWork());
         }
+
+        [Authorize]
+        [Route("PostJoke")]
+        public IHttpActionResult PostJoke(JokeModel jokeModel)
+        {
+            ResultStateContainer result = _service.InsertJoke(jokeModel);
+            switch (result.ResultState)
+            {
+                case ResultState.JokeAdded:
+                    return Ok(result.Value);
+                case ResultState.JokeExists:
+                    return BadRequest("JokeExists");
+                case ResultState.JokeCategoryNotExistsInDb:
+                    return BadRequest("JokeCategoryNotExists");
+                case ResultState.LanguageNotExists:
+                    return BadRequest("LanguageNotExists");
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
+            
+        }
+
         [Authorize]
         [Route("PostJokeCategory")]
         public IHttpActionResult PostJokeCategory(JokeCategoryModel categoryModel)
@@ -48,6 +72,18 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult GetJokeCategoriesWithAvailableLanguage(int language)
         {
             return Ok(_service.GetJokeCategoriesWithAvailableLanguage(language));
+        }
+        [Authorize]
+        [Route("GetJokesWithAvailableLanguages")]
+        public IHttpActionResult GetJokesWithAvailableLanguages(int language)
+        {
+            return Ok(_service.GetJokesWithAvailableLanguages(language));
+        }
+        [AllowAnonymous]
+        [Route("GetJokeCategories")]
+        public IHttpActionResult GetJokeCategories(int language)
+        {
+            return Ok(_service.GetJokeCategories(language));
         }
         [AllowAnonymous]
         [HttpGet]

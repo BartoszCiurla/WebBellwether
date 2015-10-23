@@ -619,6 +619,8 @@
     <Content Include="app\jokes\jokesService.js" />
     <Content Include="app\jokes\managementJokeCategories.html" />
     <Content Include="app\jokes\managementJokeCategoriesController.js" />
+    <Content Include="app\jokes\managementJokes.html" />
+    <Content Include="app\jokes\managementJokesController.js" />
     <Content Include="app\photoGalleries\photoGalleryController.js" />
     <Content Include="app\authorizations\refreshController.js" />
     <Content Include="app\authorizations\signupController.js" />
@@ -644,7 +646,6 @@
     <Content Include="app\integrationGames\integrationGames.html" />
     <Content Include="app\jokes\jokes.html" />
     <Content Include="app\integrationGames\managementIntegrationGames.html" />
-    <Content Include="app\jokes\managementJokes.html" />
     <Content Include="app\photoGalleries\photoGallery.html" />
     <Content Include="app\authorizations\refresh.html" />
     <Content Include="app\authorizations\tokens.html" />

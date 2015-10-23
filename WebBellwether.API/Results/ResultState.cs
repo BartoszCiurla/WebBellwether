@@ -31,6 +31,9 @@
         ThisJokeCategoryExists,
         JokeCategoryTranslationEdited,
         JokeCategoryTranslationAdded,
+        JokeExists,
+        LanguageNotExists,
+        JokeAdded,
         Error
     }
 }

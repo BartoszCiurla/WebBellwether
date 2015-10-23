@@ -12,11 +12,13 @@ namespace WebBellwether.API.Services.JokeService
     {
         private readonly JokeUnitOfWork _unitOfWork;
         private readonly ManagementJokeCategoryService _managementJokeCategoryService;
+        private readonly ManagementJokeService _managementJokeService;
 
         public JokeService(JokeUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _managementJokeCategoryService = new ManagementJokeCategoryService(unitOfWork);
+            _managementJokeService = new ManagementJokeService(unitOfWork);
         }
         public List<JokeModel> GetJokes(int language)
         {
@@ -26,13 +28,28 @@ namespace WebBellwether.API.Services.JokeService
             {
                 jokes.Add(new JokeModel
                 {
-                    Id=x.Joke.Id,
-                    Language = x.Language,
+                    Id = x.Joke.Id,
+                    LanguageId = x.Language.Id,
                     JokeContent = x.JokeContent,
                     JokeCategoryId = x.JokeCategoryDetail.JokeCategory.Id // global id for cateogry ,good for multilingual 
                 });
             });
             return jokes;
+        }
+        public ResultStateContainer InsertJoke(JokeModel joke)
+        {
+            ResultStateContainer result = _managementJokeService.InsertJoke(joke);
+            if (result.ResultState == ResultState.JokeAdded)
+            {
+                List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList(); 
+                var newJoke = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.JokeContent.Equals(joke.JokeContent)).FirstOrDefault();
+                joke.Id = newJoke.Joke.Id;
+                joke.JokeId = newJoke.Id;
+                joke.JokeTranslations = FillAvailableTranslation(joke.Id, languages);
+                result.Value = joke;
+                return result;
+            }
+            else return result;
         }
         public ResultStateContainer DeleteJokeCategory(JokeCategoryModel jokeCategory)
         {
@@ -57,7 +74,7 @@ namespace WebBellwether.API.Services.JokeService
                 {
                     Id = x.Joke.Id, // global id
                     JokeId = x.Id, // id for translation
-                    Language = x.Language,
+                    LanguageId = x.Language.Id,
                     JokeContent = x.JokeContent,
                     JokeCategoryName = x.JokeCategoryDetail.JokeCategoryName,
                     JokeCategoryId = x.JokeCategoryDetail.JokeCategory.Id, // global id
@@ -67,7 +84,7 @@ namespace WebBellwether.API.Services.JokeService
             });
             return jokes;
         }
-        public List<AvailableLanguage> FillAvailableTranslation(int jokeId,List<Language> allLanguages)
+        public List<AvailableLanguage> FillAvailableTranslation(int jokeId, List<Language> allLanguages)
         {
             var translation = new List<AvailableLanguage>();
             _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == jokeId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
@@ -93,6 +110,10 @@ namespace WebBellwether.API.Services.JokeService
             else
                 return result;
         }
+        public List<JokeCategoryModel> GetJokeCategories(int languageId)
+        {
+            return _managementJokeCategoryService.GetJokeCategories(languageId);
+        }
         public List<JokeCategoryModel> GetJokeCategoriesWithAvailableLanguage(int language)
         {
             List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList();
@@ -103,11 +124,11 @@ namespace WebBellwether.API.Services.JokeService
                 jokeCategories.Add(new JokeCategoryModel
                 {
                     Id = x.JokeCategory.Id, // global id
-                    JokeCategoryId =x.Id,
+                    JokeCategoryId = x.Id,
                     JokeCategoryName = x.JokeCategoryName,
                     LanguageId = x.Language.Id,
-                    JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(x.JokeCategory.Id,languages)
-                });               
+                    JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(x.JokeCategory.Id, languages)
+                });
             });
             return jokeCategories;
         }
