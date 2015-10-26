@@ -169,6 +169,7 @@
                         caption: $scope.translation.Failure,
                         content: userNotification,
                         type: 'alert',
+                        timeout: 10000
                     });
                 });
             };
@@ -184,6 +185,24 @@
                         content: $scope.translation.JokeCategoryEdited,
                         type: 'success',
                     });
+                }, function (x) {
+                    userNotification = $scope.translation.TranslationNotEdited;
+                    if (x.data.message.indexOf("JokeCategoryNotExists") > -1) {
+                        var language = 
+                        userNotification += " " + $scope.translation.JokeCategoryNotExists + " " + $scope.translation.ForLanguage + " "  + x.data.message.substr(x.data.message.indexOf(",") + 1);
+                    }else if (x.data.message == "CriticalError")
+                        userNotification += " " + $scope.translation.CriticalError;
+                    else if (x.data.message == "JokeExists")
+                        userNotification += " " + $scope.translation.ThisJokeExists;
+                    else
+                        userNotification += x.data.message;
+
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                        timeout:10000
+                    });                   
                 });
             };
             //*******************
@@ -228,9 +247,9 @@
                     }
                     else
                         userNotification = $scope.translation.TranslationNotEdited;
-
-                    if (x.data.message == "JokeCategoryNotExists")
+                    if (x.data.message == "JokeCategoryNotExists") {
                         userNotification += " " + $scope.translation.JokeCategoryNotExists;
+                    }
                     else if (x.data.message == "LanguageNotExists")
                         userNotification += " " + $scope.translation.LanguageNotExists;
                     else if (x.data.message == "CriticalError")
@@ -244,6 +263,7 @@
                         caption: $scope.translation.Failure,
                         content: userNotification,
                         type: 'alert',
+                        timeout: 10000
                     });
                 });
             };

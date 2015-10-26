@@ -5,14 +5,15 @@ using WebBellwether.API.Models;
 using WebBellwether.API.Models.Joke;
 using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
+using WebBellwether.API.Services.JokeService.Abstract;
 
 namespace WebBellwether.API.Services.JokeService
 {
-    public class JokeService
+    public class JokeService:IJokeService
     {
         private readonly JokeUnitOfWork _unitOfWork;
-        private readonly ManagementJokeCategoryService _managementJokeCategoryService;
-        private readonly ManagementJokeService _managementJokeService;
+        private readonly IManagementJokeCategoryService _managementJokeCategoryService;
+        private readonly IManagementJokeService _managementJokeService;
 
         public JokeService(JokeUnitOfWork unitOfWork)
         {

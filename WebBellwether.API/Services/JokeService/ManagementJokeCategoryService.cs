@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
 using WebBellwether.API.Entities.Joke;
 using WebBellwether.API.Models.Joke;
 using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
+using WebBellwether.API.Services.JokeService.Abstract;
 using System;
 
 namespace WebBellwether.API.Services.JokeService
 {
-    public class ManagementJokeCategoryService
+    public class ManagementJokeCategoryService:IManagementJokeCategoryService
     {
         private readonly JokeUnitOfWork _unitOfWork;
         public ManagementJokeCategoryService(JokeUnitOfWork unitOfWork)

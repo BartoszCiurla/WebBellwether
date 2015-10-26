@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Services.JokeService;
 using WebBellwether.API.Models.Joke;
 using WebBellwether.API.Results;
+using WebBellwether.API.Services.JokeService.Abstract;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Jokes")]
     public class JokesController : ApiController
     {
-        private readonly JokeService _service;
+        private readonly IJokeService _service;
         public JokesController()
         {
             _service = new JokeService(new JokeUnitOfWork());
@@ -75,8 +71,8 @@ namespace WebBellwether.API.Controllers
                 case ResultState.JokeExists:
                     return BadRequest("JokeExists");
                 case ResultState.JokeCategoryNotExistsInDb:
-                    //tutaj trzeba przesłać coś innego tzn język dla któergo nie ma translacji dla kategorii ... 
-                    return BadRequest("JokeCategoryNotExists");
+                    string message = "JokeCategoryNotExists" + "," + result.Value.ToString();
+                    return BadRequest(message);
                 case ResultState.JokeEdited:
                     return Ok();
                 case ResultState.Error:

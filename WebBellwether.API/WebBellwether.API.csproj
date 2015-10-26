@@ -233,6 +233,9 @@
     <Compile Include="Services\IntegrationGameService\IntegrationGameService.cs" />
     <Compile Include="Services\IntegrationGameService\ManagementFeaturesService.cs" />
     <Compile Include="Services\IntegrationGameService\ManagementIntegrationGamesService.cs" />
+    <Compile Include="Services\JokeService\Abstract\IJokeService.cs" />
+    <Compile Include="Services\JokeService\Abstract\IManagementJokeCategoryService.cs" />
+    <Compile Include="Services\JokeService\Abstract\IManagementJokeService.cs" />
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
@@ -254,7 +257,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\JokeService\Abstract\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

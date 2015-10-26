@@ -110,6 +110,7 @@
   "JokeNotExists": "Żart nie istnieje",
   "OtherTranslationForTheCurrentlySelectedJokeAndLanguage": "Inne translacje dla aktualnie zaznaczonego żartu i języka",
   "RemoveJokeTranslation": "Usuń translacje żartu",
+  "ForLanguage": "Dla języka : ",
   "SelectLanguageForTheJoke": "Wybierz język dla żartu",
   "AutoCompleteJokeCategoryForLanguage": "Kategoria żartu zostanie automatycznie przetłumaczona na aktualnie wybrany język innej translacji",
   "LanguageNotExists": "Language not exists",
