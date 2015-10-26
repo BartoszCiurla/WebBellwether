@@ -36,6 +36,10 @@ namespace WebBellwether.API.Services.JokeService
             });
             return jokes;
         }
+        public ResultStateContainer PutJoke(JokeModel joke)
+        {
+            return _managementJokeService.PutJoke(joke);
+        }
         public ResultStateContainer InsertJoke(JokeModel joke)
         {
             ResultStateContainer result = _managementJokeService.InsertJoke(joke);
@@ -50,6 +54,14 @@ namespace WebBellwether.API.Services.JokeService
                 return result;
             }
             else return result;
+        }
+        public JokeModel GetJokeTranslation(int jokeId, int languageId)
+        {
+            return _managementJokeService.GetJokeTranslation(jokeId, languageId);
+        }
+        public ResultStateContainer DeleteJoke(JokeModel joke)
+        {
+            return _managementJokeService.DeleteJoke(joke);
         }
         public ResultStateContainer DeleteJokeCategory(JokeCategoryModel jokeCategory)
         {

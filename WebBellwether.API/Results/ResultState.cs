@@ -34,6 +34,13 @@
         JokeExists,
         LanguageNotExists,
         JokeAdded,
+        JokeDeleted,
+        JokeDetailNotExists,
+        JokeNotExists,
+        JokeTranslationNotExists,
+        JokeTranslationEdited,
+        JokeEdited,
+        JokeNotEdited,
         Error
     }
 }

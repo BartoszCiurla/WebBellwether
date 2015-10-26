@@ -116,7 +116,7 @@ namespace WebBellwether.API.Services.JokeService
         {
             try
             {
-                //single translation
+                //all translation
                 if (jokeCategory.TemporarySeveralTranslationDelete)
                 {
                     var jokeCategoryDetail = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategory.Id);
@@ -132,7 +132,7 @@ namespace WebBellwether.API.Services.JokeService
                     return new ResultStateContainer { ResultState = ResultState.JokeCategoryDeleted };
 
                 }
-                //all translation
+
                 else
                 {
                     var jokeCategoryDetail = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.Id == jokeCategory.JokeCategoryId).FirstOrDefault();

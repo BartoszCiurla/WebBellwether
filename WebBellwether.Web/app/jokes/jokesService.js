@@ -15,6 +15,21 @@
                     return x;
                 });
             };
+            var deleteJoke = function (joke) {
+                return $http.post(serviceBase + 'api/Jokes/PostDeleteJoke', joke).then(function (x) {
+                    return x;
+                });
+            };
+            var putJoke = function (joke) {
+                return $http.post(serviceBase + 'api/Jokes/PostEditJoke', joke).then(function (x) {
+                    return x;
+                });
+            };
+            var getJokeTranslation = function (id, language) {
+                return $http.get(serviceBase + 'api/Jokes/GetJokeTranslation', { params: { id: id, languageId: language } }).then(function (x) {
+                    return x;
+                });
+            };
             var getJokeCategoriesWithAvailableLanguage = function (languageid) {
                 return $http.get(serviceBase + 'api/Jokes/GetJokeCategoriesWithAvailableLanguage/?language=' + languageid).then(function (x) {
                     return x;
@@ -57,6 +72,9 @@
             jokesServiceFactory.GetJokeCategories = getJokeCategories;
             jokesServiceFactory.PostJoke = postJoke;
             jokesServiceFactory.GetJokeWithAvailableLanguages = getJokeWithAvailableLanguages;
+            jokesServiceFactory.DeleteJoke = deleteJoke;
+            jokesServiceFactory.PutJoke = putJoke;
+            jokesServiceFactory.GetJokeTranslation = getJokeTranslation;
             return jokesServiceFactory;
 
         }]);

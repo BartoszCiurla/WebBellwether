@@ -29,6 +29,8 @@ namespace WebBellwether.API.Controllers
             {
                 case ResultState.JokeAdded:
                     return Ok(result.Value);
+                case ResultState.JokeTranslationEdited:
+                    return Ok();
                 case ResultState.JokeExists:
                     return BadRequest("JokeExists");
                 case ResultState.JokeCategoryNotExistsInDb:
@@ -42,7 +44,53 @@ namespace WebBellwether.API.Controllers
             }
             
         }
-
+        [Authorize]
+        [Route("PostDeleteJoke")]
+        public IHttpActionResult PostDeleteJoke(JokeModel jokeModel)
+        {
+            ResultStateContainer result = _service.DeleteJoke(jokeModel);
+            switch (result.ResultState)
+            {
+                case ResultState.JokeDeleted:
+                    return Ok();
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                case ResultState.JokeDetailNotExists:
+                    return BadRequest("JokeDetailNotExists");
+                case ResultState.JokeNotExists:
+                    return BadRequest("JokeNotExists");
+                default:
+                    return BadRequest("CriticalError");
+            }
+        }
+        [Authorize]
+        [Route("PostEditJoke")]
+        public IHttpActionResult PostEditJoke(JokeModel jokeModel)
+        {
+            ResultStateContainer result = _service.PutJoke(jokeModel);
+            switch (result.ResultState)
+            {
+                case ResultState.JokeNotExists:
+                    return BadRequest("JokeNotExists");
+                case ResultState.JokeExists:
+                    return BadRequest("JokeExists");
+                case ResultState.JokeCategoryNotExistsInDb:
+                    //tutaj trzeba przesłać coś innego tzn język dla któergo nie ma translacji dla kategorii ... 
+                    return BadRequest("JokeCategoryNotExists");
+                case ResultState.JokeEdited:
+                    return Ok();
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CritialError");
+            }
+        }
+        [AllowAnonymous]
+        [Route("GetJokeTranslation")]
+        public IHttpActionResult GetJokeTranslation(int id,int languageId)
+        {
+            return Ok(_service.GetJokeTranslation(id,languageId));
+        }
         [Authorize]
         [Route("PostJokeCategory")]
         public IHttpActionResult PostJokeCategory(JokeCategoryModel categoryModel)
