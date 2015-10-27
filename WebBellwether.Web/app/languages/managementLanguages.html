@@ -1,0 +1,22 @@
+﻿<div class="container">
+    <h1 style="margin-bottom:20px">{{translation.ManagementLanguages}}</h1>
+    <select id="language" class="form-control myFormColor" ng-init="languageForEdit.language = languages[selectedLanguage - 1]" required data-ng-model="languageForEdit.language" data-ng-change="" data-ng-options="language.languageName for language in languages">
+        <option value=''>{{translation.SelectLanguageForTheGame}}</option>
+    </select>
+
+    <!--this is test--> 
+    <div ng-repeat="(key,value) in myContent">
+        <div class="myFormColor" ng-class="{selectedTransparent_hover : hover }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="">
+            <div>
+                <div class="inline-block">
+                    <div>
+                      {{key}}
+                    </div>
+                    <div>
+                        {{value}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

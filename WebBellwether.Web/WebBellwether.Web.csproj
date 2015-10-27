@@ -621,10 +621,13 @@
     <Content Include="app\jokes\managementJokeCategoriesController.js" />
     <Content Include="app\jokes\managementJokes.html" />
     <Content Include="app\jokes\managementJokesController.js" />
+    <Content Include="app\languages\languagesService.js" />
     <Content Include="app\photoGalleries\photoGalleryController.js" />
     <Content Include="app\authorizations\refreshController.js" />
     <Content Include="app\authorizations\signupController.js" />
     <Content Include="app\authorizations\tokensManagerController.js" />
+    <Content Include="app\languages\managementLanguages.html" />
+    <Content Include="app\languages\managementLanguagesController.js" />
     <Content Include="app\translations\translateService.js" />
     <Content Include="app\translations\translationController.js" />
     <Content Include="app\filters\customFilters.js" />

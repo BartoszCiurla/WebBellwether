@@ -1,4 +1,22 @@
-﻿zmiana prio :
+﻿obecnie :
+zarzadzanie jezykami : UWAGA CALOSC BEDZIE ZARZADZANA PRZEZ LANGUAGE CONTROLLER 
+-edycja nazwy jezyka (bo to nie ma tutaj wiekszego znaczenia liczy sie id)
+-edycja flagi ;)) (tutaj bedzie potrzebna lista ze wszystkimi jakie mam a potem insert do bazy nowego wpisu)
+-edycja poszczególnych wartości dla kluczy (nie kluczy)
+-jako init jezyk aktualnie wybrany 
+-gdy wybiore inny jezyk na podstronie niz ten glowny pokaza sie podpowiedzi pod dany klucz w jezyku glownym 
+-edycja przez api (czyli edycja pliku json po kluczu)
+-tak to powinno wygladac 
+
+--key				--value 
+--zapisz	   --podpowiedz   --translate by hmm (jakis serwis do translacji)
+******************************** -> to ma być rozwijane o ile dobrze pamietam nazlywalo się to hmm ... zobacz w pizzeri tam to mialem 	   
+--value 
+********************************
+
+
+
+zmiana prio :
 całość to będzie kopia tego : 
 http://www.dowcipy.jeja.pl/top,22,polityczne.html
 1)kawały na gotowo:

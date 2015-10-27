@@ -5,7 +5,6 @@
             this.getLanguages = function () {
                 console.log("get languages");
             return $http.get("/api/Language");
-
         };
             this.getTranslation = function ($scope, language) {
                 var languageFilePath ='/appData/translations/translation_' + language + '.json';
