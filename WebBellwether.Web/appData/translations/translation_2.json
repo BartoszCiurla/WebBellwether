@@ -116,6 +116,7 @@
   "LanguageNotExists": "Language not exists",
   "AddLanguage": "Dodaj język",
   "LanguagesEdition": "Edycja języków",
+  "Flag": "Flaga",
   "YourLogin": "Twój login",
   "EnterYourLogin": "Proszę wprowadz swój login",
   "YourPassword": "Twoje hasło",
@@ -147,6 +148,7 @@
   "ListOfGameIncludesAvailableTranslation": "Lista gier zawierajaca dostepne translacje",
   "TranslateByGoogle": "Przetłumacz za pomocą google",
   "TranslateByGoogleDescription": "Po dodaniu pierwszej translacji zostanie uaktywniona opcja przetłumacz za pomocą google translate.Pamiętaj jednak że żaden algorym nie zastąpi człowieka ... no chyba że pisał go autor tego portalu ;P ",
+  "Translate": "Przetłumacz",
   "RemoveGameTranslation": "Usuwanie translacji gry",
   "Delete": "Usuń",
   "CriticalError": "Błąd krytyczny musisz debugować !!"

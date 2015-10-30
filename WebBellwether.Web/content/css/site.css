@@ -35,13 +35,18 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     background: rgba(0, 0, 0, 0.7);
     color: white;
 }
+.myFormColorTransparent {
+    background: rgba(0, 0, 0, 0);
+    color: white;
+    border:none;
+}
 .myFormColor.form-control[disabled]{
     background: rgba(0, 0, 0, 0.7);
     color: white;
 }
 .selectedTransparent_hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: black;
+    background: rgba(0, 0, 0, 0.1) !important;
+    color: black !important;
 }
 
 

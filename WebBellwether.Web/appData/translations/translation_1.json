@@ -116,6 +116,7 @@
   "LanguageNotExists": "Language not exists",
   "AddLanguage": "Add language",
   "LanguagesEdition": "Languages edition",
+  "Flag": "Flag",
   "YourLogin": "Your login",
   "EnterYourLogin": "Please enter your login",
   "YourPassword": "Your password",
@@ -147,6 +148,7 @@
   "ListOfGameIncludesAvailableTranslation": "List of game with available translations",
   "TranslateByGoogle": "Translate by google",
   "TranslateByGoogleDescription": "After add first translation we active translate by google function.But you must remember , the best algoritm dont swith the humam",
+  "Translate": "Translate",
   "RemoveGameTranslation": "Remove game translation",
   "Delete": "Delete",
   "CriticalError": "Critical error you must debug this !!"

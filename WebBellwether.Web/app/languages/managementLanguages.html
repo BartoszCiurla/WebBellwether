@@ -1,22 +1,67 @@
 ﻿<div class="container">
     <h1 style="margin-bottom:20px">{{translation.ManagementLanguages}}</h1>
-    <select id="language" class="form-control myFormColor" ng-init="languageForEdit.language = languages[selectedLanguage - 1]" required data-ng-model="languageForEdit.language" data-ng-change="" data-ng-options="language.languageName for language in languages">
-        <option value=''>{{translation.SelectLanguageForTheGame}}</option>
-    </select>
+    <div class="form-inline">
+        <label>{{translation.Language}}</label>
+        <select id="language" class="form-control myFormColor" ng-init="languageForEdit.language = languages[selectedLanguage - 1]; getLanguageContent(languageForEdit.language.id)" required data-ng-model="languageForEdit.language" data-ng-change="getLanguageContent(languageForEdit.language.id)" data-ng-options="language.languageName for language in languages">
+            <option value=''>{{translation.ChooseLanguage}}</option>
+        </select>
+    </div>
 
-    <!--this is test--> 
-    <div ng-repeat="(key,value) in myContent">
+    <div ng-repeat="(key,value) in selectedLanguageContent ">
         <div class="myFormColor" ng-class="{selectedTransparent_hover : hover }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="">
-            <div>
-                <div class="inline-block">
-                    <div>
-                      {{key}}
+            <div class="row">
+                <div class="col-md-9 col-md-push-3">
+                    <div class="margin10">
+                        <input type="text" class="form-control myFormColorTransparent " value="{{value}}" />
                     </div>
-                    <div>
-                        {{value}}
+                </div>
+                <div class="col-md-3 col-md-pull-9" data-toggle="collapse" data-parent="#accordion" href="#collapse{{key}}">
+                    <div class="margin10">
+                        <label style="-ms-word-break: break-all; word-break: break-all;">{{key}}</label>
+                    </div>
+                </div>
+
+                <div id="collapse{{key}}" class="panel-collapse collapse">
+                    <div ng-hide="languageForEdit.language.id == selectedLanguage" class="col-md-9 col-md-push-3">
+                        <div class="margin10">
+                            <label class="margin10">Translacja według zaznaczone języka</label>
+                            <input type="text" class="form-control myFormColorTransparent" value="{{translation.key}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-pull-9">
+                        <div class="margin10">
+                            <button class="btn btn-warning btn-block">{{translation.Translate}}</button>
+                            <button class="btn btn-default btn-block">{{translation.Save}}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--PAGER CONTROL-->
+    <div class="text-center">
+        <nav>
+            <ul class="pager">
+                <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
+                <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
+                <li ng-hide="currentPage >= quotientKeyPageSize();" ng-click="currentPage=currentPage+1"><a href="">{{translation.Next}}</a></li>
+            </ul>
+        </nav>
+    </div>
 </div>
+
+
+
+<!--<div>
+    <div class="row">
+        <div class="col-md-9 col-md-push-3">
+            <div style="text-align:center">
+                <input type="text" class="form-control myFormColorTransparent " value="{{value}}" />
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-9">
+            <label style="-ms-word-break: break-all; word-break: break-all;">{{key}}</label>
+        </div>
+    </div>
+</div>
+        </div>-->

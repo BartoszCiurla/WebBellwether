@@ -1,4 +1,4 @@
-﻿obecnie :
+﻿obecnie : deathline -> czwartek 1:13
 zarzadzanie jezykami : UWAGA CALOSC BEDZIE ZARZADZANA PRZEZ LANGUAGE CONTROLLER 
 -edycja nazwy jezyka (bo to nie ma tutaj wiekszego znaczenia liczy sie id)
 -edycja flagi ;)) (tutaj bedzie potrzebna lista ze wszystkimi jakie mam a potem insert do bazy nowego wpisu)
