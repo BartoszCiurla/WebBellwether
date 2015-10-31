@@ -7,25 +7,25 @@
         </select>
     </div>
 
-    <div ng-repeat="(key,value) in selectedLanguageContent ">
+    <div ng-repeat="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize ">
         <div class="myFormColor" ng-class="{selectedTransparent_hover : hover }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="">
             <div class="row">
                 <div class="col-md-9 col-md-push-3">
                     <div class="margin10">
-                        <input type="text" class="form-control myFormColorTransparent " value="{{value}}" />
+                        <input type="text" class="form-control myFormColorTransparent " value="{{slc.value}}" />
                     </div>
                 </div>
-                <div class="col-md-3 col-md-pull-9" data-toggle="collapse" data-parent="#accordion" href="#collapse{{key}}">
+                <div class="col-md-3 col-md-pull-9" data-toggle="collapse" data-parent="#accordion" href="#collapse{{slc.key}}">
                     <div class="margin10">
-                        <label style="-ms-word-break: break-all; word-break: break-all;">{{key}}</label>
+                        <label style="-ms-word-break: break-all; word-break: break-all;">{{slc.key}}</label>
                     </div>
                 </div>
 
-                <div id="collapse{{key}}" class="panel-collapse collapse">
+                <div id="collapse{{slc.key}}" class="panel-collapse collapse">
                     <div ng-hide="languageForEdit.language.id == selectedLanguage" class="col-md-9 col-md-push-3">
                         <div class="margin10">
                             <label class="margin10">Translacja według zaznaczone języka</label>
-                            <input type="text" class="form-control myFormColorTransparent" value="{{translation.key}}" />
+                            <input type="text" class="form-control myFormColorTransparent" value="{{slc.key}}" />
                         </div>
                     </div>
                     <div class="col-md-3 col-md-pull-9">
@@ -44,10 +44,10 @@
             <ul class="pager">
                 <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
                 <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
-                <li ng-hide="currentPage >= quotientKeyPageSize();" ng-click="currentPage=currentPage+1"><a href="">{{translation.Next}}</a></li>
+                <li ng-hide="currentPage >= selectedLanguageContent.length/pageSize - 1;" ng-click="currentPage=currentPage+1;goToTop()"><a href="">{{translation.Next}}</a></li>
             </ul>
         </nav>
-    </div>
+    </div>    
 </div>
 
 
