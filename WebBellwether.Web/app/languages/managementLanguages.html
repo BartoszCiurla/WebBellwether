@@ -7,37 +7,84 @@
         </select>
     </div>
 
-    <div ng-repeat="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize ">
-        <div class="myFormColor" ng-class="{selectedTransparent_hover : hover }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="">
+    <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize "  ng-class-odd="'alt'"  ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+        <div class="col-md-9 col-md-push-3">
+            <div class="margin10 text-center">
+                <input type="text" class="form-control myFormColorImput" required ng-model="slc.value" />
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-9" ng-click="setActiveLanguageKey(slc)">
+            <div class="margin10">
+                <div style="-ms-word-break: break-all; word-break: break-all;">
+                    {{slc.key}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--key detail-->
+    <div  class="row cssSlideUp" ng-repeat-end="" ng-hide="activeLanguageKey != slc.key" ng-class-odd="'alt'">
+        <div  class="col-md-9 col-md-push-3">
+            <div class="margin10" ng-hide="languageForEdit.language.id == selectedLanguage">
+                <div class="block  margin10">
+                    {{translation.MainLanguageTranslation}}
+                </div>
+                <!--HERE I TAKE TRANSLATION FOR MAIN LANGUAGE-->
+                <div class="block" style="font-weight:bold;">
+                    {{translation[slc.key]}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-9">
+            <div class="margin10">
+                <!--TRANSLATE LANGUAGE KEY-->
+                <button class="btn btn-primary btn-block">{{translation.Translate}}</button>
+                <!--SAVE LANGUAGE KEY-->
+                <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc)">{{translation.Save}}</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div ng-repeat="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize ">
+        <div class="myFormColorWithBorder" ng-class="{selectedTransparentWithBorder_hover : hover || selectedLanguageKey.key == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectedLanguageKey(slc)">
             <div class="row">
                 <div class="col-md-9 col-md-push-3">
-                    <div class="margin10">
-                        <input type="text" class="form-control myFormColorTransparent " value="{{slc.value}}" />
+                    <div class="margin10 text-center">
+                        <input type="text" class="form-control myFormColorImput" required ng-model="slc.value"/>
                     </div>
                 </div>
                 <div class="col-md-3 col-md-pull-9" data-toggle="collapse" data-parent="#accordion" href="#collapse{{slc.key}}">
                     <div class="margin10">
-                        <label style="-ms-word-break: break-all; word-break: break-all;">{{slc.key}}</label>
+                        <div style="-ms-word-break: break-all; word-break: break-all;">
+                            {{slc.key}}
+                        </div>
                     </div>
                 </div>
 
                 <div id="collapse{{slc.key}}" class="panel-collapse collapse">
                     <div ng-hide="languageForEdit.language.id == selectedLanguage" class="col-md-9 col-md-push-3">
                         <div class="margin10">
-                            <label class="margin10">Translacja według zaznaczone języka</label>
-                            <input type="text" class="form-control myFormColorTransparent" value="{{slc.key}}" />
+                            <div class="block  margin10">
+                                {{translation.MainLanguageTranslation}}
+                            </div>
+                          
+                            <div class="block" style="font-weight:bold;">
+                                {{translation[slc.key]}}
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-md-pull-9">
                         <div class="margin10">
-                            <button class="btn btn-warning btn-block">{{translation.Translate}}</button>
-                            <button class="btn btn-default btn-block">{{translation.Save}}</button>
+                         
+                            <button class="btn btn-primary btn-block">{{translation.Translate}}</button>
+                      
+                            <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc)">{{translation.Save}}</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!--PAGER CONTROL-->
     <div class="text-center">
         <nav>
@@ -47,21 +94,6 @@
                 <li ng-hide="currentPage >= selectedLanguageContent.length/pageSize - 1;" ng-click="currentPage=currentPage+1;goToTop()"><a href="">{{translation.Next}}</a></li>
             </ul>
         </nav>
-    </div>    
-</div>
-
-
-
-<!--<div>
-    <div class="row">
-        <div class="col-md-9 col-md-push-3">
-            <div style="text-align:center">
-                <input type="text" class="form-control myFormColorTransparent " value="{{value}}" />
-            </div>
-        </div>
-        <div class="col-md-3 col-md-pull-9">
-            <label style="-ms-word-break: break-all; word-break: break-all;">{{key}}</label>
-        </div>
     </div>
 </div>
-        </div>-->
+

@@ -11,22 +11,6 @@
                     return data;
                 });
             };
-            //var result = [];
-            //for (key in data) {
-            //    result.push({ Key: key, Value: data[key] });
-            //}
-            //return result;
-
-            //var resultData = [];
-            //var result = $resource(languageFilePath);
-            //result.get()
-            //.$promise.then(function (x) {
-            //    for (key in x) {
-            //        resultData.push({ Key: key, Value: data[key] });
-            //    }
-            //    return resultData;
-            //})
-
             var managementLanguagesServiceFactory = {};
             managementLanguagesServiceFactory.GetLanguageContent = getLanguageContent;
             return managementLanguagesServiceFactory;

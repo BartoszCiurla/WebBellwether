@@ -30,9 +30,38 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
 .selectedTransparent {
     
 }
+.myFormColorImput{
+    font-size:medium;
+    font-weight:bold;
+    border:none;
+
+}
+.myFormColorImput:focus{
+    border-color:black;
+    border:2px solid ;
+
+}
 /*DEFINICJE KOLOROW*/ 
 .myFormColor {
     background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.myFormColorWhiteTransparent {
+    background: rgba(0, 0, 0, 0.7);
+    color: black;
+}
+
+.myFormColorWithBorder {
+    background: rgba(0, 0, 0, 0.7);
+
+    color: white;
+    border:2px solid rgba(0, 0, 0, 0);
+    background-clip: content-box;
+}
+.myFormColorWithBorder input[type="text"] {
+    background-color:transparent;
+
     color: white;
 }
 .myFormColorTransparent {
@@ -47,6 +76,20 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
 .selectedTransparent_hover {
     background: rgba(0, 0, 0, 0.1) !important;
     color: black !important;
+}
+
+.selectedTransparentWithBorder_hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+
+    color: black !important;
+    background-clip: content-box;
+    border:2px solid rgba(0, 0, 0, 0.7);
+}
+.selectedTransparentWithBorder_hover input[type="text"]{
+    background-color:transparent;
+
+    color: black !important;
+    background-clip: content-box;
 }
 
 
