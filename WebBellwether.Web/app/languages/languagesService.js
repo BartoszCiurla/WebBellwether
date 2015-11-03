@@ -11,8 +11,16 @@
                     return data;
                 });
             };
+            var putLanguageKey = function (languageKey) {
+                return $http.post(serviceBase + 'api/Language/PostEditLanguageKey/', languageKey).then(function (x) {
+                    return x;
+                });
+            };
+
+
             var managementLanguagesServiceFactory = {};
             managementLanguagesServiceFactory.GetLanguageContent = getLanguageContent;
+            managementLanguagesServiceFactory.PutLanguageKey = putLanguageKey;
             return managementLanguagesServiceFactory;
 
         }]);

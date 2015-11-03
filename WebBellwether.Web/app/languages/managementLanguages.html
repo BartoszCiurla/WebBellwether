@@ -7,7 +7,7 @@
         </select>
     </div>
 
-    <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize "  ng-class-odd="'alt'"  ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+    <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize " ng-class-odd="'alt'" ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
         <div class="col-md-9 col-md-push-3">
             <div class="margin10 text-center">
                 <input type="text" class="form-control myFormColorImput" required ng-model="slc.value" />
@@ -16,14 +16,17 @@
         <div class="col-md-3 col-md-pull-9" ng-click="setActiveLanguageKey(slc)">
             <div class="margin10">
                 <div style="-ms-word-break: break-all; word-break: break-all;">
-                    {{slc.key}}
+                    <a style="text-decoration:none; color:crimson; font-weight:bold">{{slc.key}}</a>
                 </div>
             </div>
         </div>
     </div>
     <!--key detail-->
-    <div  class="row cssSlideUp" ng-repeat-end="" ng-hide="activeLanguageKey != slc.key" ng-class-odd="'alt'">
-        <div  class="col-md-9 col-md-push-3">
+    <!--tutaj wystepuje spory problem zwiazany ze zmiana stron (odpala sie zawsze ng-show co jest zle ...) sposob na to : ng-class="{true:'slide-toggle',false:''}[activeLanguageKey == slc.key]"
+    ale również nei działa dobrze bo dradze ng-hide gdy robie select na inym obiekcie kurwa mac ...-->
+    <!--musze tutaj wymyslic jakas blokade np zeby pokazal całość gdy ta bedzie juz gotowa ale nie za pomoca ng-show ...-->
+    <div class="row slide-toggle" ng-repeat-end="" data-ng-hide="activeLanguageKey != slc.key" ng-class-odd="'alt'">
+        <div class="col-md-9 col-md-push-3">
             <div class="margin10" ng-hide="languageForEdit.language.id == selectedLanguage">
                 <div class="block  margin10">
                     {{translation.MainLanguageTranslation}}
@@ -39,52 +42,10 @@
                 <!--TRANSLATE LANGUAGE KEY-->
                 <button class="btn btn-primary btn-block">{{translation.Translate}}</button>
                 <!--SAVE LANGUAGE KEY-->
-                <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc)">{{translation.Save}}</button>
+                <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc,languageForEdit.language.id)">{{translation.Save}}</button>
             </div>
         </div>
     </div>
-
-
-    <!--<div ng-repeat="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize ">
-        <div class="myFormColorWithBorder" ng-class="{selectedTransparentWithBorder_hover : hover || selectedLanguageKey.key == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectedLanguageKey(slc)">
-            <div class="row">
-                <div class="col-md-9 col-md-push-3">
-                    <div class="margin10 text-center">
-                        <input type="text" class="form-control myFormColorImput" required ng-model="slc.value"/>
-                    </div>
-                </div>
-                <div class="col-md-3 col-md-pull-9" data-toggle="collapse" data-parent="#accordion" href="#collapse{{slc.key}}">
-                    <div class="margin10">
-                        <div style="-ms-word-break: break-all; word-break: break-all;">
-                            {{slc.key}}
-                        </div>
-                    </div>
-                </div>
-
-                <div id="collapse{{slc.key}}" class="panel-collapse collapse">
-                    <div ng-hide="languageForEdit.language.id == selectedLanguage" class="col-md-9 col-md-push-3">
-                        <div class="margin10">
-                            <div class="block  margin10">
-                                {{translation.MainLanguageTranslation}}
-                            </div>
-                          
-                            <div class="block" style="font-weight:bold;">
-                                {{translation[slc.key]}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-md-pull-9">
-                        <div class="margin10">
-                         
-                            <button class="btn btn-primary btn-block">{{translation.Translate}}</button>
-                      
-                            <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc)">{{translation.Save}}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
     <!--PAGER CONTROL-->
     <div class="text-center">
         <nav>

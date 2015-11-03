@@ -203,7 +203,7 @@
       <DependentUpon>201510192124319_joke v1.1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AvailableLanguage.cs" />
+    <Compile Include="Models\Translation\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
@@ -216,6 +216,7 @@
     <Compile Include="Models\IntegrationGame\SimpleIntegrationGame.cs" />
     <Compile Include="Models\Joke\JokeCategoryModel.cs" />
     <Compile Include="Models\Joke\JokeModel.cs" />
+    <Compile Include="Models\Translation\LanguageKeyModel.cs" />
     <Compile Include="Models\Translation\TranslationWebServiceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />

@@ -1,4 +1,4 @@
-﻿{
+{
   "IntegrationGamesHeader": "Gry intergracyjne",
   "IntegrationGamesContent": "Szukasz sposobu na swietna zabawe , wyeliminowanie nudy , poznanie sie , tutaj znajdziesz to wszystko .",
   "BellwetherHeader": "Wodzirej",
@@ -153,5 +153,4 @@
   "RemoveGameTranslation": "Usuwanie translacji gry",
   "Delete": "Usuń",
   "CriticalError": "Błąd krytyczny musisz debugować !!"
-
 }

@@ -602,6 +602,7 @@
     <Content Include="appData\images\logo\BigBLogoLightR.png" />
     <Content Include="appData\videos\CloudFly.jpg" />
     <Content Include="appData\videos\CloudFly.mp4" />
+    <Content Include="app\animations\slide-toggle.js" />
     <Content Include="app\app.js" />
     <Content Include="app\authorizations\associateController.js" />
     <Content Include="app\authorizations\authSwitchController.js" />

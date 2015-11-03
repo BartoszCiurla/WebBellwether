@@ -18,21 +18,19 @@
                     $scope.activeLanguageKey = null;
                 }
             };
-
-            //$scope.active = '';
-            //$scope.showKeyDetail = function (languageKey) {
-            //    if ($scope.active != languageKey.key)
-            //        $scope.active = languageKey.key;
-            //    else 
-            //        $scope.active = null;
-            //};
-
             $scope.languageForEdit = '';
-
-
             //edit language key
-            $scope.editLanguageKey = function (selectedLanguageKey) {
-                console.log(selectedLanguageKey);
+            $scope.editLanguageKey = function (selectedLanguageKey,lang) {
+                var languageKey = {
+                    Key: selectedLanguageKey.key,
+                    Value: selectedLanguageKey.value,
+                    LanguageId: lang
+                };
+                languagesService.PutLanguageKey(languageKey).then(function (x) {
+
+                }, function (x) {
+
+                });
             };
 
             //language content
