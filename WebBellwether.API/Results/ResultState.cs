@@ -41,6 +41,7 @@
         JokeTranslationEdited,
         JokeEdited,
         JokeNotEdited,
+        LanguageKeyValueEdited,
         Error
     }
 }

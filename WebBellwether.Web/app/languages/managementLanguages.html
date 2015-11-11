@@ -2,21 +2,59 @@
     <h1 style="margin-bottom:20px">{{translation.ManagementLanguages}}</h1>
     <div class="form-inline">
         <label>{{translation.Language}}</label>
-        <select id="language" class="form-control myFormColor" ng-init="languageForEdit.language = languages[selectedLanguage - 1]; getLanguageContent(languageForEdit.language.id)" required data-ng-model="languageForEdit.language" data-ng-change="getLanguageContent(languageForEdit.language.id)" data-ng-options="language.languageName for language in languages">
+        <select id="language" class="form-control myFormColor" ng-init="getLanguageContent(languages[selectedLanguage - 1])" required data-ng-model="selectedLanguageForEdit" data-ng-change="getLanguageContent(selectedLanguageForEdit);" data-ng-options="language.languageName for language in languages">
             <option value=''>{{translation.ChooseLanguage}}</option>
         </select>
     </div>
 
-    <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | startFrom:currentPage*pageSize | limitTo:pageSize " ng-class-odd="'alt'" ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+    <!--BASIC VALUE-->
+    <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="selectedLanguageForEdit == null">
+        <form name="basicLanguageInformation">
+            <div class="form-inline" style="text-align:left">
+                <label>{{translation.LanguageName}}</label>
+                <div class="input-control text" data-role="input">
+                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
+                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
+                </div>
+            </div>
+
+            <div class="form-inline" style="text-align:left">
+                <label>{{translation.LanguageShortName}}</label>
+                <div class="input-control text" data-role="input">
+                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageShortName" type="text">
+                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
+                </div>
+            </div>
+
+            <div class="form-inline" style="text-align:left">
+                <label>{{translation.LanguageFlag}}</label>
+                <div class="input-control text" data-role="input">
+                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageFlag" type="text">
+                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
+                </div>
+            </div>
+            <div class="form-inline" style="text-align:left">
+                <button ng-disabled="basicLanguageInformation.$invalid" class="btn btn-primary btn-danger">{{translation.SaveBasicLanguageInformation}}</button>
+            </div>
+        </form>
+        <!--SEARCH-->
+        <label>{{translation.Search}}</label>
+        <div class="input-control text" data-role="input">
+            <input class="form-control myFormColor" type="text" ng-model="searchImput" uib-typeahead="sS for sS in searchSource | filter:$viewValue | limitTo:8">
+            <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
+        </div>
+    </div>
+
+    <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | filter:searchImput | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class-odd="'alt'" ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
         <div class="col-md-9 col-md-push-3">
-            <div class="margin10 text-center">
+            <div class="margin10">
                 <input type="text" class="form-control myFormColorImput" required ng-model="slc.value" />
             </div>
         </div>
         <div class="col-md-3 col-md-pull-9" ng-click="setActiveLanguageKey(slc)">
             <div class="margin10">
                 <div style="-ms-word-break: break-all; word-break: break-all;">
-                    <a style="text-decoration:none; color:crimson; font-weight:bold">{{slc.key}}</a>
+                    <a href="" style="text-decoration:none; color:crimson; font-weight:bold">{{slc.key}}</a>
                 </div>
             </div>
         </div>

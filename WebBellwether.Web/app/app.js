@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('webBellwether', ['ngRoute', 'LocalStorageModule', 'ngResource', 'angular-loading-bar', 'ngAnimate', 'customFilters','customAnimations']);
+    angular.module('webBellwether', ['ngRoute', 'LocalStorageModule', 'ngResource', 'angular-loading-bar', 'ngAnimate', 'customFilters', 'customAnimations','ui.bootstrap']);
 })();
 
 

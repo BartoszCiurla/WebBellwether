@@ -1,4 +1,4 @@
-﻿{
+{
   "IntegrationGamesHeader": "Integration games",
   "IntegrationGamesContent": "Looking for a way to have fun, to eliminate boredom, you get to know, here you'll find it all.",
   "BellwetherHeader": "Bellwether",
@@ -117,7 +117,15 @@
   "AddLanguage": "Add language",
   "LanguagesEdition": "Languages edition",
   "MainLanguageTranslation": "The main language translation",
-  "Flag": "Flag",
+  "LanguageName": "Language name",
+  "LanguageShortName": "Language short name",
+  "LanguageFlag": "Language flag",
+  "SaveBasicLanguageInformation": "Save basic information",
+  "Key": "Key",
+  "Value": "Value",
+  "SelectAWay": "Selecte a way",
+  "LanguageKeyValueEdited": "Langauge key value was edited",
+  "LanguageKeyValueNotEdited": "Langauge key value was not edited",
   "YourLogin": "Your login",
   "EnterYourLogin": "Please enter your login",
   "YourPassword": "Your password",

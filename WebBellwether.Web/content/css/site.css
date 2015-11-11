@@ -31,15 +31,12 @@ body { background: url(/appData/videos/CloudFly.jpg) #000 no-repeat center cente
     
 }
 .myFormColorImput{
-    font-size:medium;
+    border:none;   
+    font-size:large;
     font-weight:bold;
-    border:none;
-
 }
 .myFormColorImput:focus{
-    border-color:black;
-    border:2px solid ;
-
+   
 }
 /*DEFINICJE KOLOROW*/ 
 .myFormColor {
