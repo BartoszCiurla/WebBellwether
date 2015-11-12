@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201510192124319_joke v1.1.Designer.cs">
       <DependentUpon>201510192124319_joke v1.1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511122146309_publicLanguage.cs" />
+    <Compile Include="Migrations\201511122146309_publicLanguage.Designer.cs">
+      <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510192124319_joke v1.1.resx">
       <DependentUpon>201510192124319_joke v1.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511122146309_publicLanguage.resx">
+      <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

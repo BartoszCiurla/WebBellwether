@@ -17,10 +17,23 @@
                 });
             };
 
+            var putLanguage = function (language) {
+                return $http.post(serviceBase + 'api/Language/PostEditLanguage/', language).then(function (x) {
+                    return x;
+                });
+            };
+
+            var putPublishLanguage = function (language) {
+                return $http.post(serviceBase + 'api/Language/PostPublishLanguage/', language).then(function (x) {
+                    return x;
+                });
+            };
 
             var managementLanguagesServiceFactory = {};
             managementLanguagesServiceFactory.GetLanguageContent = getLanguageContent;
             managementLanguagesServiceFactory.PutLanguageKey = putLanguageKey;
+            managementLanguagesServiceFactory.PutLanguage = putLanguage;
+            managementLanguagesServiceFactory.PutPublishLanguage = putPublishLanguage;
             return managementLanguagesServiceFactory;
 
         }]);

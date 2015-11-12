@@ -4,6 +4,7 @@ using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Services.LanguageService;
 using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
+using WebBellwether.API.Entities.Translations;
 
 namespace WebBellwether.API.Controllers
 {
@@ -37,6 +38,30 @@ namespace WebBellwether.API.Controllers
                 default:
                     return BadRequest("CriticalError");
             }           
+        }
+        [Authorize]
+        [Route("PostEditLanguage")]
+        public IHttpActionResult PostEditLangauge(Language language)
+        {
+            ResultStateContainer result = _service.PutLanguage(language);
+            switch (result.ResultState)
+            {
+                case ResultState.LanguageEdited:
+                    return Ok();
+                case ResultState.LanguageNotExists:
+                    return BadRequest("LanguageNotExists");
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
+        }
+        [Authorize]
+        [Route("PostPublishLanguage")]
+        public IHttpActionResult PostPublishLanguage(Language language)
+        {
+            ResultStateContainer result = _service.PublishLanguage(language);
+            return Ok();
         }
 
     }

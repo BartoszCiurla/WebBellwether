@@ -8,7 +8,7 @@
     </div>
 
     <!--BASIC VALUE-->
-    <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="selectedLanguageForEdit == null">
+    <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="languageForEdit == null">
         <form name="basicLanguageInformation">
             <div class="form-inline" style="text-align:left">
                 <label>{{translation.LanguageName}}</label>
@@ -33,12 +33,23 @@
                     <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
                 </div>
             </div>
+            <!--SAVE LANGUAGE-->
             <div class="form-inline" style="text-align:left">
-                <button ng-disabled="basicLanguageInformation.$invalid" class="btn btn-primary btn-danger">{{translation.SaveBasicLanguageInformation}}</button>
+                <button ng-disabled="basicLanguageInformation.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-danger">{{translation.SaveBasicLanguageInformation}}</button>
             </div>
+
+            <!--PUBLISH LANGUAGE-->
+            <div class="form-inline" style="text-align:left">
+                <label>{{translation.PublishLanguage}}</label>
+                <label class="input-control checkbox">
+                    <input data-ng-model="languageForEdit.isPublic" ng-change="publishLanguage(languageForEdit)" type="checkbox">
+                    <span data-ng-class="{true:'',false:'mif-ani-spanner'}[languageForEdit.isPublic]" class="check"></span>
+                </label>
+                <label data-ng-class="{true:'',false:'formAni'}[languageForEdit.isPublic]" ng-hide="languageForEdit.isPublic ==true">{{translation.HowToPublishLanguage}}</label>
+            </div>          
         </form>
         <!--SEARCH-->
-        <label>{{translation.Search}}</label>
+        <label style="margin-top:20px">{{translation.Search}}</label>
         <div class="input-control text" data-role="input">
             <input class="form-control myFormColor" type="text" ng-model="searchImput" uib-typeahead="sS for sS in searchSource | filter:$viewValue | limitTo:8">
             <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>

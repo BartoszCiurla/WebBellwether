@@ -42,6 +42,8 @@
         JokeEdited,
         JokeNotEdited,
         LanguageKeyValueEdited,
+        LanguageEdited,
+        OnlyOnePublicLanguage,
         Error
     }
 }

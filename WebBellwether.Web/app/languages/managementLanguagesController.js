@@ -61,17 +61,59 @@
             };
             //***********************
 
+            //edit language
+            $scope.editLanguage = function (language) {
+                languagesService.PutLanguage(language).then(function (x) {
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.LanguageEdited,
+                        type: 'success',
+
+                    }, function (x) {
+                        $scope.userNotification = $scope.translation.LanguageNotEdited;
+                        if (x.data.message == "CriticalError")
+                            $scope.userNotification += ' ' + $scope.translation.CriticalError;
+                        else
+                            $scope.userNotification += ' ' + x.data.message;
+                        $.Notify({
+                            caption: $scope.translation.Failure,
+                            content: userNotification,
+                            type: 'alert',
+                        });
+                    });
+                });
+            };
+            //***********************
+
+            //publish language
+            $scope.publishLanguage = function (language) {
+                console.log(language);
+                languagesService.PutPublishLanguage(language).then(function (x) {
+
+                }, function (x) {
+
+                })
+                //jak sie uda to jeszcze mozna ewentualnie zrobic updata na jezyku który tutaj funkcjonuje zeby nie robic ponownego zaczytu 
+                //weryfikacja w api chociaz w sumie to dało by sie ja zrobic a angularze ale chce wreszcie cos w c# zrobić ... 
+            };
+
+            //***********************
+
             //language content
             $scope.selectedLanguageForEdit = null;
             $scope.selectedLanguageContent = [];
             $scope.getLanguageContent = function (lang) {
                 $scope.selectedLanguageContent = [];
+                $scope.selectedLanguageForEdit = null;
+                $scope.languageForEdit = null;
                 if (lang != null) {
+                    $scope.selectedLanguageForEdit = lang;
                     $scope.languageForEdit = {
                         id: lang.id,
                         languageFlag: lang.languageFlag,
                         languageName: lang.languageName,
-                        languageShortName: lang.languageShortName
+                        languageShortName: lang.languageShortName,
+                        isPublic:lang.isPublic
                     };
                     languagesService.GetLanguageContent(lang.id).then(function (x) {
                         for (key in x) {
