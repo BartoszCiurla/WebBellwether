@@ -16,6 +16,11 @@
                     return x;
                 });
             };
+            var getAllLanguages = function () {
+                return $http.get(serviceBase + 'api/Language/GetAllLanguages').then(function (x) {
+                    return x;
+                });
+            };
 
             var putLanguage = function (language) {
                 return $http.post(serviceBase + 'api/Language/PostEditLanguage/', language).then(function (x) {
@@ -29,11 +34,19 @@
                 });
             };
 
+            var postLanguage = function (language) {
+                return $http.post(serviceBase + 'api/Language/PostLanguage/', language).then(function (x) {
+                    return x;
+                });
+            };
+
             var managementLanguagesServiceFactory = {};
             managementLanguagesServiceFactory.GetLanguageContent = getLanguageContent;
             managementLanguagesServiceFactory.PutLanguageKey = putLanguageKey;
             managementLanguagesServiceFactory.PutLanguage = putLanguage;
             managementLanguagesServiceFactory.PutPublishLanguage = putPublishLanguage;
+            managementLanguagesServiceFactory.GetAllLanguages = getAllLanguages;
+            managementLanguagesServiceFactory.PostLanguage = postLanguage;
             return managementLanguagesServiceFactory;
 
         }]);

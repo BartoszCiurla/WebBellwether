@@ -227,6 +227,9 @@
     <Compile Include="Providers\GoogleAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
+    <Compile Include="Repositories\Abstract\IAggregateRepositories.cs" />
+    <Compile Include="Repositories\Abstract\IGenericRepository.cs" />
+    <Compile Include="Repositories\AggregateRepositories.cs" />
     <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -246,9 +249,6 @@
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="UnitOfWork\IntegrationGameUnitOfWork.cs" />
-    <Compile Include="UnitOfWork\JokeUnitOfWork.cs" />
-    <Compile Include="UnitOfWork\LanguageUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -264,6 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\LanguageService\ILanguageService\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -49,7 +49,7 @@
             $routeProvider.when("/guide", {
                 controller:"guideController",
                 templateUrl: "/app/guide/guide.html"
-            });
+            });            
 
             $routeProvider.when("/refresh", {
                 controller: "refreshController",

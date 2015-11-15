@@ -3,28 +3,28 @@ using System.Linq;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 using WebBellwether.API.Models.Joke;
-using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.JokeService.Abstract;
+using WebBellwether.API.Repositories.Abstract;
 
 namespace WebBellwether.API.Services.JokeService
 {
     public class JokeService:IJokeService
     {
-        private readonly JokeUnitOfWork _unitOfWork;
+        private readonly IAggregateRepositories _repository;
         private readonly IManagementJokeCategoryService _managementJokeCategoryService;
         private readonly IManagementJokeService _managementJokeService;
 
-        public JokeService(JokeUnitOfWork unitOfWork)
+        public JokeService(IAggregateRepositories repository)
         {
-            _unitOfWork = unitOfWork;
-            _managementJokeCategoryService = new ManagementJokeCategoryService(unitOfWork);
-            _managementJokeService = new ManagementJokeService(unitOfWork);
+            _repository = repository;
+            _managementJokeCategoryService = new ManagementJokeCategoryService(repository);
+            _managementJokeService = new ManagementJokeService(repository);
         }
         public List<JokeModel> GetJokes(int language)
         {
             var jokes = new List<JokeModel>();
-            var entity = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
+            var entity = _repository.JokeDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
             {
                 jokes.Add(new JokeModel
@@ -46,8 +46,8 @@ namespace WebBellwether.API.Services.JokeService
             ResultStateContainer result = _managementJokeService.InsertJoke(joke);
             if (result.ResultState == ResultState.JokeAdded)
             {
-                List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList(); 
-                var newJoke = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.JokeContent.Equals(joke.JokeContent)).FirstOrDefault();
+                List<Language> languages = _repository.LanguageRepository.GetAll().ToList(); 
+                var newJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.JokeContent.Equals(joke.JokeContent)).FirstOrDefault();
                 joke.Id = newJoke.Joke.Id;
                 joke.JokeId = newJoke.Id;
                 joke.JokeTranslations = FillAvailableTranslation(joke.Id, languages);
@@ -78,9 +78,9 @@ namespace WebBellwether.API.Services.JokeService
         }
         public List<JokeModel> GetJokesWithAvailableLanguages(int language)
         {
-            List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList();
+            List<Language> languages = _repository.LanguageRepository.GetAll().ToList();
             var jokes = new List<JokeModel>();
-            var entity = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
+            var entity = _repository.JokeDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
             {
                 jokes.Add(new JokeModel
@@ -100,7 +100,7 @@ namespace WebBellwether.API.Services.JokeService
         public List<AvailableLanguage> FillAvailableTranslation(int jokeId, List<Language> allLanguages)
         {
             var translation = new List<AvailableLanguage>();
-            _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == jokeId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
+            _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == jokeId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
             allLanguages.ForEach(x =>
             {
                 if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
@@ -113,10 +113,10 @@ namespace WebBellwether.API.Services.JokeService
             ResultStateContainer result = _managementJokeCategoryService.InsertJokeCategory(categoryModel);
             if (result.ResultState == ResultState.JokeCategoryAdded)
             {
-                var newJokeCategory = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategoryName == categoryModel.JokeCategoryName).FirstOrDefault();
+                var newJokeCategory = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategoryName == categoryModel.JokeCategoryName).FirstOrDefault();
                 categoryModel.Id = newJokeCategory.JokeCategory.Id;
                 categoryModel.JokeCategoryId = newJokeCategory.Id;
-                categoryModel.JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(categoryModel.Id, _unitOfWork.LanguageRepository.GetAll().ToList());
+                categoryModel.JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(categoryModel.Id, _repository.LanguageRepository.GetAll().ToList());
                 result.Value = categoryModel;
                 return result;
             }
@@ -129,9 +129,9 @@ namespace WebBellwether.API.Services.JokeService
         }
         public List<JokeCategoryModel> GetJokeCategoriesWithAvailableLanguage(int language)
         {
-            List<Language> languages = _unitOfWork.LanguageRepository.GetAll().ToList();
+            List<Language> languages = _repository.LanguageRepository.GetAll().ToList();
             var jokeCategories = new List<JokeCategoryModel>();
-            var entity = _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
+            var entity = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
             {
                 jokeCategories.Add(new JokeCategoryModel
@@ -148,7 +148,7 @@ namespace WebBellwether.API.Services.JokeService
         public List<AvailableLanguage> FillAvailableJokeCategoryTranslation(int jokeCategoryId, List<Language> allLanguages)
         {
             var translation = new List<AvailableLanguage>();
-            _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategoryId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
+            _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategoryId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));
             allLanguages.ForEach(x =>
             {
                 if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)

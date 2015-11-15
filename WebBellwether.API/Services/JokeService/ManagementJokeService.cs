@@ -4,23 +4,23 @@ using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models;
 using WebBellwether.API.Entities.Joke;
 using WebBellwether.API.Models.Joke;
-using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.JokeService.Abstract;
 using System;
+using WebBellwether.API.Repositories.Abstract;
 
 namespace WebBellwether.API.Services.JokeService
 {
     public class ManagementJokeService: IManagementJokeService
     {
-        private readonly JokeUnitOfWork _unitOfWork;
-        public ManagementJokeService(JokeUnitOfWork unitOfWork)
+        private readonly IAggregateRepositories _repository;
+        public ManagementJokeService(IAggregateRepositories repository)
         {
-            _unitOfWork = unitOfWork;
+            _repository = repository;
         }
         public ResultStateContainer InsertJoke(JokeModel joke)
         {
-            if (_unitOfWork.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
+            if (_repository.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
                 //Such verification is very feeble outright stupid, but I do not have time for anything better
                 return new ResultStateContainer { ResultState = ResultState.JokeExists };
             if (joke.Id == 0)//new joke
@@ -34,25 +34,25 @@ namespace WebBellwether.API.Services.JokeService
                 //all translation
                 if (joke.TemporarySeveralTranslationDelete)
                 {
-                    var jokeDetail = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id);
+                    var jokeDetail = _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id);
                     if (jokeDetail == null)
                         return new ResultStateContainer { ResultState = ResultState.JokeDetailNotExists };
                     jokeDetail.ToList().ForEach(x =>
                     {
-                        _unitOfWork.JokeDetailRepository.Delete(x);
+                        _repository.JokeDetailRepository.Delete(x);
                     });
-                    var mainJoke = _unitOfWork.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
+                    var mainJoke = _repository.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
                     if (mainJoke == null)
                         return new ResultStateContainer { ResultState = ResultState.JokeNotExists };
-                    _unitOfWork.JokeRepository.Delete(mainJoke);
-                    _unitOfWork.Save();
+                    _repository.JokeRepository.Delete(mainJoke);
+                    _repository.Save();
                     return new ResultStateContainer { ResultState = ResultState.JokeDeleted };
                 }
                 else
                 {
-                    var jokeDetail = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
+                    var jokeDetail = _repository.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
                     if (jokeDetail != null)
-                        _unitOfWork.JokeDetailRepository.Delete(jokeDetail);
+                        _repository.JokeDetailRepository.Delete(jokeDetail);
                     int jokeTranslationCount = 0;
                     if (joke.JokeTranslations != null)
                         joke.JokeTranslations.ForEach(x =>
@@ -62,11 +62,11 @@ namespace WebBellwether.API.Services.JokeService
                         });
                     if (jokeTranslationCount == 1)//have only one translation , can delete main id for joke . Safe is safe ...
                     {
-                        var mainJoke = _unitOfWork.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
+                        var mainJoke = _repository.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
                         if (mainJoke != null)
-                            _unitOfWork.JokeRepository.Delete(mainJoke);
+                            _repository.JokeRepository.Delete(mainJoke);
                     }
-                    _unitOfWork.Save();
+                    _repository.Save();
                     return new ResultStateContainer { ResultState = ResultState.JokeDeleted };
                 }
 
@@ -80,7 +80,7 @@ namespace WebBellwether.API.Services.JokeService
 
         public JokeModel GetJokeTranslation(int jokeId, int languageId)
         {
-            var entity = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == jokeId && x.Language.Id == languageId).FirstOrDefault();
+            var entity = _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == jokeId && x.Language.Id == languageId).FirstOrDefault();
             if (entity == null)
                 return null;
             JokeModel joke = new JokeModel { Id = jokeId, JokeContent = entity.JokeContent, LanguageId = entity.Language.Id, JokeId = entity.Id };
@@ -91,7 +91,7 @@ namespace WebBellwether.API.Services.JokeService
         {
             try
             {
-                var entity = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
+                var entity = _repository.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.JokeNotExists };
 
@@ -109,16 +109,16 @@ namespace WebBellwether.API.Services.JokeService
                             JokeCategoryDetail categoryDetailForOtherTranslation = GetJokeCategory(joke.JokeCategoryId, al.Language.Id);
                             if (categoryDetailForOtherTranslation == null)
                                 return new ResultStateContainer { ResultState = ResultState.JokeCategoryNotExistsInDb, Value = al.Language.LanguageName };
-                            var otherTranslationJoke = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id).FirstOrDefault();
+                            var otherTranslationJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id).FirstOrDefault();
                             otherTranslationJoke.JokeCategoryDetail = categoryDetailForOtherTranslation;
                         }
                     }
                 }
                 else if(!entity.JokeContent.Equals(joke.JokeContent))
-                    if (_unitOfWork.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
+                    if (_repository.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
                         return new ResultStateContainer { ResultState = ResultState.JokeExists };
                 entity.JokeContent = joke.JokeContent;
-                _unitOfWork.Save();
+                _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.JokeEdited };
             }
             catch (Exception e)
@@ -150,8 +150,8 @@ namespace WebBellwether.API.Services.JokeService
                     JokeDetails = new List<JokeDetail>()
                 };
                 entity.JokeDetails.Add(entityDetail);
-                _unitOfWork.JokeRepository.Insert(entity);
-                _unitOfWork.Save();
+                _repository.JokeRepository.Insert(entity);
+                _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.JokeAdded };
             }
             catch (Exception e)
@@ -161,7 +161,7 @@ namespace WebBellwether.API.Services.JokeService
         }
         public JokeCategoryDetail GetJokeCategory(int jokeCategory, int languageId)
         {
-            return _unitOfWork.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategory && x.Language.Id == languageId).FirstOrDefault();
+            return _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategory && x.Language.Id == languageId).FirstOrDefault();
         }
         public ResultStateContainer InsertSeveralLanguageJoke(JokeModel joke)
         {
@@ -169,14 +169,14 @@ namespace WebBellwether.API.Services.JokeService
             {
                 if (joke.JokeId != 0)
                 {
-                    var entityToEdit = _unitOfWork.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
+                    var entityToEdit = _repository.JokeDetailRepository.GetWithInclude(x => x.Id == joke.JokeId).FirstOrDefault();
                     if (entityToEdit == null)
                         return new ResultStateContainer { ResultState = ResultState.JokeTranslationNotExists };
                     entityToEdit.JokeContent = joke.JokeContent;
-                    _unitOfWork.Save();
+                    _repository.Save();
                     return new ResultStateContainer { ResultState = ResultState.JokeTranslationEdited };
                 }
-                if (_unitOfWork.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
+                if (_repository.JokeDetailRepository.GetFirst(x => x.JokeContent.Equals(joke.JokeContent)) != null)
                     return new ResultStateContainer { ResultState = ResultState.JokeExists };
                 Language lang = GetLanguage(joke.LanguageId);
                 if (lang == null)
@@ -184,14 +184,14 @@ namespace WebBellwether.API.Services.JokeService
                 JokeCategoryDetail categoryDetail = GetJokeCategory(joke.JokeCategoryId, joke.LanguageId);
                 if (categoryDetail == null)
                     return new ResultStateContainer { ResultState = ResultState.JokeCategoryNotExistsInDb };
-                var entity = _unitOfWork.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
+                var entity = _repository.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
                 entity?.JokeDetails.Add(new JokeDetail
                 {
                     JokeContent = joke.JokeContent,
                     Language = lang,
                     JokeCategoryDetail = categoryDetail
                 });
-                _unitOfWork.Save();
+                _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.JokeAdded };
 
             }
@@ -204,7 +204,7 @@ namespace WebBellwether.API.Services.JokeService
         //This function is often duplicated it a little disturbing
         public Language GetLanguage(int id)
         {
-            return _unitOfWork.LanguageRepository.Get(x => x.Id == id);
+            return _repository.LanguageRepository.Get(x => x.Id == id);
         }
     }
 }

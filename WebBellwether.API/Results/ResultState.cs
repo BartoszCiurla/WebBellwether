@@ -39,11 +39,16 @@
         JokeNotExists,
         JokeTranslationNotExists,
         JokeTranslationEdited,
-        JokeEdited,
+        JokeEdited, 
         JokeNotEdited,
         LanguageKeyValueEdited,
         LanguageEdited,
         OnlyOnePublicLanguage,
+        LanguageHasBeenPublished,
+        LanguageHasBeenNonpublic,
+        EmptyKeysExists,
+        LanguageFileNotExists,
+        LanguageExists,
         Error
     }
 }

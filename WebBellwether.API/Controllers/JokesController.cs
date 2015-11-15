@@ -1,9 +1,9 @@
 ﻿using System.Web.Http;
-using WebBellwether.API.UnitOfWork;
 using WebBellwether.API.Services.JokeService;
 using WebBellwether.API.Models.Joke;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.JokeService.Abstract;
+using WebBellwether.API.Repositories;
 
 namespace WebBellwether.API.Controllers
 {
@@ -13,7 +13,7 @@ namespace WebBellwether.API.Controllers
         private readonly IJokeService _service;
         public JokesController()
         {
-            _service = new JokeService(new JokeUnitOfWork());
+            _service = new JokeService(new AggregateRepositories());
         }
 
         [Authorize]
