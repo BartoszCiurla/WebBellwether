@@ -91,7 +91,21 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostLanguage(Language language)
         {
             ResultStateContainer result = _service.PostLanguage(language);
-            return Ok();
+            switch (result.ResultState)
+            {
+                case ResultState.LanguageAdded:
+                    return Ok(result.Value);
+                case ResultState.LanguageExists:
+                    return BadRequest(result.ResultState.ToString());
+                case ResultState.Error:
+                    return BadRequest(result.Value.ToString());
+                case ResultState.LanguageNotExists:
+                    return BadRequest(result.ResultState.ToString());
+                case ResultState.LanguageFileNotExists:
+                    return BadRequest(result.ResultState.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
         }
 
     }

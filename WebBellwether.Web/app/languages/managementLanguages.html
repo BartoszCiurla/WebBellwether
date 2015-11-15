@@ -11,7 +11,7 @@
 
     <!--EDIT LANGUAGE BASIC VALUE-->
     <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="languageForEdit == null || newLanguageOption == true">
-        <form name="basicLanguageInformation">
+        <form name="basicLanguageInformationEdit">
             <div class="form-inline" style="text-align:left">
                 <label>{{translation.LanguageName}}</label>
                 <div class="input-control text" data-role="input">
@@ -37,9 +37,8 @@
             </div>
             <!--SAVE LANGUAGE-->
             <div class="form-inline" style="text-align:left">
-                <button ng-disabled="basicLanguageInformation.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-danger">{{translation.SaveBasicLanguageInformation}}</button>
+                <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success">{{translation.SaveBasicLanguageInformation}}</button>
             </div>
-            <!--ADD NEW LANGUAGE-->
 
             <!--PUBLISH LANGUAGE-->
             <div class="form-inline" style="text-align:left">
@@ -61,7 +60,7 @@
 
     <!--NEW LANGUAGE BASIC VALUE-->
     <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="newLanguageOption == false">
-        <form name="basicLanguageInformation">
+        <form name="basicLanguageInformationNew">
             <div class="form-inline" style="text-align:left">
                 <label>{{translation.LanguageName}}</label>
                 <div class="input-control text" data-role="input">
@@ -87,18 +86,21 @@
             </div>
             <!--SAVE LANGUAGE-->
             <div class="form-inline" style="text-align:left">
-                <button ng-disabled="basicLanguageInformation.$invalid" ng-click="addNewLanguage(newLanguage)" class="btn btn-primary btn-danger">{{translation.SaveBasicLanguageInformation}}</button>
+                <button ng-disabled="basicLanguageInformationNew.$invalid" ng-click="addNewLanguage(newLanguage)" class="btn btn-primary btn-success">{{translation.SaveBasicLanguageInformation}}</button>
             </div>
         </form>
     </div>
 
     <!--ADD NEW LANGUAGE DIALOG-->
-    <div ng-hide="newLanguageOption == true" class="form-inline" style="text-align:left">
-        <button ng-click="newLanguageDialog()" class="btn btn-primary btn-success">{{translation.AddLanguage}}</button>
+    <div ng-hide="newLanguageOption == true" class="block" style="text-align:left">
+        <p>
+            <button ng-click="newLanguageDialog()" class="btn btn-primary btn-primary">{{translation.AddLanguage}}</button>
+        </p>        
+        <button ng-click="" class="btn btn-primary btn-danger">{{translation.ManagementLanguages}}</button>
     </div>
     <!--MANAGEMENT LANGUAGES-->
-    <div ng-hide="newLanguageOption == false" class="form-inline" style="text-align:left">
-        <button ng-click="newLanguageDialog()" class="btn btn-primary btn-success">{{translation.ManagementLanguages}}</button>
+    <div ng-hide="newLanguageOption == false" style="text-align:left">
+        <button ng-click="newLanguageDialog()" class="btn btn-primary btn-primary">{{translation.ManagementLanguages}}</button>       
     </div>
 
     <!--LANGUAGES DICTIONARY FOR EDIT--> 

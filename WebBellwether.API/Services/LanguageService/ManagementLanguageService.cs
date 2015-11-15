@@ -9,6 +9,7 @@ using WebBellwether.API.Models.Translation;
 using System.IO;
 using Newtonsoft.Json;
 using WebBellwether.API.Repositories.Abstract;
+using Newtonsoft.Json.Linq;
 
 namespace WebBellwether.API.Services.LanguageService
 {
@@ -16,14 +17,14 @@ namespace WebBellwether.API.Services.LanguageService
     {
         private IAggregateRepositories _repository;
         private string destinationPlace;
-        public ManagementLanguageService(IAggregateRepositories unitOfWork,string destPlace)
+        public ManagementLanguageService(IAggregateRepositories unitOfWork, string destPlace)
         {
             _repository = unitOfWork;
             destinationPlace = destPlace;
-        } 
+        }
         public List<Language> GetLanguages()
         {
-            return _repository.LanguageRepository.GetWithInclude(x=>x.IsPublic).ToList();
+            return _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).ToList();
         }
         public List<Language> GetAllLanguages()
         {
@@ -46,16 +47,78 @@ namespace WebBellwether.API.Services.LanguageService
                 _repository.LanguageRepository.Insert(entity);
                 _repository.Save();
                 entity = GetLanguageByName(language.LanguageName);
-                                  
-               //3 majac id tworze plik jezeli sie nie uda usuwam poprzedni wpis zwracam blad z zapisu pliku
+                if(entity == null)
+                    return new ResultStateContainer { ResultState = ResultState.LanguageExists };
 
-                //jezeli wszystko ok to moge kontynuować w interfejsie czyli masowe tlumaczenie ... 
-
-               return new ResultStateContainer { ResultState = ResultState.Error };
+                //create language file if error delete language row in db and return error
+                ResultStateContainer createFileLanguageResult = CreateNewLanguageFile(entity.Id);
+                if (createFileLanguageResult.ResultState != ResultState.LanguageFileAdded)
+                {
+                    //delete language in db 
+                    _repository.LanguageRepository.Delete(entity);
+                    return createFileLanguageResult;
+                }                     
+                //if lang inserted must return lang id ...
+                return new ResultStateContainer { ResultState = ResultState.LanguageAdded , Value = entity };
             }
             catch (Exception e)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error };
+                return new ResultStateContainer { ResultState = ResultState.Error,Value = e};
+            }
+        }
+
+        private Dictionary<string, string> GetLanguageFileKeys()
+        {
+            Language templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).FirstOrDefault();
+            if (templateLanguage == null)
+                return null;
+            string templateFileLocation = destinationPlace + templateLanguage.Id + ".json";
+            string templateJson = File.ReadAllText(templateFileLocation);
+            dynamic jsonTemplateObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
+            if (jsonTemplateObj == null)
+                return null;
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (var item in jsonTemplateObj)
+            {
+                result.Add(item.Key, "");
+            }
+            return result;
+
+        }
+
+        public ResultStateContainer CreateNewLanguageFile(int newLanguageId)
+        {
+            try
+            {
+                if (newLanguageId == 0)
+                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                //take key for new file                
+                Dictionary<string, string> languageFileKeys = GetLanguageFileKeys();
+                if (languageFileKeys == null)
+                    return new ResultStateContainer { ResultState = ResultState.LanguageFileNotExists };
+
+                string newFileLocation = destinationPlace + newLanguageId + ".json";
+                
+                //create json object
+                JObject jsonKeys = new JObject();
+                foreach (var item in languageFileKeys)
+                {
+                    jsonKeys.Add(new JProperty(item.Key, item.Value));
+                }
+
+                //create new file
+                using (StreamWriter file = File.CreateText(newFileLocation))
+
+                //save keys to file
+                using (JsonTextWriter writer = new JsonTextWriter(file))
+                {
+                    jsonKeys.WriteTo(writer);
+                }               
+                    return new ResultStateContainer { ResultState = ResultState.LanguageFileAdded };
+            }
+            catch (Exception e)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
             }
         }
         public ResultStateContainer PutLanguageKey(LanguageKeyModel languageKey)
@@ -73,7 +136,7 @@ namespace WebBellwether.API.Services.LanguageService
             catch (Exception e)
             {
 
-                return new ResultStateContainer { ResultState = ResultState.Error,Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
             }
         }
         public ResultStateContainer PublishLanguage(Language language)
@@ -94,7 +157,7 @@ namespace WebBellwether.API.Services.LanguageService
                             emptyKey++;
                     }
                     if (emptyKey > 0)
-                        return new ResultStateContainer { ResultState = ResultState.EmptyKeysExists};
+                        return new ResultStateContainer { ResultState = ResultState.EmptyKeysExists };
                 }
                 else //nonpublic language
                 {
@@ -106,7 +169,7 @@ namespace WebBellwether.API.Services.LanguageService
                     return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
                 entity.IsPublic = language.IsPublic;
                 _repository.Save();
-                return language.IsPublic == true ? new ResultStateContainer {ResultState = ResultState.LanguageHasBeenPublished } : new ResultStateContainer {ResultState = ResultState.LanguageHasBeenNonpublic };
+                return language.IsPublic == true ? new ResultStateContainer { ResultState = ResultState.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.LanguageHasBeenNonpublic };
             }
             catch (Exception e)
             {

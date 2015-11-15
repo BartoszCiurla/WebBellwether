@@ -48,7 +48,9 @@
         LanguageHasBeenNonpublic,
         EmptyKeysExists,
         LanguageFileNotExists,
+        LanguageFileAdded,
         LanguageExists,
+        LanguageAdded,
         Error
     }
 }

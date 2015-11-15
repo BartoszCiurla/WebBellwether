@@ -48,8 +48,33 @@
             $scope.newLanguage = '';
             $scope.addNewLanguage = function (language) {
                 languagesService.PostLanguage(language).then(function (x) {
-
+                    //insert new language to edit list 
+                    $scope.allLanguages.push(x.data);
+                    //feel key,value list with new lang 
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.LanguageAdded,
+                        type: 'success',
+                    });
                 }, function (x) {
+                    $scope.userNotification = $scope.translation.LanguageNotAdded;
+                    if (x.data.message == "CriticalError")
+                        $scope.userNotification += ' ' + $scope.translation.CriticalError;
+                    else if (x.data.message == "LanguageExists")
+                        $scope.userNotification += ' ' + $scope.translation.LanguageExists;
+                    else if (x.data.message == "LanguageNotExists")
+                        $scope.userNotification += ' ' + $scope.translation.LanguageNotExists;
+                    else if (x.data.message == "LanguageFileNotExists")
+                        $scope.userNotification += ' ' + $scope.translation.LanguageFileNotExists;
+                    else
+                        $scope.userNotification += ' ' + x.data.message;
+
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                        timeout: 10000
+                    });
                 });
             };
             //***********************
