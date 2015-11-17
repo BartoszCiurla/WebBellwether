@@ -17,11 +17,11 @@
                 <ul class="app-bar-menu">
                     <!--HOME-->
                     <li data-flexorderorigin="0" data-flexorder="0" class="">
-                        <a style="text-decoration: none ; color: darkorchid;" href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home</a>
+                        <a style="text-decoration: none ; color: darkorchid;font-weight:bold" href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home </a>
                     </li>
                     <!--LANGUAGES-->
                     <li data-flexorderorigin="1" data-flexorder="2" class="">
-                        <a style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</a>
+                        <label style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</label>
                         <ul class="d-menu" data-role="dropdown">
                             <li ng-repeat="language in languages">                                
                                 <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.id==selectedLanguage]" class={{language.languageFlag}}></span> {{language.languageName}}</a>
@@ -30,7 +30,7 @@
                     </li>                 
                     <!--TOOLS-->
                     <li data-ng-hide="authentication.userName != 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
-                        <a style="text-decoration: none;" href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</a>
+                        <label style="text-decoration: none;" href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</label>
                         <ul class="d-menu" data-role="dropdown" style="display: none;">
                             <li>
                                 <a href="" style="color:#ffffff !important;" class="dropdown-toggle">{{translation.ManagementGames}}</a>
@@ -63,7 +63,7 @@
                 </ul>
                 <!--SEARCH-->
                 <div class="app-bar-element">
-                    <a style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</a>
+                    <label style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <form class=" form-horizontal" role="form">
@@ -102,13 +102,13 @@
                 </div>
                 <!--AUTHENTICATION-->
                 <div data-ng-hide="!authentication.isAuth" class="app-bar-element place-right">
-                    <a style="text-decoration: none;color: chartreuse" data-ng-click="logOut()">
+                    <label style="text-decoration: none;color: chartreuse" data-ng-click="logOut()">
                         <span style="" class="mif-exit mif-ani-shuttle"></span>{{translation.LogOut}}
-                    </a>                
+                    </label>                
                 </div>
 
                 <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
-                    <a style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</a>
+                    <label style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <!--FOR REBUILD--> 

@@ -1,4 +1,11 @@
-﻿obecnie : deathline -> czwartek 1:13
+﻿co trzeba zrobić : 
+opis co to jest lang short name + ewentualnie trzeba bedzie utworzyc dodatkowa kolumne aby w niej trzymac wartosc dla mojego translatora ... 
+trzeba zrobić deleta + takie normalny msg zeby potwierdzic w nim wszystkie wazne informacje ... 
+udroznic wreszcie translacje bo ten temat stoi od miesiaca ... 
+
+
+
+obecnie : deathline -> czwartek 1:13
 zarzadzanie jezykami : UWAGA CALOSC BEDZIE ZARZADZANA PRZEZ LANGUAGE CONTROLLER 
 -edycja nazwy jezyka (bo to nie ma tutaj wiekszego znaczenia liczy sie id)
 -edycja flagi ;)) (tutaj bedzie potrzebna lista ze wszystkimi jakie mam a potem insert do bazy nowego wpisu)

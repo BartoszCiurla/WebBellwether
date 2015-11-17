@@ -1,109 +1,88 @@
 ﻿<div class="container">
-    <h1 ng-hide="newLanguageOption == true">{{translation.ManagementLanguages}}</h1>
-    <h1 ng-hide="newLanguageOption == false">{{translation.AddLanguage}}</h1>
-    <div class="form-inline" ng-hide="newLanguageOption == true">
-        <label>{{translation.Language}}</label>
-        <!--ng-init="getLanguageContent(languages[selectedLanguage - 1])"-->
-        <select id="language" class="form-control myFormColor"  required data-ng-model="selectedLanguageForEdit" data-ng-change="getLanguageContent(selectedLanguageForEdit);" data-ng-options="language.languageName for language in allLanguages">
-            <option value=''>{{translation.ChooseLanguage}}</option>
-        </select>
+    <div class="margin20">
+        <h1 ng-hide="newLanguageOption == true">{{translation.ManagementLanguages}}</h1>
+        <h2 ng-hide="newLanguageOption == false">{{translation.AddLanguage}}</h2>
+        <a ng-click="newLanguageDialog()" style="text-decoration: none;color:crimson" href=""><span class="mif-undo mif-2x mif-ani-shuttle"></span>Zmień</a>
     </div>
 
     <!--EDIT LANGUAGE BASIC VALUE-->
-    <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="languageForEdit == null || newLanguageOption == true">
-        <form name="basicLanguageInformationEdit">
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageName}}</label>
+    <div class="row">
+        <div class="col-xs-10 col-sm-4 col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-offset-4 formAni" ng-hide="newLanguageOption == true">
+            <div class="form-group">
+                <label>{{translation.Language}}</label>
+                <select id="language" class="form-control myFormColor" required data-ng-model="selectedLanguageForEdit" data-ng-change="getLanguageContent(selectedLanguageForEdit);" data-ng-options="language.languageName for language in allLanguages">
+                    <option value=''>{{translation.ChooseLanguage}}</option>
+                </select>
+            </div>
+
+            <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="languageForEdit == null || newLanguageOption == true">
+                <form name="basicLanguageInformationEdit">
+                    <div class="form-group">
+                        <label>{{translation.LanguageName}}</label>
+                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{translation.LanguageShortName}}</label>
+                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageShortName" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{translation.LanguageFlag}}</label>
+                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageFlag" type="text">
+                    </div>
+                    <!--SAVE LANGUAGE-->
+                    <div class="form-group text-center">
+                        <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
+                        <button ng-click="" class="btn btn-primary btn-danger"><span class="mif-minus"> {{translation.Delete}}</span></button>
+                    </div>
+
+                    <!--PUBLISH LANGUAGE-->
+                    <div class="form-inline" style="text-align:left">
+                        <label>{{translation.PublishLanguage}}</label>
+                        <label class="input-control checkbox">
+                            <input data-ng-model="languageForEdit.isPublic" ng-change="publishLanguage(languageForEdit)" type="checkbox">
+                            <span data-ng-class="{true:'',false:'mif-ani-spanner'}[languageForEdit.isPublic]" class="check"></span>
+                        </label>
+                        <label data-ng-class="{true:'',false:'formAni'}[languageForEdit.isPublic]" ng-hide="languageForEdit.isPublic ==true">{{translation.HowToPublishLanguage}}</label>
+                    </div>
+                </form>
+                <!--SEARCH-->
+                <label style="margin-top:40px">{{translation.Search}}</label>
                 <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
+                    <input class="form-control myFormColor" type="text" ng-model="searchImput" uib-typeahead="sS for sS in searchSource | filter:$viewValue | limitTo:8">
                     <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
                 </div>
             </div>
+        </div>
 
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageShortName}}</label>
-                <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageShortName" type="text">
-                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
-                </div>
-            </div>
+        <!--NEW LANGUAGE BASIC VALUE-->
+        <div class="col-xs-10 col-sm-4 col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-offset-4 formAni" ng-hide="newLanguageOption == false">
+            <div style="margin-top:20px;margin-bottom:20px">
+                <form name="basicLanguageInformationNew">
+                    <div class="form-group">
+                        <label>{{translation.LanguageName}}</label>
+                        <input class="form-control myFormColor" required ng-model="newLanguage.languageName" type="text">
+                    </div>
 
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageFlag}}</label>
-                <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="languageForEdit.languageFlag" type="text">
-                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
-                </div>
-            </div>
-            <!--SAVE LANGUAGE-->
-            <div class="form-inline" style="text-align:left">
-                <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success">{{translation.SaveBasicLanguageInformation}}</button>
-            </div>
+                    <div class="form-group">
+                        <label>{{translation.LanguageShortName}}</label>
+                        <input class="form-control myFormColor" required ng-model="newLanguage.languageShortName" type="text">
+                    </div>
 
-            <!--PUBLISH LANGUAGE-->
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.PublishLanguage}}</label>
-                <label class="input-control checkbox">
-                    <input data-ng-model="languageForEdit.isPublic" ng-change="publishLanguage(languageForEdit)" type="checkbox">
-                    <span data-ng-class="{true:'',false:'mif-ani-spanner'}[languageForEdit.isPublic]" class="check"></span>
-                </label>
-                <label data-ng-class="{true:'',false:'formAni'}[languageForEdit.isPublic]" ng-hide="languageForEdit.isPublic ==true">{{translation.HowToPublishLanguage}}</label>
-            </div>           
-        </form>
-        <!--SEARCH-->
-        <label style="margin-top:20px">{{translation.Search}}</label>
-        <div class="input-control text" data-role="input">
-            <input class="form-control myFormColor" type="text" ng-model="searchImput" uib-typeahead="sS for sS in searchSource | filter:$viewValue | limitTo:8">
-            <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
+                    <div class="form-group">
+                        <label>{{translation.LanguageFlag}}</label>
+                        <input class="form-control myFormColor" required ng-model="newLanguage.languageFlag" type="text">
+                    </div>
+                    <!--SAVE LANGUAGE-->
+                    <div class="form-group text-center">
+                        <button ng-disabled="basicLanguageInformationNew.$invalid" ng-click="addNewLanguage(newLanguage)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
-    <!--NEW LANGUAGE BASIC VALUE-->
-    <div class="formAni" style="margin-top:20px;margin-bottom:20px" ng-hide="newLanguageOption == false">
-        <form name="basicLanguageInformationNew">
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageName}}</label>
-                <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="newLanguage.languageName" type="text">
-                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
-                </div>
-            </div>
-
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageShortName}}</label>
-                <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="newLanguage.languageShortName" type="text">
-                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
-                </div>
-            </div>
-
-            <div class="form-inline" style="text-align:left">
-                <label>{{translation.LanguageFlag}}</label>
-                <div class="input-control text" data-role="input">
-                    <input class="form-control myFormColor" required ng-model="newLanguage.languageFlag" type="text">
-                    <button style="background-color:transparent;color:white" class="myFormColor button helper-button clear"><span class="mif-cross"></span></button>
-                </div>
-            </div>
-            <!--SAVE LANGUAGE-->
-            <div class="form-inline" style="text-align:left">
-                <button ng-disabled="basicLanguageInformationNew.$invalid" ng-click="addNewLanguage(newLanguage)" class="btn btn-primary btn-success">{{translation.SaveBasicLanguageInformation}}</button>
-            </div>
-        </form>
-    </div>
-
-    <!--ADD NEW LANGUAGE DIALOG-->
-    <div ng-hide="newLanguageOption == true" class="block" style="text-align:left">
-        <p>
-            <button ng-click="newLanguageDialog()" class="btn btn-primary btn-primary">{{translation.AddLanguage}}</button>
-        </p>        
-        <button ng-click="" class="btn btn-primary btn-danger">{{translation.ManagementLanguages}}</button>
-    </div>
-    <!--MANAGEMENT LANGUAGES-->
-    <div ng-hide="newLanguageOption == false" style="text-align:left">
-        <button ng-click="newLanguageDialog()" class="btn btn-primary btn-primary">{{translation.ManagementLanguages}}</button>       
-    </div>
-
-    <!--LANGUAGES DICTIONARY FOR EDIT--> 
+    <!--LANGUAGES DICTIONARY FOR EDIT-->
     <div ng-hide="newLanguageOption == true">
         <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | filter:searchImput | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class-odd="'alt'" ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
             <div class="col-md-9 col-md-push-3">
@@ -114,7 +93,7 @@
             <div class="col-md-3 col-md-pull-9" ng-click="setActiveLanguageKey(slc)">
                 <div class="margin10">
                     <div style="-ms-word-break: break-all; word-break: break-all;">
-                        <a href="" style="text-decoration:none; color:crimson; font-weight:bold">{{slc.key}}</a>
+                        <label class="text-primary"><span class="mif-key"> {{slc.key}}</span></label>
                     </div>
                 </div>
             </div>
@@ -138,9 +117,9 @@
             <div class="col-md-3 col-md-pull-9">
                 <div class="margin10">
                     <!--TRANSLATE LANGUAGE KEY-->
-                    <button class="btn btn-primary btn-block">{{translation.Translate}}</button>
+                    <button class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
                     <!--SAVE LANGUAGE KEY-->
-                    <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc,languageForEdit.language.id)">{{translation.Save}}</button>
+                    <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc,languageForEdit)"><span class="mif-plus"> {{translation.Save}}</span></button>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
                 return Math.ceil($scope.selectedLanguageContent.length / $scope.pageSize);
             }
             $scope.goToTop = function () {
-                window.scrollTo(0, 470);
+                window.scrollTo(0, 990);
             };
             $scope.activeLanguageKey = '';
             $scope.setActiveLanguageKey = function (active) {
