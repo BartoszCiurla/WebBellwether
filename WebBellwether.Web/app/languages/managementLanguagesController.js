@@ -134,6 +134,35 @@
             };
             //***********************
 
+
+            //delete language
+            $scope.deleteDialog = function () {
+                var dialog = $('#deleteDialog').data('dialog');
+                dialog.open();
+            };
+            //version alpha
+            $scope.deleteLanguage = function (language) {
+                var dialog = $('#deleteDialog').data('dialog');
+                dialog.close();
+                console.log(language);
+                languagesService.DeleteLanguage(language).then(function (x) {
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: 'lang removed',
+                        type: 'success',
+                    });
+                }, function (x) {
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: 'lang not removed',
+                        type: 'alert',
+                        timeout: 10000
+                    });
+                });
+            };
+
+            //***********************
+
             //publish language
             $scope.publishLanguage = function (language) {
                 var langExistsInCurrentList = false;
@@ -195,7 +224,7 @@
                     });
                 })
             };
-
+                
             //***********************
 
             //language content

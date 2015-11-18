@@ -39,6 +39,11 @@
                     return x;
                 });
             };
+            var deleteLanguage = function (language) {
+                return $http.post(serviceBase + 'api/Language/PostDeleteLanguage', language).then(function (x) {
+                    return x;
+                });
+            };
 
             var managementLanguagesServiceFactory = {};
             managementLanguagesServiceFactory.GetLanguageContent = getLanguageContent;
@@ -47,6 +52,7 @@
             managementLanguagesServiceFactory.PutPublishLanguage = putPublishLanguage;
             managementLanguagesServiceFactory.GetAllLanguages = getAllLanguages;
             managementLanguagesServiceFactory.PostLanguage = postLanguage;
+            managementLanguagesServiceFactory.DeleteLanguage = deleteLanguage;
             return managementLanguagesServiceFactory;
 
         }]);

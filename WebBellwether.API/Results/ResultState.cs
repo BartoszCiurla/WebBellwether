@@ -48,9 +48,12 @@
         LanguageHasBeenNonpublic,
         EmptyKeysExists,
         LanguageFileNotExists,
+        LanguageFileRemoved,
+        LanguageRemoved,
         LanguageFileAdded,
         LanguageExists,
         LanguageAdded,
+        LanguageCanNotBeRemoved,
         Error
     }
 }

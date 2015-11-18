@@ -27,7 +27,7 @@ namespace WebBellwether.API.Controllers
         [Route("GetAllLanguages")]
         public IHttpActionResult GetAllLanguages()
         {
-            return Ok(_service.GetAllLanguages());
+            return Ok(_service.GetLanguages(true));
         }
         [Authorize]
         [Route("PostEditLanguageKey")]
@@ -103,6 +103,22 @@ namespace WebBellwether.API.Controllers
                     return BadRequest(result.ResultState.ToString());
                 case ResultState.LanguageFileNotExists:
                     return BadRequest(result.ResultState.ToString());
+                default:
+                    return BadRequest("CriticalError");
+            }
+        }
+
+        [Authorize]
+        [Route("PostDeleteLanguage")]
+        public IHttpActionResult PostDeleteLanguage(Language language)
+        {
+            ResultStateContainer result = _service.DeleteLanguage(language);
+            switch (result.ResultState)
+            {
+                case ResultState.LanguageRemoved:
+                    return Ok();
+                case ResultState.LanguageCanNotBeRemoved:
+                    return BadRequest("LanguageCanNotBeRemoved");
                 default:
                     return BadRequest("CriticalError");
             }

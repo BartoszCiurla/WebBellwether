@@ -247,6 +247,7 @@
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
+    <Compile Include="Services\LanguageService\DeleteLanguageStructureService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -25,6 +25,9 @@
                     <div class="form-group">
                         <label>{{translation.LanguageShortName}}</label>
                         <input class="form-control myFormColor" required ng-model="languageForEdit.languageShortName" type="text">
+                        <div class="margin10">
+                            Uwaga musi być odpowiednio skonfigurowane gdyz jest używane jako klucz w obcych serwisach
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -34,7 +37,8 @@
                     <!--SAVE LANGUAGE-->
                     <div class="form-group text-center">
                         <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
-                        <button ng-click="" class="btn btn-primary btn-danger"><span class="mif-minus"> {{translation.Delete}}</span></button>
+                        <!--DELETE LANGUAGE-->
+                        <button ng-click="deleteDialog()" class="btn btn-primary btn-danger"><span class="mif-minus"> {{translation.Delete}}</span></button>
                     </div>
 
                     <!--PUBLISH LANGUAGE-->
@@ -134,5 +138,17 @@
             </nav>
         </div>
     </div>
+
+    <!--DIALOG-->
+        <div data-role="dialog" id="deleteDialog" class="text-center dialog alert" data-windows-style="true" data-close-button="true" data-type="alert">
+            <h1 style="text-align:left">{{translation.RemovingLanguage}} {{languageForEdit.languageName}}</h1>
+            <div class="text-center margin10">
+                {{translation.RemovingLanguageDialog}}
+            </div>
+            <div>
+                <button class="btn btn-warning" ng-click="deleteLanguage(languageForEdit)" ng-disabled="languageForEdit == ''"><span class="mif-minus"> {{translation.Delete}}</span></button>
+            </div>
+            <span class="dialog-close-button"></span>
+        </div>
 </div>
 

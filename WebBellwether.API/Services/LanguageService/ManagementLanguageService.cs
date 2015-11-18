@@ -17,22 +17,22 @@ namespace WebBellwether.API.Services.LanguageService
     {
         private IAggregateRepositories _repository;
         private string destinationPlace;
-        public ManagementLanguageService(IAggregateRepositories unitOfWork, string destPlace)
+        public ManagementLanguageService(IAggregateRepositories repository, string destPlace)
         {
-            _repository = unitOfWork;
+            _repository = repository;
             destinationPlace = destPlace;
         }
-        public List<Language> GetLanguages()
+        public List<Language> GetLanguages(bool getAll = false)
         {
-            return _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).ToList();
-        }
-        public List<Language> GetAllLanguages()
-        {
-            return _repository.LanguageRepository.Get().ToList();
+            return getAll? _repository.LanguageRepository.Get().ToList(): _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).ToList();
         }
         private Language GetLanguageByName(string languageName)
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.LanguageName.Equals(languageName)).FirstOrDefault();
+        }
+        private Language GetLanguageByID(int languageId)
+        {
+            return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
         }
         public ResultStateContainer PostLanguage(Language language)
         {
@@ -51,7 +51,7 @@ namespace WebBellwether.API.Services.LanguageService
                     return new ResultStateContainer { ResultState = ResultState.LanguageExists };
 
                 //create language file if error delete language row in db and return error
-                ResultStateContainer createFileLanguageResult = CreateNewLanguageFile(entity.Id);
+                ResultStateContainer createFileLanguageResult = CreateLanguageFile(entity.Id);
                 if (createFileLanguageResult.ResultState != ResultState.LanguageFileAdded)
                 {
                     //delete language in db 
@@ -86,7 +86,7 @@ namespace WebBellwether.API.Services.LanguageService
 
         }
 
-        public ResultStateContainer CreateNewLanguageFile(int newLanguageId)
+        public ResultStateContainer CreateLanguageFile(int newLanguageId)
         {
             try
             {
@@ -190,6 +190,74 @@ namespace WebBellwether.API.Services.LanguageService
                 entity.LanguageShortName = language.LanguageShortName;
                 _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.LanguageEdited };
+            }
+            catch (Exception e)
+            {
+
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+        }
+        private ResultStateContainer DeleteLanguageFile(int languageId)
+        {
+            try
+            {
+                string file = destinationPlace + languageId + ".json";
+                if(File.Exists(file))
+                {
+                    File.Delete(file);
+                    return new ResultStateContainer { ResultState = ResultState.LanguageFileRemoved };
+                }
+                return new ResultStateContainer { ResultState = ResultState.LanguageFileNotExists };
+            }
+            catch (Exception e)
+            {
+
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+        }
+        private ResultStateContainer DeleteIntegrationGames(int languageId)
+        {
+            //NOTE STILL DO NOT KNOW WHETHER TO OPERATE HERE SEPARATE WRITTEN OR SERVICE BECAUSE THIS WILL BE MUCH WILL THIS IS NOT SO SIMPLE
+            try
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error };
+            }
+            catch (Exception e)
+            {
+
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+        }
+        private ResultStateContainer DeleteJokes(int languageId)
+        {
+            //NOTE STILL DO NOT KNOW WHETHER TO OPERATE HERE SEPARATE WRITTEN OR SERVICE BECAUSE THIS WILL BE MUCH WILL THIS IS NOT SO SIMPLE
+            try
+            {
+                return new ResultStateContainer { ResultState = ResultState.Error };
+            }
+            catch (Exception e)
+            {
+
+                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+            }
+        }
+        public ResultStateContainer DeleteLanguage(Language language)
+        {
+            try
+            {
+                //BETA VERSION NOT REMOVE OTHER STRUCTURE ... 
+                if (language.Id == 1 | language.Id == 2)
+                    return new ResultStateContainer { ResultState = ResultState.LanguageCanNotBeRemoved };
+                Language entity = GetLanguageByID(language.Id);
+                if (entity == null)
+                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                _repository.LanguageRepository.Delete(entity);
+
+                ResultStateContainer deleteFileResult = DeleteLanguageFile(language.Id);
+                if (deleteFileResult.ResultState != ResultState.LanguageFileRemoved)
+                    return deleteFileResult;
+                _repository.Save();
+                return new ResultStateContainer { ResultState = ResultState.LanguageRemoved };
             }
             catch (Exception e)
             {

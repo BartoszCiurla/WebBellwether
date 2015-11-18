@@ -138,6 +138,8 @@
   "LanguageAdded": "Language has been added",
   "LanguageNotAdded": "Language has not been added",
   "LanguageExists": "This Language exists",
+  "RemovingLanguage": "Removing language :",
+  "RemovingLanguageDialog": "The operation will remove all translations (site structure, integration games, jokes). There will be no possibility of recovering that data. Language Polish and English are not removable because they are the template for the new language translation",
   "YourLogin": "Your login",
   "EnterYourLogin": "Please enter your login",
   "YourPassword": "Your password",
