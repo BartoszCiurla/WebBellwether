@@ -7,8 +7,18 @@ namespace WebBellwether.API.Results
 {
     public class ResultStateContainer
     {
+        public ResultStateContainer()
+        {
+
+        }
+        public ResultStateContainer(ResultState resultState,ResultMessage resultMessage,object resultValue)
+        {
+            ResultState = resultState;
+            ResultMessage = resultMessage;
+            ResultValue = resultValue;
+        }
         public ResultState ResultState { get; set; }
-        public object Value { get; set; }
-        public object SecondValue { get; set; }
+        public ResultMessage ResultMessage { get; set; }
+        public object ResultValue { get; set; }
     }
 }

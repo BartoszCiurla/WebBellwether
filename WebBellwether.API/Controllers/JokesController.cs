@@ -21,65 +21,21 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.InsertJoke(jokeModel);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeAdded:
-                    return Ok(result.Value);
-                case ResultState.JokeTranslationEdited:
-                    return Ok();
-                case ResultState.JokeExists:
-                    return BadRequest("JokeExists");
-                case ResultState.JokeCategoryNotExistsInDb:
-                    return BadRequest("JokeCategoryNotExists");
-                case ResultState.LanguageNotExists:
-                    return BadRequest("LanguageNotExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
-            
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());                      
         }
         [Authorize]
         [Route("PostDeleteJoke")]
         public IHttpActionResult PostDeleteJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.DeleteJoke(jokeModel);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeDeleted:
-                    return Ok();
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                case ResultState.JokeDetailNotExists:
-                    return BadRequest("JokeDetailNotExists");
-                case ResultState.JokeNotExists:
-                    return BadRequest("JokeNotExists");
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize]
         [Route("PostEditJoke")]
         public IHttpActionResult PostEditJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.PutJoke(jokeModel);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeNotExists:
-                    return BadRequest("JokeNotExists");
-                case ResultState.JokeExists:
-                    return BadRequest("JokeExists");
-                case ResultState.JokeCategoryNotExistsInDb:
-                    string message = "JokeCategoryNotExists" + "," + result.Value.ToString();
-                    return BadRequest(message);
-                case ResultState.JokeEdited:
-                    return Ok();
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CritialError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());          
         }
         [AllowAnonymous]
         [Route("GetJokeTranslation")]
@@ -92,23 +48,7 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostJokeCategory(JokeCategoryModel categoryModel)
         {
             ResultStateContainer result= _service.InsertJokeCategory(categoryModel);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeCategoryAdded:
-                    return Ok(result.Value);
-                case ResultState.JokeCategoryExistsInDb:
-                    return BadRequest("JokeCategoryExistsInDb");
-                case ResultState.JokeCategoryTranslationAdded:
-                    return Ok();
-                case ResultState.JokeCategoryTranslationEdited:
-                    return Ok();
-                case ResultState.JokeCategoryTranslationNotExists:
-                    return BadRequest();
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
         [Authorize]
@@ -132,7 +72,7 @@ namespace WebBellwether.API.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("GetJokeCategoryTranslation")]
-        public IHttpActionResult GetJokeCategoryTranslation(int id, int languageId)//here i have game main id and language id 
+        public IHttpActionResult GetJokeCategoryTranslation(int id, int languageId)//here i have jokecategory main id and language id 
         {
             return Ok(_service.GetJokeCategoryTranslation(id,languageId));
         }
@@ -142,37 +82,14 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostEditJokeCategory(JokeCategoryModel jokeCategory)
         {
             ResultStateContainer result = _service.PutJokeCategory(jokeCategory);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeCategoryEdited:
-                    return Ok();
-                case ResultState.JokeCategoryNotExistsInDb:
-                    return BadRequest("JokeCategoryNotExists");
-                case ResultState.ThisJokeCategoryExists:
-                    return BadRequest("ThisJokeCategoryExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize]
         [Route("PostDeleteJokeCategory")]
         public IHttpActionResult PostDeleteJokeCategory(JokeCategoryModel jokeCategory)
         {
             ResultStateContainer result = _service.DeleteJokeCategory(jokeCategory);
-            switch (result.ResultState)
-            {
-                case ResultState.JokeCategoryDeleted:
-                    return Ok(result);
-                case ResultState.JokeCategoryTranslationNotExists:
-                    return BadRequest("JokeCategoryTranslationNotExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());      
         }
-
     }
 }

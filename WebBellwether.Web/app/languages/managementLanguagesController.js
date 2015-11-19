@@ -57,18 +57,7 @@
                         type: 'success',
                     });
                 }, function (x) {
-                    $scope.userNotification = $scope.translation.LanguageNotAdded;
-                    if (x.data.message == "CriticalError")
-                        $scope.userNotification += ' ' + $scope.translation.CriticalError;
-                    else if (x.data.message == "LanguageExists")
-                        $scope.userNotification += ' ' + $scope.translation.LanguageExists;
-                    else if (x.data.message == "LanguageNotExists")
-                        $scope.userNotification += ' ' + $scope.translation.LanguageNotExists;
-                    else if (x.data.message == "LanguageFileNotExists")
-                        $scope.userNotification += ' ' + $scope.translation.LanguageFileNotExists;
-                    else
-                        $scope.userNotification += ' ' + x.data.message;
-
+                    userNotification = $scope.translation.LanguageNotAdded + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -95,11 +84,7 @@
                     });
 
                 }, function (x) {
-                    $scope.userNotification = $scope.translation.LanguageKeyValueNotEdited;
-                    if (x.data.message == "CriticalError")
-                        $scope.userNotification += ' ' + $scope.translation.CriticalError;
-                    else
-                        $scope.userNotification += ' ' + x.data.message;
+                    userNotification = $scope.translation.LanguageKeyValueNotEdited + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -119,14 +104,10 @@
                         type: 'success',
                     });
                 }, function (x) {
-                    $scope.userNotification = $scope.translation.LanguageNotEdited;
-                    if (x.data.message == "CriticalError")
-                        $scope.userNotification += ' ' + $scope.translation.CriticalError;
-                    else
-                        $scope.userNotification += ' ' + x.data.message;
+                    userNotification = $scope.translation.LanguageNotEdited + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
-                        content: $scope.userNotification,
+                        content: userNotification,
                         type: 'alert',
                         timeout: 10000
                     });
@@ -146,15 +127,17 @@
                 dialog.close();
                 console.log(language);
                 languagesService.DeleteLanguage(language).then(function (x) {
+                    //tutaj trzeba jeszcze dorobić kilka rzeczy czyli np usuwanie go z list (tych które już sa w interfejsie ...)
                     $.Notify({
                         caption: $scope.translation.Success,
-                        content: 'lang removed',
+                        content: $scope.translation.LanguageRemoved,
                         type: 'success',
                     });
                 }, function (x) {
+                    userNotification = $scope.translation.LanguageNotRemoved + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
-                        content: 'lang not removed',
+                        content: userNotification,
                         type: 'alert',
                         timeout: 10000
                     });

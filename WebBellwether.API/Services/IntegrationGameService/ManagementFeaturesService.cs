@@ -15,28 +15,28 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             _repository = repository;
         }
-        public ResultState PutGameFeature(GameFeatureModel gameFeatureModel)
+        public ResultMessage PutGameFeature(GameFeatureModel gameFeatureModel)
         {
             var entity =
                _repository.GameFeatureLanguageRepository.GetWithInclude(
                     x => x.GameFeature.Id == gameFeatureModel.Id && x.Language.Id == gameFeatureModel.LanguageId).SingleOrDefault();
 
             if (entity == null)
-                return ResultState.GameFeatureNotExists;
+                return ResultMessage.GameFeatureNotExists;
             entity.GameFeatureName = gameFeatureModel.GameFeatureName;
             _repository.Save();
-            return ResultState.GameFeatureEdited;
+            return ResultMessage.GameFeatureEdited;
         }
-        public ResultState PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
+        public ResultMessage PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
             var entity =
                _repository.GameFeatureDetailLanguageRepository.GetWithInclude(
                     x => x.Id == gameFeatureDetailModel.Id && x.Language.Id == gameFeatureDetailModel.LanguageId).SingleOrDefault();
             if (entity == null)
-                return ResultState.GameFeatureDetailNotExists;
+                return ResultMessage.GameFeatureDetailNotExists;
             entity.GameFeatureDetailName = gameFeatureDetailModel.GameFeatureDetailName;
             _repository.Save();
-            return ResultState.GameFeatureDetailEdited;
+            return ResultMessage.GameFeatureDetailEdited;
         }
 
 

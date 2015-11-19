@@ -36,26 +36,9 @@ namespace WebBellwether.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            //this is stupid but works ehm this don't work i must return id ffss 
+
             ResultStateContainer result = _service.InsertIntegrationGame(gameModel);
-            switch (result.ResultState)
-            {
-                //this i really stupid ... 
-                case ResultState.GameAdded:
-                    return Ok(result.Value);//standard 
-                case ResultState.ThisGameExistsInDb:
-                    return BadRequest(result.Value.ToString());//if game name exists in db
-                case ResultState.SeveralLanguageGameAdded:
-                    return Ok(result.Value); //standard user can add more game translation
-                case ResultState.GameHaveTranslationForThisLanguage:
-                    return BadRequest(result.Value.ToString()); // if game have translation for language
-                case ResultState.GameTranslationEdited:
-                    return Ok(result.Value);
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());        
         }
         [Authorize]
         [Route("PostEditIntegrationGame")]
@@ -64,17 +47,7 @@ namespace WebBellwether.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             ResultStateContainer result =  _service.PutIntegrationGame(integrationGame);
-            switch (result.ResultState)
-            {
-                case ResultState.GameEdited:
-                    return Ok();
-                case ResultState.GameNotExists:
-                    return BadRequest("GameNotExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok() : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
         [Authorize]
@@ -82,19 +55,7 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostDeleteIntegrationGame(IntegrationGameModel integrationGame)
         {
             ResultStateContainer result = _service.DeleteIntegratiomGame(integrationGame);
-            switch (result.ResultState)
-            {
-                case ResultState.GameRemoved:
-                    return Ok(result);
-                case ResultState.GameTranslationNotExists:
-                    return BadRequest("GameTranslationNotExists"); 
-                case ResultState.GameFeatureTranslationNotExists:
-                    return BadRequest("GameFeatureTranslationNotExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
         [Authorize]
@@ -103,7 +64,7 @@ namespace WebBellwether.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (_service.PutGameFeature(gameFeatureModel) == ResultState.GameFeatureEdited)
+            if (_service.PutGameFeature(gameFeatureModel) == ResultMessage.GameFeatureEdited)
                 return Ok(gameFeatureModel);
             return NotFound();
         }
@@ -114,7 +75,7 @@ namespace WebBellwether.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (_service.PutGameFeatureDetail(gameFeatureDetailModel) == ResultState.GameFeatureDetailEdited)
+            if (_service.PutGameFeatureDetail(gameFeatureDetailModel) == ResultMessage.GameFeatureDetailEdited)
                 return Ok(gameFeatureDetailModel);
             return NotFound();
         }
@@ -146,5 +107,5 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetGameFeatures(language));
         }
-    }
+    }//153 linie kody były prawie 50 mniej ;) 
 }

@@ -34,78 +34,28 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostEditLanguageKey(LanguageKeyModel languageKey)
         {
             ResultStateContainer result = _service.PutLanguageKey(languageKey);
-            switch (result.ResultState)
-            {
-                case ResultState.LanguageKeyValueEdited:
-                    return Ok();
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }           
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());         
         }
         [Authorize]
         [Route("PostEditLanguage")]
         public IHttpActionResult PostEditLangauge(Language language)
         {
             ResultStateContainer result = _service.PutLanguage(language);
-            switch (result.ResultState)
-            {
-                case ResultState.LanguageEdited:
-                    return Ok();
-                case ResultState.LanguageNotExists:
-                    return BadRequest("LanguageNotExists");
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize]
         [Route("PostPublishLanguage")]
         public IHttpActionResult PostPublishLanguage(Language language)
         {
-            //koniecznie musze się zastanowic jak zrobić to inaczej bo takie rozwiązanie nie podoba mi się 
-            //teoretycznie mozna by 
             ResultStateContainer result = _service.PublishLanguage(language);
-            switch (result.ResultState)
-            {
-                case ResultState.LanguageFileNotExists:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.EmptyKeysExists:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.OnlyOnePublicLanguage:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.LanguageNotExists:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.LanguageHasBeenPublished:
-                    return Ok(result.ResultState.ToString());
-                case ResultState.LanguageHasBeenNonpublic:
-                    return Ok(result.ResultState.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize]
         [Route("PostLanguage")]
         public IHttpActionResult PostLanguage(Language language)
         {
             ResultStateContainer result = _service.PostLanguage(language);
-            switch (result.ResultState)
-            {
-                case ResultState.LanguageAdded:
-                    return Ok(result.Value);
-                case ResultState.LanguageExists:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.Error:
-                    return BadRequest(result.Value.ToString());
-                case ResultState.LanguageNotExists:
-                    return BadRequest(result.ResultState.ToString());
-                case ResultState.LanguageFileNotExists:
-                    return BadRequest(result.ResultState.ToString());
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
         [Authorize]
@@ -113,15 +63,7 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostDeleteLanguage(Language language)
         {
             ResultStateContainer result = _service.DeleteLanguage(language);
-            switch (result.ResultState)
-            {
-                case ResultState.LanguageRemoved:
-                    return Ok();
-                case ResultState.LanguageCanNotBeRemoved:
-                    return BadRequest("LanguageCanNotBeRemoved");
-                default:
-                    return BadRequest("CriticalError");
-            }
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
     }

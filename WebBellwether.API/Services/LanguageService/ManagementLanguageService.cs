@@ -41,29 +41,29 @@ namespace WebBellwether.API.Services.LanguageService
                 //check is language exists 
                 Language entity = GetLanguageByName(language.LanguageName);
                 if (entity != null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage=ResultMessage.LanguageExists };
                 //insert and return new id 
                 entity = new Language { IsPublic = false, LanguageName = language.LanguageName, LanguageFlag = language.LanguageFlag, LanguageShortName = language.LanguageShortName };
                 _repository.LanguageRepository.Insert(entity);
                 _repository.Save();
                 entity = GetLanguageByName(language.LanguageName);
                 if(entity == null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageExists };
 
                 //create language file if error delete language row in db and return error
                 ResultStateContainer createFileLanguageResult = CreateLanguageFile(entity.Id);
-                if (createFileLanguageResult.ResultState != ResultState.LanguageFileAdded)
+                if (createFileLanguageResult.ResultState != ResultState.Success)
                 {
                     //delete language in db 
                     _repository.LanguageRepository.Delete(entity);
                     return createFileLanguageResult;
                 }                     
                 //if lang inserted must return lang id ...
-                return new ResultStateContainer { ResultState = ResultState.LanguageAdded , Value = entity };
+                return new ResultStateContainer { ResultState = ResultState.Success ,ResultMessage= ResultMessage.LanguageAdded, ResultValue = entity };
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error,Value = e};
+                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.Error };
             }
         }
 
@@ -91,11 +91,11 @@ namespace WebBellwether.API.Services.LanguageService
             try
             {
                 if (newLanguageId == 0)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageNotExists };
                 //take key for new file                
                 Dictionary<string, string> languageFileKeys = GetLanguageFileKeys();
                 if (languageFileKeys == null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageFileNotExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageFileNotExists };
 
                 string newFileLocation = destinationPlace + newLanguageId + ".json";
                 
@@ -114,11 +114,11 @@ namespace WebBellwether.API.Services.LanguageService
                 {
                     jsonKeys.WriteTo(writer);
                 }               
-                    return new ResultStateContainer { ResultState = ResultState.LanguageFileAdded };
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.LanguageFileAdded };
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage=ResultMessage.Error };
             }
         }
         public ResultStateContainer PutLanguageKey(LanguageKeyModel languageKey)
@@ -131,12 +131,12 @@ namespace WebBellwether.API.Services.LanguageService
                 jsonObj[languageKey.Key] = languageKey.Value;
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(jsonLocation, output);
-                return new ResultStateContainer { ResultState = ResultState.LanguageKeyValueEdited };
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage= ResultMessage.LanguageKeyValueEdited };
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.Error };
             }
         }
         public ResultStateContainer PublishLanguage(Language language)
@@ -150,31 +150,31 @@ namespace WebBellwether.API.Services.LanguageService
                     string json = File.ReadAllText(jsonLocation);
                     dynamic jsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
                     if (jsonObj == null)
-                        return new ResultStateContainer { ResultState = ResultState.LanguageFileNotExists, };
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageFileNotExists };
                     foreach (var item in jsonObj)
                     {
                         if (item.Value.Length < 3)
                             emptyKey++;
                     }
                     if (emptyKey > 0)
-                        return new ResultStateContainer { ResultState = ResultState.EmptyKeysExists };
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.EmptyKeysExists };
                 }
                 else //nonpublic language
                 {
                     if (_repository.LanguageRepository.GetWithInclude(x => x.IsPublic == true).Count() == 1)  //check how many languages is public 
-                        return new ResultStateContainer { ResultState = ResultState.OnlyOnePublicLanguage };
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.OnlyOnePublicLanguage };
                 }
                 Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
                 if (entity == null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage =ResultMessage.LanguageNotExists };
                 entity.IsPublic = language.IsPublic;
                 _repository.Save();
-                return language.IsPublic == true ? new ResultStateContainer { ResultState = ResultState.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.LanguageHasBeenNonpublic };
+                return language.IsPublic == true ? new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.LanguageHasBeenNonpublic };
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error};
             }
         }
 
@@ -184,17 +184,17 @@ namespace WebBellwether.API.Services.LanguageService
             {
                 Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
                 if (entity == null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageNotExists };
                 entity.LanguageFlag = language.LanguageFlag;
                 entity.LanguageName = language.LanguageName;
                 entity.LanguageShortName = language.LanguageShortName;
                 _repository.Save();
-                return new ResultStateContainer { ResultState = ResultState.LanguageEdited };
+                return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage = ResultMessage.LanguageEdited };
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
         private ResultStateContainer DeleteLanguageFile(int languageId)
@@ -205,40 +205,14 @@ namespace WebBellwether.API.Services.LanguageService
                 if(File.Exists(file))
                 {
                     File.Delete(file);
-                    return new ResultStateContainer { ResultState = ResultState.LanguageFileRemoved };
+                    return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage = ResultMessage.LanguageFileRemoved };
                 }
-                return new ResultStateContainer { ResultState = ResultState.LanguageFileNotExists };
+                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageFileNotExists };
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
-            }
-        }
-        private ResultStateContainer DeleteIntegrationGames(int languageId)
-        {
-            //NOTE STILL DO NOT KNOW WHETHER TO OPERATE HERE SEPARATE WRITTEN OR SERVICE BECAUSE THIS WILL BE MUCH WILL THIS IS NOT SO SIMPLE
-            try
-            {
-                return new ResultStateContainer { ResultState = ResultState.Error };
-            }
-            catch (Exception e)
-            {
-
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
-            }
-        }
-        private ResultStateContainer DeleteJokes(int languageId)
-        {
-            //NOTE STILL DO NOT KNOW WHETHER TO OPERATE HERE SEPARATE WRITTEN OR SERVICE BECAUSE THIS WILL BE MUCH WILL THIS IS NOT SO SIMPLE
-            try
-            {
-                return new ResultStateContainer { ResultState = ResultState.Error };
-            }
-            catch (Exception e)
-            {
-
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
         public ResultStateContainer DeleteLanguage(Language language)
@@ -246,23 +220,22 @@ namespace WebBellwether.API.Services.LanguageService
             try
             {
                 //BETA VERSION NOT REMOVE OTHER STRUCTURE ... 
-                if (language.Id == 1 | language.Id == 2)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageCanNotBeRemoved };
+                if (language.Id == 1 | language.Id == 2) // i need list of irremovable languages ... 
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageCanNotBeRemoved };
                 Language entity = GetLanguageByID(language.Id);
                 if (entity == null)
-                    return new ResultStateContainer { ResultState = ResultState.LanguageNotExists };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageNotExists };
                 _repository.LanguageRepository.Delete(entity);
 
                 ResultStateContainer deleteFileResult = DeleteLanguageFile(language.Id);
-                if (deleteFileResult.ResultState != ResultState.LanguageFileRemoved)
+                if (deleteFileResult.ResultState != ResultState.Success)
                     return deleteFileResult;
                 _repository.Save();
-                return new ResultStateContainer { ResultState = ResultState.LanguageRemoved };
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.LanguageRemoved };
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
     }

@@ -50,14 +50,7 @@
                     });
                 },
                 function (x) {
-                    if (x.data.message == "JokeCategoryNotExists")
-                        userNotification = $scope.translation.JokeCategoryNotExists;
-                    else if (x.data.message == "ThisJokeCategoryExists")
-                        userNotification = $scope.translation.ThisJokeCategoryExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification = $scope.translation.CriticalError;
-                    else
-                        userNotification = X.data.message; // handled error
+                    userNotification = $scope.translation.JokeCategoryNotEdited + " " + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -100,16 +93,9 @@
                     });
                 },
                 function (x) {
-                    if (x.data.message == "JokeCategoryTranslationNotExists")
-                        userNotification = $scope.translation.JokeCategoryTranslationNotExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification = $scope.translation.CriticalError;
-                    else
-                        userNotification = x.data.message; // handled error
-
                     $.Notify({
                         caption: $scope.translation.Failure,
-                        content: userNotification,
+                        content: $scope.translation[x.data.message],
                         type: 'alert',
                     });
                 });
@@ -130,9 +116,7 @@
                     });
                 },
                 function (x) {
-                    if (x.data.message == "JokeCategoryTranslationNotExists")
-                        userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation.JokeCategoryTranslationNotExists;
-                        userNotification = $scope.translation.TranslationNotRemoved + " " + x.data.message;
+                    userNotification = $scope.translation.TranslationNotRemoved + " " + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,

@@ -94,12 +94,12 @@ namespace WebBellwether.API.Services.IntegrationGameService
             return _managementIntegrationGamesService.PutIntegrationGame(integrationGame);
         }
 
-        public ResultState PutGameFeature(GameFeatureModel gameFeatureModel)
+        public ResultMessage PutGameFeature(GameFeatureModel gameFeatureModel)
         {
             return _managementFeaturesService.PutGameFeature(gameFeatureModel);
 
         }
-        public ResultState PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
+        public ResultMessage PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
             return _managementFeaturesService.PutGameFeatureDetail(gameFeatureDetailModel);
         }

@@ -233,6 +233,7 @@
     <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Results\ResultMessage.cs" />
     <Compile Include="Results\ResultState.cs" />
     <Compile Include="Results\ResultStateContainer.cs" />
     <Compile Include="Services\IntegrationGameService\Abstract\IIntegrationGameService.cs" />
@@ -247,7 +248,6 @@
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
-    <Compile Include="Services\LanguageService\DeleteLanguageStructureService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

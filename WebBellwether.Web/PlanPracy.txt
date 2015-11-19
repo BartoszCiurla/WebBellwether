@@ -2,9 +2,24 @@
 -PRIO przeniesienie dodawania gier do ich edycji , poprawa resultstatow tak zeby wykluczyc wszystkie casy i calosc postawic na jednym switchu w sensie ok / badreq
 uwaga w dalszym ciagu wartosci z pliku bede zaciagal w ui bo to jest dobre rozwiazanie tylko te casy gryza mnie w oczy (teoretycznie trzeba bedzie rozbudować klase resultstate zeby bylo wiecej moliwosci SUKCES , PORAZKA , BLAD)
 
+
+
 -potrzebny serwis który resultstate bedzie formatował od razu na odpowiednik z jsona hmmm tylko czy to jest dobre ? 
 -teoretycznie potrzebny mi serwis który bedzie obsługiwał jeżyki 
 -jezeli mam publikacje jezyka i wchodze na edycje cech gier to powinien mi utworzyć odpowiednie wpisy 
+
+**************************************************
+pytania do promotora :
+potrzebne mi logowanie do asp czy jest coś co może logować na backendzie i frontendzie ? ? 
+**************************************************
+
+jak na itadzie bedzie nudto to bede to robił : 
+**************************************************
+1)po usuwaniu języka trzeba go wypierdolić z list tych ktore istnieja w ui 
+
+
+**************************************************
+
 
 
 co trzeba zrobić : 

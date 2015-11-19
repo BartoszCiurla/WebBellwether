@@ -48,11 +48,11 @@ namespace WebBellwether.API.Services.IntegrationGameService
                         integrationGameDetail
                             .IntegrationGame.Id;
                 }
-                return new ResultStateContainer { ResultState = ResultState.GameAdded, Value = integrationGameId };
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.GameAdded, ResultValue = integrationGameId };
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
            
         }
@@ -115,16 +115,16 @@ namespace WebBellwether.API.Services.IntegrationGameService
                         //delete main game
                         _repository.IntegrationGameRepository.Delete(mainGameEntity);
                     _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.GameRemoved };
+                    return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage=ResultMessage.GameRemoved };
                 }
                 else
                 {
                     var gameEntity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
                     if (gameEntity == null)
-                        return new ResultStateContainer { ResultState = ResultState.GameTranslationNotExists };
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.GameRemoved };
                     var gameFeatureEntity = _repository.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.Id == gameEntity.Id);
                     if (gameFeatureEntity == null)
-                        return new ResultStateContainer { ResultState = ResultState.GameFeatureTranslationNotExists };
+                        return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.GameFeatureTranslationNotExists };
                     int gameTranslationCount = 0;
                     if (integrationGame.GameTranslations != null) // when i have null here i know this is only translation
                         integrationGame.GameTranslations.ForEach(x =>
@@ -147,12 +147,12 @@ namespace WebBellwether.API.Services.IntegrationGameService
                             _repository.IntegrationGameRepository.Delete(mainGameEntity);
                     }
                     _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.GameRemoved };
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.GameRemoved };
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.Error };
             }
 
         }
@@ -186,13 +186,13 @@ namespace WebBellwether.API.Services.IntegrationGameService
                             entity = null;
                         }
                     });
-                    return new ResultStateContainer { ResultState = ResultState.GameEdited };
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.GameEdited };
                 }
-                return new ResultStateContainer { ResultState = ResultState.GameNotExists };
+                return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage = ResultMessage.GameNotExists };
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
            
         }
@@ -236,38 +236,38 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 {
                     var entityToEdit = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == game.IntegrationGameId).FirstOrDefault();
                     if (entityToEdit == null)
-                        return new ResultStateContainer { ResultState = ResultState.GameTranslationNotExists };
+                        return new ResultStateContainer { ResultMessage = ResultMessage.GameTranslationNotExists,ResultState = ResultState.Failure };
 
                     entityToEdit.IntegrationGameName = game.GameName;
                     entityToEdit.IntegrationGameDescription = game.GameDetails;
                     _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.GameTranslationEdited };
+                    return new ResultStateContainer { ResultState = ResultState.Success ,ResultMessage=ResultMessage.GameTranslationEdited };
                 }
-                if (CheckNewGameLanguage(game) != ResultState.GameCanBeAdded)
-                    return new ResultStateContainer { ResultState = ResultState.GameHaveTranslationForThisLanguage, Value = game.Id };
+                if (CheckNewGameLanguage(game) != ResultMessage.GameCanBeAdded)
+                    return new ResultStateContainer (ResultState.Failure,ResultMessage.GameHaveTranslationForThisLanguage, game.Id);
                 var entity = _repository.IntegrationGameRepository.GetFirst(x => x.Id == game.Id);
                 entity?.IntegrationGameDetails.Add(BuildIntegrationGameDetail(game));
                 _repository.Save();
-                return new ResultStateContainer { ResultState = ResultState.SeveralLanguageGameAdded, Value = game.Id };
+                return new ResultStateContainer (ResultState.Success,  ResultMessage.SeveralLanguageGameAdded, game.Id );
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Error, Value = e };
+                return new ResultStateContainer {ResultState= ResultState.Failure,ResultMessage = ResultMessage.Error };
             }
         }
-        public ResultState CheckNewGameLanguage(NewIntegrationGameModel game)
+        public ResultMessage CheckNewGameLanguage(NewIntegrationGameModel game)
         {
             if (
                _repository.IntegrationGameDetailRepository.GetFirst(
                     x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language.Id) == null)
-                return ResultState.GameCanBeAdded;
-            return ResultState.GameHaveTranslationForThisLanguage;
+                return ResultMessage.GameCanBeAdded;
+            return ResultMessage.GameHaveTranslationForThisLanguage;
         }
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
         {
             //probably i set here multiple language insert game 
             if (_repository.IntegrationGameDetailRepository.GetFirst(x => x.IntegrationGameName.Equals(game.GameName)) != null)
-                return new ResultStateContainer { ResultState = ResultState.ThisGameExistsInDb, Value = game.Id };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = game.Id };
             if (game.Id == 0)
                 return InsertSingleLanguageGame(game);
             return InsertSeveralLanguageGame(game);

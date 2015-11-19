@@ -44,14 +44,14 @@ namespace WebBellwether.API.Services.JokeService
         public ResultStateContainer InsertJoke(JokeModel joke)
         {
             ResultStateContainer result = _managementJokeService.InsertJoke(joke);
-            if (result.ResultState == ResultState.JokeAdded)
+            if (result.ResultState == ResultState.Success)
             {
                 List<Language> languages = _repository.LanguageRepository.GetAll().ToList(); 
                 var newJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.JokeContent.Equals(joke.JokeContent)).FirstOrDefault();
                 joke.Id = newJoke.Joke.Id;
                 joke.JokeId = newJoke.Id;
                 joke.JokeTranslations = FillAvailableTranslation(joke.Id, languages);
-                result.Value = joke;
+                result.ResultValue = joke;
                 return result;
             }
             else return result;
@@ -111,13 +111,13 @@ namespace WebBellwether.API.Services.JokeService
         public ResultStateContainer InsertJokeCategory(JokeCategoryModel categoryModel)
         {
             ResultStateContainer result = _managementJokeCategoryService.InsertJokeCategory(categoryModel);
-            if (result.ResultState == ResultState.JokeCategoryAdded)
+            if (result.ResultState == ResultState.Success)
             {
                 var newJokeCategory = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategoryName == categoryModel.JokeCategoryName).FirstOrDefault();
                 categoryModel.Id = newJokeCategory.JokeCategory.Id;
                 categoryModel.JokeCategoryId = newJokeCategory.Id;
                 categoryModel.JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(categoryModel.Id, _repository.LanguageRepository.GetAll().ToList());
-                result.Value = categoryModel;
+                result.ResultValue = categoryModel;
                 return result;
             }
             else

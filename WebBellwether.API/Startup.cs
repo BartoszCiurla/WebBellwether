@@ -41,7 +41,7 @@ namespace WebBellwether.API
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 //UWAGA TO JEST NA CZAS TESTÓW W PRZYSZLOSCI TRZEBA TO JAKOS INACZEJ ROZWIAZAC
-                //AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                //AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30), 
                 Provider = new SimpleAuthorizationServerProvider(),
                 RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };

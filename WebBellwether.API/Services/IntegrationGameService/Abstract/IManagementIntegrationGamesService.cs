@@ -15,7 +15,7 @@ namespace WebBellwether.API.Services.IntegrationGameService.Abstract
         void BuildFeaturesTemplate(int language, List<GameFeatureModel> gameFeatures);
         List<IntegrationGameFeature> GetGameFeatures(int[] features, int language);
         ResultStateContainer InsertSeveralLanguageGame(NewIntegrationGameModel game);
-        ResultState CheckNewGameLanguage(NewIntegrationGameModel game);
+        ResultMessage CheckNewGameLanguage(NewIntegrationGameModel game);
         ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game);
         ResultStateContainer PutIntegrationGame(IntegrationGameModel integrationGame);
         ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame);
