@@ -21,7 +21,7 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.InsertJoke(jokeModel);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());                      
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString() + (result.ResultValue == null ? "" : "," + result.ResultValue));                      
         }
         [Authorize]
         [Route("PostDeleteJoke")]
@@ -35,7 +35,8 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostEditJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.PutJoke(jokeModel);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());          
+            //tutaj jest pewnien problem mianowicie mechanizm do zwracania języków dla kturych nie ma translacji ... 
+            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString() + (result.ResultValue == null ? "": "," +result.ResultValue));          
         }
         [AllowAnonymous]
         [Route("GetJokeTranslation")]

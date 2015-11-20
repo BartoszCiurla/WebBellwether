@@ -12,7 +12,7 @@ namespace WebBellwether.API.Models.IntegrationGame
         [Required]
         public string GameDetails { get; set; }
         [Required]
-        public Language Language { get; set; }
+        public int Language { get; set; }
         public int[] Features { get; set; }
     }
 

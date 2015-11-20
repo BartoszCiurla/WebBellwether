@@ -100,7 +100,7 @@ namespace WebBellwether.API.Services.JokeService
 
                     JokeCategoryDetail categoryDetail = GetJokeCategory(joke.JokeCategoryId, joke.LanguageId);
                     if (categoryDetail == null)
-                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.JokeCategoryNotExistsInDb, ResultValue = GetLanguage(joke.LanguageId) };
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.JokeCategoryNotExists, ResultValue = GetLanguage(joke.LanguageId) };
                     entity.JokeCategoryDetail = categoryDetail;
                     foreach (AvailableLanguage al in joke.JokeTranslations)
                     {
@@ -108,7 +108,7 @@ namespace WebBellwether.API.Services.JokeService
                         {
                             JokeCategoryDetail categoryDetailForOtherTranslation = GetJokeCategory(joke.JokeCategoryId, al.Language.Id);
                             if (categoryDetailForOtherTranslation == null)
-                                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExistsInDb, ResultValue = al.Language.LanguageName };
+                                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExists, ResultValue = al.Language.LanguageName };
                             var otherTranslationJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id).FirstOrDefault();
                             otherTranslationJoke.JokeCategoryDetail = categoryDetailForOtherTranslation;
                         }
@@ -135,7 +135,7 @@ namespace WebBellwether.API.Services.JokeService
                 //first i check joke category 
                 JokeCategoryDetail entityCategory = GetJokeCategory(joke.JokeCategoryId, joke.LanguageId);
                 if (entityCategory == null)
-                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExistsInDb };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExists };
                 JokeDetail entityDetail = new JokeDetail
                 {
                     JokeContent = joke.JokeContent,
@@ -183,7 +183,7 @@ namespace WebBellwether.API.Services.JokeService
                     return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageNotExists };
                 JokeCategoryDetail categoryDetail = GetJokeCategory(joke.JokeCategoryId, joke.LanguageId);
                 if (categoryDetail == null)
-                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExistsInDb };
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExists,ResultValue =GetLanguage(joke.LanguageId).LanguageName};
                 var entity = _repository.JokeRepository.GetWithInclude(x => x.Id == joke.Id).FirstOrDefault();
                 entity?.JokeDetails.Add(new JokeDetail
                 {

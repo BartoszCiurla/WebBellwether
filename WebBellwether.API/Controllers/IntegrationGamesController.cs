@@ -47,7 +47,7 @@ namespace WebBellwether.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             ResultStateContainer result =  _service.PutIntegrationGame(integrationGame);
-            return result.ResultState == ResultState.Success ? Ok() : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            return result.ResultState == ResultState.Success ? Ok() : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());            
         }
 
         [Authorize]

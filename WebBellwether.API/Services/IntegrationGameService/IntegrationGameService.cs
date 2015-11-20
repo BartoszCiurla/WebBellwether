@@ -44,14 +44,22 @@ namespace WebBellwether.API.Services.IntegrationGameService
             return _managementIntegrationGamesService.GetGameTranslation(gameId,languageId);
         }
 
-        public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
-        {
-            return _managementIntegrationGamesService.InsertSingleLanguageGame(game);
-        }
-
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
         {
-            return _managementIntegrationGamesService.InsertIntegrationGame(game);
+            ResultStateContainer result = _managementIntegrationGamesService.InsertIntegrationGame(game);
+            if (result.ResultState == ResultState.Success && result.ResultMessage == ResultMessage.SeveralLanguageGameAdded)
+                return result;
+            else if (result.ResultState == ResultState.Success && result.ResultMessage == ResultMessage.GameAdded)
+            {
+                List<Language> languages = _repository.LanguageRepository.GetAll().ToList();
+                //fill rest of data
+                IntegrationGameModel tempGame = (IntegrationGameModel)result.ResultValue;
+                tempGame.IntegrationGameDetailModels = FillGameDetailModel(tempGame.IntegrationGameId);
+                tempGame.GameTranslations = FillAvailableTranslation(tempGame.Id, languages);
+                result.ResultValue = tempGame;
+                return result;
+            }
+            else return result;
         }
 
         public List<GameFeatureModel> GetGameFeatures(int language)

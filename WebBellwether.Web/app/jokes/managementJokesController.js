@@ -84,14 +84,7 @@
                     });
                 },
                 function (x) {
-                    if (x.data.message == "JokeDetailNotExists")
-                        userNotification = $scope.translation.JokeNotDeleted + " " + $scope.translation.JokeDetailNotExists;
-                    else if (x.data.message == "JokeNotExists")
-                        userNotification = $scope.translation.JokeNotDeleted + " " + $scope.translation.JokeNotExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification = $scope.translation.CriticalError;
-                    else
-                        userNotification = x.data.message;
+                    userNotification = $scope.translation.JokeNotDeleted + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -115,16 +108,7 @@
                     });
                 },
                 function (x) {
-                    userNotification = $scope.translation.TranslationNotRemoved
-                    if (x.data.message == "JokeDetailNotExists")
-                        userNotification += " " + $scope.translation.JokeDetailNotExists;
-                    else if (x.data.message == "JokeNotExists")
-                        userNotification += " " + $scope.translation.JokeNotExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification += " " + $scope.translation.CriticalError;
-                    else
-                        userNotification += " " + x.data.message;
-
+                    userNotification = $scope.translation.TranslationNotRemoved + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -155,16 +139,7 @@
                     });
                 },
                 function (x) {
-                    if (x.data.message == "JokeExists")
-                        userNotification = $scope.translation.ThisJokeExists;
-                    else if (x.data.message == "JokeCategoryNotExists")
-                        userNotification = $scope.translation.JokeNotAdded + " " + $scope.translation.JokeCategoryNotExists;
-                    else if (x.data.message == "LanguageNotExists")
-                        userNotification = $scope.translation.JokeNotAdded + " " + $scope.translation.LanguageNotExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification = $scope.translation.CriticalError
-                    else
-                        userNotification = x.data.message; //handled error
+                    userNotification = $scope.translation.JokeNotAdded + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -187,16 +162,11 @@
                     });
                 }, function (x) {
                     userNotification = $scope.translation.TranslationNotEdited;
-                    if (x.data.message.indexOf("JokeCategoryNotExists") > -1) {
-                        var language = 
+                    if (x.data.message.indexOf(",") > -1) {
                         userNotification += " " + $scope.translation.JokeCategoryNotExists + " " + $scope.translation.ForLanguage + " "  + x.data.message.substr(x.data.message.indexOf(",") + 1);
-                    }else if (x.data.message == "CriticalError")
-                        userNotification += " " + $scope.translation.CriticalError;
-                    else if (x.data.message == "JokeExists")
-                        userNotification += " " + $scope.translation.ThisJokeExists;
-                    else
-                        userNotification += x.data.message;
-
+                    } else {
+                        userNotification + $scope.translation[x.data.message];
+                    }
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
@@ -247,18 +217,12 @@
                     }
                     else
                         userNotification = $scope.translation.TranslationNotEdited;
-                    if (x.data.message == "JokeCategoryNotExists") {
-                        userNotification += " " + $scope.translation.JokeCategoryNotExists;
-                    }
-                    else if (x.data.message == "LanguageNotExists")
-                        userNotification += " " + $scope.translation.LanguageNotExists;
-                    else if (x.data.message == "CriticalError")
-                        userNotification += " " + $scope.translation.CriticalError;
-                    else if (x.data.message == "JokeExists")
-                        userNotification += " " + $scope.translation.ThisJokeExists;
-                    else
-                        userNotification += x.data.message;
 
+                    if (x.data.message.indexOf(",") > -1) {
+                        userNotification += " " + $scope.translation.JokeCategoryNotExists + " " + $scope.translation.ForLanguage + " " + x.data.message.substr(x.data.message.indexOf(",") + 1);
+                    } else {
+                        userNotification += " " + $scope.translation[x.data.message];
+                    }
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,

@@ -100,7 +100,7 @@ namespace WebBellwether.API.Services.JokeService
             {
                 var entity = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Id == jokeCategory.JokeCategoryId).FirstOrDefault();
                 if (entity == null)
-                    return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.JokeCategoryNotExistsInDb };
+                    return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.JokeCategoryNotExists };
                 if (_repository.JokeCategoryDetailRepository.GetFirst(x => x.JokeCategoryName.Equals(jokeCategory.JokeCategoryName)) != null)
                     return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.ThisJokeCategoryExists };
                 entity.JokeCategoryName = jokeCategory.JokeCategoryName;

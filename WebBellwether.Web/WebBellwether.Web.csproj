@@ -612,8 +612,6 @@
     <Content Include="app\home\indexController.js" />
     <Content Include="app\integrationGames\editGameFeaturesController.js" />
     <Content Include="app\integrationGames\integrationGamesController.js" />
-    <Content Include="app\integrationGames\newGameManagement.html" />
-    <Content Include="app\integrationGames\newGameManagementController.js" />
     <Content Include="app\jokes\jokesController.js" />
     <Content Include="app\authorizations\loginController.js" />
     <Content Include="app\integrationGames\managementIntegrationGamesController.js" />

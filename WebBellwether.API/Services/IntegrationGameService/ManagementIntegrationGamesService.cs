@@ -41,14 +41,15 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 _repository.IntegrationGameRepository.Insert(entity);
                 _repository.Save();
                 var integrationGameDetail = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).FirstOrDefault();
-                int integrationGameId = 0;
-                if (integrationGameDetail != null)
+                IntegrationGameModel returnEntity = new IntegrationGameModel
                 {
-                    integrationGameId =
-                        integrationGameDetail
-                            .IntegrationGame.Id;
-                }
-                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.GameAdded, ResultValue = integrationGameId };
+                    Id = integrationGameDetail.IntegrationGame.Id, // this is global id 
+                    IntegrationGameId = integrationGameDetail.Id, // id for translation
+                    Language = integrationGameDetail.Language,
+                    GameName = integrationGameDetail.IntegrationGameName,
+                    GameDescription = integrationGameDetail.IntegrationGameDescription,
+                };
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.GameAdded, ResultValue = returnEntity };
             }
             catch(Exception)
             {
@@ -60,10 +61,10 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             return new IntegrationGameDetail
             {
-                Language = GetLanguage(game.Language.Id),
+                Language = GetLanguage(game.Language),
                 IntegrationGameName = game.GameName,
                 IntegrationGameDescription = game.GameDetails,
-                IntegrationGameFeatures = GetGameFeatures(game.Features, game.Language.Id)
+                IntegrationGameFeatures = GetGameFeatures(game.Features, game.Language)
             };
         }
         public List<IntegrationGameFeature> GetGameFeatures(int[] features, int language)
@@ -259,7 +260,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             if (
                _repository.IntegrationGameDetailRepository.GetFirst(
-                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language.Id) == null)
+                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language) == null)
                 return ResultMessage.GameCanBeAdded;
             return ResultMessage.GameHaveTranslationForThisLanguage;
         }
@@ -267,7 +268,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             //probably i set here multiple language insert game 
             if (_repository.IntegrationGameDetailRepository.GetFirst(x => x.IntegrationGameName.Equals(game.GameName)) != null)
-                return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = game.Id };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.GameExists };
             if (game.Id == 0)
                 return InsertSingleLanguageGame(game);
             return InsertSeveralLanguageGame(game);

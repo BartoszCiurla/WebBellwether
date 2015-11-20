@@ -1,7 +1,31 @@
 ﻿<div class="container">
     <h1 style="margin-bottom:20px">{{translation.ManagementGames}}</h1>
-    <div class="col-md-4 formAni">
-        <form name="saveGame">
+ 
+    <div class="col-md-4 ">
+        <!--NEW INTEGRATION GAME--> 
+        <form name="newGame" ng-hide="selectedGame != ''" class="formAni">
+            <div>
+                <h2 style="text-align:left">{{translation.AddIntegrationGame}}</h2>
+                <input type="text" class="form-control myFormColor" required data-ng-model="newIntegrationGame.gameName" placeholder={{translation.GameName}} />
+                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="newIntegrationGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+
+                <!--GAME FEATURES-->
+                <div ng-repeat="feature in gameFeatures">
+                    <label>{{feature.gameFeatureName}}</label>
+                    <select class="form-control myFormColor" required data-ng-model="newIntegrationGame.features[$index].gameFeatureDetailId" data-ng-options="gfdm.gameFeatureDetailId as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                        <option value=''>{{translation.PleaseSelectGame}}</option>
+                    </select>
+                </div>
+
+                <!--SAVE GAME-->
+                <div style="text-align: center">
+                    <button class="btn btn-success btn-block" type="submit" ng-click="addIntegrationGame(newIntegrationGame,selectedLanguage)" ng-disabled="newGame.$invalid"><span class="mif-checkmark"></span> {{translation.SaveGame}}</button>
+                </div>
+            </div>
+        </form>
+
+        <!--EDIT INTEGRATION GAME-->
+        <form name="saveGame" ng-hide="selectedGame == ''" class="formAni">
             <div>
                 <h2 style="text-align:left">{{translation.HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal}}</h2>
                 <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}} />
@@ -31,7 +55,7 @@
 
     <!--NEW TRANSLATION OR EDIT-->
     <div class="col-md-4">
-        <div ng-hide="selectedGame == ''">
+        <div ng-hide="selectedGame == ''" class="formAni">
             <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedGameAndLanguage}}</h2>
 
             <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation.language.id" data-ng-options="language.id as language.languageName for language in languages | filter : {id: '!' + selectedGame.language.id}">
