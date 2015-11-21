@@ -59,6 +59,7 @@ namespace WebBellwether.API.Results
         LanguageExists,
         LanguageAdded,
         LanguageCanNotBeRemoved,
+        TooLongRequest,
         Error
     }
 }

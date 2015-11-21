@@ -143,6 +143,7 @@
   "LanguageCanNotBeRemoved": "Język nie może został usunięty bo jest na liście językow nieusuwalnych",
   "LanguageRemoved": "Język został usunięty",
   "LanguageNotRemoved": "Język nie został usunięty",
+  "Change": "Zmiana",
   "YourLogin": "Twój login",
   "EnterYourLogin": "Proszę wprowadz swój login",
   "YourPassword": "Twoje hasło",
@@ -181,5 +182,12 @@
   "Warning": "Uwaga",
   "WrongLanguageCodeConfiguration": "w przypadku błednej konfiguracji może doprowadzić do nieprawidłowych translacji . ",
   "CurrentlyUserService": "Aktualnie używany serwis : ",
-  "CodeForLanguage": "Kod dla języka "
+  "CodeForLanguage": "Kod dla języka ",
+  "ErrorDuringTranslation": "Błąd podczas translacji",
+  "TranslationCompletedSuccessfully": "Translacja zakończona pomyślnie",
+  "TranslateAllLanguageKeys": "Przetłumacz wszystkie klucze",
+  "QuantityOfLanguageKeys": "Obecna liczba kluczy to :",
+  "TranslationOfAllKeyLanguage": "Tłumaczenie wszystkich kluczy językowych",
+  "TranslateAllLangaugeKeysDescription": "Translacja może trochę potrwać . Uwaga dane zostaną automatycznie zapisane , proszę o weryfikację wynikow"
+
 }

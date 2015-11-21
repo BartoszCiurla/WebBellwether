@@ -2,7 +2,7 @@
     <div class="margin20">
         <h1 ng-hide="newLanguageOption == true">{{translation.ManagementLanguages}}</h1>
         <h2 ng-hide="newLanguageOption == false">{{translation.AddLanguage}}</h2>
-        <a ng-click="newLanguageDialog()" style="text-decoration: none; color: crimson" href=""><span class="mif-undo mif-2x mif-ani-shuttle"></span>Zmień</a>
+        <a ng-click="newLanguageDialog()" style="text-decoration: none; color: crimson" href=""><span class="mif-undo mif-2x mif-ani-shuttle"></span>{{translation.Change}}</a>
     </div>
     
     <!--EDIT LANGUAGE BASIC VALUE-->
@@ -49,7 +49,7 @@
                     <div class="form-group text-center">
                         <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
                         <!--DELETE LANGUAGE-->
-                        <button ng-click="deleteDialog()" class="btn btn-primary btn-danger"><span class="mif-minus"> {{translation.Delete}}</span></button>
+                        <button ng-click="deleteDialog()" class="btn btn-primary btn-danger"><span class="mif-minus"> [BETA] {{translation.Delete}}</span></button>
                     </div>
 
                     <!--PUBLISH LANGUAGE-->
@@ -61,6 +61,13 @@
                         </label>
                         <label data-ng-class="{true:'',false:'formAni'}[languageForEdit.isPublic]" ng-hide="languageForEdit.isPublic ==true">{{translation.HowToPublishLanguage}}</label>
                     </div>
+
+                    <!--TRANSLATE ALL KEYS-->
+                    <div class="form-group">
+                        <label>{{translation.TranslateAllLanguageKeys}}</label>
+                        <button ng-click="translateAllLanguageKeysDialog()" ng-hide="languageForEdit.id == selectedLanguage" class="btn btn-primary btn-block formAni"><span class="mif-cloud-download mif-2x"></span></button>
+                    </div>
+                    
                 </form>
                 <!--SEARCH-->
                 <label style="margin-top: 40px">{{translation.Search}}</label>
@@ -116,7 +123,7 @@
         <div class="row myFormColorWithBorder" ng-repeat-start="slc in selectedLanguageContent | filter:searchImput | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class-odd="'alt'" ng-class="{selectedTransparentWithBorder_hover : hover || activeLanguageKey == slc.key }" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
             <div class="col-md-9 col-md-push-3">
                 <div class="margin10">
-                    <input type="text" class="form-control myFormColorImput" required ng-model="slc.value"/>
+                    <input type="text" class="form-control myFormColorImput" required data-ng-model="slc.value"/>
                 </div>
             </div>
             <div class="col-md-3 col-md-pull-9" ng-click="setActiveLanguageKey(slc)">
@@ -133,7 +140,7 @@
         <!--musze tutaj wymyslic jakas blokade np zeby pokazal całość gdy ta bedzie juz gotowa ale nie za pomoca ng-show ...-->
         <div class="row slide-toggle" ng-repeat-end="" data-ng-hide="activeLanguageKey != slc.key" ng-class-odd="'alt'">
             <div class="col-md-9 col-md-push-3">
-                <div class="margin10" ng-hide="languageForEdit.language.id == selectedLanguage">
+                <div class="margin10" ng-hide="languageForEdit.id == selectedLanguage">
                     <div class="block  margin10">
                         {{translation.MainLanguageTranslation}}
                     </div>
@@ -146,7 +153,7 @@
             <div class="col-md-3 col-md-pull-9">
                 <div class="margin10">
                     <!--TRANSLATE LANGUAGE KEY-->
-                    <button class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
+                    <button ng-click="translateLanguageKey(selectedLanguage,languageForEdit.languageShortName,translation[slc.key],slc.key)" ng-hide="languageForEdit.id == selectedLanguage" class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
                     <!--SAVE LANGUAGE KEY-->
                     <button class="btn btn-default btn-block" ng-disabled="slc.value == null" ng-click="editLanguageKey(slc,languageForEdit)"><span class="mif-plus"> {{translation.Save}}</span></button>
                 </div>
@@ -172,6 +179,17 @@
         </div>
         <div>
             <button class="btn btn-warning" ng-click="deleteLanguage(languageForEdit)" ng-disabled="languageForEdit == ''"><span class="mif-minus"> {{translation.Delete}}</span></button>
+        </div>
+        <span class="dialog-close-button"></span>
+    </div>
+
+    <div data-role="dialog" id="translateAllDialog" class="text-center dialog info " data-windows-style="true" data-close-button="true" data-type="alert">
+        <h1 style="text-align: left">{{translation.TranslationOfAllKeyLanguage}}</h1>
+        <div class="text-center margin10">
+            {{translation.QuantityOfLanguageKeys}} {{selectedLanguageContent.length}} {{translation.TranslateAllLangaugeKeysDescription}}
+        </div>
+        <div>
+            <button class="btn btn-warning" ng-click="translateAllLanguageKeys(selectedLanguage,languageForEdit)" ng-disabled="languageForEdit == ''"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
         </div>
         <span class="dialog-close-button"></span>
     </div>

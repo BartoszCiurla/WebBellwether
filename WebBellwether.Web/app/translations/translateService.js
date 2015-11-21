@@ -16,6 +16,17 @@
                     return x;
                 });
             };
+            var getLanguageKeyTranslation = function(currentLang, targetLang, contentLang) {
+                return $http.get(serviceBase + "api/Translate/GetLanguageKeyTranslation/", { params: { currentLanguage: currentLang, targetLanguage: targetLang, content: contentLang } }).then(function (x) {
+                    return x;
+                });
+            };
+            var getTranslateAllLanguageKeys = function(currentLang, targetLang) {
+                return $http.get(serviceBase + "api/Translate/GetTranslateAllLanguageKeys/",
+                    { params: { currentLanguageId: currentLang.id, targetLanguageId: targetLang.id, currentShortName: currentLang.languageShortName, targetShortname: targetLang.languageShortName } }).then(function (x) {
+                    return x;
+                });
+            };
         
 
             var translateIntegrationGame = function (currentLangugae, targetLanguage, header, content) {
@@ -29,6 +40,8 @@
             translateServiceFactory.TranslateIntegrationGame = translateIntegrationGame;
             translateServiceFactory.GetLanguages = getLangs;
             translateServiceFactory.GetTranslateServiceName = getTranslateServiceName;
+            translateServiceFactory.GetLanguageKeyTranslation = getLanguageKeyTranslation;
+            translateServiceFactory.GetTranslateAllLanguageKeys = getTranslateAllLanguageKeys;
             return translateServiceFactory;
         }]);
 })();

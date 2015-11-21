@@ -143,6 +143,7 @@
   "LanguageCanNotBeRemoved": "Language can not be deleted because it is the list of languages irremovable",
   "LanguageRemoved": "Language was removed",
   "LanguageNotRemoved": "The language was removed",
+  "Change": "Change",
   "YourLogin": "Your login",
   "EnterYourLogin": "Please enter your login",
   "YourPassword": "Your password",
@@ -181,5 +182,11 @@
   "Warning": "Warning",
   "WrongLanguageCodeConfiguration": "in the case of a configuration error could lead to incorrect translation .",
   "CurrentlyUserService": "Currently used service : ",
-  "CodeForLanguage": "Code for language "
+  "CodeForLanguage": "Code for language ",
+  "ErrorDuringTranslation": "Error during translation",
+  "TranslationCompletedSuccessfully": "Translation completed successfully",
+  "TranslateAllLanguageKeys": "Translate all",
+  "QuantityOfLanguageKeys": "Current number of keys it :",
+  "TranslationOfAllKeyLanguage": "Translation of all key language",
+  "TranslateAllLangaugeKeysDescription": "The translation may take some time. Please note that the data will be automatically recorded, please verify results"
 }
