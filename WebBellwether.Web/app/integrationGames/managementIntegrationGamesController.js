@@ -13,7 +13,24 @@
                     return 0;
             }
             // ********************
-
+//            $scope.translateGame = function (currentLanguage, targetLanguage, gameName, gameDescription) {		+           
+//-                //fast code for test 		
+//-                var tempCurrentLang = '';		
+//                -                var tempTargetLang = '';		
+//                -                if (currentLanguage == 1)		
+//                -                    tempCurrentLang = 'en';		
+//                -                else		
+//                -                    tempCurrentLang = 'pl';		
+//                -                if (targetLanguage = 1)		
+//                -                    tempTargetLang = 'en';		
+//                -                else		
+//                -                    tempTargetLang = 'pl';		
+//                -                translateService.TranslateIntegrationGame(tempCurrentLang, tempTargetLang, gameName, gameDescription).then(function (x) {		
+//                    -                    $scope.selectedGameOtherTranslation = {};		
+//                    -                    $scope.selectedGameOtherTranslation.gameName = x.data.text[0];		
+//                    -                    $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];		
+//                    -                });		
+//                -            };
 
             $scope.selectedGame = '';
             $scope.selectedGameOtherTranslation = '';
@@ -274,16 +291,12 @@
             };
             //base init
             initContent($scope.selectedLanguage);
-            //$scope.getIntegrationGamesWithLanguages($scope.selectedLanguage);
-            //$scope.getGameFeatuesModelWithDetails($scope.selectedLanguage);
             // ********************
 
           
             //when language change 
             $scope.$on('languageChange', function () {
                 initContent(sharedService.sharedmessage);
-                //$scope.getIntegrationGamesWithLanguages(sharedService.sharedmessage);
-                //$scope.getGameFeatuesModelWithDetails(sharedService.sharedmessage);
             });
             // ********************
         }]);

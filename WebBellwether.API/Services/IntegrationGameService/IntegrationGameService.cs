@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
 using WebBellwether.API.Models.IntegrationGame;
+using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.IntegrationGameService.Abstract;
 using WebBellwether.API.Repositories.Abstract;

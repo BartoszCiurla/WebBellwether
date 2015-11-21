@@ -118,7 +118,7 @@
   "LanguagesEdition": "Languages edition",
   "MainLanguageTranslation": "The main language translation",
   "LanguageName": "Language name",
-  "LanguageShortName": "Language short name",
+  "LanguageShortName": "Language short name for translating services",
   "LanguageFlag": "Language flag",
   "SaveBasicLanguageInformation": "Save basic information",
   "Key": "Key",
@@ -177,5 +177,9 @@
   "Translate": "Translate",
   "RemoveGameTranslation": "Remove game translation",
   "Delete": "Delete",
-  "Error": "Fatal error that was recorded and will be soon corrected"
+  "Error": "Fatal error that was recorded and will be soon corrected",
+  "Warning": "Warning",
+  "WrongLanguageCodeConfiguration": "in the case of a configuration error could lead to incorrect translation .",
+  "CurrentlyUserService": "Currently used service : ",
+  "CodeForLanguage": "Code for language "
 }

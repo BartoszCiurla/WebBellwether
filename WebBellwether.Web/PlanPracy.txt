@@ -1,4 +1,33 @@
-﻿
+﻿obecny cel to zbudowanie nowego translationControllera oczywiście sam mechanizm musi być wstrzykiwany (chodi mi tutaj o obsluge mojego serwisu tak zeby dalo się go w razie czego zmienić i tyle)
+trzeba dodać do edycji językow liste obsługiwanych językow przez mój serwis 
+pamiętaj że wszystko ma się dziać w moim api a nie we froncie ... 
+
+jak to ma działać :
+-current language
+-target language
+- w chuj parametrów ... 
+
+$scope.translateGame = function (currentLanguage, targetLanguage, gameName, gameDescription) {		+           
+-                //fast code for test 		
+-                var tempCurrentLang = '';		
+-                var tempTargetLang = '';		
+-                if (currentLanguage == 1)		
+-                    tempCurrentLang = 'en';		
+-                else		
+-                    tempCurrentLang = 'pl';		
+-                if (targetLanguage = 1)		
+-                    tempTargetLang = 'en';		
+-                else		
+-                    tempTargetLang = 'pl';		
+-                translateService.TranslateIntegrationGame(tempCurrentLang, tempTargetLang, gameName, gameDescription).then(function (x) {		
+-                    $scope.selectedGameOtherTranslation = {};		
+-                    $scope.selectedGameOtherTranslation.gameName = x.data.text[0];		
+-                    $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];		
+-                });		
+-            };
+
+
+
 
 **************************************************
 pytania do promotora :
@@ -9,7 +38,7 @@ jak na itadzie bedzie nudto to bede to robił :
 **************************************************
 1)po usuwaniu języka trzeba go wypierdolić z list tych ktore istnieja w ui 
 2)napisz mechanizm który wyświetli puste translacja dla jezyka na detalach cech gier integracycjnych 
-
+3)language serwise w dalszym ciagu nei ma interfejsu mozna dorobić
 **************************************************
 
 

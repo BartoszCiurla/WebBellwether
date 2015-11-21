@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
 using WebBellwether.API.Entities.Joke;
 using WebBellwether.API.Models.Joke;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.JokeService.Abstract;
 using System;
+using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Repositories.Abstract;
 
 namespace WebBellwether.API.Services.JokeService
@@ -110,7 +110,8 @@ namespace WebBellwether.API.Services.JokeService
                             if (categoryDetailForOtherTranslation == null)
                                 return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryNotExists, ResultValue = al.Language.LanguageName };
                             var otherTranslationJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.Joke.Id == joke.Id).FirstOrDefault();
-                            otherTranslationJoke.JokeCategoryDetail = categoryDetailForOtherTranslation;
+                            if (otherTranslationJoke != null)
+                                otherTranslationJoke.JokeCategoryDetail = categoryDetailForOtherTranslation;
                         }
                     }
                 }

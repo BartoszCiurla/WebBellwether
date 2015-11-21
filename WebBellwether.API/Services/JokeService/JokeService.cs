@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
 using WebBellwether.API.Models.Joke;
+using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Results;
 using WebBellwether.API.Services.JokeService.Abstract;
 using WebBellwether.API.Repositories.Abstract;
@@ -48,13 +48,16 @@ namespace WebBellwether.API.Services.JokeService
             {
                 List<Language> languages = _repository.LanguageRepository.GetAll().ToList(); 
                 var newJoke = _repository.JokeDetailRepository.GetWithInclude(x => x.JokeContent.Equals(joke.JokeContent)).FirstOrDefault();
-                joke.Id = newJoke.Joke.Id;
-                joke.JokeId = newJoke.Id;
-                joke.JokeTranslations = FillAvailableTranslation(joke.Id, languages);
+                if (newJoke != null)
+                {
+                    joke.Id = newJoke.Joke.Id;
+                    joke.JokeId = newJoke.Id;
+                    joke.JokeTranslations = FillAvailableTranslation(joke.Id, languages);
+                }               
                 result.ResultValue = joke;
                 return result;
             }
-            else return result;
+             return result;
         }
         public JokeModel GetJokeTranslation(int jokeId, int languageId)
         {
@@ -114,8 +117,11 @@ namespace WebBellwether.API.Services.JokeService
             if (result.ResultState == ResultState.Success)
             {
                 var newJokeCategory = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategoryName == categoryModel.JokeCategoryName).FirstOrDefault();
-                categoryModel.Id = newJokeCategory.JokeCategory.Id;
-                categoryModel.JokeCategoryId = newJokeCategory.Id;
+                if (newJokeCategory != null)
+                {
+                    categoryModel.Id = newJokeCategory.JokeCategory.Id;
+                    categoryModel.JokeCategoryId = newJokeCategory.Id;
+                }
                 categoryModel.JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(categoryModel.Id, _repository.LanguageRepository.GetAll().ToList());
                 result.ResultValue = categoryModel;
                 return result;

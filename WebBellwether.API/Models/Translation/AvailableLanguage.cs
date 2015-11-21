@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebBellwether.API.Entities.Translations;
+﻿using WebBellwether.API.Entities.Translations;
 
-namespace WebBellwether.API.Models
+namespace WebBellwether.API.Models.Translation
 {
     public class AvailableLanguage
     {

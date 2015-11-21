@@ -118,7 +118,7 @@
   "LanguagesEdition": "Edycja języków",
   "MainLanguageTranslation": "Translacja dla głównego języka",
   "LanguageName": "Nazwa języka",
-  "LanguageShortName": "Krótka nazwa języka",
+  "LanguageShortName": "Krótka nazwa języka dla usługi tłumaczącej",
   "LanguageFlag": "Flaga języka",
   "SaveBasicLanguageInformation": "Zapisz podstawowe informacje",
   "Key": "Klucza",
@@ -177,5 +177,9 @@
   "Translate": "Przetłumacz",
   "RemoveGameTranslation": "Usuwanie translacji gry",
   "Delete": "Usuń",
-  "Error": "Bład krytyczny który został odnotowany i zostanie niebawem poprawiony"
+  "Error": "Bład krytyczny który został odnotowany i zostanie niebawem poprawiony",
+  "Warning": "Uwaga",
+  "WrongLanguageCodeConfiguration": "w przypadku błednej konfiguracji może doprowadzić do nieprawidłowych translacji . ",
+  "CurrentlyUserService": "Aktualnie używany serwis : ",
+  "CodeForLanguage": "Kod dla języka "
 }

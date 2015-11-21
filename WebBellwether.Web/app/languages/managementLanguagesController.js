@@ -54,7 +54,7 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.LanguageAdded,
-                        type: 'success',
+                        type: 'success'
                     });
                 }, function (x) {
                     userNotification = $scope.translation.LanguageNotAdded + ' ' + $scope.translation[x.data.message];
@@ -67,7 +67,7 @@
                 });
             };
             //***********************
-
+       
             //edit language key
             $scope.languageForEdit = null;
             $scope.editLanguageKey = function (selectedLanguageKey, lang) {
@@ -80,7 +80,7 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.LanguageKeyValueEdited,
-                        type: 'success',
+                        type: 'success'
                     });
 
                 }, function (x) {
@@ -100,8 +100,8 @@
                 languagesService.PutLanguage(language).then(function (x) {
                     $.Notify({
                         caption: $scope.translation.Success,
-                        content: $scope.translation.LanguageKeyValueEdited,
-                        type: 'success',
+                        content: $scope.translation.LanguageEdited,
+                        type: 'success'
                     });
                 }, function (x) {
                     userNotification = $scope.translation.LanguageNotEdited + ' ' + $scope.translation[x.data.message];
@@ -131,7 +131,7 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.LanguageRemoved,
-                        type: 'success',
+                        type: 'success'
                     });
                 }, function (x) {
                     userNotification = $scope.translation.LanguageNotRemoved + ' ' + $scope.translation[x.data.message];
@@ -207,7 +207,7 @@
                     });
                 })
             };
-                
+
             //***********************
 
             //language content
@@ -243,16 +243,34 @@
             $scope.getAllLanguages = function () {
                 languagesService.GetAllLanguages().then(function (x) {
                     $scope.allLanguages = x.data;
-                    $scope.allLanguages.forEach(function (z) {
+                    $scope.allLanguages.forEach(function(z) {
                         if (z.id == $scope.selectedLanguage)
                             $scope.getLanguageContent(z);
-                    })
+                    });
                 });
             };
             // ********************
 
+
+            //supported languages for translate service
+            $scope.supportedLanguages = [];
+            $scope.translateServiceName = '';
+            $scope.getSupportedLanguages = function () {
+                translateService.GetLanguages().then(function(x) {
+                    $scope.supportedLanguages = x.data;
+                });
+            };
+            $scope.getTranslateServiceName = function() {
+                translateService.GetTranslateServiceName().then(function (x) {
+                    $scope.translateServiceName = x.data;
+                });
+            };
+                       
             function initContent() {
                 $scope.getAllLanguages();
+                $scope.getTranslateServiceName();
+                $scope.getSupportedLanguages();
+                
             };
             //base init
             initContent();

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Models;
 using WebBellwether.API.Models.Joke;
+using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Results;
 
 

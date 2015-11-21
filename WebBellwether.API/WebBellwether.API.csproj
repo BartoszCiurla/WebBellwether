@@ -167,6 +167,7 @@
     <Compile Include="Controllers\JokesController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Controllers\TranslateController.cs" />
     <Compile Include="Controllers\TranslationController.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
@@ -221,7 +222,7 @@
     <Compile Include="Models\Joke\JokeCategoryModel.cs" />
     <Compile Include="Models\Joke\JokeModel.cs" />
     <Compile Include="Models\Translation\LanguageKeyModel.cs" />
-    <Compile Include="Models\Translation\TranslationWebServiceModel.cs" />
+    <Compile Include="Models\Translation\SupportedLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\GoogleAuthProvider.cs" />
@@ -249,6 +250,8 @@
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
+    <Compile Include="Services\TranslateService\Abstract\ITranslateService.cs" />
+    <Compile Include="Services\TranslateService\YandexTranslateService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
