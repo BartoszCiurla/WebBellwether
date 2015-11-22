@@ -16,14 +16,13 @@
                     return x;
                 });
             };
-            var getLanguageKeyTranslation = function(currentLang, targetLang, contentLang) {
-                return $http.get(serviceBase + "api/Translate/GetLanguageKeyTranslation/", { params: { currentLanguage: currentLang, targetLanguage: targetLang, content: contentLang } }).then(function (x) {
+            var postLanguageKeyTranslation = function(translateLanguageKeyModel) {
+                return $http.post(serviceBase + "api/Translate/PostLanguageKeyTranslation", translateLanguageKeyModel).then(function (x) {
                     return x;
                 });
             };
-            var getTranslateAllLanguageKeys = function(currentLang, targetLang) {
-                return $http.get(serviceBase + "api/Translate/GetTranslateAllLanguageKeys/",
-                    { params: { currentLanguageId: currentLang.id, targetLanguageId: targetLang.id, currentShortName: currentLang.languageShortName, targetShortname: targetLang.languageShortName } }).then(function (x) {
+            var postTranslateAllLanguageKeys = function (translateLangaugeKeysModel) {
+                return $http.post(serviceBase + "api/Translate/PostTranslateAllLanguageKeys",translateLangaugeKeysModel).then(function (x) {
                     return x;
                 });
             };
@@ -40,8 +39,8 @@
             translateServiceFactory.TranslateIntegrationGame = translateIntegrationGame;
             translateServiceFactory.GetLanguages = getLangs;
             translateServiceFactory.GetTranslateServiceName = getTranslateServiceName;
-            translateServiceFactory.GetLanguageKeyTranslation = getLanguageKeyTranslation;
-            translateServiceFactory.GetTranslateAllLanguageKeys = getTranslateAllLanguageKeys;
+            translateServiceFactory.PostLanguageKeyTranslation = postLanguageKeyTranslation;
+            translateServiceFactory.PostTranslateAllLanguageKeys = postTranslateAllLanguageKeys;
             return translateServiceFactory;
         }]);
 })();

@@ -131,7 +131,7 @@
   "PublishLanguage": "Publish language",
   "HowToPublishLanguage": "To publish language must be filled with all the values for the key (listed below). A minimum of one language must be public",
   "LanguageFileNotExists": "Language file not exists",
-  "EmptyKeyExists": "In language file exists empty keys",
+  "EmptyKeysExists": "In language file exists empty keys",
   "OnlyOnePublicLangugae": "Exists only one public language",
   "LanguageHasBeenPublished": "Language has been published",
   "LanguageHasBeenNonPublic": "Language has been nonpublic",
@@ -188,5 +188,8 @@
   "TranslateAllLanguageKeys": "Translate all",
   "QuantityOfLanguageKeys": "Current number of keys it :",
   "TranslationOfAllKeyLanguage": "Translation of all key language",
-  "TranslateAllLangaugeKeysDescription": "The translation may take some time. Please note that the data will be automatically recorded, please verify results"
+  "TranslateAllLangaugeKeysDescription": "The translation may take some time. Please note that the data will be automatically recorded, please verify results",
+  "ContentLanguageFilesAreNotCompatible": "Content language files are not compatible",
+  "KeyValuesAreCorrectlyFilled": "Key values are correctly filled",
+  "KeyValuesAreNotFilled": "Key values are not filled"
 }

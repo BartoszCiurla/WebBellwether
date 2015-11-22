@@ -7,13 +7,13 @@
             $scope.pageSize = 20;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.selectedLanguageContent.length / $scope.pageSize);
-            }
+            };
             $scope.goToTop = function () {
                 window.scrollTo(0, 990);
             };
             $scope.activeLanguageKey = '';
             $scope.setActiveLanguageKey = function (active) {
-                if (active.key != $scope.activeLanguageKey)
+                if (active.key !== $scope.activeLanguageKey)
                     $scope.activeLanguageKey = active.key;
                 else {
                     $scope.activeLanguageKey = null;
@@ -35,14 +35,12 @@
             $scope.newLanguageOption = false;
             $scope.newLanguageDialog = function () {
                 if (!$scope.newLanguageOption) {
-                    $scope.newLanguageOption = true
-
+                    $scope.newLanguageOption = true;
                 }
                 else {
                     $scope.newLanguageOption = false;
                 }
-            }
-            //***********************
+            }; //***********************
 
             //new language
             $scope.newLanguage = '';
@@ -67,7 +65,7 @@
                 });
             };
             //***********************
-       
+
             //edit language key
             $scope.languageForEdit = null;
             $scope.editLanguageKey = function (selectedLanguageKey, lang) {
@@ -122,12 +120,25 @@
                 dialog.open();
             };
             //version alpha
+            $scope.deleteLanguageFromAllList = function (language) {
+                angular.forEach($scope.languages, function (z, index) {
+                    if (z.id === language.id)
+                        $scope.languages.splice(index, 1);
+                });
+
+                angular.forEach($scope.allLanguages, function (z, index) {
+                    if (z.id === language.id)
+                        $scope.allLanguages.splice(index, 1);
+                });
+                $scope.languageForEdit = null;
+            };
             $scope.deleteLanguage = function (language) {
                 var dialog = $('#deleteDialog').data('dialog');
                 dialog.close();
                 console.log(language);
                 languagesService.DeleteLanguage(language).then(function (x) {
-                    //tutaj trzeba jeszcze dorobić kilka rzeczy czyli np usuwanie go z list (tych które już sa w interfejsie ...)
+                    $scope.deleteLanguageFromAllList(language);
+
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.LanguageRemoved,
@@ -147,55 +158,47 @@
             //***********************
 
             //publish language
-            $scope.publishLanguage = function (language) {
+            $scope.languageHasBeenPublished = function (language, langExistsInCurrentList) {
+                userNotification += ' ' + $scope.translation.LanguageHasBeenPublished;
+                if (!langExistsInCurrentList) {
+                    $scope.languages.push(language);
+                }
+            };
+            $scope.languageHasBeenUnPublic = function (language) {
+                userNotification += ' ' + $scope.translation.LanguageHasBeenNonPublic;
+                angular.forEach($scope.languages, function (z, index) {
+                    if (z.id === language.id)
+                        $scope.languages.splice(index, 1);
+                });
+            };
+            $scope.checkIsLangExistsInGlobalList = function (language) {
                 var langExistsInCurrentList = false;
-                languagesService.PutPublishLanguage(language).then(function(x) {
+                $scope.languages.forEach(function (x) {
+                    if (x.id === language.id)
+                        langExistsInCurrentList = true;
+                });
+                return langExistsInCurrentList;
+            };
+            $scope.publishLanguage = function (language) {
+                var langExistsInCurrentList = $scope.checkIsLangExistsInGlobalList(language);
 
-                    $scope.languages.forEach(function(x) {
-                        if (x.id === language.id)
-                            langExistsInCurrentList = true;
-                    });
-
-                    $scope.userNotification = $scope.translation.LanguageEdited;
+                languagesService.PutPublishLanguage(language).then(function (x) {
+                    userNotification = $scope.translation.LanguageEdited;
 
                     if (x.data === "LanguageHasBeenPublished") {
-                        $scope.userNotification += ' ' + $scope.translation.LanguageHasBeenPublished;
+                        $scope.languageHasBeenPublished(language, langExistsInCurrentList);
 
-                        if (!langExistsInCurrentList)
-                            $scope.languages.push(language);
-                    } else {
-                        $scope.userNotification += ' ' + $scope.translation.LanguageHasBeenNonPublic;
-                        if (langExistsInCurrentList)
-                        //public languages
-                            angular.forEach($scope.languages, function(z, index) {
-                                if (z.id === language.id)
-                                    $scope.languages.splice(index, 1);
-                            });
+                    } else if (x.data === "LanguageHasBeenNonpublic") {
+                        $scope.languageHasBeenUnPublic(language);
                     }
-                    //management languages
-                    angular.forEach($scope.allLanguages, function(z) {
-                        if (z.id === language.id)
-                            z.isPublic = language.isPublic;
-                    });
-
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: userNotification,
                         type: 'success'
                     });
 
-                }, function(x) {
-                    $scope.userNotification = $scope.translation.LanguageNotEdited;
-                    if (x.data.message === "LanguageFileNotExists")
-                        $scope.userNotification += ' ' + $scope.translation.LanguageFileNotExists;
-                    else if (x.data.message === "EmptyKeysExists")
-                        $scope.userNotification += ' ' + $scope.translation.EmptyKeyExists;
-                    else if (x.data.message === "OnlyOnePublicLanguage")
-                        $scope.userNotification += ' ' + $scope.translation.OnlyOnePublicLangugae;
-                    else if (x.data.message === "LanguageNotExists")
-                        $scope.userNotification += ' ' + $scope.translation.LanguageNotExists;
-                    else
-                        $scope.userNotification += ' ' + $scope.translation.CriticalError;
+                }, function (x) {
+                    userNotification = $scope.translation.LanguageNotEdited + ' ' + $scope.translation[x.data.message];
 
                     language.isPublic = !language.isPublic;
 
@@ -212,6 +215,18 @@
             //language content
             $scope.selectedLanguageForEdit = null;
             $scope.selectedLanguageContent = [];
+            $scope.getLanguageFileContent = function(lang) {
+                languagesService.GetLanguageContent(lang.id).then(function (x) {
+                    $scope.selectedLanguageContent = [];
+                    for (key in x) {
+                        if (x.hasOwnProperty(key)) {
+                            if (key.indexOf('$', 0) === -1 && key !== "toJSON")                                
+                                $scope.selectedLanguageContent.push({ key: key, value: x[key] });
+                        }
+                    }
+                    $scope.changeSearchSource();
+                });
+            }
             $scope.getLanguageContent = function (lang) {
                 $scope.selectedLanguageContent = [];
                 $scope.selectedLanguageForEdit = null;
@@ -225,14 +240,7 @@
                         languageShortName: lang.languageShortName,
                         isPublic: lang.isPublic
                     };
-                    languagesService.GetLanguageContent(lang.id).then(function (x) {
-                        for (key in x) {
-                            //bad solution but the only thing that works
-                            if (key.indexOf('$', 0) == -1 && key != "toJSON")
-                                $scope.selectedLanguageContent.push({ key: key, value: x[key] });
-                        }
-                        $scope.changeSearchSource();
-                    })
+                    $scope.getLanguageFileContent(lang);
                 }
             };
             // ********************
@@ -242,8 +250,8 @@
             $scope.getAllLanguages = function () {
                 languagesService.GetAllLanguages().then(function (x) {
                     $scope.allLanguages = x.data;
-                    $scope.allLanguages.forEach(function(z) {
-                        if (z.id == $scope.selectedLanguage)
+                    $scope.allLanguages.forEach(function (z) {
+                        if (z.id === $scope.selectedLanguage)
                             $scope.getLanguageContent(z);
                     });
                 });
@@ -255,26 +263,31 @@
             $scope.supportedLanguages = [];
             $scope.translateServiceName = '';
             $scope.getSupportedLanguages = function () {
-                translateService.GetLanguages().then(function(x) {
+                translateService.GetLanguages().then(function (x) {
                     $scope.supportedLanguages = x.data;
                 });
             };
-            $scope.getTranslateServiceName = function() {
+            $scope.getTranslateServiceName = function () {
                 translateService.GetTranslateServiceName().then(function (x) {
                     $scope.translateServiceName = x.data;
                 });
             };
             // ********************
-                      
+
             //translate function
-            $scope.translateLanguageKey = function (currentLangId, targetLang, content,key) {
+            $scope.translateLanguageKey = function (currentLangId, targetLang, content, key) {
                 var shortNameCurrentLang = '';
-                $scope.languages.forEach((function(x) {
+                $scope.languages.forEach((function (x) {
                     if (x.id === currentLangId)
                         shortNameCurrentLang = x.languageShortName;
                 }));
-                translateService.GetLanguageKeyTranslation(shortNameCurrentLang, targetLang, content).then(function (x) {
-                    $scope.selectedLanguageContent.forEach(function(z) {
+                var translateLanguageKeyModel = {
+                    CurrentLanguageShortName: shortNameCurrentLang,
+                    TargetLangaugeShortName: targetLang,
+                    ContentToTranslate: content
+                };
+                translateService.PostLanguageKeyTranslation(translateLanguageKeyModel).then(function (x) {
+                    $scope.selectedLanguageContent.forEach(function (z) {
                         if (z.key === key) {
                             z.value = x.data.text[0];
                         }
@@ -282,22 +295,28 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.TranslationCompletedSuccessfully + " " + x.data.text[0],
-                        type: 'success'
+                        type: 'success',
+                        timeout: 10000
                     });
 
                 }, function (x) {
-                    userNotification = $scope.translation.ErrorDuringTranslation + ' ' +  x.data.message;
+                    userNotification = $scope.translation.ErrorDuringTranslation + ' ' + x.data.message;
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
-                        type: 'alert'
+                        type: 'alert',
+                        timeout: 10000
                     });
                 });
             };
 
-            $scope.translateAllLanguageKeysDialog = function() {
+            $scope.translateAllLanguageKeysDialog = function () {
                 var dialog = $('#translateAllDialog').data('dialog');
                 dialog.open();
+            };
+            $scope.translateAllLangaugeKeysCloseDialog = function () {
+                var dialog = $('#translateAllDialog').data('dialog');
+                dialog.close();
             };
             $scope.translateAllLanguageKeys = function (currentLangId, targetLang) {
                 var selectedLangauge = '';
@@ -305,10 +324,36 @@
                     if (x.id === currentLangId)
                         selectedLangauge = x;
                 }));
-                translateService.GetTranslateAllLanguageKeys(selectedLangauge, targetLang).then(function(x) {
-                    console.log(x.data);
-                }, function(x) {
-                    console.log(x.data.message);
+                var translateLangaugeKeysModel = {
+                    CurrentLanguageShortName: selectedLangauge.languageShortName,
+                    CurrentLanguageId: selectedLangauge.id,
+                    TargetLangaugeShortName: targetLang.languageShortName,
+                    TargetLanguageId: targetLang.id
+                };
+                translateService.PostTranslateAllLanguageKeys(translateLangaugeKeysModel).then(function (x) {
+                    $scope.getLanguageFileContent(targetLang);
+                    $scope.translateAllLangaugeKeysCloseDialog();
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.KeyValuesAreCorrectlyFilled,
+                        type: 'success',
+                        timeout: 10000
+                    });
+                }, function (x) {
+                    $scope.translateAllLangaugeKeysCloseDialog();
+                    userNotification = $scope.translation.KeyValuesAreNotFilled;
+                    var haveResultMessage = $scope.translation[x.data.message];
+                    if (haveResultMessage != undefined) {
+                        userNotification += ' ' + haveResultMessage;
+                    } else {
+                        userNotification += ' ' + x.data.message;
+                    }
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert',
+                        timeout: 10000
+                    });
                 });
             };
             // ********************
@@ -317,7 +362,7 @@
                 $scope.getAllLanguages();
                 $scope.getTranslateServiceName();
                 $scope.getSupportedLanguages();
-                
+
             };
             //base init
             initContent();

@@ -60,6 +60,8 @@ namespace WebBellwether.API.Results
         LanguageAdded,
         LanguageCanNotBeRemoved,
         TooLongRequest,
+        ContentLanguageFilesAreNotCompatible,
+        KeyValuesAreCorrectlyFilled,
         Error
     }
 }

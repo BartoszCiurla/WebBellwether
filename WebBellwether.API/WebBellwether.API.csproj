@@ -223,6 +223,9 @@
     <Compile Include="Models\Joke\JokeModel.cs" />
     <Compile Include="Models\Translation\LanguageKeyModel.cs" />
     <Compile Include="Models\Translation\SupportedLanguage.cs" />
+    <Compile Include="Models\Translation\TranslateLanguageKeyModel.cs" />
+    <Compile Include="Models\Translation\TranslateLanguageKeysModel.cs" />
+    <Compile Include="Models\Translation\Yandex\YandexResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\GoogleAuthProvider.cs" />

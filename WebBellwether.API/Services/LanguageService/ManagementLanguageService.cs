@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Results;
 using WebBellwether.API.Models.Translation;
@@ -15,12 +13,12 @@ namespace WebBellwether.API.Services.LanguageService
 {
     public class ManagementLanguageService
     {
-        private IAggregateRepositories _repository;
-        private string destinationPlace;
+        private readonly IAggregateRepositories _repository;
+        private readonly string _destinationPlace;
         public ManagementLanguageService(IAggregateRepositories repository, string destPlace)
         {
             _repository = repository;
-            destinationPlace = destPlace;
+            _destinationPlace = destPlace;
         }
         public List<Language> GetLanguages(bool getAll = false)
         {
@@ -67,23 +65,24 @@ namespace WebBellwether.API.Services.LanguageService
             }
         }
 
-        public ResultStateContainer FillLanguageFile(List<string> values, int langaugeId)
+        public ResultStateContainer FillLanguageFile(IEnumerable<string> languageValues, int langaugeId)
         {
             try
             {
-                string jsonLocation = destinationPlace + langaugeId + ".json";
-                string json = File.ReadAllText(jsonLocation);
-                dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                //jsonObj[languageKey.Key] = languageKey.Value;
-                int counter = 0;
-                values.ForEach(x =>
+                string languagefileLocation = $"{_destinationPlace}{langaugeId}{".json"}";
+                var json = File.ReadAllText(languagefileLocation);
+                Dictionary<string,string> languageFile = JsonConvert.DeserializeObject<Dictionary<string,string>>(json);
+                var enumerable = languageValues as string[] ?? languageValues.ToArray();
+                if (enumerable.Count() != languageFile.Count())
+                    return new ResultStateContainer {ResultState = ResultState.Failure ,ResultValue = ResultMessage.ContentLanguageFilesAreNotCompatible};
+                for (int i = 0; i < languageFile.Count; i++)
                 {
-                    jsonObj[counter] = x;
-                    counter ++;
-                });
-                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(jsonLocation, output);
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageKeyValueEdited };
+                    languageFile[languageFile.ElementAt(i).Key] = enumerable.ElementAt(i);
+                }
+
+                var output = JsonConvert.SerializeObject(languageFile, Formatting.Indented);
+                File.WriteAllText(languagefileLocation, output);
+                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.KeyValuesAreCorrectlyFilled };
 
             }
             catch (Exception e)
@@ -98,7 +97,7 @@ namespace WebBellwether.API.Services.LanguageService
             Language templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).FirstOrDefault();
             if (templateLanguage == null)
                 return null;
-            string templateFileLocation = destinationPlace + templateLanguage.Id + ".json";
+            string templateFileLocation = _destinationPlace + templateLanguage.Id + ".json";
             string templateJson = File.ReadAllText(templateFileLocation);
             dynamic jsonTemplateObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
             if (jsonTemplateObj == null)
@@ -111,22 +110,22 @@ namespace WebBellwether.API.Services.LanguageService
             return result;
         }
 
-        public Dictionary<string, string> GetLanguageFile(int languageId)
+        public IEnumerable<string> GetLanguageFileValue(int languageId)
         {
-            Language templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
-            if (templateLanguage == null)
+            Language language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            if (language == null)
                 return null;
-            string templateFileLocation = destinationPlace + templateLanguage.Id + ".json";
-            string templateJson = File.ReadAllText(templateFileLocation);
-            dynamic jsonTemplateObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
-            if (jsonTemplateObj == null)
+            string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
+            string templateJson = File.ReadAllText(languageFileLocation);
+            dynamic valuesFromFile = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
+            if (valuesFromFile == null)
                 return null;
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (var item in jsonTemplateObj)
+            List<string> result = new List<string>();
+            foreach (var item in valuesFromFile)
             {
-                result.Add(item.Key, item.Value);
+                result.Add(item.Value);
             }
-            return result;
+            return result.AsEnumerable();
         } 
 
         public ResultStateContainer CreateLanguageFile(int newLanguageId)
@@ -140,7 +139,7 @@ namespace WebBellwether.API.Services.LanguageService
                 if (languageFileKeys == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageFileNotExists };
 
-                string newFileLocation = destinationPlace + newLanguageId + ".json";
+                string newFileLocation = _destinationPlace + newLanguageId + ".json";
                 
                 //create json object
                 JObject jsonKeys = new JObject();
@@ -168,11 +167,11 @@ namespace WebBellwether.API.Services.LanguageService
         {
             try
             {
-                string jsonLocation = destinationPlace + languageKey.LanguageId + ".json";
+                string jsonLocation = _destinationPlace + languageKey.LanguageId + ".json";
                 string json = File.ReadAllText(jsonLocation);
-                dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                dynamic jsonObj = JsonConvert.DeserializeObject(json);
                 jsonObj[languageKey.Key] = languageKey.Value;
-                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                string output = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
                 File.WriteAllText(jsonLocation, output);
                 return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage= ResultMessage.LanguageKeyValueEdited };
             }
@@ -189,14 +188,14 @@ namespace WebBellwether.API.Services.LanguageService
                 int emptyKey = 0;
                 if (language.IsPublic) //public language
                 {
-                    string jsonLocation = destinationPlace + language.Id + ".json";
+                    string jsonLocation = _destinationPlace + language.Id + ".json";
                     string json = File.ReadAllText(jsonLocation);
                     dynamic jsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
                     if (jsonObj == null)
                         return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageFileNotExists };
                     foreach (var item in jsonObj)
                     {
-                        if (item.Value.Length < 3)
+                        if (item.Value.Length < 2)
                             emptyKey++;
                     }
                     if (emptyKey > 0)
@@ -204,7 +203,7 @@ namespace WebBellwether.API.Services.LanguageService
                 }
                 else //nonpublic language
                 {
-                    if (_repository.LanguageRepository.GetWithInclude(x => x.IsPublic == true).Count() == 1)  //check how many languages is public 
+                    if (_repository.LanguageRepository.GetWithInclude(x => x.IsPublic).Count() == 1)  //check how many languages is public 
                         return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.OnlyOnePublicLanguage };
                 }
                 Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
@@ -212,7 +211,7 @@ namespace WebBellwether.API.Services.LanguageService
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage =ResultMessage.LanguageNotExists };
                 entity.IsPublic = language.IsPublic;
                 _repository.Save();
-                return language.IsPublic == true ? new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.LanguageHasBeenNonpublic };
+                return language.IsPublic ? new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.LanguageHasBeenNonpublic };
             }
             catch (Exception)
             {
@@ -244,7 +243,7 @@ namespace WebBellwether.API.Services.LanguageService
         {
             try
             {
-                string file = destinationPlace + languageId + ".json";
+                string file = _destinationPlace + languageId + ".json";
                 if(File.Exists(file))
                 {
                     File.Delete(file);

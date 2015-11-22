@@ -42,30 +42,32 @@ namespace WebBellwether.API.Controllers
         }
 
         [Authorize]
-        [Route("GetLanguageKeyTranslation")]
-        public async Task<IHttpActionResult> GetLanguageKeyTranslation(string currentLanguage, string targetLanguage, string content)
+        [Route("PostLanguageKeyTranslation")]
+        public async Task<IHttpActionResult> PostLanguageKeyTranslation(TranslateLanguageKeyModel translateLangaugeKeyModel)
         {
-            var resultStateContainer = await _service.GetLanguageKeyTranslation(currentLanguage, targetLanguage, content);
+            var resultStateContainer = await _service.GetLanguageKeyTranslation(translateLangaugeKeyModel.CurrentLanguageShortName, translateLangaugeKeyModel.TargetLangaugeShortName, translateLangaugeKeyModel.ContentToTranslate);
             return resultStateContainer.ResultState == ResultState.Success
                 ? Ok(resultStateContainer.ResultValue)
                 : (IHttpActionResult)BadRequest(resultStateContainer.ResultValue.ToString());
         }
 
         [Authorize]
-        [Route("GetTranslateAllLanguageKeys")]
-        public async Task<IHttpActionResult> GetTranslateAllLanguageKeys(int currentLanguageId, int targetLanguageId, string currentShortName, string targetShortname)
+        [Route("PostTranslateAllLanguageKeys")]
+        public async Task<IHttpActionResult> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {
-            Dictionary<string, string> currentLangaugeFile = _languageService.GetLanguageFile(currentLanguageId);
+            IEnumerable<string> currentLangaugeFile = _languageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId);
             if (currentLangaugeFile == null)
                 return BadRequest(ResultMessage.LanguageFileNotExists.ToString());
-            var translateResultState = await _service.TranslateAllLanguageKeys(currentLangaugeFile, currentShortName, targetShortname);
+
+            var translateResultState = await _service.TranslateAllLanguageKeys(currentLangaugeFile, translateLangaugeKeysModel.CurrentLanguageShortName, translateLangaugeKeysModel.TargetLangaugeShortName);
             if (translateResultState.ResultState == ResultState.Failure)
                 return BadRequest(translateResultState.ResultValue.ToString());
-            var fillLangaugeFileResultState = _languageService.FillLanguageFile(translateResultState.ResultValue as List<string>,
-                targetLanguageId);
+
+            var fillLangaugeFileResultState = _languageService.FillLanguageFile(translateResultState.ResultValue as IEnumerable<string>,
+                translateLangaugeKeysModel.TargetLanguageId);
 
             return fillLangaugeFileResultState.ResultState == ResultState.Success
-                ? Ok()
+                ? Ok(fillLangaugeFileResultState.ResultMessage)
                 : (IHttpActionResult)BadRequest(fillLangaugeFileResultState.ResultValue.ToString());
         }
     }

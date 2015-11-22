@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using WebBellwether.API.Context;
 using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Services.LanguageService;
 using WebBellwether.API.Results;
@@ -48,7 +47,7 @@ namespace WebBellwether.API.Controllers
         public IHttpActionResult PostPublishLanguage(Language language)
         {
             ResultStateContainer result = _service.PublishLanguage(language);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            return result.ResultState == ResultState.Success ? Ok(result.ResultMessage.ToString()) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize]
         [Route("PostLanguage")]
