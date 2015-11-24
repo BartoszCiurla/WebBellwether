@@ -40,7 +40,7 @@ namespace WebBellwether.API.Context
         //jokes
 
         //translation    
-        public DbSet<Language> Languages { get; set; } 
+        public DbSet<Language> Languages { get; set; }
         //translation
 
         //authentication

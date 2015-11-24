@@ -168,7 +168,6 @@
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\TranslateController.cs" />
-    <Compile Include="Controllers\TranslationController.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguage.cs" />
@@ -206,6 +205,26 @@
     <Compile Include="Migrations\201511122146309_publicLanguage.cs" />
     <Compile Include="Migrations\201511122146309_publicLanguage.Designer.cs">
       <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511232204301_langSpecifycation.cs" />
+    <Compile Include="Migrations\201511232204301_langSpecifycation.Designer.cs">
+      <DependentUpon>201511232204301_langSpecifycation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511232207044_badidea.cs" />
+    <Compile Include="Migrations\201511232207044_badidea.Designer.cs">
+      <DependentUpon>201511232207044_badidea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511232209107_languageTranslationSpecifications.cs" />
+    <Compile Include="Migrations\201511232209107_languageTranslationSpecifications.Designer.cs">
+      <DependentUpon>201511232209107_languageTranslationSpecifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511232227246_zaraz cie wypierdole.cs" />
+    <Compile Include="Migrations\201511232227246_zaraz cie wypierdole.Designer.cs">
+      <DependentUpon>201511232227246_zaraz cie wypierdole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511232234312_flag-down.cs" />
+    <Compile Include="Migrations\201511232234312_flag-down.Designer.cs">
+      <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
@@ -294,6 +313,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511122146309_publicLanguage.resx">
       <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511232204301_langSpecifycation.resx">
+      <DependentUpon>201511232204301_langSpecifycation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511232207044_badidea.resx">
+      <DependentUpon>201511232207044_badidea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511232209107_languageTranslationSpecifications.resx">
+      <DependentUpon>201511232209107_languageTranslationSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511232227246_zaraz cie wypierdole.resx">
+      <DependentUpon>201511232227246_zaraz cie wypierdole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511232234312_flag-down.resx">
+      <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

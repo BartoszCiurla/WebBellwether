@@ -235,7 +235,6 @@
                     $scope.selectedLanguageForEdit = lang;
                     $scope.languageForEdit = {
                         id: lang.id,
-                        languageFlag: lang.languageFlag,
                         languageName: lang.languageName,
                         languageShortName: lang.languageShortName,
                         isPublic: lang.isPublic
@@ -356,6 +355,30 @@
                     });
                 });
             };
+
+            $scope.translateLanguageName = function(language, languageEdit) {
+                var languageNameToTranslate = '';
+                $scope.supportedLanguages.forEach(function(x) {
+                    if (x.code === language.languageShortName) {
+                        languageNameToTranslate = x.language;
+                        return;
+                    }
+                });
+                var languageNameModel = {
+                    CurrentLanguageShortName: "en",
+                    TargetLangaugeShortName: language.languageShortName,
+                    ContentToTranslate :languageNameToTranslate
+                }
+                translateService.PostLanguageKeyTranslation(languageNameModel).then(function(x) {
+                    if (languageEdit) {
+                        $scope.languageForEdit.languageName = x.data.text[0];
+                    } else {
+                        $scope.newLanguage.languageName = x.data.text[0];
+                    }
+                }, function() {
+
+                });
+            }
             // ********************
 
             function initContent() {

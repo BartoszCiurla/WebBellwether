@@ -41,7 +41,7 @@ namespace WebBellwether.API.Services.LanguageService
                 if (entity != null)
                     return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage=ResultMessage.LanguageExists };
                 //insert and return new id 
-                entity = new Language { IsPublic = false, LanguageName = language.LanguageName, LanguageFlag = language.LanguageFlag, LanguageShortName = language.LanguageShortName };
+                entity = new Language { IsPublic = false, LanguageName = language.LanguageName, LanguageShortName = language.LanguageShortName };
                 _repository.LanguageRepository.Insert(entity);
                 _repository.Save();
                 entity = GetLanguageByName(language.LanguageName);
@@ -227,7 +227,6 @@ namespace WebBellwether.API.Services.LanguageService
                 Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageNotExists };
-                entity.LanguageFlag = language.LanguageFlag;
                 entity.LanguageName = language.LanguageName;
                 entity.LanguageShortName = language.LanguageShortName;
                 _repository.Save();

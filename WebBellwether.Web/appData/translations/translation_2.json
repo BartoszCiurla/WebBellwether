@@ -119,7 +119,6 @@
   "MainLanguageTranslation": "Translacja dla głównego języka",
   "LanguageName": "Nazwa języka",
   "LanguageShortName": "Krótka nazwa języka dla usługi tłumaczącej",
-  "LanguageFlag": "Flaga języka",
   "SaveBasicLanguageInformation": "Zapisz podstawowe informacje",
   "Key": "Klucza",
   "Value": "Wartości",
@@ -191,5 +190,6 @@
   "TranslateAllLangaugeKeysDescription": "Translacja może trochę potrwać . Uwaga dane zostaną automatycznie zapisane , proszę o weryfikację wynikow",
   "ContentLanguageFilesAreNotCompatible": "Zawartości plików językowych nie sa zgodne ",
   "KeyValuesAreCorrectlyFilled": "Wartości kluczy zostały poprawnie wypełnoine",
-  "KeyValuesAreNotFilled": "Wartości kluczy nie zostały wypełnione"
+  "KeyValuesAreNotFilled": "Wartości kluczy nie zostały wypełnione",
+  "Home": "Home"
 }

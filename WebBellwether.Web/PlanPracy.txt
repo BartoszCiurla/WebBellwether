@@ -1,9 +1,42 @@
-﻿obecny problem to w zarzadzaniu grami , kawałami przy wyborze języka innego niż polski nie moge robić translacji ?? 
+﻿prio jedna metoda do translacji w sumei parametry zawsze będa takie same w sencie currentLang targetLang i content który po prostu będzie tablicą ... i po problemie, po co się tyle z tym jebać to ma 
+być uniwersalne
 
-dalej nie mam wyboru tych flach (ale to jest z jeden dzień roboty) dobra kurwa jutro z tym zrobie ... 
+flagi wyjebane ... 
+teraz trzeba dodac jeszcze languageshort name do list zeby bylo wiadomo o co biega (chodzi mi tutaj głównie o edycje);
+potrzebna funkcja ktora rozpoznaje język i tłumaczy na zaznaczony
+obecny problem to w zarzadzaniu grami , kawałami przy wyborze języka innego niż polski nie moge robić translacji ?? 
 
 
 
+powstala nowa idea , z racji ze nie mozna stosować flag musze w jakiś inny sposób podkreślić ze ta strona jest wielojęzykowa więc wpadłem na pomysł 
+zeby porozwalać dostępne języki po headerze w losowych miejscach na danym obszarze , zaznaczony niech ma jakaś powaloną animacje w sumei to bedzie genialne !
+
+
+CIEKAWOSTKI :
+RANDOMOWE BLOKI http://jsfiddle.net/redler/QcUPk/8/
+http://codepen.io/Shikkediel/pen/dPOVJp TO JEST TO CO POTRZEBUJE
+https://css-tricks.com/forums/topic/making-random-not-so-random/
+http://codepen.io/LrnWdlr/pen/zxZNeK
+http://zurb.com/playground/css3-polaroids
+https://css-tricks.com/myth-busting-css-animations-vs-javascript/  TAK MA SIĘ ZACHOWYWAĆ MOJE LOGO 
+http://sixrevisions.com/css/10-random-css-tricks-you-might-want-to-know-about/
+http://www.kirupa.com/html5/animating_movement_smoothly_using_css.htm
+http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background SA I ANIMOWANE CHMURY ... WLASNIE O COŚ TAKIEGO MI CHODZIŁO .... 
+http://codepen.io/quasimondo/pen/lDdrF 
+https://codepen.io/montanaflynn/pen/orxwK ksiezyc i zmiana jasności .... 
+http://codepen.io/kevinjannis/full/wyFga/
+http://www.scriptiny.com/2012/12/moving-clouds-animation-using-jquery-spritely/
+
+https://www.clicktorelease.com/code/css3dclouds/#  to nie jest możliwe ...
+
+https://perishablepress.com/tools/css/transform/ to można zostosować na listach i w menu 
+http://tympanus.net/Development/AnimatedHeaderBackgrounds/index2.html
+
+http://snook.ca/archives/javascript/jquery-bg-image-animations bardzo fajne na zwykłe buttony 
+
+http://www.webdesignerdepot.com/2014/05/8-simple-css3-transitions-that-will-wow-your-users/ bardzo fajna kolorystyka na hoverze s
+
+http://www.minimamente.com/example/magic_animations/ tutaj tez grubo dowalili 
 
 
 

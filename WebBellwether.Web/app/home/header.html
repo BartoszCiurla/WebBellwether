@@ -17,14 +17,14 @@
                 <ul class="app-bar-menu">
                     <!--HOME-->
                     <li data-flexorderorigin="0" data-flexorder="0" class="">
-                        <a style="text-decoration: none ; color: darkorchid;font-weight:bold" href="#/home"><span class="mif-home mif-ani-heartbeat"></span>Home </a>
+                        <a style="text-decoration: none ; color: darkorchid;font-weight:bold" href="#/home"><span class="mif-home mif-ani-heartbeat"></span>{{translation.Home}}</a>
                     </li>
                     <!--LANGUAGES-->
                     <li data-flexorderorigin="1" data-flexorder="2" class="">
                         <label style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</label>
                         <ul class="d-menu" data-role="dropdown">
                             <li ng-repeat="language in languages">                                
-                                <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.id==selectedLanguage]" class={{language.languageFlag}}></span> {{language.languageName}}</a>
+                                <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.id==selectedLanguage]"></span> {{language.languageName}}</a>
                             </li>
                         </ul>
                     </li>                 

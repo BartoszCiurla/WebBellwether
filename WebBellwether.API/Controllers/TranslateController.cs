@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models.Translation;
 using WebBellwether.API.Repositories;
 using WebBellwether.API.Results;
@@ -51,7 +45,6 @@ namespace WebBellwether.API.Controllers
                 : (IHttpActionResult)BadRequest(resultStateContainer.ResultValue.ToString());
         }
 
-        [Authorize]
         [Route("PostTranslateAllLanguageKeys")]
         public async Task<IHttpActionResult> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {

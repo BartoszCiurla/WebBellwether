@@ -4,7 +4,7 @@
         <h2 ng-hide="newLanguageOption == false">{{translation.AddLanguage}}</h2>
         <a ng-click="newLanguageDialog()" style="text-decoration: none; color: crimson" href=""><span class="mif-undo mif-2x mif-ani-shuttle"></span>{{translation.Change}}</a>
     </div>
-    
+
     <!--EDIT LANGUAGE BASIC VALUE-->
     <div class="row">
         <div class="col-xs-10 col-sm-4 col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-offset-4 formAni" ng-hide="newLanguageOption == true">
@@ -18,16 +18,11 @@
             <div class="formAni" style="margin-top: 20px; margin-bottom: 20px" ng-hide="languageForEdit == null || newLanguageOption == true">
                 <form name="basicLanguageInformationEdit">
                     <div class="form-group">
-                        <label>{{translation.LanguageName}}</label>
-                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
-                    </div>
-
-                    <div class="form-group">
                         <label>{{translation.LanguageShortName}}</label>
-                        <select class="form-control myFormColor" required ng-model="languageForEdit.languageShortName" data-ng-options="sl.code as sl.language for sl in supportedLanguages">
+                        <select class="form-control myFormColor" ng-change="translateLanguageName(languageForEdit,true)" required ng-model="languageForEdit.languageShortName" data-ng-options="sl.code as sl.language for sl in supportedLanguages">
                             <option value=''>{{translation.ChooseLanguage}}</option>
                         </select>
-                        <div class="margin10" style="text-align: left;font-weight: bold" >
+                        <div class="margin10" style="text-align: left; font-weight: bold">
                             <span style="color: crimson">{{translation.Warning}}</span>
                             {{translation.WrongLanguageCodeConfiguration}}
                             <div>
@@ -42,9 +37,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{translation.LanguageFlag}}</label>
-                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageFlag" type="text">
+                        <label>{{translation.LanguageName}}</label>
+                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
                     </div>
+
                     <!--SAVE LANGUAGE-->
                     <div class="form-group text-center">
                         <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
@@ -67,7 +63,7 @@
                         <label>{{translation.TranslateAllLanguageKeys}}</label>
                         <button ng-click="translateAllLanguageKeysDialog()" ng-hide="languageForEdit.id == selectedLanguage" class="btn btn-primary btn-block formAni"><span class="mif-cloud-download mif-2x"></span></button>
                     </div>
-                    
+
                 </form>
                 <!--SEARCH-->
                 <label style="margin-top: 40px">{{translation.Search}}</label>
@@ -83,16 +79,11 @@
             <div style="margin-top: 20px; margin-bottom: 20px">
                 <form name="basicLanguageInformationNew">
                     <div class="form-group">
-                        <label>{{translation.LanguageName}}</label>
-                        <input class="form-control myFormColor" required ng-model="newLanguage.languageName" type="text">
-                    </div>
-
-                    <div class="form-group">
                         <label>{{translation.LanguageShortName}}</label>
-                        <select class="form-control myFormColor" required ng-model="newLanguage.languageShortName" data-ng-options="sl.code as sl.language for sl in supportedLanguages">
+                        <select class="form-control myFormColor" ng-change="translateLanguageName(newLanguage,false)" required ng-model="newLanguage.languageShortName" data-ng-options="sl.code as sl.language for sl in supportedLanguages">
                             <option value=''>{{translation.ChooseLanguage}}</option>
                         </select>
-                        <div class="margin10" style="text-align: left;font-weight: bold">
+                        <div class="margin10" style="text-align: left; font-weight: bold">
                             <span style="color: crimson">{{translation.Warning}}</span>
                             {{translation.WrongLanguageCodeConfiguration}}
                             <div>
@@ -107,9 +98,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{translation.LanguageFlag}}</label>
-                        <input class="form-control myFormColor" required ng-model="newLanguage.languageFlag" type="text">
+                        <label>{{translation.LanguageName}}</label>
+                        <input class="form-control myFormColor" required ng-model="newLanguage.languageName" type="text">
                     </div>
+
                     <!--SAVE LANGUAGE-->
                     <div class="form-group text-center">
                         <button ng-disabled="basicLanguageInformationNew.$invalid" ng-click="addNewLanguage(newLanguage)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
@@ -194,4 +186,5 @@
         <span class="dialog-close-button"></span>
     </div>
 </div>
+
 
