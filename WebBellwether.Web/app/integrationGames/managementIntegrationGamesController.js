@@ -12,31 +12,13 @@
                 else
                     return 0;
             }
-            // ********************
-//            $scope.translateGame = function (currentLanguage, targetLanguage, gameName, gameDescription) {		+           
-//-                //fast code for test 		
-//-                var tempCurrentLang = '';		
-//                -                var tempTargetLang = '';		
-//                -                if (currentLanguage == 1)		
-//                -                    tempCurrentLang = 'en';		
-//                -                else		
-//                -                    tempCurrentLang = 'pl';		
-//                -                if (targetLanguage = 1)		
-//                -                    tempTargetLang = 'en';		
-//                -                else		
-//                -                    tempTargetLang = 'pl';		
-//                -                translateService.TranslateIntegrationGame(tempCurrentLang, tempTargetLang, gameName, gameDescription).then(function (x) {		
-//                    -                    $scope.selectedGameOtherTranslation = {};		
-//                    -                    $scope.selectedGameOtherTranslation.gameName = x.data.text[0];		
-//                    -                    $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];		
-//                    -                });		
-//                -            };
+            // ********************   
 
             $scope.selectedGame = '';
             $scope.selectedGameOtherTranslation = '';
             $scope.languageForOtherTranslation = '';
             $scope.setSelectGame = function (selected) {
-                if (selected.id == $scope.selectedGame.id) {
+                if (selected.id === $scope.selectedGame.id) {
                     $scope.resetSelectedGameOrTranslation(true, true);
                 } else {
                     $scope.selectedGame = selected;
@@ -289,6 +271,13 @@
                 $scope.getIntegrationGamesWithLanguages(language);
                 $scope.getGameFeatuesModelWithDetails(language);
             };
+
+            //translate game 
+            //selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription
+            $scope.translateGame = function(currentLanguage,targetLanguage,gameName,gameDescription) {
+                
+            }
+
             //base init
             initContent($scope.selectedLanguage);
             // ********************

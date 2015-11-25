@@ -16,8 +16,8 @@
                     return x;
                 });
             };
-            var postLanguageKeyTranslation = function(translateLanguageKeyModel) {
-                return $http.post(serviceBase + "api/Translate/PostLanguageKeyTranslation", translateLanguageKeyModel).then(function (x) {
+            var postLanguageTranslation = function(translateLanguageModel) {
+                return $http.post(serviceBase + "api/Translate/PostLanguageTranslation", translateLanguageModel).then(function (x) {
                     return x;
                 });
             };
@@ -25,21 +25,11 @@
                 return $http.post(serviceBase + "api/Translate/PostTranslateAllLanguageKeys",translateLangaugeKeysModel).then(function (x) {
                     return x;
                 });
-            };
-        
+            };        
 
-            var translateIntegrationGame = function (currentLangugae, targetLanguage, header, content) {
-                var superTest = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + 'trnsl.1.1.20151017T111637Z.54c56d436735854a.e8642bcd77612c2534f47bb494e96fba7fca5c5a' + '&lang='+ currentLangugae + '-' + targetLanguage + '&text=' + header + '&text=' + content;
-                return $http.get(superTest).then(function (x) {
-                    return x;
-                });
-             
-            };
-
-            translateServiceFactory.TranslateIntegrationGame = translateIntegrationGame;
             translateServiceFactory.GetLanguages = getLangs;
             translateServiceFactory.GetTranslateServiceName = getTranslateServiceName;
-            translateServiceFactory.PostLanguageKeyTranslation = postLanguageKeyTranslation;
+            translateServiceFactory.PostLanguageTranslation = postLanguageTranslation;
             translateServiceFactory.PostTranslateAllLanguageKeys = postTranslateAllLanguageKeys;
             return translateServiceFactory;
         }]);

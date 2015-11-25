@@ -12,9 +12,8 @@ namespace WebBellwether.API.Services.TranslateService.Abstract
     {
         List<SupportedLanguage> GetListOfSupportedLanguages();
         string GetServiceName();
-        Task<ResultStateContainer> GetLanguageKeyTranslation(string currentLanguage, string targetLanguage,string content);
+        Task<ResultStateContainer> GetLanguageTranslation(TranslateLanguageModel languageModel);
 
-        Task<ResultStateContainer> TranslateAllLanguageKeys(IEnumerable<string> currentLanguageFile,
-            string currentLanguage, string targetLanguage);
+        Task<ResultStateContainer> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel);
     }
 }

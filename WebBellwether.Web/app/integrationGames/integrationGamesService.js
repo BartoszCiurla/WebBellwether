@@ -67,19 +67,7 @@
                     return x;
                 });
             };
-
-            var test = function (header,content) {
-                //'api/Language/GetTranslate1'
-                var url = 'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=' + 'trnsl.1.1.20151017T111637Z.54c56d436735854a.e8642bcd77612c2534f47bb494e96fba7fca5c5a' + '&ui=uk';
-                var otherUrl = 'http://mymemory.translated.net/api/get?q=Hello World!&langpair=en|it';
-
-                var superTest = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + 'trnsl.1.1.20151017T111637Z.54c56d436735854a.e8642bcd77612c2534f47bb494e96fba7fca5c5a' + '&lang=pl-en&text=' + header + '&text=' + content;
-                return $http.get(superTest).then(function (x) {
-                    return x;
-                });
-            };
             var integrationGamesServiceFactory = {};
-            integrationGamesServiceFactory.Test = test;
             integrationGamesServiceFactory.GameFeatuesModelWithDetails = getGameFeatuesModelWithDetails;
             integrationGamesServiceFactory.AddNewIntegrationGame = postIntegrationGame;
             integrationGamesServiceFactory.IntegrationGames = getIntegrationGames;

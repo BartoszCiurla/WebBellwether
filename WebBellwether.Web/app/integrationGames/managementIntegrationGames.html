@@ -69,7 +69,7 @@
                 </form>
                 <div style="text-align: center">
                     <!--TRANSLATE GAME-->
-                    <button class="btn btn-default btn-block" ng-click="translateGame(selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription)"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                    <button class="btn btn-primary btn-block" ng-click="translateGame(selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription)"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
                     <!--SAVE TRANSLATION-->
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherTranslation()" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
                     <!--DELETE TRANSLATION-->

@@ -280,12 +280,12 @@
                     if (x.id === currentLangId)
                         shortNameCurrentLang = x.languageShortName;
                 }));
-                var translateLanguageKeyModel = {
-                    CurrentLanguageShortName: shortNameCurrentLang,
-                    TargetLangaugeShortName: targetLang,
-                    ContentToTranslate: content
+                var translateLanguageModel = {
+                    CurrentLanguageCode: shortNameCurrentLang,
+                    TargetLanguageCode: targetLang,
+                    ContentForTranslation: [content]
                 };
-                translateService.PostLanguageKeyTranslation(translateLanguageKeyModel).then(function (x) {
+                translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     $scope.selectedLanguageContent.forEach(function (z) {
                         if (z.key === key) {
                             z.value = x.data.text[0];
@@ -365,11 +365,11 @@
                     }
                 });
                 var languageNameModel = {
-                    CurrentLanguageShortName: "en",
-                    TargetLangaugeShortName: language.languageShortName,
-                    ContentToTranslate :languageNameToTranslate
+                    CurrentLanguageCode: "en",
+                    TargetLanguageCode: language.languageShortName,
+                    ContentForTranslation : [languageNameToTranslate]
                 }
-                translateService.PostLanguageKeyTranslation(languageNameModel).then(function(x) {
+                translateService.PostLanguageTranslation(languageNameModel).then(function (x) {
                     if (languageEdit) {
                         $scope.languageForEdit.languageName = x.data.text[0];
                     } else {

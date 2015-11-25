@@ -40,7 +40,7 @@
                 <textarea class="form-control myFormColor" rows="16" required data-ng-model="selectedJokeTranslation.jokeContent" placeholder="{{translation.JokeContent}}"></textarea>
                 <label style="margin-top:20px;margin-bottom:20px;text-align:left">{{translation.AutoCompleteJokeCategoryForLanguage}}</label>
                 <!--TRANSLATE GAME-->
-                <button class="btn btn-default btn-block"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                <button class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
                 <!--SAVE TRANSLATION-->
                 <div style="text-align: center">
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherJokeTranslation()" ng-disabled="selectedJokeTranslation.jokeContent == null || selectedJoke.jokeCategoryId == null"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>

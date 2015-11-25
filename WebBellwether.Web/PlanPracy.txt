@@ -1,10 +1,10 @@
-﻿prio jedna metoda do translacji w sumei parametry zawsze będa takie same w sencie currentLang targetLang i content który po prostu będzie tablicą ... i po problemie, po co się tyle z tym jebać to ma 
-być uniwersalne
+﻿
 
 flagi wyjebane ... 
 teraz trzeba dodac jeszcze languageshort name do list zeby bylo wiadomo o co biega (chodzi mi tutaj głównie o edycje);
-potrzebna funkcja ktora rozpoznaje język i tłumaczy na zaznaczony
 obecny problem to w zarzadzaniu grami , kawałami przy wyborze języka innego niż polski nie moge robić translacji ?? 
+potrzebna funkcja do translacji wszystkich gier integracyjnych/kawałów 
+ma to być do 27.11.2015 godzina 2 
 
 
 

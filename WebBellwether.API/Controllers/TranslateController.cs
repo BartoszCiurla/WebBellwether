@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebBellwether.API.Models.Translation;
@@ -36,15 +37,15 @@ namespace WebBellwether.API.Controllers
         }
 
         [Authorize]
-        [Route("PostLanguageKeyTranslation")]
-        public async Task<IHttpActionResult> PostLanguageKeyTranslation(TranslateLanguageKeyModel translateLangaugeKeyModel)
+        [Route("PostLanguageTranslation")]
+        public async Task<IHttpActionResult> PostLanguageTranslation(TranslateLanguageModel languageModel)
         {
-            var resultStateContainer = await _service.GetLanguageKeyTranslation(translateLangaugeKeyModel.CurrentLanguageShortName, translateLangaugeKeyModel.TargetLangaugeShortName, translateLangaugeKeyModel.ContentToTranslate);
+            var resultStateContainer = await _service.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation));
             return resultStateContainer.ResultState == ResultState.Success
                 ? Ok(resultStateContainer.ResultValue)
                 : (IHttpActionResult)BadRequest(resultStateContainer.ResultValue.ToString());
         }
-
+        [Authorize]
         [Route("PostTranslateAllLanguageKeys")]
         public async Task<IHttpActionResult> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {
@@ -52,7 +53,7 @@ namespace WebBellwether.API.Controllers
             if (currentLangaugeFile == null)
                 return BadRequest(ResultMessage.LanguageFileNotExists.ToString());
 
-            var translateResultState = await _service.TranslateAllLanguageKeys(currentLangaugeFile, translateLangaugeKeysModel.CurrentLanguageShortName, translateLangaugeKeysModel.TargetLangaugeShortName);
+            var translateResultState = await _service.GetAllLanguageKeysTranslations(new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,translateLangaugeKeysModel.TargetLangaugeShortName,currentLangaugeFile));
             if (translateResultState.ResultState == ResultState.Failure)
                 return BadRequest(translateResultState.ResultValue.ToString());
 
