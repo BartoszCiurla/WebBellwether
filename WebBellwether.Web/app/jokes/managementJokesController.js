@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementJokesController', ['$scope', '$timeout', 'sharedService', 'jokesService', function ($scope, $timeout, sharedService, jokesService) {
+        .controller('managementJokesController', ['$scope', '$timeout', 'sharedService','translateService', 'jokesService', function ($scope, $timeout, sharedService,translateService, jokesService) {
             var userNotification = '';
             //pagination and set other joke category translation (get from api)
             $scope.currentPage = 0;
@@ -34,11 +34,11 @@
 
             $scope.getTranslationForJoke = function () {
                 //check language on new translation
-                if ($scope.languageForOtherTranslation.language != null) {
+                if ($scope.languageForOtherTranslation != null) {
                     $scope.selectedJoke.jokeTranslations.forEach(function (x) {
-                        if (x.language.id == $scope.languageForOtherTranslation.language.id && x.hasTranslation) {
+                        if (x.language.id === $scope.languageForOtherTranslation.id && x.hasTranslation) {
                             $scope.selectedJokeTranslation.id = $scope.selectedJoke.id;
-                            jokesService.GetJokeTranslation($scope.selectedJoke.id, $scope.languageForOtherTranslation.language.id).then(function (z) {
+                            jokesService.GetJokeTranslation($scope.selectedJoke.id, $scope.languageForOtherTranslation.id).then(function (z) {
                                 $scope.selectedJokeTranslation = z.data;
                             });
                             return;
@@ -165,7 +165,7 @@
                     if (x.data.message.indexOf(",") > -1) {
                         userNotification += " " + $scope.translation.JokeCategoryNotExists + " " + $scope.translation.ForLanguage + " "  + x.data.message.substr(x.data.message.indexOf(",") + 1);
                     } else {
-                        userNotification + $scope.translation[x.data.message];
+                        userNotification += $scope.translation[x.data.message];
                     }
                     $.Notify({
                         caption: $scope.translation.Failure,
@@ -180,7 +180,7 @@
             //set mark in main joke category translations
             $scope.setTranslation = function (translationStatus) {
                 $scope.selectedJoke.jokeTranslations.forEach(function (x) {
-                    if (x.language.id == $scope.languageForOtherTranslation.language.id) {
+                    if (x.language.id === $scope.languageForOtherTranslation.id) {
                         x.hasTranslation = translationStatus;
                         if (!translationStatus)
                             $scope.resetSelectedJokeOrTranslation(false, true);
@@ -195,7 +195,7 @@
                     Id: $scope.selectedJoke.id,
                     JokeId: $scope.selectedJokeTranslation.jokeId,
                     JokeContent: $scope.selectedJokeTranslation.jokeContent,
-                    LanguageId: $scope.languageForOtherTranslation.language.id,
+                    LanguageId: $scope.languageForOtherTranslation.id,
                     JokeCategoryId: $scope.selectedJoke.jokeCategoryId
                 };
                 jokesService.PostJoke(joke).then(function (x) {
@@ -252,6 +252,43 @@
                 });
             };
             //*******************
+
+            //translate joke 
+            $scope.translateJoke = function(selectedJoke,targetJokeLanguage) {
+                var selectedJokeLanguageCode = '';
+                $scope.languages.forEach(function(x) {
+                    if (x.id === selectedJoke.languageId)
+                        selectedJokeLanguageCode = x.languageShortName;
+                });
+                var translateLanguageModel = {
+                    CurrentLanguageCode: selectedJokeLanguageCode,
+                    TargetLanguageCode: targetJokeLanguage.languageShortName,
+                    ContentForTranslation: [selectedJoke.jokeContent]
+                };
+                $scope.languages.forEach(function(x) {
+                    if (x.id !== selectedJoke.languageId)
+                        console.log(x);
+                });
+                var selectedJokeTranslationIdIfExists = $scope.selectedJokeTranslation.jokeId;
+                translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
+                    $scope.selectedJokeTranslation = {
+                        jokeContent: x.data.text[0],
+                        jokeId: selectedJokeTranslationIdIfExists
+                    };
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.TranslationCompletedSuccessfully,
+                        type: 'success'
+                    });
+                }, function (x) {
+                    userNotification = $scope.translation.ErrorDuringTranslation + ' ' + x.data.message;
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert'
+                    });
+                });
+            };
 
             //init content
             function initContent(language) {

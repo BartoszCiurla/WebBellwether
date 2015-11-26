@@ -33,7 +33,7 @@
                 if ($scope.languageForOtherTranslation.language != null) {
                     //check available translation by language in selectedGame
                     $scope.selectedGame.gameTranslations.forEach(function (o) {
-                        if (o.language.id == $scope.languageForOtherTranslation.language.id && o.hasTranslation) {
+                        if (o.language.id === $scope.languageForOtherTranslation.language.id && o.hasTranslation) {
                             $scope.selectedGameOtherTranslation.id = $scope.selectedGame.id;
                             integrationGamesService.GetIntegrationGameTranslation($scope.selectedGame.id, $scope.languageForOtherTranslation.language.id).then(function (x) {
                                 $scope.selectedGameOtherTranslation = x.data;
@@ -56,7 +56,7 @@
             //set mark in main game translations 
             $scope.setTranslation = function (translationStatus) {
                 $scope.selectedGame.gameTranslations.forEach(function (x) {
-                    if (x.language.id == $scope.languageForOtherTranslation.language.id) {
+                    if (x.language.id === $scope.languageForOtherTranslation.language.id) {
                         x.hasTranslation = translationStatus;
                         //when translation status is false then i know translation not exists
                         if (!translationStatus)
@@ -176,14 +176,14 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.GameEdited,
-                        type: 'success',
+                        type: 'success'
                     });
                 }, function (x) {                    
                     userNotification = $scope.translation.GameNotEdited + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
-                        type: 'alert',
+                        type: 'alert'
                     });
                 });
             };
@@ -274,9 +274,32 @@
 
             //translate game 
             //selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription
-            $scope.translateGame = function(currentLanguage,targetLanguage,gameName,gameDescription) {
-                
-            }
+            $scope.translateGame = function(currentLanguage, targetLanguage, gameName, gameDescription) {
+                var translateLanguageModel = {
+                    CurrentLanguageCode: currentLanguage.languageShortName,
+                    TargetLanguageCode: targetLanguage.languageShortName,
+                    ContentForTranslation: [gameName, gameDescription]
+                };
+                translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
+                    $scope.selectedGameOtherTranslation.gameName = '';
+                    $scope.selectedGameOtherTranslation.gameDescription = '';
+                    $scope.selectedGameOtherTranslation.gameName = x.data.text[0];
+                    $scope.selectedGameOtherTranslation.gameDescription = x.data.text[1];
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.TranslationAdded,
+                        type: 'success'
+                    });
+                }, function (x) {
+                    userNotification = $scope.translation.TranslationNotAdded + ' ' + x.data.message;
+
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert'
+                    });
+                });
+            };
 
             //base init
             initContent($scope.selectedLanguage);

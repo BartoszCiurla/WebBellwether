@@ -33,14 +33,14 @@
     <div class="col-md-4">
         <div ng-hide="selectedJoke == ''">
             <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedJokeAndLanguage}}</h2>
-            <select id="language" ng-change="getTranslationForJoke()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation.language.id" data-ng-options="language.id as language.languageName for language in languages | filter : {id: '!' + selectedJoke.languageId}">
+            <select id="language" ng-change="getTranslationForJoke()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation" ng-options="language.languageName + '   :   ' + language.languageShortName for language in languages | filter : {id: '!' + selectedLanguage}">
                 <option value=''>{{translation.SelectLanguageForTheJoke}}</option>
             </select>
-            <div ng-hide="languageForOtherTranslation.language.id == null" class="formAni">
+            <div ng-hide="languageForOtherTranslation == ''" class="formAni">
                 <textarea class="form-control myFormColor" rows="16" required data-ng-model="selectedJokeTranslation.jokeContent" placeholder="{{translation.JokeContent}}"></textarea>
                 <label style="margin-top:20px;margin-bottom:20px;text-align:left">{{translation.AutoCompleteJokeCategoryForLanguage}}</label>
-                <!--TRANSLATE GAME-->
-                <button class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
+                <!--TRANSLATE JOKE-->
+                <button ng-click="translateJoke(selectedJoke,languageForOtherTranslation)" class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
                 <!--SAVE TRANSLATION-->
                 <div style="text-align: center">
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherJokeTranslation()" ng-disabled="selectedJokeTranslation.jokeContent == null || selectedJoke.jokeCategoryId == null"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>

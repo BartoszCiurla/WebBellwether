@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementJokeCategoriesController', ['$scope', '$timeout', 'sharedService', 'jokesService', function ($scope, $timeout, sharedService, jokesService) {
+        .controller('managementJokeCategoriesController', ['$scope', '$timeout', 'sharedService', 'jokesService', 'translateService', function ($scope, $timeout, sharedService, jokesService, translateService) {
             var userNotification = '';
             //pagination and set other joke category translation (get from api)
             $scope.currentPage = 0;
@@ -17,7 +17,7 @@
             $scope.newJokeCategory = '';
             $scope.languageForOtherTranslation = '';
             $scope.setJokeCategory = function (selected) {
-                if (selected.id == $scope.selectedJokeCategory.id) {
+                if (selected.id === $scope.selectedJokeCategory.id) {
                     $scope.resetSelectedJokeCategoryOrTranslation(true, true);
                 } else {
                     $scope.selectedJokeCategory = selected;
@@ -27,11 +27,11 @@
 
             $scope.getTranslationForJokeCategory = function () {
                 //check language on new translation
-                if ($scope.languageForOtherTranslation.language != null) {
+                if ($scope.languageForOtherTranslation != null) {
                     $scope.selectedJokeCategory.jokeCategoryTranslations.forEach(function (x) {
-                        if (x.language.id == $scope.languageForOtherTranslation.language.id && x.hasTranslation) {
+                        if (x.language.id === $scope.languageForOtherTranslation.id && x.hasTranslation) {
                             $scope.selectedJokeCategoryTranslation.id = $scope.selectedJokeCategory.id;
-                            jokesService.GetJokeCategoryTranslation($scope.selectedJokeCategory.id, $scope.languageForOtherTranslation.language.id).then(function (z) {
+                            jokesService.GetJokeCategoryTranslation($scope.selectedJokeCategory.id, $scope.languageForOtherTranslation.id).then(function (z) {
                                 $scope.selectedJokeCategoryTranslation = z.data;
                             });
                             return;
@@ -105,7 +105,7 @@
                 dialog.open();
             };
             $scope.deleteTranslation = function (selectedJokeCategoryTranslation) {
-                dialog = $('#deleteTranslationDialog').data('dialog');
+                var dialog = $('#deleteTranslationDialog').data('dialog');
                 dialog.close();
                 jokesService.DeleteJokeCategory(selectedJokeCategoryTranslation).then(function (x) {
                     $scope.setTranslation(false);
@@ -158,7 +158,7 @@
             //set mark in main joke category translations
             $scope.setTranslation = function(translationStatus){
                 $scope.selectedJokeCategory.jokeCategoryTranslations.forEach(function(x){
-                    if(x.language.id == $scope.languageForOtherTranslation.language.id){
+                    if(x.language.id === $scope.languageForOtherTranslation.id){
                         x.hasTranslation = translationStatus;
                         if(!translationStatus)
                             $scope.resetSelectedJokeCategoryOrTranslation(false,true);
@@ -172,7 +172,7 @@
                     Id: $scope.selectedJokeCategory.id,
                     JokeCategoryId: $scope.selectedJokeCategoryTranslation.jokeCategoryId,
                     JokeCategoryName: $scope.selectedJokeCategoryTranslation.jokeCategoryName,
-                    LanguageId: $scope.languageForOtherTranslation.language.id
+                    LanguageId: $scope.languageForOtherTranslation.id
                 };
                 jokesService.PostJokeCategory(jokeCategory).then(function (x) {
                     $scope.setTranslation(true);
@@ -228,9 +228,9 @@
             };
             //reset selected game or translation true is reset 
             $scope.resetSelectedJokeCategoryOrTranslation = function (category, translation) {
-                if (category == true)
+                if (category === true)
                     $scope.selectedJokeCategory = '';
-                if (translation == true)
+                if (translation === true)
                     $scope.selectedJokeCategoryTranslation = '';
             }
             // ********************
@@ -241,6 +241,40 @@
             //base init
             initContent($scope.selectedLanguage);
             // ********************
+
+
+            //translate joke cateogory
+            $scope.translateJokeCategory = function (selectedJokeCategory, targetJokeCategoryLanguage) {
+                var selectedJokeCategoryLanguageCode = '';
+                $scope.languages.forEach(function(x) {
+                    if (x.id === selectedJokeCategory.languageId)
+                        selectedJokeCategoryLanguageCode = x.languageShortName;
+                });
+                var translateLanguageModel = {
+                    CurrentLanguageCode: selectedJokeCategoryLanguageCode,
+                    TargetLanguageCode: targetJokeCategoryLanguage.languageShortName,
+                    ContentForTranslation :[selectedJokeCategory.jokeCategoryName]
+                }
+                var selectedJokeCategoryTranslationCategoryIdIfExists = $scope.selectedJokeCategoryTranslation.jokeCategoryId;
+                translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
+                    $scope.selectedJokeCategoryTranslation = {
+                        jokeCategoryId :selectedJokeCategoryTranslationCategoryIdIfExists,
+                        jokeCategoryName: x.data.text[0]
+                };
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: $scope.translation.TranslationCompletedSuccessfully,
+                        type: 'success'
+                    });
+                }, function (x) {
+                    userNotification = $scope.translation.ErrorDuringTranslation + ' ' + x.data.message;
+                    $.Notify({
+                        caption: $scope.translation.Failure,
+                        content: userNotification,
+                        type: 'alert'
+                    });
+                });
+            };
 
             //when language change 
             $scope.$on('languageChange', function () {

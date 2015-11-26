@@ -33,17 +33,17 @@
         <div ng-hide="selectedJokeCategory == ''">
             <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedJokeCategoryAndLanguage}}</h2>
 
-            <select id="language" ng-change="getTranslationForJokeCategory()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation.language.id" data-ng-options="language.id as language.languageName for language in languages | filter : {id: '!' + selectedJokeCategory.languageId}">
+            <select id="language" ng-change="getTranslationForJokeCategory()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation" data-ng-options="language.languageName + '   :   ' + language.languageShortName for language in languages | filter : { id : '!' + selectedLanguage}">
                 <option value=''>{{translation.SelectLanguageForTheJokeCategory}}</option>
             </select>
 
-            <div ng-hide="languageForOtherTranslation.language.id == null" class="formAni">
+            <div ng-hide="languageForOtherTranslation == ''" class="formAni">
                 <form name="otherJokeCategoryTranslation">
                     <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategoryTranslation.jokeCategoryName" placeholder={{translation.CategoryName}} />                    
                 </form>
                 <div style="text-align: center">
-                    <!--TRANSLATE GAME-->
-                    <button class="btn btn-default btn-block"><span class="mif-google-plus mif-ani-heartbeat"></span>{{translation.TranslateByGoogle}}</button>
+                    <!--TRANSLATE JOKE CATEGORy-->
+                    <button ng-click="translateJokeCategory(selectedJokeCategory,languageForOtherTranslation)" class="btn btn-primary btn-block"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
                     <!--SAVE TRANSLATION-->
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherJokeCategoryTranslation()" ng-disabled="otherJokeCategoryTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
                     <!--DELETE TRANSLATION-->
