@@ -1,5 +1,5 @@
 {
-  "IntegrationGamesHeader": "Gry intergracyjne",
+  "IntegrationGamesHeader": "Gry integracyjne",
   "IntegrationGamesContent": "Szukasz sposobu na swietna zabawe , wyeliminowanie nudy , poznanie sie , tutaj znajdziesz to wszystko .",
   "BellwetherHeader": "Wodzirej",
   "BellwetherContent": " Alkohol jeszcze nie dziala , nikt nie chce dzialac , pozostale opcje sa nie atrakcyjne .Aplikacja przygotuje dla Was cos ekstra ;)",
@@ -191,5 +191,6 @@
   "ContentLanguageFilesAreNotCompatible": "Zawartości plików językowych nie sa zgodne ",
   "KeyValuesAreCorrectlyFilled": "Wartości kluczy zostały poprawnie wypełnoine",
   "KeyValuesAreNotFilled": "Wartości kluczy nie zostały wypełnione",
-  "Home": "Home"
+  "Home": "Home",
+  "CreateFeatures": "Utwórz cechy"
 }

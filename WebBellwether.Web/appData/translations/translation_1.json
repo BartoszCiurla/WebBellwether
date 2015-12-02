@@ -191,5 +191,6 @@
   "ContentLanguageFilesAreNotCompatible": "Content language files are not compatible",
   "KeyValuesAreCorrectlyFilled": "Key values are correctly filled",
   "KeyValuesAreNotFilled": "Key values are not filled",
-  "Home": "Home"
+  "Home": "Home",
+  "CreateFeatures": "Create features"
 }

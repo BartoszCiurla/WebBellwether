@@ -1,11 +1,10 @@
-﻿obecny problem to filtriowanie po id jezyka który jest zaznaczony na głównej translacji ... 
+﻿obecnei zajmuje się cechami gier . w przypadku braku definicji trzeba takową założyć ... w przypadku gdy zaznacozny jest inny jezyk niz główny tłumaczenie 
+wszystkiego na raz ... 
 
+odkrłem kolejny problem , trzeba zrobić komunikat ze brakuje cech dla zaznaczonej translacji w sumei to duzo roboty nie będzie chyba ... 
 
 teraz trzeba dodac jeszcze languageshort name do list zeby bylo wiadomo o co biega (chodzi mi tutaj głównie o edycje);
 obecny problem to w zarzadzaniu grami , kawałami przy wyborze języka innego niż polski nie moge robić translacji ?? 
-potrzebna funkcja do translacji wszystkich gier integracyjnych/kawałów 
-ma to być do 27.11.2015 godzina 2 
-
 
 
 powstala nowa idea , z racji ze nie mozna stosować flag musze w jakiś inny sposób podkreślić ze ta strona jest wielojęzykowa więc wpadłem na pomysł 

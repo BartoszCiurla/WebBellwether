@@ -195,7 +195,7 @@ namespace WebBellwether.API.Services.LanguageService
                         return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.LanguageFileNotExists };
                     foreach (var item in jsonObj)
                     {
-                        if (item.Value.Length < 2)
+                        if (item.Value.Length < 1)
                             emptyKey++;
                     }
                     if (emptyKey > 0)

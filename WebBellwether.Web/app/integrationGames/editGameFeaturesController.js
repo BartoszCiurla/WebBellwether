@@ -12,19 +12,6 @@
                 });
             };
 
-            //current not used 
-            //$scope.newFeatureDetail = function (gameFeature) {
-            //    var gameFeatureDetail = {
-            //        Id: gameFeature.featureId,
-            //        GameFeatureDetailId: '',
-            //        GameFeature: gameFeature.newFeatureName,
-            //        Language: gameFeature.language.languageName,
-            //        LanguageId: gameFeature.language.id
-            //    };
-            //    //BRAK OBSLUGI PUKI CO
-            //    console.log(gameFeatureDetail);
-            //};
-
             $scope.getClass = function (id, id2) {
                 //for gameFeature
                 if (id > 0) {
@@ -97,6 +84,14 @@
                 integrationGamesService.GameFeatures(lang).then(function (results) {
                     $scope.gameFeatures = results.data;
                     console.log("get game features");
+                });
+            };
+
+            $scope.createGameFeatures = function(languageId) {
+                integrationGamesService.PostCreateGameFeatures(languageId).then(function(x) {
+
+                }, function(x) {
+
                 });
             };
             //get on load , but i must change this value when i want add game in another language

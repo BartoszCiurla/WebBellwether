@@ -10,6 +10,11 @@
                     return x;
                 });
             };
+            var postCreateGameFeatures = function(languageid) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostCreateGameFeatures/?language=' + languageid).then(function (x) {
+                    return x;
+                });
+            }
 
             var putGameFeature = function (gameFeature) {
                 return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeature', gameFeature).then(function (x) {
@@ -24,9 +29,9 @@
 
             };
             var deleteIntegrationGame = function (integrationGame) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostDeleteIntegrationGame/', integrationGame).then(function (x) {
+                return $http.post(serviceBase + 'api/IntegrationGames/PostDeleteIntegrationGame/', integrationGame).then(function(x) {
                     return x;
-                })
+                });
             };
 
             var putIntegrationGame = function (integrationGame) {
@@ -79,6 +84,7 @@
             integrationGamesServiceFactory.PutGameFeatureDetail = putGameFeatureDetail;
             integrationGamesServiceFactory.DeleteIntegrationGame = deleteIntegrationGame;
             integrationGamesServiceFactory.GetIntegrationGameTranslation = getIntegrationGameTranslation;
+            integrationGamesServiceFactory.PostCreateGameFeatures = postCreateGameFeatures;
 
             return integrationGamesServiceFactory;
 

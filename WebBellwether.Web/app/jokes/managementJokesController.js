@@ -265,10 +265,6 @@
                     TargetLanguageCode: targetJokeLanguage.languageShortName,
                     ContentForTranslation: [selectedJoke.jokeContent]
                 };
-                $scope.languages.forEach(function(x) {
-                    if (x.id !== selectedJoke.languageId)
-                        console.log(x);
-                });
                 var selectedJokeTranslationIdIfExists = $scope.selectedJokeTranslation.jokeId;
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     $scope.selectedJokeTranslation = {

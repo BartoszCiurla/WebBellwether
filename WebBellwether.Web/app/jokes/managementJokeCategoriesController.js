@@ -215,14 +215,14 @@
                 });
             };
             $scope.setJokeCategoryTranslationAfterLanguageChange = function () {
-                if ($scope.selectedJokeCategory != '') {
+                if ($scope.selectedJokeCategory !== '') {
                     $scope.jokeCategories.forEach(function (o) {
-                        if (o.id == $scope.selectedJokeCategory.id && o.languageId == $scope.selectedLanguage) {
+                        if (o.id === $scope.selectedJokeCategory.id && o.languageId === $scope.selectedLanguage) {
                             $scope.selectedJokeCategory = o;
                             return;
                         }
                     });
-                    if ($scope.selectedJokeCategory.languageId != $scope.selectedLanguage)
+                    if ($scope.selectedJokeCategory.languageId !== $scope.selectedLanguage)
                         $scope.resetSelectedJokeCategoryOrTranslation(true, false);
                 }
             };
