@@ -21,6 +21,7 @@ namespace WebBellwether.API.Services.IntegrationGameService.Abstract
         ResultStateContainer PutIntegrationGame(IntegrationGameModel integrationGame);
         ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame);
         IntegrationGameModel GetGameTranslation(int gameId,int languageId);
+        bool CreateGameFeatures(int languageId);
 
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 
@@ -34,174 +32,171 @@ namespace WebBellwether.API.Context
             var en = languages.FirstOrDefault(x => x.LanguageName.StartsWith("English"));
             var pl = languages.FirstOrDefault(x => x.LanguageName.StartsWith("Polish"));
 
-            var newGameFeatures = new List<GameFeature>();
-
-            newGameFeatures.Add(new GameFeature
+            var newGameFeatures = new List<GameFeature>
             {
-                GameFeatureLanguages = new Collection<GameFeatureLanguage>
+                new GameFeature
                 {
-                    new GameFeatureLanguage
+                    GameFeatureLanguages = new Collection<GameFeatureLanguage>
                     {
-                        GameFeatureName = "Category game",
-                        Language = en
-                        
+                        new GameFeatureLanguage
+                        {
+                            GameFeatureName = "Category game",
+                            Language = en
+                        },
+                        new GameFeatureLanguage
+                        {
+                            GameFeatureName = "Kategoria zabawy",
+                            Language = pl
+                        }
                     },
-                    new GameFeatureLanguage
+                    GameFeatureDetails = new Collection<GameFeatureDetail>
                     {
-                        GameFeatureName = "Kategoria zabawy",
-                        Language = pl
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Integration",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Integracja",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Concentration",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Koncentracja",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Creativity",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Kreatywność",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Gone to group",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Podział na grupy",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Let us learn to",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Poznajmy się",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Team work",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Praca w grupie",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Discharge energy",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Rozładowanie energii",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Competition",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Współzawodnictwo",
+                                    Language = pl
+                                },
+                            }
+                        },
+                        new GameFeatureDetail
+                        {
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            {
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Dexterity",
+                                    Language = en
+                                },
+                                new GameFeatureDetailLanguage
+                                {
+                                    GameFeatureDetailName = "Zręczność",
+                                    Language = pl
+                                },
+                            }
+                        },
                     }
                 },
-                GameFeatureDetails = new Collection<GameFeatureDetail>
-                {
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Integration",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Integracja",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Concentration",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Koncentracja",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Creativity",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Kreatywność",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Gone to group",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Podział na grupy",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Let us learn to",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Poznajmy się",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Team work",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Praca w grupie",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Discharge energy",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Rozładowanie energii",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Competition",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Współzawodnictwo",
-                                Language = pl
-                            },
-                        }
-                    },
-                    new GameFeatureDetail
-                    {
-                        GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
-                        {
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Dexterity",
-                                Language = en
-                            },
-                            new GameFeatureDetailLanguage
-                            {
-                                GameFeatureDetailName = "Zręczność",
-                                Language = pl
-                            },
-                        }
-                    },
-
-                }
-            });
-            newGameFeatures.Add(
                 new GameFeature
                 {
                     GameFeatureLanguages = new Collection<GameFeatureLanguage>
@@ -257,7 +252,7 @@ namespace WebBellwether.API.Context
                             {
                                 new GameFeatureDetailLanguage
                                 {
-                                    GameFeatureDetailName= "Living",
+                                    GameFeatureDetailName = "Living",
                                     Language = en
                                 },
                                 new GameFeatureDetailLanguage
@@ -268,10 +263,7 @@ namespace WebBellwether.API.Context
                             }
                         }
                     }
-                });
-
-
-            newGameFeatures.Add(
+                },
                 new GameFeature
                 {
                     GameFeatureLanguages = new Collection<GameFeatureLanguage>
@@ -316,15 +308,13 @@ namespace WebBellwether.API.Context
                                 },
                                 new GameFeatureDetailLanguage
                                 {
-                                    GameFeatureDetailName= "Powyżej 20",
+                                    GameFeatureDetailName = "Powyżej 20",
                                     Language = pl
                                 },
                             }
                         }
                     }
-
-                });
-            newGameFeatures.Add(
+                },
                 new GameFeature
                 {
                     GameFeatureLanguages = new Collection<GameFeatureLanguage>
@@ -364,11 +354,12 @@ namespace WebBellwether.API.Context
                             {
                                 new GameFeatureDetailLanguage
                                 {
-                                    GameFeatureDetailName= "Minimum",
+                                    GameFeatureDetailName = "Minimum",
                                     Language = en
                                 },
                                 new GameFeatureDetailLanguage
-                                {GameFeatureDetailName = "Minimalne",
+                                {
+                                    GameFeatureDetailName = "Minimalne",
                                     Language = pl
                                 },
                             }
@@ -383,13 +374,18 @@ namespace WebBellwether.API.Context
                                     Language = en
                                 },
                                 new GameFeatureDetailLanguage
-                                { GameFeatureDetailName = "Wymagane",
+                                {
+                                    GameFeatureDetailName = "Wymagane",
                                     Language = pl
                                 },
                             }
                         }
                     }
-                });
+                }
+            };
+
+
+
 
 
             return newGameFeatures;

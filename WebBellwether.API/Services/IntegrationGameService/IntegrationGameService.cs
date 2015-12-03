@@ -146,6 +146,11 @@ namespace WebBellwether.API.Services.IntegrationGameService
                     });
                 });
             return result;
-        }       
+        }
+
+        public bool CreateGameFeatures(int languageId)
+        {
+            return _managementFeaturesService.CreateGameFeatures(languageId);
+        }
     }
 }

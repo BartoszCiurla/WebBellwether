@@ -155,7 +155,7 @@
   "Success": "Succes",
   "Failure": "Failure",
   "GameFeatureEdited": "Feature game was edited",
-  "GameFeatureDetailEdited": "Retail features of the game was edited",
+  "GameFeatureDetailEdited": "Retail features of the game was edited",   
   "GameFeatueNotEdited": "Feature game has not been edited",
   "GameFeatureDetailNotEdited": "Retail features of the game has not been edited",
   "SaveTranslation": "Save translation",
@@ -192,5 +192,8 @@
   "KeyValuesAreCorrectlyFilled": "Key values are correctly filled",
   "KeyValuesAreNotFilled": "Key values are not filled",
   "Home": "Home",
-  "CreateFeatures": "Create features"
+  "CreateFeatures": "Create features",
+  "GameFeaturesAdded": "Game features have been added",
+  "GameFeaturesNotAdded": "Game features have been added"
+
 }

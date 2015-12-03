@@ -24,17 +24,21 @@
                     </label>
                 </div>
             </div>
+            <!--TRANSLATE-->
+            <div class="margin10" ng-hide="gameFeatures[0].gameFeatureTemplateName == null">
+                <button ng-disabled ="required1.val1 == null" ng-click="translateGameFeatures(gameFeature.language,gameFeatures)" class="btn btn-primary"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
+            </div>
             <div ng-repeat="gameFeature in gameFeatures" class="formAni">
                 <div class="form-inline">
                     <form style="float: left" class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
-                        <input ng-class="getClass(gameFeature.id,0)" ng-disabled=" required1.val1 == null" type="text" class="form-control myFormColor" required data-ng-model="gameFeature.gameFeatureName"/>
+                        <input ng-class="getClass(gameFeature.id,0)" ng-disabled=" required1.val1 == null" type="text" class="form-control myFormColor" required data-ng-model="gameFeature.gameFeatureName" />
                         <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
                         <label ng-hide="gameFeature.gameFeatureTemplateName == null">
                             {{gameFeature.gameFeatureTemplateName}}
                         </label>
                     </form>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
     <div class="col-md-6">
@@ -52,10 +56,14 @@
             <div class="has-error">
                 <div class="checkbox">
                     <label style="font-weight: bold">
-                        <input required data-ng-model="required2.val1" value="{{required1.val}}" type="checkbox" />
+                        <input required data-ng-model="required2.val1" value="{{required1.val}}" type="checkbox"/>
                         {{translation.IKnowWhatIAmDoing}}
                     </label>
                 </div>
+            </div>
+            <!--TRANSLATE-->
+            <div class="margin10" ng-hide ="gameFeatureDetails[0].gameFeatureDetailTemplateName == null">
+                <button ng-disabled ="required2.val1 == null" ng-click="translateGameFeaturesDetails(gameFeature.language,gameFeatureDetails)" class="btn btn-primary"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
             </div>
             <div class="formAni" ng-show="gameFeature.featureId > 0" ng-repeat="gameFeatureDetail in gameFeatureDetails | filter:{gameFeatureId : gameFeature.featureId} ">
                 <div class="form-inline">

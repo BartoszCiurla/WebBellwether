@@ -192,5 +192,7 @@
   "KeyValuesAreCorrectlyFilled": "Wartości kluczy zostały poprawnie wypełnoine",
   "KeyValuesAreNotFilled": "Wartości kluczy nie zostały wypełnione",
   "Home": "Home",
-  "CreateFeatures": "Utwórz cechy"
+  "CreateFeatures": "Utwórz cechy",
+  "GameFeaturesAdded": "Cechy gry zostały dodane",
+  "GameFeaturesNotAdded": "Cechy gry nie zostały dodane"
 }

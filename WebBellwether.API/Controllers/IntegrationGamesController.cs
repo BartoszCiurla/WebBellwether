@@ -112,8 +112,12 @@ namespace WebBellwether.API.Controllers
         [Route("PostCreateGameFeatures")]
         public IHttpActionResult PostCreateGameFeatures(int language)
         {
-            //tutaj teoretycznie mozna by jeszcze zwrocić to co utworzylem ...
-            return Ok();
+            bool gameFeaturesInserted = _service.CreateGameFeatures(language);
+            if (gameFeaturesInserted)
+            {
+                return Ok(_service.GetGameFeatures(language));
+            }
+                return BadRequest();         
         }
     }//153 linie kody były prawie 50 mniej ;) 
 }

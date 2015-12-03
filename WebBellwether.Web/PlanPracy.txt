@@ -1,10 +1,6 @@
-﻿obecnei zajmuje się cechami gier . w przypadku braku definicji trzeba takową założyć ... w przypadku gdy zaznacozny jest inny jezyk niz główny tłumaczenie 
-wszystkiego na raz ... 
+﻿obecny problem to : przy dodaniu kategori i checi klikniecia w detale kategori nic tam nie ma tak jak by nie zaczytal tych danych , do poprawy 
 
-odkrłem kolejny problem , trzeba zrobić komunikat ze brakuje cech dla zaznaczonej translacji w sumei to duzo roboty nie będzie chyba ... 
-
-teraz trzeba dodac jeszcze languageshort name do list zeby bylo wiadomo o co biega (chodzi mi tutaj głównie o edycje);
-obecny problem to w zarzadzaniu grami , kawałami przy wyborze języka innego niż polski nie moge robić translacji ?? 
+ostatni punkt administracji to usuwanie języków wszystkich oprócz pol i ang bo to jezyki szablonowe ... przy takim usuwaniu ma wywalić wszystko co jest skojazone z jezykiem pliki gry kategorie gier kawaly i kategorie kawałow
 
 
 powstala nowa idea , z racji ze nie mozna stosować flag musze w jakiś inny sposób podkreślić ze ta strona jest wielojęzykowa więc wpadłem na pomysł 
