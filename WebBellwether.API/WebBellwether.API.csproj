@@ -271,6 +271,7 @@
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
+    <Compile Include="Services\LanguageService\Abstract\IManagementLanguageService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
     <Compile Include="Services\TranslateService\Abstract\ITranslateService.cs" />
     <Compile Include="Services\TranslateService\YandexTranslateService.cs" />
@@ -290,7 +291,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\LanguageService\ILanguageService\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

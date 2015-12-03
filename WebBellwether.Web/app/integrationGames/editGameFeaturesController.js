@@ -86,6 +86,7 @@
             $scope.createGameFeatures = function(languageId) {
                 integrationGamesService.PostCreateGameFeatures(languageId).then(function(x) {
                     $scope.gameFeatures = x.data;
+                    $scope.getGameFeatureDetails(languageId);
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.GameFeaturesAdded,

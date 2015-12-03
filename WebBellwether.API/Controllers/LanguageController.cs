@@ -4,15 +4,17 @@ using WebBellwether.API.Services.LanguageService;
 using WebBellwether.API.Results;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Repositories;
+using WebBellwether.API.Services.LanguageService.Abstract;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Language")]
     public class LanguageController : ApiController
     {
-        private ManagementLanguageService _service;
+        private readonly IManagementLanguageService _service;
         public LanguageController()
         {
+            //this route is fs must change it ...
             _service = new ManagementLanguageService(new AggregateRepositories(), @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
         }
         

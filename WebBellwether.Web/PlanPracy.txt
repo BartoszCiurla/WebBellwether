@@ -1,7 +1,4 @@
-﻿obecny problem to : przy dodaniu kategori i checi klikniecia w detale kategori nic tam nie ma tak jak by nie zaczytal tych danych , do poprawy 
-
-ostatni punkt administracji to usuwanie języków wszystkich oprócz pol i ang bo to jezyki szablonowe ... przy takim usuwaniu ma wywalić wszystko co jest skojazone z jezykiem pliki gry kategorie gier kawaly i kategorie kawałow
-
+﻿kolejny etap to przebudowa list na te z bootstrap ui 
 
 powstala nowa idea , z racji ze nie mozna stosować flag musze w jakiś inny sposób podkreślić ze ta strona jest wielojęzykowa więc wpadłem na pomysł 
 zeby porozwalać dostępne języki po headerze w losowych miejscach na danym obszarze , zaznaczony niech ma jakaś powaloną animacje w sumei to bedzie genialne !
@@ -34,43 +31,6 @@ http://www.webdesignerdepot.com/2014/05/8-simple-css3-transitions-that-will-wow-
 http://www.minimamente.com/example/magic_animations/ tutaj tez grubo dowalili 
 
 
-
-**************************************************
-pytania do promotora :
-potrzebne mi logowanie do asp czy jest coś co może logować na backendzie i frontendzie ? ? 
-**************************************************
-
-jak na itadzie bedzie nudto to bede to robił : 
-**************************************************
-1)po usuwaniu języka trzeba go wypierdolić z list tych ktore istnieja w ui 
-2)napisz mechanizm który wyświetli puste translacja dla jezyka na detalach cech gier integracycjnych 
-3)language serwise w dalszym ciagu nei ma interfejsu mozna dorobić
-**************************************************
-
-
-
-co trzeba zrobić : 
-opis co to jest lang short name + ewentualnie trzeba bedzie utworzyc dodatkowa kolumne aby w niej trzymac wartosc dla mojego translatora ... 
-trzeba zrobić deleta + takie normalny msg zeby potwierdzic w nim wszystkie wazne informacje ... 
-udroznic wreszcie translacje bo ten temat stoi od miesiaca ... 
-
-
-
-obecnie : deathline -> czwartek 1:13
-zarzadzanie jezykami : UWAGA CALOSC BEDZIE ZARZADZANA PRZEZ LANGUAGE CONTROLLER 
--edycja nazwy jezyka (bo to nie ma tutaj wiekszego znaczenia liczy sie id)
--edycja flagi ;)) (tutaj bedzie potrzebna lista ze wszystkimi jakie mam a potem insert do bazy nowego wpisu)
--edycja poszczególnych wartości dla kluczy (nie kluczy)
--jako init jezyk aktualnie wybrany 
--gdy wybiore inny jezyk na podstronie niz ten glowny pokaza sie podpowiedzi pod dany klucz w jezyku glownym 
--edycja przez api (czyli edycja pliku json po kluczu)
--tak to powinno wygladac 
-
---key				--value 
---zapisz	   --podpowiedz   --translate by hmm (jakis serwis do translacji)
-******************************** -> to ma być rozwijane o ile dobrze pamietam nazlywalo się to hmm ... zobacz w pizzeri tam to mialem 	   
---value 
-********************************
 
 1)zrób filtr po kluczu  lub value 
 2)zrób edycje tutaj będzie problem bo bede edytował ten plik ...
