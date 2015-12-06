@@ -3,9 +3,12 @@
         .module('customFilters', [])
         .filter('startFrom', function () {
             return function (input, start) {
-                start = +start; //parse to int
-                return input.slice(start);
-            }
+                if (input) {
+                    start = +start;
+                    return input.slice(start);
+                }
+                return [];
+            };
         })
     .filter('filterByIdTakeWhenNotExists', function () {
         return function (input, value) {

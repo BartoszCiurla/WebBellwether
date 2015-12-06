@@ -1,34 +1,34 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('integrationGamesController', ['$scope','$timeout','integrationGamesService','sharedService', function ($scope, $timeout, integrationGamesService, sharedService) {
-            $scope.currentPage = 0;
-            $scope.pageSize = 12;
-            $scope.integrationGames = [];
+        .controller('integrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', 'startFromFilter', function ($scope, $timeout, integrationGamesService, sharedService, startFromFilter) {
+            //pagination
+            $scope.search = {};
+            $scope.resetFilters = function () {
+                $scope.search = {};
+            };
+            $scope.currentPage = 1;
+            $scope.entryLimit = 6; // items per page
+            $scope.noOfPages = 0;
+            $scope.maxSize = 5; //max size in pager 
+            $scope.updateSearch = function() {
+                $scope.filtered = startFromFilter($scope.integrationGames,  $scope.search.gameName );
+            };
             $scope.goToTop = function () {
                 window.scrollTo(0, 470);
             };
-            $scope.numberOfPages = function () {
-                return Math.ceil($scope.integrationGames.length / $scope.pageSize);
-            }
+            $scope.pageChanged = function () {
+              $scope.goToTop();  
+            };
+            //**************
+
             $scope.getIntegrationGames = function (lang) {
                 integrationGamesService.IntegrationGames(lang).then(function (results) {
                     $scope.integrationGames = [];
-                    $scope.integrationGames = results.data;
+                    $scope.integrationGames = results.data; 
                 });
             };
             $scope.getIntegrationGames($scope.selectedLanguage);
-
-
-         
-
-
-            var startTimer = function () {
-                var timer = $timeout(function () {
-                    $timeout.cancel(timer);
-                    $scope.resultStateNewGame = '';
-                }, 4000);
-            }
 
             //when language change 
             $scope.$on('languageChange', function () {

@@ -100,6 +100,7 @@
     <Content Include="appData\images\home\presentation5\89.jpg" />
     <Content Include="appData\images\home\presentation5\90.jpg" />
     <Content Include="appData\images\home\presentation5\92.jpg" />
+    <Content Include="appData\images\integrationGames\10.png" />
     <Content Include="appData\images\logo\BigBLogoDarkR.png" />
     <Content Include="appData\images\logo\BigBLogoLightR.png" />
     <Content Include="appData\videos\CloudFly.jpg" />
@@ -129,6 +130,7 @@
     <Content Include="app\authorizations\tokensManagerController.js" />
     <Content Include="app\languages\managementLanguages.html" />
     <Content Include="app\languages\managementLanguagesController.js" />
+    <Content Include="app\search\search.html" />
     <Content Include="app\translations\translateService.js" />
     <Content Include="app\translations\translationController.js" />
     <Content Include="app\filters\customFilters.js" />
@@ -171,6 +173,7 @@
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\ui-bootstrap-csp.css" />
+    <Content Include="cssGuide.txt" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GoodLink.txt" />
     <Content Include="index.html" />

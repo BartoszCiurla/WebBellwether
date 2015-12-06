@@ -60,10 +60,11 @@
                     <label style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
-                            <form class=" form-horizontal" role="form">
+                            <div ng-include src="'/app/search/search.html'"></div>
+                            <!--<form class=" form-horizontal" role="form">
                                 <div class="form-group">
                                     <div class="input-group" id="adv-search">
-                                        <input type="text" class="form-control" placeholder="Search for snippets" />
+                                        <input type="text" class="form-control" placeholder="Search for snippets"/>
                                         <div class="input-group-btn">
                                             <div class="btn-group" role="group">
                                             </div>
@@ -83,14 +84,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
+                                    <input class="form-control" type="text"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text" />
+                                    <input class="form-control" type="text"/>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </form> 
+                            </form>-->
                         </div>
                     </div>
                 </div>
@@ -104,8 +105,7 @@
                 <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
                     <label style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
-                        <div class="padding20">
-                            <!--FOR REBUILD--> 
+                        <div class="padding20">  
                             <div ng-include src="'/app/authorizations/authentication.html'"></div>
                         </div>
                     </div>

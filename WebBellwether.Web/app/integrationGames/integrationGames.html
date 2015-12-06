@@ -1,7 +1,28 @@
 ﻿<div class="container">
     <h1>{{translation.IntegrationGamesHeader}}</h1>
-    <div class="row">
-        <div ng-repeat="g in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
+    <div class="row" style="bottom: -100px;top:50px">
+        <!--<div>
+            <label>Search:</label> <input type="text" ng-model="search.gameName" ng-change="updateSearch()" placeholder="Search" />
+            <br />-->
+
+            <!--<label>Filter by Category:</label>
+            <ul>
+                <li><a href="" ng-click="search.category='engineering'">Engineering</a></li>
+                <li><a href="" ng-click="search.category='management'">Management</a></li>
+                <li><a href="" ng-click="search.category='business'">Business</a></li>
+            </ul>
+
+            <label>Filter by Branch:</label>
+            <ul>
+                <li><a href="" ng-click="search.branch='West'">West</a></li>
+                <li><a href="" ng-click="search.branch='East'">East</a></li>
+            </ul>
+
+            <p>
+                <strong><a href="" ng-click="resetFilters()">Show All</a></strong>
+            </p>-->
+        <!--</div>-->
+        <div ng-repeat="g in filtered = (integrationGames | filter:search | startFrom:(currentPage -1)*entryLimit | limitTo:entryLimit)">
             <div class="animatedParent col-md-6">
                 <h1 class="animated bounceIn">{{g.gameName}}</h1>
                 <p class="animated lightSpeedInLeft">{{g.gameDescription}}</p>
@@ -12,14 +33,9 @@
             </div>
         </div>
     </div>
-    <!--PAGER CONTROL-->    
-        <div class="text-center">
-            <nav>
-                <ul class="pager">
-                    <li ng-hide="currentPage==0" ng-click="currentPage=currentPage-1;goToTop()"><a href="">{{translation.Previous}}</a></li>
-                    <li ng-hide="numberOfPages() == 0">{{currentPage+1}}/{{numberOfPages()}}</li>
-                    <li ng-hide="currentPage >= integrationGames.length/pageSize - 1;" ng-click="currentPage=currentPage+1;goToTop()"><a href="">{{translation.Next}}</a></li>
-                </ul>
-            </nav>
-        </div>    
+    <!--PAGER CONTROL-->
+    <div class="row">
+        <uib-pagination ng-change="pageChanged()" style="display: inline-block; position: relative; bottom: -225px; z-index: 3;" direction-links="false" max-size="maxSize" ng-model="currentPage" total-items="(integrationGames |filter:search).length" items-per-page="entryLimit" num-pages="noOfPages" rotate="false"></uib-pagination>        
+            <uib-pager ng-change="pageChanged()" style="position: relative; bottom: -160px;z-index: 2" total-items="(integrationGames |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages" ></uib-pager>
+    </div>
 </div>

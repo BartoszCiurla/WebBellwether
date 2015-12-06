@@ -1,4 +1,10 @@
-﻿kolejny etap to przebudowa list na te z bootstrap ui 
+﻿http://www.designyourway.net/blog/inspiration/effective-website-designs-with-dark-color-schemes/ na tej stronie trzeba sie wzorować 
+
+kolejny etap to przebudowa list na te z bootstrap ui nowa paginacja + filtry które będa w pasku :
+filtrowanie po 
+kategoria 
+to co wpiszesz . I tutaj najwieszym probleme bedzie dostosowanie searcza do aktualnego modułu czyli w przypadku odpalenia jakiegoś modułu 
+musze gdzieś dać znać ze to właśnie on ma być widoczny ... 
 
 powstala nowa idea , z racji ze nie mozna stosować flag musze w jakiś inny sposób podkreślić ze ta strona jest wielojęzykowa więc wpadłem na pomysł 
 zeby porozwalać dostępne języki po headerze w losowych miejscach na danym obszarze , zaznaczony niech ma jakaś powaloną animacje w sumei to bedzie genialne !
@@ -32,8 +38,6 @@ http://www.minimamente.com/example/magic_animations/ tutaj tez grubo dowalili
 
 
 
-1)zrób filtr po kluczu  lub value 
-2)zrób edycje tutaj będzie problem bo bede edytował ten plik ...
 http://jsfiddle.net/3sVz8/19/ tu jest ciekawa opcja do slidera tylko czy ja mam czas zeby bawić się w takie pierdoły ??
 http://ng.malsup.com/#!/css-animations-for-ng-hide_ng-show
 jedno jest pewne prawdopodobnie nei da się tego zrobić bez javy http://blog.assaf.co/native-slide-toggle-for-angularjs-1-4-x/
