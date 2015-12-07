@@ -5,7 +5,7 @@
         <div ng-hide="selectedJoke != ''" class="formAni">
             <h2 style="text-align:left">{{translation.AddJoke}}</h2>
             <textarea class="form-control myFormColor" rows="16" required data-ng-model="newJoke.jokeContent" placeholder="{{translation.JokeContent}}"></textarea>
-            <label >{{translation.JokeCategory}}</label>
+            <label>{{translation.JokeCategory}}</label>
             <select class="form-control myFormColor" required data-ng-model="newJoke.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
                 <option value=''>{{translation.SelectCategoryForJoke}}</option>
             </select>
@@ -15,8 +15,8 @@
         </div>
         <!--EDIT JOKE-->
         <div ng-hide="selectedJoke == ''" class="formAni">
-            <h2 style="text-align:left">{{translation.EditJoke}}</h2>            
-            <textarea  class="form-control myFormColor" rows="16" required data-ng-model="selectedJoke.jokeContent" placeholder="{{translation.JokeContent}}"></textarea>
+            <h2 style="text-align:left">{{translation.EditJoke}}</h2>
+            <textarea class="form-control myFormColor" rows="16" required data-ng-model="selectedJoke.jokeContent" placeholder="{{translation.JokeContent}}"></textarea>
             <label>{{translation.JokeCategory}}</label>
             <select class="form-control myFormColor" required data-ng-model="selectedJoke.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
                 <option value=''>{{translation.SelectCategoryForJoke}}</option>
@@ -57,7 +57,7 @@
         <h2 style="text-align:left">{{translation.ListOfJokeIncludesAvailableTranslation}}</h2>
         <div ng-repeat="joke in jokes | startFrom:currentPage*pageSize | limitTo:pageSize">
             <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedJoke.id == joke.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectedJoke(joke)">
-                <label maxlength="10">{{joke.jokeContent}}</label>
+                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-left: 10px;margin-right: 10px">{{joke.jokeContent}}</p>
                 <div>
                     <div ng-repeat="al in joke.jokeTranslations" class="inline-block">
                         <div>

@@ -131,6 +131,7 @@
     <Content Include="app\languages\managementLanguages.html" />
     <Content Include="app\languages\managementLanguagesController.js" />
     <Content Include="app\search\search.html" />
+    <Content Include="app\search\searchController.js" />
     <Content Include="app\translations\translateService.js" />
     <Content Include="app\translations\translationController.js" />
     <Content Include="app\filters\customFilters.js" />

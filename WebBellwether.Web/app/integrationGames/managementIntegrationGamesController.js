@@ -25,8 +25,8 @@
                     $scope.getTranslationForGame();
                 }
             };
-   
-           
+
+
 
             $scope.getTranslationForGame = function () {
                 //check language on new translation 
@@ -47,9 +47,9 @@
 
             //reset selected game or translation true is reset 
             $scope.resetSelectedGameOrTranslation = function (game, translation) {
-                if (game == true)
+                if (game === true)
                     $scope.selectedGame = '';
-                if (translation == true)
+                if (translation === true)
                     $scope.selectedGameTranslation = '';
             }
 
@@ -80,24 +80,24 @@
                 $scope.selectedGame.integrationGameDetailModels.forEach(function (x) {
                     integrationGame.Features.push(x.gameFeatureDetailId);
                 });
-                integrationGamesService.AddNewIntegrationGame(integrationGame).then(function(results) {
-                        //mark translation
-                        $scope.setTranslation(true);
-                        $scope.getTranslationForGame();
+                integrationGamesService.AddNewIntegrationGame(integrationGame).then(function (results) {
+                    //mark translation
+                    $scope.setTranslation(true);
+                    $scope.getTranslationForGame();
 
-                        if (integrationGame.IntegrationGameId == null | integrationGame.IntegrationGameId == undefined ) {
-                            userNotification = $scope.translation.TranslationAdded;
-                        } else {
-                            userNotification = $scope.translation.TranslationEdited;
-                        }
-                        $.Notify({
-                            caption: $scope.translation.Success,
-                            content: userNotification,
-                            type: 'success'
-                        });
+                    if (integrationGame.IntegrationGameId == null | integrationGame.IntegrationGameId == undefined) {
+                        userNotification = $scope.translation.TranslationAdded;
+                    } else {
+                        userNotification = $scope.translation.TranslationEdited;
+                    }
+                    $.Notify({
+                        caption: $scope.translation.Success,
+                        content: userNotification,
+                        type: 'success'
+                    });
 
-                    },
-                    function(results) {
+                },
+                    function (results) {
                         if (integrationGame.IntegrationGameId == undefined | integrationGame.IntegrationGameId == null) {
                             userNotification = $scope.translation.TranslationNotAdded + ' ' + $scope.translation[results.data.message] + " " + $scope.translation.ForLanguage + $scope.languageForOtherTranslation.languageName + " : " + $scope.languageForOtherTranslation.languageShortName;
                         } else
@@ -115,7 +115,7 @@
 
             //new integration game
             $scope.newIntegrationGame = '';
-            $scope.addIntegrationGame = function (newIntegrationGame,selectedLanguage) {
+            $scope.addIntegrationGame = function (newIntegrationGame, selectedLanguage) {
                 var integrationGame = {
                     GameName: newIntegrationGame.gameName,
                     GameDetails: newIntegrationGame.gameDescription,
@@ -129,7 +129,7 @@
                 integrationGamesService.AddNewIntegrationGame(integrationGame).then(function (x) {
                     $scope.integrationGames.push(x.data);
                     $scope.newIntegrationGame = '';
-                    
+
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.GameAdded,
@@ -170,14 +170,14 @@
             // ********************
 
             //edit integration games
-            $scope.editGame = function (selectedGame) {                
+            $scope.editGame = function (selectedGame) {
                 integrationGamesService.PutIntegrationGame(selectedGame).then(function (x) {
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.GameEdited,
                         type: 'success'
                     });
-                }, function (x) {                    
+                }, function (x) {
                     userNotification = $scope.translation.GameNotEdited + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
@@ -216,7 +216,7 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.TranlastionRemoved,
-                        type: 'success',
+                        type: 'success'
                     });
                 },
                function (x) {
@@ -224,7 +224,7 @@
                    $.Notify({
                        caption: $scope.translation.Failure,
                        content: userNotification,
-                       type: 'alert',
+                       type: 'alert'
                    });
                });
 
@@ -241,16 +241,16 @@
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.GameRemoved,
-                        type: 'success',
+                        type: 'success'
                     });
-                    
+
                 },
                 function (x) {
                     userNotification = $scope.translation.GameNotRemoved + ' ' + $scope.translation[x.data.message];
                     $.Notify({
                         caption: $scope.translation.Failure,
                         content: userNotification,
-                        type: 'alert',
+                        type: 'alert'
                     });
                 });
             };
@@ -265,15 +265,9 @@
             };
             // ********************
 
-
-            function initContent(language) {
-                $scope.getIntegrationGamesWithLanguages(language);
-                $scope.getGameFeatuesModelWithDetails(language);
-            };
-
             //translate game 
             //selectedGame.language.id,languageForOtherTranslation.language.id,selectedGame.gameName,selectedGame.gameDescription
-            $scope.translateGame = function(currentLanguage, targetLanguage, gameName, gameDescription) {
+            $scope.translateGame = function (currentLanguage, targetLanguage, gameName, gameDescription) {
                 var translateLanguageModel = {
                     CurrentLanguageCode: currentLanguage.languageShortName,
                     TargetLanguageCode: targetLanguage.languageShortName,
@@ -282,10 +276,10 @@
                 var selectedGameTranslationIdIfExists = $scope.selectedGameTranslation.integrationGameId;
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     $scope.selectedGameTranslation = {
-                        gameName:x.data.text[0] ,
+                        gameName: x.data.text[0],
                         gameDescription: x.data.text[1],
                         integrationGameId: selectedGameTranslationIdIfExists,
-                        id : $scope.selectedGame.id
+                        id: $scope.selectedGame.id
                     };
 
                     $.Notify({
@@ -305,10 +299,16 @@
             };
 
             //base init
+            function initContent(language) {
+                if (language !== undefined) {
+                    $scope.getIntegrationGamesWithLanguages(language);
+                    $scope.getGameFeatuesModelWithDetails(language);
+                }
+            };
             initContent($scope.selectedLanguage);
             // ********************
 
-          
+
             //when language change 
             $scope.$on('languageChange', function () {
                 initContent(sharedService.sharedmessage);

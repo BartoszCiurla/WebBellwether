@@ -5,6 +5,12 @@
 
             var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
+            var getJokes = function(languageId) {
+                return $http.get(serviceBase + 'api/Jokes/GetJokes/?language=' + languageId).then(function (x) {
+                    return x;
+                });
+            };
+
             var postJoke = function (joke) {
                 return $http.post(serviceBase + 'api/Jokes/PostJoke', joke).then(function (x) {
                     return x;
@@ -75,6 +81,7 @@
             jokesServiceFactory.DeleteJoke = deleteJoke;
             jokesServiceFactory.PutJoke = putJoke;
             jokesServiceFactory.GetJokeTranslation = getJokeTranslation;
+            jokesServiceFactory.GetJokes = getJokes;
             return jokesServiceFactory;
 
         }]);

@@ -168,7 +168,14 @@
                 return templateLanguageShortName;
             };
 
-            //get on load , but i must change this value when i want add game in another language
-            $scope.getGameFeatureDetails($scope.selectedLanguage);   
+            //base init
+            function initContent(language) {
+                if (language !== undefined) {
+                    $scope.getGameFeatureDetails(language);
+                }
+            };
+            initContent($scope.selectedLanguage);
+            // ********************
+            
         }]);
 })();

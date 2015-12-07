@@ -60,7 +60,29 @@
                     <label style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
-                            <div ng-include src="'/app/search/search.html'"></div>
+                            <!--<div ng-include src="'/app/search/search.html'"></div>-->
+
+                            <!--TO BEDZIE GDZIE INDZIEJ-->
+                            <div data-ng-controller="searchController">
+                                <!--INTEGRATION GAMES-->
+                                <div>
+                                    <input type="text" class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" required data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
+                                    <div ng-repeat="feature in gameFeatures">
+                                        <label>{{feature.gameFeatureName}}</label>
+                                        <select class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" required data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                                            <option value=''>{{translation.PleaseSelectGame}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--JOKES-->
+                            </div>
+
+                            <!--TO BEDZIE GDZIE INDZIEJ-->
+
+
+
+
+
                             <!--<form class=" form-horizontal" role="form">
                                 <div class="form-group">
                                     <div class="input-group" id="adv-search">

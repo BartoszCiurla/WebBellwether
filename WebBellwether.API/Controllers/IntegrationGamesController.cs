@@ -89,7 +89,7 @@ namespace WebBellwether.API.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("GetIntegrationGameTranslation")]
-        public IHttpActionResult GetIntegrationGameTranslation(int id,int languageId)//here i have game main id and language id 
+        public IHttpActionResult GetIntegrationGameTranslation(int id,int languageId)
         {
            return Ok(_service.GetGameTranslation(id,languageId));
         }
@@ -119,5 +119,5 @@ namespace WebBellwether.API.Controllers
             }
                 return BadRequest();         
         }
-    }//153 linie kody były prawie 50 mniej ;) 
+    }
 }

@@ -3,13 +3,18 @@
     .module('webBellwether')
     .factory('sharedService', ['$rootScope', function ($rootScope) {
         var sharedService = {};
+        sharedService.sharedmessage = '';
 
         sharedService.languageChange = function (language) {
             this.sharedmessage = language;
             $rootScope.$broadcast('languageChange');
         }
 
-        sharedService.sharedmessage = '';
+        sharedService.applyIntegrationGamesFilters = function (integartiomGamesSearchParams) {
+            this.sharedmessage = integartiomGamesSearchParams;
+            $rootScope.$broadcast("integartiomGamesSearchParamsChange");
+        };
+
         sharedService.prepForPublish = function (msg) {
             this.sharedmessage = msg;
             this.publishItem();

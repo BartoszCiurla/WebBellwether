@@ -1,44 +1,25 @@
-﻿<div style="background-color: #ff2b3c;">
-    <h1>Jokes</h1>
-    <a href="#/home" class="navHeaderColor">Home</a>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+﻿<div class="container">
+    <h1>{{translation.Jokes}}</h1>
+    <div class="row" style="bottom: -100px; top: 50px">
+        <div ng-repeat="joke in filtered = (jokes | filter:search | startFrom:(currentPage -1)*entryLimit | limitTo:entryLimit)">
+            <div class="animatedParent col-md-12" style="margin-bottom: 60px" >
+                <!--<h1 class="animated bounceIn">{{g.gameName}}</h1>-->
+                <!--<h5 ></h5>-->
+                <!--<textarea class="animated lightSpeedInLeft" style="background: transparent; color: black"></textarea>-->
+                <h3 class="animated lightSpeedInLeft go">
+                    {{joke.jokeContent}}
+                </h3>
+                <!--<textarea rows="16">{{joke.jokeContent}}</textarea>-->
+                <!--<p></p>-->
+                <!--<div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
+                    <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!--PAGER CONTROL-->
+    <div class="row">
+        <uib-pagination ng-change="pageChanged()" style="display: inline-block; position: relative; bottom: -225px; z-index: 3;" direction-links="false" max-size="maxSize" ng-model="currentPage" total-items="(jokes |filter:search).length" items-per-page="entryLimit" num-pages="noOfPages" rotate="false"></uib-pagination>
+        <uib-pager ng-change="pageChanged()" style="position: relative; bottom: -160px;z-index: 2" total-items="(jokes |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages"></uib-pager>
+    </div>
 </div>

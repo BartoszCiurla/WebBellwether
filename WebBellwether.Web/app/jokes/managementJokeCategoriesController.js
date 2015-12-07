@@ -122,7 +122,7 @@
                         content: userNotification,
                         type: 'alert',
                     });
-                });                
+                });
             };
 
             // ********************
@@ -154,14 +154,14 @@
                 });
             };
             // ********************
-            
+
             //set mark in main joke category translations
-            $scope.setTranslation = function(translationStatus){
-                $scope.selectedJokeCategory.jokeCategoryTranslations.forEach(function(x){
-                    if(x.language.id === $scope.languageForOtherTranslation.id){
+            $scope.setTranslation = function (translationStatus) {
+                $scope.selectedJokeCategory.jokeCategoryTranslations.forEach(function (x) {
+                    if (x.language.id === $scope.languageForOtherTranslation.id) {
                         x.hasTranslation = translationStatus;
-                        if(!translationStatus)
-                            $scope.resetSelectedJokeCategoryOrTranslation(false,true);
+                        if (!translationStatus)
+                            $scope.resetSelectedJokeCategoryOrTranslation(false, true);
                     };
                 });
             };
@@ -177,7 +177,7 @@
                 jokesService.PostJokeCategory(jokeCategory).then(function (x) {
                     $scope.setTranslation(true);
                     $scope.getTranslationForJokeCategory();
-                    
+
                     if (jokeCategory.jokeCategoryId == null) {
                         userNotification = $scope.translation.TranslationAdded;
                     } else {
@@ -235,32 +235,24 @@
             }
             // ********************
 
-            function initContent(language) {
-                $scope.getJokeCategoriesWithAvailableLanguage(language);
-            };
-            //base init
-            initContent($scope.selectedLanguage);
-            // ********************
-
-
             //translate joke cateogory
             $scope.translateJokeCategory = function (selectedJokeCategory, targetJokeCategoryLanguage) {
                 var selectedJokeCategoryLanguageCode = '';
-                $scope.languages.forEach(function(x) {
+                $scope.languages.forEach(function (x) {
                     if (x.id === selectedJokeCategory.languageId)
                         selectedJokeCategoryLanguageCode = x.languageShortName;
                 });
                 var translateLanguageModel = {
                     CurrentLanguageCode: selectedJokeCategoryLanguageCode,
                     TargetLanguageCode: targetJokeCategoryLanguage.languageShortName,
-                    ContentForTranslation :[selectedJokeCategory.jokeCategoryName]
+                    ContentForTranslation: [selectedJokeCategory.jokeCategoryName]
                 }
                 var selectedJokeCategoryTranslationCategoryIdIfExists = $scope.selectedJokeCategoryTranslation.jokeCategoryId;
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     $scope.selectedJokeCategoryTranslation = {
-                        jokeCategoryId :selectedJokeCategoryTranslationCategoryIdIfExists,
+                        jokeCategoryId: selectedJokeCategoryTranslationCategoryIdIfExists,
                         jokeCategoryName: x.data.text[0]
-                };
+                    };
                     $.Notify({
                         caption: $scope.translation.Success,
                         content: $scope.translation.TranslationCompletedSuccessfully,
@@ -275,6 +267,16 @@
                     });
                 });
             };
+
+            //base init
+            function initContent(language) {
+                if (language !== undefined) {
+                    $scope.getJokeCategoriesWithAvailableLanguage(language);
+                }
+            };
+
+            initContent($scope.selectedLanguage);
+            // ********************
 
             //when language change 
             $scope.$on('languageChange', function () {

@@ -16,6 +16,11 @@ namespace WebBellwether.API.Controllers
             _service = new JokeService(new AggregateRepositories());
         }
 
+        [Route("GetJokes")]
+        public IHttpActionResult GetJokes(int language)
+        {
+            return Ok(_service.GetJokes(language));
+        }
         [Authorize]
         [Route("PostJoke")]
         public IHttpActionResult PostJoke(JokeModel jokeModel)
@@ -73,7 +78,7 @@ namespace WebBellwether.API.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("GetJokeCategoryTranslation")]
-        public IHttpActionResult GetJokeCategoryTranslation(int id, int languageId)//here i have jokecategory main id and language id 
+        public IHttpActionResult GetJokeCategoryTranslation(int id, int languageId)
         {
             return Ok(_service.GetJokeCategoryTranslation(id,languageId));
         }

@@ -7,9 +7,7 @@ using WebBellwether.API.Repositories.Abstract;
 
 namespace WebBellwether.API.Repositories
 {
-    //public class GenericRepository<TEntity> : IGenerilRepository<TEntity>  where TEntity : class
-    public class GenericRepository<TEntity> :IGenericRepository<TEntity> where TEntity : class// wersja ostatnia
-    //public class GenericRepository<T> : IGenericRepository
+    public class GenericRepository<TEntity> :IGenericRepository<TEntity> where TEntity : class
     {
         internal EfDbContext Context;
         internal DbSet<TEntity> DbSet;
