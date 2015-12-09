@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Models.IntegrationGame;
 using WebBellwether.API.Models.Translation;
@@ -9,7 +10,7 @@ using WebBellwether.API.Repositories.Abstract;
 
 namespace WebBellwether.API.Services.IntegrationGameService
 {
-    public class IntegrationGameService:IIntegrationGameService
+    public class IntegrationGameService : IIntegrationGameService
     {
         private readonly IAggregateRepositories _repository;
         private readonly IManagementFeaturesService _managementFeaturesService;
@@ -22,26 +23,39 @@ namespace WebBellwether.API.Services.IntegrationGameService
             _managementIntegrationGamesService = new ManagementIntegrationGamesService(repository);
         }
 
-        public List<IntegrationGameModel> GetIntegrationGames(int language)
+        public IEnumerable<DirectIntegrationGameModel> GetIntegrationGames(int language)
         {
-            var games = new List<IntegrationGameModel>();
+            var games = new List<DirectIntegrationGameModel>();
             var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
             {
-                games.Add(new IntegrationGameModel
+                var gameFeatureDetailsNames = GetGameFeatureDetailName(x.Id).ToArray();
+                games.Add(new DirectIntegrationGameModel()
                 {
                     Id = x.IntegrationGame.Id,
-                    Language = x.Language,
+                    IntegrationGameId = x.Id,
                     GameName = x.IntegrationGameName,
                     GameDescription = x.IntegrationGameDescription,
-                    IntegrationGameDetailModels = FillGameDetailModel(x.Id) //i take id from integrationgamedetails
+                    CategoryGame = gameFeatureDetailsNames[0],
+                    PaceOfPlay = gameFeatureDetailsNames[1],
+                    NumberOfPlayer = gameFeatureDetailsNames[2],
+                    PreparationFun = gameFeatureDetailsNames[3]
                 });
             });
             return games;
         }
-        public IntegrationGameModel GetGameTranslation(int gameId,int languageId)
+
+        private IEnumerable<string> GetGameFeatureDetailName(int integrationGameDetailId)
         {
-            return _managementIntegrationGamesService.GetGameTranslation(gameId,languageId);
+            return _repository.IntegrationGameFeatureRepository
+                .GetWithInclude(x => x.IntegrationGameDetail.Id == integrationGameDetailId)
+                .OrderBy(x => x.GameFeatureLanguage.GameFeature.Id)
+                .Select(x => x.GameFeatureDetailLanguage.GameFeatureDetailName);
+        }
+
+        public IntegrationGameModel GetGameTranslation(int gameId, int languageId)
+        {
+            return _managementIntegrationGamesService.GetGameTranslation(gameId, languageId);
         }
 
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
@@ -65,7 +79,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         public List<GameFeatureModel> GetGameFeatures(int language)
         {
             return _managementIntegrationGamesService.GetGameFeatures(language);
-            
+
         }
 
         public List<GameFeatureModel> GetGameFeatuesModelWithDetails(int language)
@@ -111,13 +125,13 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             return _managementFeaturesService.PutGameFeatureDetail(gameFeatureDetailModel);
         }
-                      
+
         public List<GameFeatureDetailModel> GetGameFeatureDetails(int language)
         {
             return _managementFeaturesService.GetGameFeatureDetails(language);
         }
-        
-       
+
+
         public List<AvailableLanguage> FillAvailableTranslation(int gameId, List<Language> allLanguages)
         {
             var translation = new List<AvailableLanguage>();

@@ -6,8 +6,11 @@
                 <h1 class="animated bounceIn">{{g.gameName}}</h1>
                 <p class="animated lightSpeedInLeft go">{{g.gameDescription}}</p>
                 <p></p>
-                <div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
-                    <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
+                <div class="animated fadeInRight slow go">
+                    <p>{{g.categoryGame}}</p>
+                    <p>{{g.paceOfPlay}}</p>
+                    <p>{{g.numberOfPlayer}}</p>
+                    <p>{{g.preparationFun}}</p>
                 </div>
             </div>
         </div>

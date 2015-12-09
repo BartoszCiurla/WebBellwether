@@ -227,6 +227,7 @@
       <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Entities\RefreshToken.cs" />

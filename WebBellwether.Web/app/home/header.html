@@ -66,6 +66,7 @@
                             <div data-ng-controller="searchController">
                                 <!--INTEGRATION GAMES-->
                                 <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
+                                    szukaj według słów kluczowych 
                                     <input type="text" class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
                                     <div ng-repeat="feature in gameFeatures">
                                         <label>{{feature.gameFeatureName}}</label>

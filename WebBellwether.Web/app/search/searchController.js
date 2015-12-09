@@ -10,8 +10,66 @@
                     $scope.gameFeatures = x.data;
                 });
             };
+
+            function validateIntegrationGameDetailModelsParam(integrationGamesSearchParams) {
+                if (integrationGamesSearchParams.integrationGameDetailModels === undefined)
+                    return false;
+                if (integrationGamesSearchParams.integrationGameDetailModels === null)
+                    return false;
+                return true;
+            };
+
+            function validateGameNameParam(integrationGamesSearchParams) {
+                if (integrationGamesSearchParams.gameName === undefined)
+                    return false;
+                if (integrationGamesSearchParams.gameName === null)
+                    return false;
+                return true;
+            }
+
+            function getDetailSearchParam(integrationGamesSearchParams,gameFeatureId) {
+                var applyParam = "";
+                if (integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId] === undefined)
+                    return applyParam;
+                if (integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId] === null)
+                    return applyParam;
+                return integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId].gameFeatureDetailName;
+            }
+
+            function validateIntegrationGamesFiltersParams(integrationGamesSearchParams) {
+                var searchParams = {}
+
+                var applyGameName = validateGameNameParam(integrationGamesSearchParams);
+                if (applyGameName)
+                    searchParams.gameName = integrationGamesSearchParams.gameName;
+
+                var applyIntegrationGameDetailsModel = validateIntegrationGameDetailModelsParam(integrationGamesSearchParams);
+                if (!applyIntegrationGameDetailsModel)
+                    return searchParams;
+
+                //              TAK WIEM MAM PEŁNĄ ŚWIADOMOŚĆ JAK BARDZO PONIŻSZY KOD JEST SPIERDOLONY 
+                //  ZOSTAWIAM GO W TAKIEJ FORMIE BO BRAKUJE MI CZASU ALE Z PEWNOŚCIĄ BEDZIE TO NAUCZKA NA PRZYSZŁOŚĆ 
+                //              WYDAJE MI SIĘ ŻE ANALIZUJĄC GO DOKŁADNIE MOŻNA ODNALEŚĆ PEWNE WADY ANGULARA ... 
+                //                                  LUB MÓJ POMYSŁ BYŁ ZJEBANY ...
+                //   Z DRUGIEJ STRONY MOGLEM ULEPSZYĆ FILTR ALE TO TRWAŁO BY TYLE SAMO I PEWNIE MOGLO BY NIE DZIALAĆ
+
+                var categoryGame = getDetailSearchParam(integrationGamesSearchParams, 0);
+                if (categoryGame !== "")
+                    searchParams.categoryGame = categoryGame;
+                var paceOfPlay = getDetailSearchParam(integrationGamesSearchParams, 1);
+                if (paceOfPlay !== "")
+                    searchParams.paceOfPlay = paceOfPlay;
+                var numberOfPlayer = getDetailSearchParam(integrationGamesSearchParams, 2);
+                if (numberOfPlayer !== "")
+                    searchParams.numberOfPlayer = numberOfPlayer;
+                var preparationFun = getDetailSearchParam(integrationGamesSearchParams, 3);
+                if (preparationFun !== "")
+                    searchParams.preparationFun = preparationFun;
+                return searchParams;
+            };
+
             $scope.applyIntegrationGamesFilter = function () {
-                sharedService.applyIntegrationGamesFilters($scope.integrationGamesSearchParams);
+                sharedService.applyIntegrationGamesFilters(validateIntegrationGamesFiltersParams($scope.integrationGamesSearchParams));
             };
             //******************
 

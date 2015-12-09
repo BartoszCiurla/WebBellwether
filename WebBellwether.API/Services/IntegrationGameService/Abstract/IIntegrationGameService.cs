@@ -8,7 +8,7 @@ namespace WebBellwether.API.Services.IntegrationGameService.Abstract
 {
     public interface IIntegrationGameService
     {
-        List<IntegrationGameModel> GetIntegrationGames(int language);
+        IEnumerable<DirectIntegrationGameModel> GetIntegrationGames(int language);
         List<IntegrationGameModel> GetIntegrationGamesWithAvailableLanguages(int language);
         ResultMessage PutGameFeature(GameFeatureModel gameFeatureModel);
         ResultMessage PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel);

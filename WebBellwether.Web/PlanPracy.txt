@@ -1,5 +1,7 @@
 ﻿http://www.designyourway.net/blog/inspiration/effective-website-designs-with-dark-color-schemes/ na tej stronie trzeba sie wzorować 
 
+prawdopodobnie na jutro musze zrobić zeby gototop dzialalo jako animacji a nie instant 
+
 kolejny etap to przebudowa list na te z bootstrap ui nowa paginacja + filtry które będa w pasku :
 filtrowanie po 
 kategoria 

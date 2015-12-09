@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebBellwether.API.Entities.Translations;
 
 namespace WebBellwether.API.Models.IntegrationGame
 {
