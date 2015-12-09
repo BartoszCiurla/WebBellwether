@@ -11,10 +11,13 @@
             $scope.entryLimit = 12;
             $scope.noOfPages = 0;
             $scope.maxSize = 5; //max size in pager 
-            $scope.updateSearch = function (jokesSearchParams) {                
-                $scope.search = integrationGamesSearchParams;
-                $scope.filtered = startFromFilter($scope.jokes, jokesSearchParams);
+
+
+            $scope.updateSearch = function (jokesSearchParams) {
+                $scope.search = jokesSearchParams;
+                $scope.filtered = startFromFilter($scope.jokes, $scope.search);
             };
+           
             $scope.goToTop = function () {
                 window.scrollTo(0, 470);
             };
@@ -39,6 +42,9 @@
             initContent($scope.selectedLanguage);
             // ********************
 
+            $scope.$on("jokesSearchParamsChange", function () {
+                $scope.updateSearch(sharedService.sharedmessage);
+            });
 
             $scope.$on('languageChange', function () {
                 $scope.getJokes(sharedService.sharedmessage);

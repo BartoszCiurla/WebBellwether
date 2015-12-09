@@ -65,16 +65,22 @@
                             <!--TO BEDZIE GDZIE INDZIEJ-->
                             <div data-ng-controller="searchController">
                                 <!--INTEGRATION GAMES-->
-                                <div>
-                                    <input type="text" class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" required data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
+                                <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
+                                    <input type="text" class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
                                     <div ng-repeat="feature in gameFeatures">
                                         <label>{{feature.gameFeatureName}}</label>
-                                        <select class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" required data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
-                                            <option value=''>{{translation.PleaseSelectGame}}</option>
+                                        <select class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                                            <option value="">{{translation.PleaseSelectGame}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--JOKES-->
+                                <div ng-show="filterDependingOnLocation == 'showJokesFilter'">
+                                    <input type="text" class="form-control myFormColor" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeContent"/>
+                                    <select class="form-control myFormColor" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
+                                        <option value="">{{translation.SelectCategoryForJoke}}</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <!--TO BEDZIE GDZIE INDZIEJ-->

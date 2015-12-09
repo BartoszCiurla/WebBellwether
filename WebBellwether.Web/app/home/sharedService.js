@@ -14,6 +14,10 @@
             this.sharedmessage = integartiomGamesSearchParams;
             $rootScope.$broadcast("integartiomGamesSearchParamsChange");
         };
+        sharedService.applyJokesFilter = function (jokesSearchParams) {
+            this.sharedmessage = jokesSearchParams;
+            $rootScope.$broadcast("jokesSearchParamsChange");
+        };
 
         sharedService.prepForPublish = function (msg) {
             this.sharedmessage = msg;

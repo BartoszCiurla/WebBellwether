@@ -23,7 +23,6 @@
                 </div>
             </div>
         </form>
-
         <!--EDIT INTEGRATION GAME-->
         <form name="saveGame" ng-hide="selectedGame == ''" class="formAni">
             <div>
@@ -97,6 +96,7 @@
                 </div>
             </div>
         </div>
+        
         <!--PAGER CONTROL-->
         <div class="text-center">
             <nav>
@@ -108,6 +108,7 @@
             </nav>
         </div>
     </div>
+ 
     <div data-role="dialog" id="deleteDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
         <h1>{{translation.DeleteTheGame}} :</h1>
         <h1>{{selectedGame.gameName}}</h1>

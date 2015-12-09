@@ -73,8 +73,7 @@
 (function () {
     angular
         .module('webBellwether')
-        .run(function ($rootScope, $location) {
-            
+        .run(function ($rootScope, $location) {            
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
                 $('footer').addClass("hide"); //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)             
 //aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 

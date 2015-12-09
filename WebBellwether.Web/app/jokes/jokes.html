@@ -3,17 +3,9 @@
     <div class="row" style="bottom: -100px; top: 50px">
         <div ng-repeat="joke in filtered = (jokes | filter:search | startFrom:(currentPage -1)*entryLimit | limitTo:entryLimit)">
             <div class="animatedParent col-md-12" style="margin-bottom: 60px" >
-                <!--<h1 class="animated bounceIn">{{g.gameName}}</h1>-->
-                <!--<h5 ></h5>-->
-                <!--<textarea class="animated lightSpeedInLeft" style="background: transparent; color: black"></textarea>-->
                 <h3 class="animated lightSpeedInLeft go">
                     {{joke.jokeContent}}
-                </h3>
-                <!--<textarea rows="16">{{joke.jokeContent}}</textarea>-->
-                <!--<p></p>-->
-                <!--<div class="animated fadeInRight slow go" ng-repeat="gf in g.integrationGameDetailModels">
-                    <p>{{gf.gameFeatureName}} : {{gf.gameFeatureDetailName}}</p>
-                </div>-->
+                </h3>           
             </div>
         </div>
     </div>
