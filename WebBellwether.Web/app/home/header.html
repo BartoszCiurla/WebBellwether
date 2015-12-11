@@ -1,16 +1,28 @@
 ﻿<header class="main-header">
     <h1>
         <a href="#/">
-            <!--<img class='rotator animation' src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />-->
-            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px" />
+            <!--<img class='rotator animation' src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px"/>-->
+            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px"/>
         </a>
     </h1>
-    <div class="imageContainer" style="background-image: url(/appData/images/header/23nR.png)">
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="imageContainer" style="background-image: url(/appData/images/header/23nR.png);z-index: 2">
         <div data-ng-hide="!authentication.isAuth" style="color: white; text-align: center; margin-top: 300px; font-weight: bold">
             {{translation.HaveFun}} {{authentication.userName}}
         </div>
     </div>
-    
+
     <div class="menu">
         <div class="container">
             <div class="app-bar myDarcula" data-role="appbar">
@@ -23,11 +35,11 @@
                     <li data-flexorderorigin="1" data-flexorder="2" class="">
                         <label style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</label>
                         <ul class="d-menu" data-role="dropdown">
-                            <li ng-repeat="language in languages">                                
+                            <li ng-repeat="language in languages">
                                 <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.id==selectedLanguage]"></span> {{language.languageName}}</a>
                             </li>
                         </ul>
-                    </li>                 
+                    </li>
                     <!--TOOLS-->
                     <li data-ng-hide="authentication.userName != 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
                         <label style="text-decoration: none;" href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</label>
@@ -58,69 +70,49 @@
                 <!--SEARCH-->
                 <div class="app-bar-element">
                     <label style="text-decoration: none; color: darkorange" href="" class="dropdown-toggle"><span class="mif-search mif-ani-pulse"></span>{{translation.Search}}</label>
-                    <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
+                    <div class="app-bar-drop-container place-left" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <!--<div ng-include src="'/app/search/search.html'"></div>-->
 
-                            <!--TO BEDZIE GDZIE INDZIEJ-->
-                            <div data-ng-controller="searchController">
+                            <div data-ng-controller="searchController" style="z-index: 2">
                                 <!--INTEGRATION GAMES-->
                                 <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
-                                    szukaj według słów kluczowych 
-                                    <input type="text" class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
+                                    <input type="text" class="form-control myFormColor" style="border: none !important" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
                                     <div ng-repeat="feature in gameFeatures">
-                                        <label>{{feature.gameFeatureName}}</label>
-                                        <select class="form-control myFormColor" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                                        <h3 style="clear: both; display: inline-block; white-space: nowrap;">{{feature.gameFeatureName}}</h3>
+                                        <select class="form-control myFormColor" style="border: none !important" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
                                             <option value="">{{translation.PleaseSelectGame}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--JOKES-->
                                 <div ng-show="filterDependingOnLocation == 'showJokesFilter'">
-                                    <input type="text" class="form-control myFormColor" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeContent"/>
-                                    <select class="form-control myFormColor" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
+                                    <h1 style="clear: both; display: inline-block; white-space: nowrap;">Kawały</h1>
+                                    <input type="text" class="form-control myFormColor" style="border: none !important" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeContent"/>
+                                    <select class="form-control myFormColor" style="border: none !important" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
                                         <option value="">{{translation.SelectCategoryForJoke}}</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <!--TO BEDZIE GDZIE INDZIEJ-->
-
-
-
-
-
-                            <!--<form class=" form-horizontal" role="form">
-                                <div class="form-group">
-                                    <div class="input-group" id="adv-search">
-                                        <input type="text" class="form-control" placeholder="Search for snippets"/>
-                                        <div class="input-group-btn">
-                                            <div class="btn-group" role="group">
-                                            </div>
-                                        </div>
+                                <div ng-show="filterDependingOnLocation == ''">
+                                    <div class="margin100">
+                                        Siema test 
                                     </div>
-                                    <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>Sie zobaczy</option>
-                                        <option value="1">Featured</option>
-                                        <option value="2">Most popular</option>
-                                        <option value="3">Top rated</option>
-                                        <option value="4">Most commented</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text"/>
-                                </div>
-                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </form>-->
+                            </div>
+                            <ul class="bg-bubbles">
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                                <li>gjkfgjsdlfg</li>
+                            </ul>
+
+
                         </div>
                     </div>
                 </div>
@@ -128,14 +120,26 @@
                 <div data-ng-hide="!authentication.isAuth" class="app-bar-element place-right">
                     <label style="text-decoration: none;color: chartreuse" data-ng-click="logOut()">
                         <span style="" class="mif-exit mif-ani-shuttle"></span>{{translation.LogOut}}
-                    </label>                
+                    </label>
                 </div>
 
                 <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
                     <label style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
-                        <div class="padding20">  
-                            <div ng-include src="'/app/authorizations/authentication.html'"></div>
+                        <div>
+                            <div class="padding20" ng-include src="'/app/authorizations/authentication.html'"></div>
+                            <ul class="bg-bubbles">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

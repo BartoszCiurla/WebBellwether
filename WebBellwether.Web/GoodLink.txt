@@ -196,3 +196,11 @@ http://lwiesel.github.io/jquery-fadethis/ również się powinno nadać
 
 https://docs.angularjs.org/tutorial/step_12 to wygląda dość ciekawie , koniecznie jeszcze dzisiaj na to spójż ... 
 
+
+
+http://codepen.io/CBeghin/pen/HeuiF
+
+http://placeholdem.jackrugile.com/
+
+
+http://jsfiddle.net/simurai/CGmCe/light/ fajne 

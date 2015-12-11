@@ -103,6 +103,7 @@
     <Content Include="appData\images\integrationGames\10.png" />
     <Content Include="appData\images\logo\BigBLogoDarkR.png" />
     <Content Include="appData\images\logo\BigBLogoLightR.png" />
+    <Content Include="appData\images\search\searchBackGround1.jpg" />
     <Content Include="appData\videos\CloudFly.jpg" />
     <Content Include="appData\videos\CloudFly.mp4" />
     <Content Include="app\animations\slide-toggle.js" />
@@ -261,6 +262,7 @@
     <Content Include="scripts\angular-loader.min.js.map" />
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
+    <Content Include="content\less\magic.less" />
     <None Include="scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="scripts\i18n\angular-locale_af-na.js" />
     <Content Include="scripts\i18n\angular-locale_af-za.js" />
@@ -533,6 +535,7 @@
     <Content Include="scripts\i18n\angular-locale_zu.js" />
     <Content Include="scripts\jquery-2.1.4.js" />
     <Content Include="scripts\jquery-2.1.4.min.js" />
+    <Content Include="scripts\less.min.js" />
     <Content Include="scripts\loading-bar.js" />
     <Content Include="scripts\loading-bar.min.js" />
     <Content Include="scripts\metro.js" />

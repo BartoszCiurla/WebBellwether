@@ -12,33 +12,63 @@
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="content/css/animation.css" rel="stylesheet" />
     <link href="content/css/animations.css" rel="stylesheet" />
+    <link rel="stylesheet/less" type="text/css" href="content/less/magic.less" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body data-ng-app="webBellwether" data-ng-controller="translationController">
-    <video autoplay loop poster="/appData/videos/CloudFly.jpg" id="bgvid">
+    <!--<video autoplay loop poster="/appData/videos/CloudFly.jpg" id="bgvid">
 
         <source src="/appData/videos/CloudFly.webm" type="video/webm">
 
         <source src="/appData/videos/CloudFly.mp4" type="video/mp4">
 
-    </video>
-    <div data-ng-controller="indexController" role="navigation">
+    </video>-->
+
+    <div data-ng-controller="indexController" role="navigation" style="z-index: 2">
 
         <!--Header-->
         <div ng-include src="'/app/home/header.html'"></div>
-
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
         <!--Content-->
-        <div class="container">
+        <div class="container" style="z-index: 2">
             <div id="myView" class="page page-rotateFall" ng-view fix-position-absolute></div>
         </div>
 
-        <!--Footer-->
-        <div>
-            <div ng-include src="'/app/home/footer.html'"></div>
-        </div>
-    </div>
 
+        <footer>
+            <ul class="bg-bubbles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <div class="imageContainerMyFooter" style="background-image: url(/appData/images/footer/113.png); z-index: 2"></div>
+        </footer>
+
+        <!--Footer-->
+        
+        <!--<div>
+            <div ng-include src="'/app/home/footer.html'"></div>
+        </div>-->
+    </div>
 
     <!-- Must be here -->
     <!--UWAGA DOKONALEM TUTAJ WYBORU NOWA WERSJA ANGULARA LUB LOSOWE ANIMACJE PRZY WCHODZENIU DO MODUŁÓW
@@ -55,6 +85,7 @@
     <script src="scripts/metro.min.js"></script>
     <script src="scripts/css3-animate-it.js"></script>
     <script src="scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/less.min.js"></script>
 
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
@@ -100,16 +131,17 @@
     <!-- Load custom animations -->
     <script src="app/animations/slide-toggle.js"></script>
 
-    <script type="text/javascript">
-        //scrollowany nav
-        var num = 480; //
-        $(window).bind('scroll', function () {
-            if ($(window).scrollTop() > num) {
-                $('.menu').addClass('fixed');
-            } else {
-                $('.menu').removeClass('fixed');
-            }
-        });
-    </script>
+<script type="text/javascript">
+    //scrollowany nav
+    var num = 480; //
+    $(window).bind('scroll', function() {
+        if ($(window).scrollTop() > num) {
+            $('.menu').addClass('fixed');
+        } else {
+            $('.menu').removeClass('fixed');
+        }
+    });
+</script>
+
 </body>
 </html>

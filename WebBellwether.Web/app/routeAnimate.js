@@ -75,7 +75,8 @@
         .module('webBellwether')
         .run(function ($rootScope, $location) {            
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                $('footer').addClass("hide"); //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)             
+                $('footer').addClass("test");
+                //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)             
 //aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 
                 //bede je dodawal tylko na potrzeby animacji i w czasie ich trwania gdy bede mail stan active ustawiam relative 
                 //mimo wszystko nie dziala to zbyt dobrze bo na 1 sekunde widac footer ... juz poprawione 
@@ -121,7 +122,7 @@
                         //w przyszlości mozna by się zastanowić nad porobieniem takich opoznien czasowych w zaleznosci od kontentu 
                         $rootScope.$on("$routeChangeSuccess", function () {
                             setTimeout(function () {
-                                $('footer').removeClass("hide");
+                                $('footer').removeClass("test");
                             },1500);
                         });
                     }
