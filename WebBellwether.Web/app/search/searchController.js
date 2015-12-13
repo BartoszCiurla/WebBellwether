@@ -4,7 +4,6 @@
         .controller('searchController', ['$scope', '$location', 'sharedService', 'jokesService', 'integrationGamesService', function ($scope, $location, sharedService, jokesService, integrationGamesService) {
             //integration games            
             $scope.integrationGamesSearchParams = {};
-            $scope.gameFeaturesTemplateName = ['test', 'test1', 'test', 'test'];
             $scope.gameFeatures = [];
             $scope.getGameFeatuesModelWithDetails = function (lang) {
                 integrationGamesService.GameFeatuesModelWithDetails(lang).then(function (x) {
@@ -72,6 +71,11 @@
             $scope.applyIntegrationGamesFilter = function () {
                 sharedService.applyIntegrationGamesFilters(validateIntegrationGamesFiltersParams($scope.integrationGamesSearchParams));
             };
+
+            $scope.resetIntegrationGamesFilter = function() {
+                $scope.integrationGamesSearchParams = {};
+                sharedService.applyIntegrationGamesFilters($scope.integrationGamesSearchParams);
+            };
             //******************
 
 
@@ -129,9 +133,15 @@
             $scope.applyJokesFilter = function () {
                 sharedService.applyJokesFilter(validateJokesFiltersParams($scope.jokesSearchParams));
             };
+            $scope.resetJokesFilter = function() {
+                $scope.jokesSearchParams = {};
+                sharedService.applyJokesFilter($scope.jokesSearchParams);
+            };
             //******************
 
-
+            $scope.changeLocation = function(url) {
+                $location.path(url);
+            };
 
             //base init
             function initContent(language) {

@@ -1,4 +1,4 @@
-﻿<div data-ng-controller="authSwitchController">
+﻿<div data-ng-controller="authSwitchController" class="margin20 zIndex2">
     <div ng-show="!registration" class="{{ asPageClass }} authAni">
         <form role="form" data-ng-controller="loginController">
             <h1>{{translation.Login}}</h1>
@@ -6,7 +6,7 @@
                 <input type="text" data-ng-model="loginData.userName">
                 <span class="label">{{translation.YourLogin}}</span>
                 <span class="informer">{{translation.EnterYourLogin}}</span>
-                <span class="placeholder">{{translation.YourLogin}}</span>
+                <span ng-hide="loginData.userName != ''" class="placeholder">{{translation.YourLogin}}</span>
                 <span class="icon mif-user"></span>
             </div>
 
@@ -84,5 +84,5 @@
                 <button class="btn btn-success" type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.NewHere}} {{translation.JoinUs}}</button>
             </div>
         </div>
-    </form>   
+    </form>
 </div>

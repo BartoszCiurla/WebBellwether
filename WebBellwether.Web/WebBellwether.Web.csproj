@@ -103,7 +103,7 @@
     <Content Include="appData\images\integrationGames\10.png" />
     <Content Include="appData\images\logo\BigBLogoDarkR.png" />
     <Content Include="appData\images\logo\BigBLogoLightR.png" />
-    <Content Include="appData\images\search\searchBackGround1.jpg" />
+    <Content Include="appData\images\search\searchBotton.png" />
     <Content Include="appData\videos\CloudFly.jpg" />
     <Content Include="appData\videos\CloudFly.mp4" />
     <Content Include="app\animations\slide-toggle.js" />

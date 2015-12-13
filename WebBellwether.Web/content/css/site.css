@@ -33,14 +33,18 @@ video {
     }
 }
 
+.hoverCrimson {
+    color: crimson !important;
+}
 
 .marginTop1000 {
-    margin-top: 1000px
+    margin-top: 1000px;
 }
 
 .zIndex2 {
     z-index: 2;
 }
+
 .main-header {
     text-align: center;
 }
@@ -406,9 +410,14 @@ video {
     }
 
     .app-bar.myDarcula .app-bar-drop-container {
-        border: solid black;
         background-color: white;
         color: black;
+        z-index: 4;
+        border-radius: 99px 6px 99px 6px;
+        -moz-border-radius: 99px 6px 99px 6px;
+        -webkit-border-radius: 99px 6px 99px 6px;
+        border: 2px outset #000000;
+        overflow: hidden !important;
     }
 
         .app-bar.myDarcula .app-bar-drop-container:before {
@@ -429,6 +438,3 @@ video {
                 background-color: #1d1d1d;
                 color: #ffffff;
             }
-
-
-

@@ -1,25 +1,7 @@
-﻿http://www.designyourway.net/blog/inspiration/effective-website-designs-with-dark-color-schemes/ na tej stronie trzeba sie wzorować 
-
-      <div data-ng-controller="searchController" style="background-color: black">
-                                <!--INTEGRATION GAMES-->
-                                <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
-                                    <input type="text" class="form-control myFormColor" style="border: none !important" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.GameName}}>
-                                    <div ng-repeat="feature in gameFeatures">
-                                        <h3 style="clear: both; display: inline-block; white-space: nowrap;">{{feature.gameFeatureName}}</h3>
-                                        <select class="form-control myFormColor" style="border: none !important" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
-                                            <option value="">{{translation.PleaseSelectGame}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--JOKES-->
-                                <div ng-show="filterDependingOnLocation == 'showJokesFilter'">
-                                    <input type="text" class="form-control myFormColor" style="border: none !important" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeContent"/>
-                                    <select class="form-control myFormColor" style="border: none !important" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
-                                        <option value="">{{translation.SelectCategoryForJoke}}</option>
-                                    </select>
-                                </div>                          
-
-                        </div>
+﻿problemy które kiedyś można rozwiązać oczywiście jak będzie mi się chcialo : 
+-w dalszym ciągu brakuje czegoś takiego jak role w systemie (jak je dodam to wypadało by zrobić zarządzanie ...)
+-listy gier/kawałów gdy jest tylko jedna srona to nei powinien pokazywać pagera
+-przebudowa list w edycjach na nowa paginacje (nie jest to koneicne)
 
 
 
