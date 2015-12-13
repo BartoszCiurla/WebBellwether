@@ -4,6 +4,7 @@
         .controller('searchController', ['$scope', '$location', 'sharedService', 'jokesService', 'integrationGamesService', function ($scope, $location, sharedService, jokesService, integrationGamesService) {
             //integration games            
             $scope.integrationGamesSearchParams = {};
+            $scope.gameFeaturesTemplateName = ['test', 'test1', 'test', 'test'];
             $scope.gameFeatures = [];
             $scope.getGameFeatuesModelWithDetails = function (lang) {
                 integrationGamesService.GameFeatuesModelWithDetails(lang).then(function (x) {

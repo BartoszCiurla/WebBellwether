@@ -34,11 +34,13 @@ video {
 }
 
 
-.test {
+.marginTop1000 {
     margin-top: 1000px
 }
 
-
+.zIndex2 {
+    z-index: 2;
+}
 .main-header {
     text-align: center;
 }
@@ -404,7 +406,7 @@ video {
     }
 
     .app-bar.myDarcula .app-bar-drop-container {
-        border: 2px solid black;
+        border: solid black;
         background-color: white;
         color: black;
     }

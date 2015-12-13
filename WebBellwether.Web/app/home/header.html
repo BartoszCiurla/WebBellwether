@@ -1,24 +1,10 @@
-﻿<header class="main-header">
-    <h1>
-        <a href="#/">
-            <!--<img class='rotator animation' src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px"/>-->
-            <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px"/>
-        </a>
-    </h1>
-    <ul class="bg-bubbles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-    <div class="imageContainer" style="background-image: url(/appData/images/header/23nR.png);z-index: 2">
-        <div data-ng-hide="!authentication.isAuth" style="color: white; text-align: center; margin-top: 300px; font-weight: bold">
+﻿<header class="main-header zIndex2">    
+    <div class="margin10 zIndex2">
+        <img src="/appData/images/logo/BigBLogoLightR.png" style="width: 150px; height: 150px; margin-bottom: -20px; margin-top: -10px;" />
+    </div>
+
+    <div class="imageContainer zIndex2" style="background-image: url(/appData/images/header/23nR.png);">
+        <div data-ng-hide="!authentication.isAuth" style="color: white;text-align: center; margin-top: 300px; font-weight: bold">
             {{translation.HaveFun}} {{authentication.userName}}
         </div>
     </div>
@@ -73,7 +59,6 @@
                     <div class="app-bar-drop-container place-left" data-role="dropdown" data-no-close="true">
                         <div class="padding20">
                             <!--<div ng-include src="'/app/search/search.html'"></div>-->
-
                             <div data-ng-controller="searchController" style="z-index: 2">
                                 <!--INTEGRATION GAMES-->
                                 <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
@@ -81,7 +66,8 @@
                                     <div ng-repeat="feature in gameFeatures">
                                         <h3 style="clear: both; display: inline-block; white-space: nowrap;">{{feature.gameFeatureName}}</h3>
                                         <select class="form-control myFormColor" style="border: none !important" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
-                                            <option value="">{{translation.PleaseSelectGame}}</option>
+                                            <!--<option value="">{{translation.PleaseSelectGame}}</option>-->
+                                            <option value="">{{translation[gameFeaturesTemplateName[$index]]}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -95,25 +81,24 @@
                                 </div>
                                 <div ng-show="filterDependingOnLocation == ''">
                                     <div class="margin100">
-                                        Siema test 
+                                        Siema test
                                     </div>
                                 </div>
                             </div>
-                            <ul class="bg-bubbles">
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                                <li>gjkfgjsdlfg</li>
-                            </ul>
-
-
                         </div>
+                        <ul class="bg-bubblesFooter" style="margin: 1px">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+
                     </div>
                 </div>
                 <!--AUTHENTICATION-->
@@ -126,21 +111,19 @@
                 <div data-ng-hide="authentication.isAuth" class="app-bar-element place-right">
                     <label style="text-decoration: none;color: chartreuse" class="dropdown-toggle"><span class="mif-enter mif-ani-shuttle"></span>{{translation.Login}}</label>
                     <div class="app-bar-drop-container place-right" data-role="dropdown" data-no-close="true">
-                        <div>
-                            <div class="padding20" ng-include src="'/app/authorizations/authentication.html'"></div>
-                            <ul class="bg-bubbles">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
+                        <div class="margin20 zIndex2" ng-include src="'/app/authorizations/authentication.html'"></div>
+                        <ul class="bg-bubblesFooter" style="margin: 1px">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
                     </div>
                 </div>
 
@@ -149,3 +132,20 @@
         </div>
     </div>
 </header>
+<ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>

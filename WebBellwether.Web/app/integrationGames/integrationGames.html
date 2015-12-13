@@ -17,7 +17,7 @@
     </div>
     <!--PAGER CONTROL-->
     <div class="row">
-        <uib-pagination ng-change="pageChanged()" style="display: inline-block; position: relative; bottom: -225px; z-index: 3;" direction-links="false" max-size="maxSize" ng-model="currentPage" total-items="(integrationGames |filter:search).length" items-per-page="entryLimit" num-pages="noOfPages" rotate="false"></uib-pagination>        
-            <uib-pager ng-change="pageChanged()" style="position: relative; bottom: -160px;z-index: 2" total-items="(integrationGames |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages" ></uib-pager>
+        <uib-pagination ng-change="pageChanged()" style="display: inline-block; position: relative; top: 71px;z-index: 3" direction-links="false" max-size="maxSize" ng-model="currentPage" total-items="(integrationGames |filter:search).length" items-per-page="entryLimit" num-pages="noOfPages" rotate="false"></uib-pagination>        
+            <uib-pager ng-change="pageChanged()" style="position: relative;" total-items="(integrationGames |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages" ></uib-pager>
     </div>
 </div>

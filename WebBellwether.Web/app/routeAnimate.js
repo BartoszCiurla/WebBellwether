@@ -68,18 +68,12 @@
     
 })();
 
-//kurde z tego poziomu to nei zadziała 12 godzin poszlo ... musze serwis napisac do tego i wstrzykiwać do kazdego kontrollera ...
-//jednak sprawa lezala po stronie angulara tylko wersja 1.2.13 pozwala na taka opcję , wiec migracja , serwis usuniety
 (function () {
     angular
         .module('webBellwether')
         .run(function ($rootScope, $location) {            
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                $('footer').addClass("test");
-                //z racji ze nie wiem jak to ogarnac poprostu ukryje footer na czas animacji ;)             
-//aby działał footer musze poprawić animacje od teraz page nie bedzie posiadalo position absolute 
-                //bede je dodawal tylko na potrzeby animacji i w czasie ich trwania gdy bede mail stan active ustawiam relative 
-                //mimo wszystko nie dziala to zbyt dobrze bo na 1 sekunde widac footer ... juz poprawione 
+                $('footer').addClass("marginTop1000");
             });
 
             function getRandomAnimation() {
@@ -118,11 +112,9 @@
                 return {
                     restrict: "A",
                     link: function ($rootScope) {
-                        //najprostrze rozwiązania bywają najlepszymi 
-                        //w przyszlości mozna by się zastanowić nad porobieniem takich opoznien czasowych w zaleznosci od kontentu 
                         $rootScope.$on("$routeChangeSuccess", function () {
                             setTimeout(function () {
-                                $('footer').removeClass("test");
+                                $('footer').removeClass("marginTop1000");
                             },1500);
                         });
                     }

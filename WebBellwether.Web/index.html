@@ -12,7 +12,7 @@
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="content/css/animation.css" rel="stylesheet" />
     <link href="content/css/animations.css" rel="stylesheet" />
-    <link rel="stylesheet/less" type="text/css" href="content/less/magic.less" />
+    <link rel="stylesheet/less" type="text/css" href="content/less/backgroundAnimation.less" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
@@ -25,30 +25,21 @@
 
     </video>-->
 
-    <div data-ng-controller="indexController" role="navigation" style="z-index: 2">
-
+    <div data-ng-controller="indexController" role="navigation">
         <!--Header-->
         <div ng-include src="'/app/home/header.html'"></div>
-        <ul class="bg-bubbles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
+
         <!--Content-->
-        <div class="container" style="z-index: 2">
+        <div class="container zIndex2">
             <div id="myView" class="page page-rotateFall" ng-view fix-position-absolute></div>
         </div>
-
-
         <footer>
-            <ul class="bg-bubbles">
+            <ul class="bg-bubblesFooter">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
                 <li></li>
                 <li></li>
                 <li></li>
@@ -62,12 +53,6 @@
             </ul>
             <div class="imageContainerMyFooter" style="background-image: url(/appData/images/footer/113.png); z-index: 2"></div>
         </footer>
-
-        <!--Footer-->
-        
-        <!--<div>
-            <div ng-include src="'/app/home/footer.html'"></div>
-        </div>-->
     </div>
 
     <!-- Must be here -->

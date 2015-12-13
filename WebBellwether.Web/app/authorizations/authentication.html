@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="authSwitchController">
-    <div ng-show="!registration" class="{{ asPageClass }} authAni" style="z-index: 2">
+    <div ng-show="!registration" class="{{ asPageClass }} authAni">
         <form role="form" data-ng-controller="loginController">
             <h1>{{translation.Login}}</h1>
             <div class="input-control modern text iconic" data-role="imput">
@@ -37,7 +37,7 @@
         </form>
     </div>
 
-    <div ng-show="registration" class="{{ asPageClass }} authAni" style="z-index: 2">
+    <div ng-show="registration" class="{{ asPageClass }} authAni">
         <form role="form" data-ng-controller="signupController">
             <h1 class="form-login-heading">{{translation.Register}}</h1>
 
@@ -73,7 +73,7 @@
         </form>
 
     </div>
-    <form style="z-index: 2">
+    <form>
         <div ng-hide="!registration">
             <div class="inline-block">
                 <button class="btn btn-success" type="button" data-ng-click="joinUs()"><span class="mif-spinner4 mif-ani-spin"></span> {{translation.HaveAccount}} {{translation.SignIn}}</button>
