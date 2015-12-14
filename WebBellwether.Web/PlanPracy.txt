@@ -1,7 +1,7 @@
 ﻿problemy które kiedyś można rozwiązać oczywiście jak będzie mi się chcialo : 
 -w dalszym ciągu brakuje czegoś takiego jak role w systemie (jak je dodam to wypadało by zrobić zarządzanie ...)
--listy gier/kawałów gdy jest tylko jedna srona to nei powinien pokazywać pagera
--przebudowa list w edycjach na nowa paginacje (nie jest to koneicne)
+https://www.google.pl/?gws_rd=ssl#q=angularjs+owin+auth+with+roles
+-przebudowa list w edycjach na nowa paginacje (nie jest to koneicne , do zrobienai jak bede miał czas bo moze to troche potrwać ... w sumie to by tez trezba colapsa naprawic na edycji jezykow)
 
 
 

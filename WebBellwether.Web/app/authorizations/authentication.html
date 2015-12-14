@@ -24,11 +24,11 @@
                 </div>
             </div>
 
-            <h4>{{translation.SocialLogins}}</h4>
+            <!--<h4>{{translation.SocialLogins}}</h4>
             <div class="inline-block">
                 <button class="btn btn-facebook" type="button" data-ng-click="authExternalProvider('Facebook')"><span class="mif-facebook mif-ani-heartbeat"></span>Facebook</button>
                 <button class="btn btn-google-plus" type="button" data-ng-click="authExternalProvider('Google')"><span class="mif-google-plus mif-ani-shuttle"></span>Google+</button>
-            </div>
+            </div>-->
             <!--<div class="checkbox">
                 <label>
                     <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong>{{translation.URT}}</strong>
@@ -45,7 +45,7 @@
                 <input type="text" data-ng-model="registration.userName" required>
                 <span class="label">{{translation.YourLogin}}</span>
                 <span class="informer">{{translation.EnterYourLogin}}</span>
-                <span class="placeholder">{{translation.YourLogin}}</span>
+                <span ng-hide="registration.userName != null" class="placeholder">{{translation.YourLogin}}</span>
                 <span class="icon mif-user "></span>
             </div>
 
