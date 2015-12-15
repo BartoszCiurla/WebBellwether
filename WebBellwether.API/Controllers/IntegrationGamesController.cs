@@ -30,7 +30,7 @@ namespace WebBellwether.API.Controllers
             return Ok(_service.GetGameFeatuesModelWithDetails(language));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostIntegrationGame")]
         public IHttpActionResult PostIntegrationGame(NewIntegrationGameModel gameModel)
         {
@@ -40,7 +40,8 @@ namespace WebBellwether.API.Controllers
             ResultStateContainer result = _service.InsertIntegrationGame(gameModel);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());        
         }
-        [Authorize]
+ 
+        [Authorize(Roles = "Admin")]
         [Route("PostEditIntegrationGame")]
         public IHttpActionResult PostEditIntegrationGame(IntegrationGameModel integrationGame)
         {
@@ -50,7 +51,7 @@ namespace WebBellwether.API.Controllers
             return result.ResultState == ResultState.Success ? Ok() : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());            
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostDeleteIntegrationGame")]
         public IHttpActionResult PostDeleteIntegrationGame(IntegrationGameModel integrationGame)
         {
@@ -58,7 +59,7 @@ namespace WebBellwether.API.Controllers
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostGameFeature")]
         public IHttpActionResult PostGameFeature(GameFeatureModel gameFeatureModel)
         {
@@ -69,7 +70,7 @@ namespace WebBellwether.API.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostGameFeatureDetail")]
         public IHttpActionResult PostGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
         {
@@ -94,7 +95,7 @@ namespace WebBellwether.API.Controllers
            return Ok(_service.GetGameTranslation(id,languageId));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("GetIntegrationGamesWithAvailableLanguage")]
         public IHttpActionResult GetIntegrationGamesWithAvailableLanguage(int language)
         {
@@ -108,7 +109,7 @@ namespace WebBellwether.API.Controllers
             return Ok(_service.GetGameFeatures(language));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostCreateGameFeatures")]
         public IHttpActionResult PostCreateGameFeatures(int language)
         {

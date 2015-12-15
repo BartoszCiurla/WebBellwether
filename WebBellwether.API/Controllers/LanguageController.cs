@@ -24,34 +24,34 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetLanguages());
         }  
-        [Authorize]
+        
         [Route("GetAllLanguages")]
         public IHttpActionResult GetAllLanguages()
         {
             return Ok(_service.GetLanguages(true));
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostEditLanguageKey")]
         public IHttpActionResult PostEditLanguageKey(LanguageKeyModel languageKey)
         {
             ResultStateContainer result = _service.PutLanguageKey(languageKey);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());         
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostEditLanguage")]
         public IHttpActionResult PostEditLangauge(Language language)
         {
             ResultStateContainer result = _service.PutLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostPublishLanguage")]
         public IHttpActionResult PostPublishLanguage(Language language)
         {
             ResultStateContainer result = _service.PublishLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultMessage.ToString()) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostLanguage")]
         public IHttpActionResult PostLanguage(Language language)
         {
@@ -59,7 +59,7 @@ namespace WebBellwether.API.Controllers
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostDeleteLanguage")]
         public IHttpActionResult PostDeleteLanguage(Language language)
         {

@@ -27,7 +27,7 @@
                         </ul>
                     </li>
                     <!--TOOLS-->
-                    <li data-ng-hide="authentication.userName != 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
+                    <li data-ng-show="authentication.roles == 'Admin'" data-flexorderorigin="3" data-flexorder="4" class="">
                         <label style="text-decoration: none;" href="" class="dropdown-toggle"><span class="mif-wrench mif-ani-spanner"></span>{{translation.Tools}}</label>
                         <ul class="d-menu" data-role="dropdown" style="display: none;">
                             <li>

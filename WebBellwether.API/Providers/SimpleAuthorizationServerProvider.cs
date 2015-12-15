@@ -104,15 +104,18 @@ namespace WebBellwether.API.Providers
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            //to jest tymczasowe rozwiązanie , czyli pewnie juz tak zostanie 
+            identity.AddClaim(context.UserName == "Admin"
+                ? new Claim(ClaimTypes.Role, "Admin")
+                : new Claim(ClaimTypes.Role, "User"));
             identity.AddClaim(new Claim("sub", context.UserName));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {
-                    { 
+                    {
                         "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
                     },
-                    { 
+                    {
                         "userName", context.UserName
                     }
                 });
@@ -155,11 +158,13 @@ namespace WebBellwether.API.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-
+            //to jest tymczasowe rozwiązanie , czyli pewnie juz tak zostanie 
+            context.AdditionalResponseParameters.Add("roles",
+                context.Identity.Name == "Admin" ? "Admin" : "User");
             return Task.FromResult<object>(null);
         }
 
     }
 
-       
+
 }

@@ -22,21 +22,21 @@ namespace WebBellwether.API.Controllers
             _languageService = new ManagementLanguageService(new AggregateRepositories(), @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("GetSupportedLanguages")]
         public IHttpActionResult GetSupportedLanguages()
         {
             return Ok(_service.GetListOfSupportedLanguages());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("GetTranslateServiceName")]
         public IHttpActionResult GetTranslateServiceName()
         {
             return Ok(_service.GetServiceName());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostLanguageTranslation")]
         public async Task<IHttpActionResult> PostLanguageTranslation(TranslateLanguageModel languageModel)
         {
@@ -45,7 +45,7 @@ namespace WebBellwether.API.Controllers
                 ? Ok(resultStateContainer.ResultValue)
                 : (IHttpActionResult)BadRequest(resultStateContainer.ResultValue.ToString());
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostTranslateAllLanguageKeys")]
         public async Task<IHttpActionResult> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {

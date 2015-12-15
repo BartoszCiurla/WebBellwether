@@ -9,8 +9,9 @@
             var _authentication = {
                 isAuth: false,
                 userName: "",
-                useRefreshTokens: false
-            };
+                useRefreshTokens: false,
+                roles: {}
+        };
 
             var _externalAuthData = {
                 provider: "",
@@ -44,11 +45,12 @@
                         localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
                     }
                     else {
-                        localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: "", useRefreshTokens: false });
+                        localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: "", useRefreshTokens: false,roles:response.roles });
                     }
                     _authentication.isAuth = true;
                     _authentication.userName = loginData.userName;
                     _authentication.useRefreshTokens = loginData.useRefreshTokens;
+                    _authentication.roles = response.roles;
 
                     deferred.resolve(response);
 
@@ -68,6 +70,7 @@
                 _authentication.isAuth = false;
                 _authentication.userName = "";
                 _authentication.useRefreshTokens = false;
+                _authentication.roles = {};
 
             };
 
@@ -78,6 +81,7 @@
                     _authentication.isAuth = true;
                     _authentication.userName = authData.userName;
                     _authentication.useRefreshTokens = authData.useRefreshTokens;
+                    _authentication.roles = authData.roles;
                 }
 
             };

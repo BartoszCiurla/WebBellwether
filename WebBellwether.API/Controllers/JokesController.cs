@@ -21,21 +21,21 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetJokes(language));
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostJoke")]
         public IHttpActionResult PostJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.InsertJoke(jokeModel);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString() + (result.ResultValue == null ? "" : "," + result.ResultValue));                      
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostDeleteJoke")]
         public IHttpActionResult PostDeleteJoke(JokeModel jokeModel)
         {
             ResultStateContainer result = _service.DeleteJoke(jokeModel);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostEditJoke")]
         public IHttpActionResult PostEditJoke(JokeModel jokeModel)
         {
@@ -49,7 +49,7 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetJokeTranslation(id,languageId));
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostJokeCategory")]
         public IHttpActionResult PostJokeCategory(JokeCategoryModel categoryModel)
         {
@@ -57,13 +57,13 @@ namespace WebBellwether.API.Controllers
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("GetJokeCategoriesWithAvailableLanguage")]
         public IHttpActionResult GetJokeCategoriesWithAvailableLanguage(int language)
         {
             return Ok(_service.GetJokeCategoriesWithAvailableLanguage(language));
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("GetJokesWithAvailableLanguages")]
         public IHttpActionResult GetJokesWithAvailableLanguages(int language)
         {
@@ -82,7 +82,7 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetJokeCategoryTranslation(id,languageId));
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostEditJokeCategory")]
 
         public IHttpActionResult PostEditJokeCategory(JokeCategoryModel jokeCategory)
@@ -90,7 +90,7 @@ namespace WebBellwether.API.Controllers
             ResultStateContainer result = _service.PutJokeCategory(jokeCategory);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("PostDeleteJokeCategory")]
         public IHttpActionResult PostDeleteJokeCategory(JokeCategoryModel jokeCategory)
         {
