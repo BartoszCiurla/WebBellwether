@@ -95,7 +95,7 @@ namespace WebBellwether.API.Repositories
             {
                 if (disposing)
                 {
-                    Debug.WriteLine("UnitOfWork is being disposed");
+                    Debug.WriteLine("AggregateRepositories is being disposed");
                     _context.Dispose();
                 }
             }

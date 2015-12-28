@@ -129,6 +129,16 @@ namespace WebBellwether.API.Services.LanguageService
             return result.AsEnumerable();
         }
 
+        public Dictionary<string, string> GetLanguageFile(int languageId)
+        {
+            Language language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            if (language == null)
+                return null;
+            string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
+            string templateJson = File.ReadAllText(languageFileLocation);
+            return  JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
+        } 
+
         public ResultStateContainer CreateLanguageFile(int newLanguageId)
         {
             try
@@ -230,6 +240,7 @@ namespace WebBellwether.API.Services.LanguageService
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.LanguageName = language.LanguageName;
                 entity.LanguageShortName = language.LanguageShortName;
+                entity.LanguageVersion = language.LanguageVersion;
                 _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageEdited };
             }

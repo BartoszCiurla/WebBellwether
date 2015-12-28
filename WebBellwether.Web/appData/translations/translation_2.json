@@ -148,6 +148,8 @@
   "LanguageCanNotBeRemoved": "Język nie może został usunięty bo jest na liście językow nieusuwalnych",
   "LanguageRemoved": "Język został usunięty",
   "LanguageNotRemoved": "Język nie został usunięty",
+  "LanguageVersion": "Wersja języka",
+  "LanguageVersionDescription": "Wersja języka jest wyznacznikiem dla aplikacji mobilnej w przypadku jakichkolwiek modyfikacji wartośc tą należy zwiększyć o np  0.5. Gdy nie zostanie ona podniesiona Bellwether nie pobierze nowej wersji translacji .",
   "Change": "Zmiana",
   "YourLogin": "Twój login",
   "EnterYourLogin": "Proszę wprowadz swój login",

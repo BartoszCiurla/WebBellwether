@@ -40,12 +40,20 @@
                         <label>{{translation.LanguageName}}</label>
                         <input class="form-control myFormColor" required ng-model="languageForEdit.languageName" type="text">
                     </div>
+                    <div class="form-group">
+                        <label>{{translation.LanguageVersion}}</label>
+                        <input class="form-control myFormColor" required ng-model="languageForEdit.languageVersion" type="text">
+                        <div class="margin10" style="text-align: left; font-weight: bold">
+                            <span style="color: crimson">{{translation.Warning}}</span>
+                          {{translation.LanguageVersionDescription}}
+                        </div>
+                    </div>
 
                     <!--SAVE LANGUAGE-->
                     <div class="form-group text-center">
                         <button ng-disabled="basicLanguageInformationEdit.$invalid" ng-click="editLanguage(languageForEdit)" class="btn btn-primary btn-success"><span class="mif-plus"> {{translation.Save}}</span></button>
                         <!--DELETE LANGUAGE-->
-                        <button ng-click="deleteDialog()" class="btn btn-primary btn-danger"><span class="mif-minus"> [BETA] {{translation.Delete}}</span></button>
+                        <button ng-click="deleteDialog()" class="btn btn-primary btn-danger"><span class="mif-minus"> {{translation.Delete}}</span></button>
                     </div>
 
                     <!--PUBLISH LANGUAGE-->
@@ -59,9 +67,9 @@
                     </div>
 
                     <!--TRANSLATE ALL KEYS-->
-                    <div class="form-group">
+                    <div class="form-group" ng-hide="languageForEdit.id == selectedLanguage">
                         <label>{{translation.TranslateAllLanguageKeys}}</label>
-                        <button ng-click="translateAllLanguageKeysDialog()" ng-hide="languageForEdit.id == selectedLanguage" class="btn btn-primary btn-block formAni"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
+                        <button ng-click="translateAllLanguageKeysDialog()"  class="btn btn-primary btn-block formAni"><span class="mif-cloud-download mif-2x"> {{translation.Translate}}</span></button>
                     </div>
 
                 </form>

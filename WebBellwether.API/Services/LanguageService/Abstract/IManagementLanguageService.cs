@@ -20,5 +20,6 @@ namespace WebBellwether.API.Services.LanguageService.Abstract
         ResultStateContainer PublishLanguage(Language language);
         ResultStateContainer PutLanguage(Language language);
         ResultStateContainer DeleteLanguage(Language language);
+        Dictionary<string, string> GetLanguageFile(int languageId);
     }
 }

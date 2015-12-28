@@ -30,6 +30,13 @@ namespace WebBellwether.API.Controllers
         {
             return Ok(_service.GetLanguages(true));
         }
+
+        [AllowAnonymous]
+        [Route("GetLanguageFile")]
+        public IHttpActionResult GetLanguageFile(int languageId)
+        {
+            return Ok(_service.GetLanguageFile(languageId));
+        }
         [Authorize(Roles = "Admin")]
         [Route("PostEditLanguageKey")]
         public IHttpActionResult PostEditLanguageKey(LanguageKeyModel languageKey)

@@ -148,6 +148,8 @@
   "LanguageCanNotBeRemoved": "Language can not be deleted because it is the list of languages irremovable",
   "LanguageRemoved": "Language was removed",
   "LanguageNotRemoved": "The language was removed",
+  "LanguageVersion": "Language version",
+  "LanguageVersionDescription": "Language Version is the determinant for mobile application in the event of any modification of this value should be increased by eg 0.5. When it will not be raised Bellwether will not pull the new version of the translation.",
   "Change": "Change",
   "YourLogin": "Your login",
   "EnterYourLogin": "Please enter your login",

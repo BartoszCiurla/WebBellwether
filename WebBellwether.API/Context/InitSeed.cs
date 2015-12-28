@@ -17,12 +17,16 @@ namespace WebBellwether.API.Context
                 {
                     LanguageName = "English",
                     LanguageShortName = "GB",
+                    IsPublic = true,
+                    LanguageVersion = 1.0
 
                 },
                 new Language
                 {
                     LanguageName = "Polish",
                     LanguageShortName = "PL",
+                    IsPublic = true,
+                    LanguageVersion = 1.0
                 },
             };
         }

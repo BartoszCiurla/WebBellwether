@@ -237,7 +237,8 @@
                         id: lang.id,
                         languageName: lang.languageName,
                         languageShortName: lang.languageShortName,
-                        isPublic: lang.isPublic
+                        isPublic: lang.isPublic,
+                        languageVersion : lang.languageVersion
                     };
                     $scope.getLanguageFileContent(lang);
                 }

@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201511232234312_flag-down.Designer.cs">
       <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512280234095_languageVersion.cs" />
+    <Compile Include="Migrations\201512280234095_languageVersion.Designer.cs">
+      <DependentUpon>201512280234095_languageVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
@@ -330,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511232234312_flag-down.resx">
       <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512280234095_languageVersion.resx">
+      <DependentUpon>201512280234095_languageVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
