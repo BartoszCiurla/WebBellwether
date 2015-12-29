@@ -32,6 +32,13 @@ namespace WebBellwether.API.Controllers
         }
 
         [AllowAnonymous]
+        [Route("GetLanguage")]
+        public IHttpActionResult GetLanguage(int languageId)
+        {
+            return Ok(_service.GetLanguageById(languageId));
+        }
+
+        [AllowAnonymous]
         [Route("GetLanguageFile")]
         public IHttpActionResult GetLanguageFile(int languageId)
         {

@@ -29,7 +29,7 @@ namespace WebBellwether.API.Services.LanguageService
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.LanguageName.Equals(languageName)).FirstOrDefault();
         }
-        private Language GetLanguageById(int languageId)
+        public Language GetLanguageById(int languageId)
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
         }
