@@ -203,5 +203,9 @@
   "CreateFeatures": "Utwórz cechy",
   "GameFeaturesAdded": "Cechy gry zostały dodane",
   "GameFeaturesNotAdded": "Cechy gry nie zostały dodane",
-  "Jokes": "Kawały"
+  "Jokes": "Kawały",
+  "Settings": "Ustawienia",
+  "CurrentLanguage": "Aktualny język",
+  "ChangeLanguage": "Zmień język",
+  "ApplyLanguage": "Zastosuj język"
 }

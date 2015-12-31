@@ -246,6 +246,7 @@
     <Compile Include="Models\IntegrationGame\SimpleIntegrationGame.cs" />
     <Compile Include="Models\Joke\JokeCategoryModel.cs" />
     <Compile Include="Models\Joke\JokeModel.cs" />
+    <Compile Include="Models\Translation\LanguageFilePosition.cs" />
     <Compile Include="Models\Translation\LanguageKeyModel.cs" />
     <Compile Include="Models\Translation\SupportedLanguage.cs" />
     <Compile Include="Models\Translation\TranslateLanguageKeysModel.cs" />

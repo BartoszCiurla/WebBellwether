@@ -129,14 +129,20 @@ namespace WebBellwether.API.Services.LanguageService
             return result.AsEnumerable();
         }
 
-        public Dictionary<string, string> GetLanguageFile(int languageId)
+        public IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId)
         {
             Language language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
             if (language == null)
                 return null;
             string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
             string templateJson = File.ReadAllText(languageFileLocation);
-            return  JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
+            var dictionaryJson = JsonConvert.DeserializeObject<Dictionary<string,string>>(templateJson);
+            var result = new List<LanguageFilePosition>();
+            dictionaryJson.ToList().ForEach(x =>
+            {
+                result.Add(new LanguageFilePosition { Key = x.Key, Value = x.Value });
+            });
+            return result;
         } 
 
         public ResultStateContainer CreateLanguageFile(int newLanguageId)
