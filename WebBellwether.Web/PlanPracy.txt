@@ -1,4 +1,8 @@
-﻿wprowadziłem pewe tymczasowe zmiany mianowicie user o nicku Admin dostaje z automatu claimsy -> roles == Admin kazdy inny dostaje usera jest to obejście większego mechanizmu
+﻿co trzeba naprawić od razu przed reforgem : 
+-w przypadku publikacji jeżyka trzeba od razu dodać mu wersje = 1 
+-jest problem z translacja Yandexa ale tylko dla pojedynyczhc wartosci cały plik tłumaczy ... 
+
+wprowadziłem pewe tymczasowe zmiany mianowicie user o nicku Admin dostaje z automatu claimsy -> roles == Admin kazdy inny dostaje usera jest to obejście większego mechanizmu
 którego na tą chwilę nie mogę wdrożyć.
 Od dnia 16.12.2015 prace będa rozłożone na 2 projekty po 2h-3h na każdy z nich dziennie w dni gdy pracujece.
 Natomiast w dni wolne trzeba będzie walić po 6-8 godzin na projekt w innym przypadku nie skończe na czas to pewne 

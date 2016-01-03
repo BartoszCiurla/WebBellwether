@@ -15,7 +15,7 @@ namespace WebBellwether.API.Controllers
         {
             _service = new JokeService(new AggregateRepositories());
         }
-
+        [AllowAnonymous]
         [Route("GetJokes")]
         public IHttpActionResult GetJokes(int language)
         {
