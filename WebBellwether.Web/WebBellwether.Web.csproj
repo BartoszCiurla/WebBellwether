@@ -157,6 +157,9 @@
     <Content Include="app\photoGalleries\photoGallery.html" />
     <Content Include="app\authorizations\refresh.html" />
     <Content Include="app\authorizations\tokens.html" />
+    <Content Include="app\versions\managementVersions.html" />
+    <Content Include="app\versions\managementVersionsController.js" />
+    <Content Include="app\versions\versionsService.js" />
     <Content Include="authComplete.html" />
     <Content Include="content\css\animation.css" />
     <Content Include="content\css\animations.css" />

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
+using WebBellwether.API.Context;
 using WebBellwether.API.Models.Auth;
 using WebBellwether.API.Repositories;
 using WebBellwether.API.Results;
@@ -27,7 +28,7 @@ namespace WebBellwether.API.Controllers
         }
 
         public AccountController()
-        {
+        {            
             _repo = new AuthRepository();
         }       
 

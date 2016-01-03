@@ -8,6 +8,7 @@ using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Repositories.Abstract;
 using WebBellwether.API.Entities.Joke;
+using WebBellwether.API.Entities.Version;
 
 
 namespace WebBellwether.API.Repositories
@@ -28,10 +29,33 @@ namespace WebBellwether.API.Repositories
         private IGenericRepository<JokeCategory> _jokeCategoryRepository;
         private IGenericRepository<JokeCategoryDetail> _jokeCategoryDetailRepository;
 
+        private IGenericRepository<LanguageVersion> _languageVersionRepository;
+        private IGenericRepository<IntegrationGameVersion> _integrationGameVersionRepository;
+        private IGenericRepository<JokeCategoryVersion> _jokeCategoryVersionRespository;
+        private IGenericRepository<JokeVersion> _jokeVersionRepository;
+
         public AggregateRepositories()
         {
             _context = new EfDbContext();
         }
+
+        public IGenericRepository<JokeVersion> JokeVersionRepository
+            => _jokeVersionRepository ?? (_jokeVersionRepository = new GenericRepository<JokeVersion>(_context)); 
+
+        public IGenericRepository<JokeCategoryVersion> JokeCategoryVersionRepository
+            =>
+                _jokeCategoryVersionRespository ??
+                (_jokeCategoryVersionRespository = new GenericRepository<JokeCategoryVersion>(_context));
+
+        public IGenericRepository<LanguageVersion> LanguageVersionRepository
+            =>
+                _languageVersionRepository ??
+                (_languageVersionRepository = new GenericRepository<LanguageVersion>(_context));
+
+        public IGenericRepository<IntegrationGameVersion> IntegrationGameVersionRepository
+            =>
+                _integrationGameVersionRepository ??
+                (_integrationGameVersionRepository = new GenericRepository<IntegrationGameVersion>(_context)); 
 
         public IGenericRepository<Joke> JokeRepository => _jokeRepository ?? (_jokeRepository = new GenericRepository<Joke>(_context));
         public IGenericRepository<JokeDetail> JokeDetailRepository => _jokeDetailRepository ?? (_jokeDetailRepository = new GenericRepository<JokeDetail>(_context));

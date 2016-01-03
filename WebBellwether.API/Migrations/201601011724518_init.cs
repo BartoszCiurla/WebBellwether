@@ -76,6 +76,8 @@ namespace WebBellwether.API.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         LanguageName = c.String(),
+                        LanguageShortName = c.String(),
+                        IsPublic = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -120,6 +122,109 @@ namespace WebBellwether.API.Migrations
                 .Index(t => t.GameFeatureDetailLanguage_Id)
                 .Index(t => t.GameFeatureLanguage_Id)
                 .Index(t => t.IntegrationGameDetail_Id);
+            
+            CreateTable(
+                "dbo.IntegrationGameVersions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Version = c.Double(nullable: false),
+                        NumberOfIntegrationGames = c.Int(nullable: false),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.Language_Id);
+            
+            CreateTable(
+                "dbo.JokeCategories",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        CreationDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.JokeCategoryDetails",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        JokeCategoryName = c.String(),
+                        JokeCategory_Id = c.Int(),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.JokeCategories", t => t.JokeCategory_Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.JokeCategory_Id)
+                .Index(t => t.Language_Id);
+            
+            CreateTable(
+                "dbo.JokeCategoryVersions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Version = c.Double(nullable: false),
+                        NumberOfJokeCategory = c.Int(nullable: false),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.Language_Id);
+            
+            CreateTable(
+                "dbo.JokeDetails",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        JokeContent = c.String(),
+                        Joke_Id = c.Int(),
+                        JokeCategoryDetail_Id = c.Int(),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Jokes", t => t.Joke_Id)
+                .ForeignKey("dbo.JokeCategoryDetails", t => t.JokeCategoryDetail_Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.Joke_Id)
+                .Index(t => t.JokeCategoryDetail_Id)
+                .Index(t => t.Language_Id);
+            
+            CreateTable(
+                "dbo.Jokes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        CreationDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.JokeVersions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Version = c.Double(nullable: false),
+                        NumberOfJokes = c.Int(nullable: false),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.Language_Id);
+            
+            CreateTable(
+                "dbo.LanguageVersions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Version = c.Double(nullable: false),
+                        NumberOfItemsInFileLanguage = c.Int(nullable: false),
+                        Language_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Languages", t => t.Language_Id)
+                .Index(t => t.Language_Id);
             
             CreateTable(
                 "dbo.RefreshTokens",
@@ -210,6 +315,15 @@ namespace WebBellwether.API.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.LanguageVersions", "Language_Id", "dbo.Languages");
+            DropForeignKey("dbo.JokeVersions", "Language_Id", "dbo.Languages");
+            DropForeignKey("dbo.JokeDetails", "Language_Id", "dbo.Languages");
+            DropForeignKey("dbo.JokeDetails", "JokeCategoryDetail_Id", "dbo.JokeCategoryDetails");
+            DropForeignKey("dbo.JokeDetails", "Joke_Id", "dbo.Jokes");
+            DropForeignKey("dbo.JokeCategoryVersions", "Language_Id", "dbo.Languages");
+            DropForeignKey("dbo.JokeCategoryDetails", "Language_Id", "dbo.Languages");
+            DropForeignKey("dbo.JokeCategoryDetails", "JokeCategory_Id", "dbo.JokeCategories");
+            DropForeignKey("dbo.IntegrationGameVersions", "Language_Id", "dbo.Languages");
             DropForeignKey("dbo.IntegrationGameDetails", "Language_Id", "dbo.Languages");
             DropForeignKey("dbo.IntegrationGameFeatures", "IntegrationGameDetail_Id", "dbo.IntegrationGameDetails");
             DropForeignKey("dbo.IntegrationGameFeatures", "GameFeatureLanguage_Id", "dbo.GameFeatureLanguages");
@@ -226,6 +340,15 @@ namespace WebBellwether.API.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.LanguageVersions", new[] { "Language_Id" });
+            DropIndex("dbo.JokeVersions", new[] { "Language_Id" });
+            DropIndex("dbo.JokeDetails", new[] { "Language_Id" });
+            DropIndex("dbo.JokeDetails", new[] { "JokeCategoryDetail_Id" });
+            DropIndex("dbo.JokeDetails", new[] { "Joke_Id" });
+            DropIndex("dbo.JokeCategoryVersions", new[] { "Language_Id" });
+            DropIndex("dbo.JokeCategoryDetails", new[] { "Language_Id" });
+            DropIndex("dbo.JokeCategoryDetails", new[] { "JokeCategory_Id" });
+            DropIndex("dbo.IntegrationGameVersions", new[] { "Language_Id" });
             DropIndex("dbo.IntegrationGameFeatures", new[] { "IntegrationGameDetail_Id" });
             DropIndex("dbo.IntegrationGameFeatures", new[] { "GameFeatureLanguage_Id" });
             DropIndex("dbo.IntegrationGameFeatures", new[] { "GameFeatureDetailLanguage_Id" });
@@ -242,6 +365,14 @@ namespace WebBellwether.API.Migrations
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.RefreshTokens");
+            DropTable("dbo.LanguageVersions");
+            DropTable("dbo.JokeVersions");
+            DropTable("dbo.Jokes");
+            DropTable("dbo.JokeDetails");
+            DropTable("dbo.JokeCategoryVersions");
+            DropTable("dbo.JokeCategoryDetails");
+            DropTable("dbo.JokeCategories");
+            DropTable("dbo.IntegrationGameVersions");
             DropTable("dbo.IntegrationGameFeatures");
             DropTable("dbo.IntegrationGames");
             DropTable("dbo.IntegrationGameDetails");

@@ -169,6 +169,7 @@
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\TranslateController.cs" />
+    <Compile Include="Controllers\VersionsController.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
     <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguage.cs" />
@@ -181,55 +182,15 @@
     <Compile Include="Entities\Joke\JokeCategoryDetail.cs" />
     <Compile Include="Entities\Joke\JokeDetail.cs" />
     <Compile Include="Entities\Translations\Language.cs" />
+    <Compile Include="Entities\Version\IntegrationGameVersion.cs" />
+    <Compile Include="Entities\Version\JokeCategoryVersion.cs" />
+    <Compile Include="Entities\Version\JokeVersion.cs" />
+    <Compile Include="Entities\Version\LanguageVersion.cs" />
     <Compile Include="Function\Helper.cs" />
     <Compile Include="Entities\Client.cs" />
-    <Compile Include="Migrations\201508161151084_init.cs" />
-    <Compile Include="Migrations\201508161151084_init.Designer.cs">
-      <DependentUpon>201508161151084_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509212034390_new col.cs" />
-    <Compile Include="Migrations\201509212034390_new col.Designer.cs">
-      <DependentUpon>201509212034390_new col.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509212152105_flag.cs" />
-    <Compile Include="Migrations\201509212152105_flag.Designer.cs">
-      <DependentUpon>201509212152105_flag.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510192048377_joke v1.0.cs" />
-    <Compile Include="Migrations\201510192048377_joke v1.0.Designer.cs">
-      <DependentUpon>201510192048377_joke v1.0.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510192124319_joke v1.1.cs" />
-    <Compile Include="Migrations\201510192124319_joke v1.1.Designer.cs">
-      <DependentUpon>201510192124319_joke v1.1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511122146309_publicLanguage.cs" />
-    <Compile Include="Migrations\201511122146309_publicLanguage.Designer.cs">
-      <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511232204301_langSpecifycation.cs" />
-    <Compile Include="Migrations\201511232204301_langSpecifycation.Designer.cs">
-      <DependentUpon>201511232204301_langSpecifycation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511232207044_badidea.cs" />
-    <Compile Include="Migrations\201511232207044_badidea.Designer.cs">
-      <DependentUpon>201511232207044_badidea.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511232209107_languageTranslationSpecifications.cs" />
-    <Compile Include="Migrations\201511232209107_languageTranslationSpecifications.Designer.cs">
-      <DependentUpon>201511232209107_languageTranslationSpecifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511232227246_zaraz cie wypierdole.cs" />
-    <Compile Include="Migrations\201511232227246_zaraz cie wypierdole.Designer.cs">
-      <DependentUpon>201511232227246_zaraz cie wypierdole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511232234312_flag-down.cs" />
-    <Compile Include="Migrations\201511232234312_flag-down.Designer.cs">
-      <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512280234095_languageVersion.cs" />
-    <Compile Include="Migrations\201512280234095_languageVersion.Designer.cs">
-      <DependentUpon>201512280234095_languageVersion.cs</DependentUpon>
+    <Compile Include="Migrations\201601011724518_init.cs" />
+    <Compile Include="Migrations\201601011724518_init.Designer.cs">
+      <DependentUpon>201601011724518_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
@@ -252,6 +213,11 @@
     <Compile Include="Models\Translation\TranslateLanguageKeysModel.cs" />
     <Compile Include="Models\Translation\TranslateLanguageModel.cs" />
     <Compile Include="Models\Translation\Yandex\YandexResponse.cs" />
+    <Compile Include="Models\Version\ClientVersionModel.cs" />
+    <Compile Include="Models\Version\CurrentVersionDetailStateModel.cs" />
+    <Compile Include="Models\Version\VersionDetailModel.cs" />
+    <Compile Include="Models\Version\VersionAggregateModel.cs" />
+    <Compile Include="Models\Version\VersionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\GoogleAuthProvider.cs" />
@@ -282,6 +248,7 @@
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
     <Compile Include="Services\TranslateService\Abstract\ITranslateService.cs" />
     <Compile Include="Services\TranslateService\YandexTranslateService.cs" />
+    <Compile Include="Services\VersionService\VersionService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -303,41 +270,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508161151084_init.resx">
-      <DependentUpon>201508161151084_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509212034390_new col.resx">
-      <DependentUpon>201509212034390_new col.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509212152105_flag.resx">
-      <DependentUpon>201509212152105_flag.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510192048377_joke v1.0.resx">
-      <DependentUpon>201510192048377_joke v1.0.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510192124319_joke v1.1.resx">
-      <DependentUpon>201510192124319_joke v1.1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511122146309_publicLanguage.resx">
-      <DependentUpon>201511122146309_publicLanguage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511232204301_langSpecifycation.resx">
-      <DependentUpon>201511232204301_langSpecifycation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511232207044_badidea.resx">
-      <DependentUpon>201511232207044_badidea.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511232209107_languageTranslationSpecifications.resx">
-      <DependentUpon>201511232209107_languageTranslationSpecifications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511232227246_zaraz cie wypierdole.resx">
-      <DependentUpon>201511232227246_zaraz cie wypierdole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511232234312_flag-down.resx">
-      <DependentUpon>201511232234312_flag-down.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512280234095_languageVersion.resx">
-      <DependentUpon>201512280234095_languageVersion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601011724518_init.resx">
+      <DependentUpon>201601011724518_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

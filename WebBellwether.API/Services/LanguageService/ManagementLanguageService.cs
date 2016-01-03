@@ -245,8 +245,7 @@ namespace WebBellwether.API.Services.LanguageService
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.LanguageName = language.LanguageName;
-                entity.LanguageShortName = language.LanguageShortName;
-                entity.LanguageVersion = language.LanguageVersion;
+                entity.LanguageShortName = language.LanguageShortName;                
                 _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageEdited };
             }

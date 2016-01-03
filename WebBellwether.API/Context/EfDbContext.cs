@@ -8,6 +8,7 @@ using WebBellwether.API.Entities;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Translations;
 using WebBellwether.API.Entities.Joke;
+using WebBellwether.API.Entities.Version;
 
 namespace WebBellwether.API.Context
 {
@@ -47,5 +48,12 @@ namespace WebBellwether.API.Context
         public DbSet<Client> Clients { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         //authentication
+
+        //version
+        public DbSet<LanguageVersion> LanguageVersions { get; set; }
+        public DbSet<IntegrationGameVersion> IntegrationGameVersions { get; set; }
+        public DbSet<JokeCategoryVersion> JokeCategoryVersions { get; set; }
+        public DbSet<JokeVersion> JokeVersions { get; set; }
+        //version
     }
 }

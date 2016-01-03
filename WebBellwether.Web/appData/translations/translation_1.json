@@ -207,5 +207,17 @@
   "Settings": "Settings",
   "CurrentLanguage": "Current language",
   "ChangeLanguage": "Change language",
-  "ApplyLanguage": "Apply language"
+  "ApplyLanguage": "Apply language",
+  "ManagementVersions": "Versions management",
+  "LanguageVersion": "Language Version",
+  "IntegrationGameVersion": "Integration game version",
+  "JokeCategoryVersion": "Joke category version",
+  "JokeVersion": "Joke version",
+  "Version": "Version",
+  "EntriesInTheLanguageFile": "Entries in the language file",
+  "NumbersOfIntegrationGames": "Numbers of integration games",
+  "NumbersOfCategoriesJokes": "Numbers of categories jokes",
+  "NumbersOfJokes": "Numbers of jokes",
+  "AddVersion": "Add version",
+  "IncreasingVersionDescription": "Current version + 0.1"
 }

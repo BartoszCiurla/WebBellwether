@@ -1,0 +1,133 @@
+﻿<div class="container">
+    <div class="margin20">
+        <h1>{{translation.ManagementVersions}}</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-10 col-sm-4 col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-offset-4">
+            <label>{{translation.Language}}</label>
+            <select id="language" class="form-control myFormColor" ng-init="languageForVersion = languages[selectedLanguage - 1]; getVersionDetailsForLanguage(languageForVersion)" data-ng-model="languageForVersion" data-ng-change="getVersionDetailsForLanguage(languageForVersion)" data-ng-options="language.languageName for language in languages">
+                <option value=''>{{translation.ChooseLanguage}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6 formAni">
+        <div class="formAni" style="margin-top: 20px; margin-bottom: 20px" ng-hide="languageForVersion == null">
+            <div style="border: solid black" class="margin5">
+                <div class="margin20">
+                    <h2>{{translation.LanguageVersion}}</h2>
+                    <table class="table table-striped table-bordered success">
+                        <tr>
+                            <th class="text-center">{{translation.Version}}</th>
+                            <th class="text-center">{{translation.EntriesInTheLanguageFile}}</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="languageVersion in versionDetail.languageVersions">
+                            <td>{{languageVersion.versionNumber}}</td>
+                            <td>{{languageVersion.numberOf}}</td>
+                            <td><button ng-click="removeVersion(languageVersion,'language',$index)" class="btn btn-danger">{{translation.Delete}}</button></td>
+                        </tr>
+                    </table>
+                    <form name="langVer">
+                        <div class="form-group">
+                            <label for="imputLangVer">{{translation.Version}}</label>
+                            <input required data-ng-model="langVersion" type="text" class="form-control myFormColor" id="imputLangVer" placeholder={{translation.IncreasingVersionDescription}}>
+                        </div>
+                        <div class="form-group">
+                            <label for="imputLangFile">{{translation.EntriesInTheLanguageFile}}</label>
+                            <input type="text" class="form-control myFormColor" id="imputLangFile" value={{versionDetail.currentVersionStateModel.numberOfItemsInFileLanguage}} disabled>
+                        </div>
+                        <button ng-click="addVersion(langVersion,'language',versionDetail.currentVersionStateModel.numberOfItemsInFileLanguage)" ng-disabled="langVer.$invalid || versionDetail.languageVersions[versionDetail.languageVersions.length -1].versionNumber >= langVersion" type="submit" class="btn btn-primary">{{translation.AddVersion}}</button>
+                    </form>
+                </div>
+            </div>
+            <div style="border: solid black" class="margin5">
+                <div class="margin20">
+                    <h2>{{translation.IntegrationGameVersion}}</h2>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{translation.Version}}</th>
+                            <th class="text-center">{{translation.NumbersOfIntegrationGames}}</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="integrationGameVersion in versionDetail.integrationGameVersions">
+                            <td>{{integrationGameVersion.versionNumber}}</td>
+                            <td>{{integrationGameVersion.numberOf}}</td>
+                            <td><button ng-click="removeVersion(integrationGameVersion,'integrationGame',$index)" class="btn btn-danger">{{translation.Delete}}</button></td>
+                        </tr>
+                    </table>
+                    <form name="gamesVer">
+                        <div class="form-group">
+                            <label for="imputGamesVer">{{translation.Version}}</label>
+                            <input data-ng-model="integrationGameVersion" required type="text" class="form-control myFormColor" id="imputGamesVer" placeholder={{translation.IncreasingVersionDescription}}>
+                        </div>
+                        <div class="form-group">
+                            <label for="imputGamesNumbers">{{translation.NumbersOfIntegrationGames}}</label>
+                            <input required class="form-control myFormColor" id="imputGamesNumbers" value="{{versionDetail.currentVersionStateModel.numberOfIntegrationGames}}" disabled>
+                        </div>
+                        <button ng-click="addVersion(integrationGameVersion,'integrationGame',versionDetail.currentVersionStateModel.numberOfIntegrationGames)" ng-disabled="gamesVer.$invalid || versionDetail.integrationGameVersions[versionDetail.integrationGameVersions.length -1].versionNumber >= integrationGameVersion" type="submit" class="btn btn-primary">{{translation.AddVersion}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 formAni">
+        <div class="formAni" style="margin-top: 20px; margin-bottom: 20px" ng-hide="languageForVersion == null">
+            <div style="border: solid black" class="margin5">
+                <div class="margin20">
+                    <h2>{{translation.JokeCategoryVersion}}</h2>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{translation.Version}}</th>
+                            <th class="text-center">{{translation.NumbersOfCategoriesJokes}}</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="jokeCategoryVersion in versionDetail.jokeCategoryVersions">
+                            <td>{{jokeCategoryVersion.versionNumber}}</td>
+                            <td>{{jokeCategoryVersion.numberOf}}</td>
+                            <td><button ng-click="removeVersion(jokeCategoryVersion,'jokeCategory',$index)" class="btn btn-danger">{{translation.Delete}}</button></td>
+                        </tr>
+                    </table>
+                    <form name="jokeCategoryVer">
+                        <div class="form-group">
+                            <label for="imputJokeCategoryVer">{{translation.Version}}</label>
+                            <input data-ng-model="jokeCategoryVersion" required type="text" class="form-control myFormColor" id="imputJokeCategoryVer" placeholder={{translation.IncreasingVersionDescription}}>
+                        </div>
+                        <div class="form-group">
+                            <label for="imputJokeCategoryNumbers">{{translation.NumbersOfCategoriesJokes}}</label>
+                            <input required class="form-control myFormColor" id="imputJokeCategoryNumbers" value="{{versionDetail.currentVersionStateModel.numberOfJokeCategory}}" disabled>
+                        </div>
+                        <button ng-click="addVersion(jokeCategoryVersion,'jokeCategory',versionDetail.currentVersionStateModel.numberOfJokeCategory)" ng-disabled="jokeCategoryVer.$invalid || versionDetail.jokeCategoryVersions[versionDetail.jokeCategoryVersions.length -1].versionNumber >= jokeCategoryVersion" type="submit" class="btn btn-primary">{{translation.AddVersion}}</button>
+                    </form>
+                </div>
+            </div>
+            <div style="border: solid black" class="margin5">
+                <div class="margin20">
+                    <h2>{{translation.JokeVersion}}</h2>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{translation.Version}}</th>
+                            <th class="text-center">{{translation.NumbersOfJokes}}</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="jokeVersion in versionDetail.jokeVersions">
+                            <td>{{jokeVersion.versionNumber}}</td>
+                            <td>{{jokeVersion.numberOf}}</td>
+                            <td><button ng-click="removeVersion(jokeVersion,'joke',$index)" class="btn btn-danger">{{translation.Delete}}</button></td>
+                        </tr>
+                    </table>
+                    <form name="jokeVer">
+                        <div class="form-group">
+                            <label for="imputJokeVer">{{translation.Version}}</label>
+                            <input data-ng-model="jokeVersion" required type="text" class="form-control myFormColor" id="imputJokeVer" placeholder={{translation.IncreasingVersionDescription}}>
+                        </div>
+                        <div class="form-group">
+                            <label for="imputJokeNumbers">{{translation.NumbersOfJokes}}</label>
+                            <input required class="form-control myFormColor" id="imputJokeNumbers" value="{{versionDetail.currentVersionStateModel.numberOfJokes}}" disabled>
+                        </div>
+                        <button ng-click="addVersion(jokeVersion,'joke',versionDetail.currentVersionStateModel.numberOfJokes)" ng-disabled="jokeVer.$invalid || versionDetail.jokeVersions[versionDetail.jokeVersions.length -1].versionNumber >= jokeVersion" type="submit" class="btn btn-primary">{{translation.AddVersion}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

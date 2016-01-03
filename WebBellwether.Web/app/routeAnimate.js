@@ -30,6 +30,10 @@
                 controller: "managementLanguagesController",
                 templateUrl: "/app/languages/managementLanguages.html"
             });
+            $routeProvider.when("/managementVersions", {
+                controller: "managementVersionsController",
+                templateUrl: "/app/versions/managementVersions.html"
+            });
             $routeProvider.when("/bellwether", {
                 controller: "bellwetherController",
                 templateUrl: "/app/bellwether/bellwether.html"

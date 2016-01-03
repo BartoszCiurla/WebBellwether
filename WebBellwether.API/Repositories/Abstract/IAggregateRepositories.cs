@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebBellwether.API.Entities.IntegrationGame;
 using WebBellwether.API.Entities.Joke;
 using WebBellwether.API.Entities.Translations;
+using WebBellwether.API.Entities.Version;
 
 namespace WebBellwether.API.Repositories.Abstract
 {
@@ -24,6 +25,10 @@ namespace WebBellwether.API.Repositories.Abstract
         IGenericRepository<JokeDetail> JokeDetailRepository { get; }
         IGenericRepository<JokeCategory> JokeCategoryRepository { get; }
         IGenericRepository<JokeCategoryDetail> JokeCategoryDetailRepository { get; }
+        IGenericRepository<JokeVersion> JokeVersionRepository { get; }
+        IGenericRepository<JokeCategoryVersion> JokeCategoryVersionRepository { get; }
+        IGenericRepository<LanguageVersion> LanguageVersionRepository { get; }
+        IGenericRepository<IntegrationGameVersion> IntegrationGameVersionRepository { get; }
     }
 }
 

@@ -207,5 +207,17 @@
   "Settings": "Ustawienia",
   "CurrentLanguage": "Aktualny język",
   "ChangeLanguage": "Zmień język",
-  "ApplyLanguage": "Zastosuj język"
+  "ApplyLanguage": "Zastosuj język",
+  "ManagementVersions": "Zarządzanie wersjami",
+  "LanguageVersion": "Wersja języka",
+  "IntegrationGameVersion": "Wersja gier integracyjnych",
+  "JokeCategoryVersion": "Wersja kategori kawałów",
+  "JokeVersion": "Wersja kawałów",
+  "Version": "Wersja",
+  "EntriesInTheLanguageFile": "Pozycje w pliku językowym",
+  "NumbersOfIntegrationGames": "Liczba gier integracyjnych",
+  "NumbersOfCategoriesJokes": "Liczba kategorii zartów",
+  "NumbersOfJokes": "Liczba kawałów",
+  "AddVersion": "Dodaj wersję",
+  "IncreasingVersionDescription": "Obecna wersja + 0.1"
 }
