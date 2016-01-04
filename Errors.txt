@@ -1,0 +1,1 @@
+1)jak dodaje kategorie kawa³u która ju¿ istnieje to podaje nie prawid³owy status operacji 

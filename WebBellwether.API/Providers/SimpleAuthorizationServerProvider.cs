@@ -21,7 +21,7 @@ namespace WebBellwether.API.Providers
 
             string clientId = string.Empty;
             string clientSecret = string.Empty;
-            Client client = null;
+            ClientDao client = null;
 
             if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
             {

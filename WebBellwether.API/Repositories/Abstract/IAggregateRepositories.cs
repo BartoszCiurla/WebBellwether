@@ -13,22 +13,22 @@ namespace WebBellwether.API.Repositories.Abstract
     public interface IAggregateRepositories
     {
         void Save();
-        IGenericRepository<IntegrationGame> IntegrationGameRepository { get; }
-        IGenericRepository<IntegrationGameDetail> IntegrationGameDetailRepository { get; }
-        IGenericRepository<IntegrationGameFeature> IntegrationGameFeatureRepository { get; }
-        IGenericRepository<GameFeatureDetailLanguage> GameFeatureDetailLanguageRepository { get; }
-        IGenericRepository<GameFeatureLanguage> GameFeatureLanguageRepository { get; }
-        IGenericRepository<GameFeatureDetail> GameFeatureDetailRepository { get; }
-        IGenericRepository<GameFeature> GameFeatureRepository { get; }
-        IGenericRepository<Language> LanguageRepository { get; }
-        IGenericRepository<Joke> JokeRepository { get; }
-        IGenericRepository<JokeDetail> JokeDetailRepository { get; }
-        IGenericRepository<JokeCategory> JokeCategoryRepository { get; }
-        IGenericRepository<JokeCategoryDetail> JokeCategoryDetailRepository { get; }
-        IGenericRepository<JokeVersion> JokeVersionRepository { get; }
-        IGenericRepository<JokeCategoryVersion> JokeCategoryVersionRepository { get; }
-        IGenericRepository<LanguageVersion> LanguageVersionRepository { get; }
-        IGenericRepository<IntegrationGameVersion> IntegrationGameVersionRepository { get; }
+        IGenericRepository<IntegrationGameDao> IntegrationGameRepository { get; }
+        IGenericRepository<IntegrationGameDetailDao> IntegrationGameDetailRepository { get; }
+        IGenericRepository<IntegrationGameFeatureDao> IntegrationGameFeatureRepository { get; }
+        IGenericRepository<GameFeatureDetailLanguageDao> GameFeatureDetailLanguageRepository { get; }
+        IGenericRepository<GameFeatureLanguageDao> GameFeatureLanguageRepository { get; }
+        IGenericRepository<GameFeatureDetailDao> GameFeatureDetailRepository { get; }
+        IGenericRepository<GameFeatureDao> GameFeatureRepository { get; }
+        IGenericRepository<LanguageDao> LanguageRepository { get; }
+        IGenericRepository<JokeDao> JokeRepository { get; }
+        IGenericRepository<JokeDetailDao> JokeDetailRepository { get; }
+        IGenericRepository<JokeCategoryDao> JokeCategoryRepository { get; }
+        IGenericRepository<JokeCategoryDetailDao> JokeCategoryDetailRepository { get; }
+        IGenericRepository<JokeVersionDao> JokeVersionRepository { get; }
+        IGenericRepository<JokeCategoryVersionDao> JokeCategoryVersionRepository { get; }
+        IGenericRepository<LanguageVersionDao> LanguageVersionRepository { get; }
+        IGenericRepository<IntegrationGameVersionDao> IntegrationGameVersionRepository { get; }
     }
 }
 

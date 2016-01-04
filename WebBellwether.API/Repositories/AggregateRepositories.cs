@@ -16,80 +16,80 @@ namespace WebBellwether.API.Repositories
     public class AggregateRepositories: IAggregateRepositories,IDisposable
     {
         private readonly EfDbContext _context;
-        private IGenericRepository<IntegrationGame> _integrationGameRepository;
-        private IGenericRepository<IntegrationGameDetail> _integrationGameDetailRepository;
-        private IGenericRepository<IntegrationGameFeature> _integrationGameFeatureRepository;
-        private IGenericRepository<GameFeatureDetailLanguage> _gameFeatureDetailLanguageRepository;
-        private IGenericRepository<GameFeatureLanguage> _gameFeatureLanguageRepository;
-        private IGenericRepository<GameFeatureDetail> _gameFeatureDetailRepository;
-        private IGenericRepository<GameFeature> _gameFeatureRepository;
-        private IGenericRepository<Language> _languageRepository;
-        private IGenericRepository<Joke> _jokeRepository;
-        private IGenericRepository<JokeDetail> _jokeDetailRepository;
-        private IGenericRepository<JokeCategory> _jokeCategoryRepository;
-        private IGenericRepository<JokeCategoryDetail> _jokeCategoryDetailRepository;
+        private IGenericRepository<IntegrationGameDao> _integrationGameRepository;
+        private IGenericRepository<IntegrationGameDetailDao> _integrationGameDetailRepository;
+        private IGenericRepository<IntegrationGameFeatureDao> _integrationGameFeatureRepository;
+        private IGenericRepository<GameFeatureDetailLanguageDao> _gameFeatureDetailLanguageRepository;
+        private IGenericRepository<GameFeatureLanguageDao> _gameFeatureLanguageRepository;
+        private IGenericRepository<GameFeatureDetailDao> _gameFeatureDetailRepository;
+        private IGenericRepository<GameFeatureDao> _gameFeatureRepository;
+        private IGenericRepository<LanguageDao> _languageRepository;
+        private IGenericRepository<JokeDao> _jokeRepository;
+        private IGenericRepository<JokeDetailDao> _jokeDetailRepository;
+        private IGenericRepository<JokeCategoryDao> _jokeCategoryRepository;
+        private IGenericRepository<JokeCategoryDetailDao> _jokeCategoryDetailRepository;
 
-        private IGenericRepository<LanguageVersion> _languageVersionRepository;
-        private IGenericRepository<IntegrationGameVersion> _integrationGameVersionRepository;
-        private IGenericRepository<JokeCategoryVersion> _jokeCategoryVersionRespository;
-        private IGenericRepository<JokeVersion> _jokeVersionRepository;
+        private IGenericRepository<LanguageVersionDao> _languageVersionRepository;
+        private IGenericRepository<IntegrationGameVersionDao> _integrationGameVersionRepository;
+        private IGenericRepository<JokeCategoryVersionDao> _jokeCategoryVersionRespository;
+        private IGenericRepository<JokeVersionDao> _jokeVersionRepository;
 
         public AggregateRepositories()
         {
             _context = new EfDbContext();
         }
 
-        public IGenericRepository<JokeVersion> JokeVersionRepository
-            => _jokeVersionRepository ?? (_jokeVersionRepository = new GenericRepository<JokeVersion>(_context)); 
+        public IGenericRepository<JokeVersionDao> JokeVersionRepository
+            => _jokeVersionRepository ?? (_jokeVersionRepository = new GenericRepository<JokeVersionDao>(_context)); 
 
-        public IGenericRepository<JokeCategoryVersion> JokeCategoryVersionRepository
+        public IGenericRepository<JokeCategoryVersionDao> JokeCategoryVersionRepository
             =>
                 _jokeCategoryVersionRespository ??
-                (_jokeCategoryVersionRespository = new GenericRepository<JokeCategoryVersion>(_context));
+                (_jokeCategoryVersionRespository = new GenericRepository<JokeCategoryVersionDao>(_context));
 
-        public IGenericRepository<LanguageVersion> LanguageVersionRepository
+        public IGenericRepository<LanguageVersionDao> LanguageVersionRepository
             =>
                 _languageVersionRepository ??
-                (_languageVersionRepository = new GenericRepository<LanguageVersion>(_context));
+                (_languageVersionRepository = new GenericRepository<LanguageVersionDao>(_context));
 
-        public IGenericRepository<IntegrationGameVersion> IntegrationGameVersionRepository
+        public IGenericRepository<IntegrationGameVersionDao> IntegrationGameVersionRepository
             =>
                 _integrationGameVersionRepository ??
-                (_integrationGameVersionRepository = new GenericRepository<IntegrationGameVersion>(_context)); 
+                (_integrationGameVersionRepository = new GenericRepository<IntegrationGameVersionDao>(_context)); 
 
-        public IGenericRepository<Joke> JokeRepository => _jokeRepository ?? (_jokeRepository = new GenericRepository<Joke>(_context));
-        public IGenericRepository<JokeDetail> JokeDetailRepository => _jokeDetailRepository ?? (_jokeDetailRepository = new GenericRepository<JokeDetail>(_context));
-        public IGenericRepository<JokeCategory> JokeCategoryRepository => _jokeCategoryRepository ?? (_jokeCategoryRepository = new GenericRepository<JokeCategory>(_context));
-        public IGenericRepository<JokeCategoryDetail> JokeCategoryDetailRepository => _jokeCategoryDetailRepository ?? (_jokeCategoryDetailRepository = new GenericRepository<JokeCategoryDetail>(_context));
-        public IGenericRepository<Language> LanguageRepository => _languageRepository ?? (_languageRepository = new GenericRepository<Language>(_context));
+        public IGenericRepository<JokeDao> JokeRepository => _jokeRepository ?? (_jokeRepository = new GenericRepository<JokeDao>(_context));
+        public IGenericRepository<JokeDetailDao> JokeDetailRepository => _jokeDetailRepository ?? (_jokeDetailRepository = new GenericRepository<JokeDetailDao>(_context));
+        public IGenericRepository<JokeCategoryDao> JokeCategoryRepository => _jokeCategoryRepository ?? (_jokeCategoryRepository = new GenericRepository<JokeCategoryDao>(_context));
+        public IGenericRepository<JokeCategoryDetailDao> JokeCategoryDetailRepository => _jokeCategoryDetailRepository ?? (_jokeCategoryDetailRepository = new GenericRepository<JokeCategoryDetailDao>(_context));
+        public IGenericRepository<LanguageDao> LanguageRepository => _languageRepository ?? (_languageRepository = new GenericRepository<LanguageDao>(_context));
 
-        public IGenericRepository<IntegrationGame> IntegrationGameRepository
+        public IGenericRepository<IntegrationGameDao> IntegrationGameRepository
          => _integrationGameRepository ??
-            (_integrationGameRepository = new GenericRepository<IntegrationGame>(_context));
+            (_integrationGameRepository = new GenericRepository<IntegrationGameDao>(_context));
 
-        public IGenericRepository<IntegrationGameDetail> IntegrationGameDetailRepository
+        public IGenericRepository<IntegrationGameDetailDao> IntegrationGameDetailRepository
             => _integrationGameDetailRepository ??
-               (_integrationGameDetailRepository = new GenericRepository<IntegrationGameDetail>(_context));
+               (_integrationGameDetailRepository = new GenericRepository<IntegrationGameDetailDao>(_context));
 
-        public IGenericRepository<IntegrationGameFeature> IntegrationGameFeatureRepository
+        public IGenericRepository<IntegrationGameFeatureDao> IntegrationGameFeatureRepository
             => _integrationGameFeatureRepository ??
-                (_integrationGameFeatureRepository = new GenericRepository<IntegrationGameFeature>(_context));
+                (_integrationGameFeatureRepository = new GenericRepository<IntegrationGameFeatureDao>(_context));
 
-        public IGenericRepository<GameFeatureDetailLanguage> GameFeatureDetailLanguageRepository
+        public IGenericRepository<GameFeatureDetailLanguageDao> GameFeatureDetailLanguageRepository
             => _gameFeatureDetailLanguageRepository ??
-               ((_gameFeatureDetailLanguageRepository = new GenericRepository<GameFeatureDetailLanguage>(_context)));
+               ((_gameFeatureDetailLanguageRepository = new GenericRepository<GameFeatureDetailLanguageDao>(_context)));
 
-        public IGenericRepository<GameFeatureLanguage> GameFeatureLanguageRepository
+        public IGenericRepository<GameFeatureLanguageDao> GameFeatureLanguageRepository
             => _gameFeatureLanguageRepository ??
-               (_gameFeatureLanguageRepository = new GenericRepository<GameFeatureLanguage>(_context));
+               (_gameFeatureLanguageRepository = new GenericRepository<GameFeatureLanguageDao>(_context));
 
-        public IGenericRepository<GameFeatureDetail> GameFeatureDetailRepository
+        public IGenericRepository<GameFeatureDetailDao> GameFeatureDetailRepository
             => _gameFeatureDetailRepository ??
-               (_gameFeatureDetailRepository = new GenericRepository<GameFeatureDetail>(_context));
+               (_gameFeatureDetailRepository = new GenericRepository<GameFeatureDetailDao>(_context));
 
-        public IGenericRepository<GameFeature> GameFeatureRepository
+        public IGenericRepository<GameFeatureDao> GameFeatureRepository
             => _gameFeatureRepository ??
-               (_gameFeatureRepository = new GenericRepository<GameFeature>(_context));
+               (_gameFeatureRepository = new GenericRepository<GameFeatureDao>(_context));
 
         public void Save()
         {

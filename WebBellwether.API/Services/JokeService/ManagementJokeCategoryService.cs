@@ -59,7 +59,7 @@ namespace WebBellwether.API.Services.JokeService
                 if (_repository.JokeCategoryDetailRepository.GetFirst(x => x.JokeCategoryName.Equals(jokeCategory.JokeCategoryName)) != null)
                     return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryExistsInDb };
                 var entity = _repository.JokeCategoryRepository.GetWithInclude(x => x.Id == jokeCategory.Id).FirstOrDefault();
-                entity?.JokeCategoryDetail.Add(new JokeCategoryDetail { JokeCategoryName = jokeCategory.JokeCategoryName, Language = _repository.LanguageRepository.GetFirst(x => x.Id == jokeCategory.LanguageId) });
+                entity?.JokeCategoryDetail.Add(new JokeCategoryDetailDao { JokeCategoryName = jokeCategory.JokeCategoryName, Language = _repository.LanguageRepository.GetFirst(x => x.Id == jokeCategory.LanguageId) });
                 _repository.Save();
                 return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.JokeCategoryTranslationAdded };
             }
@@ -72,12 +72,12 @@ namespace WebBellwether.API.Services.JokeService
         {
             try
             {
-                JokeCategory entity = new JokeCategory
+                JokeCategoryDao entity = new JokeCategoryDao
                 {
                     CreationDate = DateTime.UtcNow,
-                    JokeCategoryDetail = new List<JokeCategoryDetail>
+                    JokeCategoryDetail = new List<JokeCategoryDetailDao>
                     {
-                        new JokeCategoryDetail
+                        new JokeCategoryDetailDao
                         {
                             JokeCategoryName = jokeCategory.JokeCategoryName,
                             Language = GetLanguage(jokeCategory.LanguageId)
@@ -163,7 +163,7 @@ namespace WebBellwether.API.Services.JokeService
             }
         }
         //This function is often duplicated it a little disturbing . Do something with this 
-        public Language GetLanguage(int id)
+        public LanguageDao GetLanguage(int id)
         {
             return _repository.LanguageRepository.Get(x => x.Id == id);
         }

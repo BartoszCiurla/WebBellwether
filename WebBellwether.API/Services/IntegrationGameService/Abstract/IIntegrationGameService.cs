@@ -13,7 +13,7 @@ namespace WebBellwether.API.Services.IntegrationGameService.Abstract
         ResultMessage PutGameFeature(GameFeatureModel gameFeatureModel);
         ResultMessage PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel);
         List<GameFeatureDetailModel> GetGameFeatureDetails(int language);
-        List<AvailableLanguage> FillAvailableTranslation(int gameId, List<Language> allLanguages);
+        List<AvailableLanguage> FillAvailableTranslation(int gameId, List<LanguageDao> allLanguages);
         List<IntegrationGameDetailModel> FillGameDetailModel(int integrationGameDetailId);
         ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game);
         List<GameFeatureModel> GetGameFeatures(int language);

@@ -65,7 +65,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 return result;
             else if (result.ResultState == ResultState.Success && result.ResultMessage == ResultMessage.GameAdded)
             {
-                List<Language> languages = _repository.LanguageRepository.GetAll().ToList();
+                List<LanguageDao> languages = _repository.LanguageRepository.GetAll().ToList();
                 //fill rest of data
                 IntegrationGameModel tempGame = (IntegrationGameModel)result.ResultValue;
                 tempGame.IntegrationGameDetailModels = FillGameDetailModel(tempGame.IntegrationGameId);
@@ -88,7 +88,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         }
         public List<IntegrationGameModel> GetIntegrationGamesWithAvailableLanguages(int language)
         {
-            List<Language> languages = _repository.LanguageRepository.GetAll().ToList();
+            List<LanguageDao> languages = _repository.LanguageRepository.GetAll().ToList();
             var games = new List<IntegrationGameModel>();
             var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
             entity.ForEach(x =>
@@ -132,7 +132,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         }
 
 
-        public List<AvailableLanguage> FillAvailableTranslation(int gameId, List<Language> allLanguages)
+        public List<AvailableLanguage> FillAvailableTranslation(int gameId, List<LanguageDao> allLanguages)
         {
             var translation = new List<AvailableLanguage>();
             _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = z.Language, HasTranslation = true }));

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebBellwether.API.Entities
 {
-    public class RefreshToken
+    [Table("RefreshToken")]
+    public class RefreshTokenDao
     {
         [Key]
         public string Id { get; set; }

@@ -7,13 +7,13 @@ namespace WebBellwether.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class initAferFirstPartReforge : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initAferFirstPartReforge));
         
         string IMigrationMetadata.Id
         {
-            get { return "201601011724518_init"; }
+            get { return "201601042254131_initAferFirstPartReforge"; }
         }
         
         string IMigrationMetadata.Source

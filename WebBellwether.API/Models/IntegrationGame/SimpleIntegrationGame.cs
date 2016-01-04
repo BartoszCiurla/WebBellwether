@@ -6,6 +6,6 @@ namespace WebBellwether.API.Models.IntegrationGame
     public class SimpleIntegrationGame
     {
         public int Id { get; set; }
-        public Language Language { get; set; }
+        public LanguageDao Language { get; set; }
     }
 }

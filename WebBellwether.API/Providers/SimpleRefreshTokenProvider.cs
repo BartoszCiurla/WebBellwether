@@ -29,7 +29,7 @@ namespace WebBellwether.API.Providers
             {
                 var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
 
-                var token = new RefreshToken()
+                var token = new RefreshTokenDao()
                 {
                     Id = Helper.GetHash(refreshTokenId),
                     ClientId = clientid,

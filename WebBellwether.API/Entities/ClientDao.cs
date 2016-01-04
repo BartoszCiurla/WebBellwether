@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebBellwether.API.Models;
 
 namespace WebBellwether.API.Entities
 {
-    public class Client
+    [Table("Client")]
+    public class ClientDao
     {
         [Key]
         public string Id { get; set; }

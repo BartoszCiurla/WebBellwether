@@ -1,7 +1,9 @@
-﻿namespace WebBellwether.API.Entities.Translations
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebBellwether.API.Entities.Translations
 {
-    //tylko sama definicja jezyka 
-    public class Language
+    [Table("Language")]
+    public class LanguageDao
     {
         public int Id { get; set; }
         public string LanguageName { get; set; }

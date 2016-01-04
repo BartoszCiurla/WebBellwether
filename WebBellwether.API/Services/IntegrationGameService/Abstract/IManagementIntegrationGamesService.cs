@@ -9,11 +9,11 @@ namespace WebBellwether.API.Services.IntegrationGameService.Abstract
     public interface IManagementIntegrationGamesService
     {
         ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game);
-        IntegrationGameDetail BuildIntegrationGameDetail(NewIntegrationGameModel game);
-        Language GetLanguage(int id);
+        IntegrationGameDetailDao BuildIntegrationGameDetail(NewIntegrationGameModel game);
+        LanguageDao GetLanguage(int id);
         List<GameFeatureModel> GetGameFeatures(int language);
         void BuildFeaturesTemplate(int language, List<GameFeatureModel> gameFeatures);
-        List<IntegrationGameFeature> GetGameFeatures(int[] features, int language);
+        List<IntegrationGameFeatureDao> GetGameFeatures(int[] features, int language);
         ResultStateContainer InsertSeveralLanguageGame(NewIntegrationGameModel game);
         ResultMessage CheckNewGameLanguage(NewIntegrationGameModel game);
         ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game);

@@ -30,10 +30,10 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             try
             {
-                IntegrationGame entity = new IntegrationGame
+                IntegrationGameDao entity = new IntegrationGameDao
                 {
                     CreationDate = DateTime.UtcNow,
-                    IntegrationGameDetails = new List<IntegrationGameDetail>
+                    IntegrationGameDetails = new List<IntegrationGameDetailDao>
                 {
                    BuildIntegrationGameDetail(game)
                 }
@@ -57,12 +57,12 @@ namespace WebBellwether.API.Services.IntegrationGameService
             }
            
         }
-        public IntegrationGameDetail BuildIntegrationGameDetail(NewIntegrationGameModel game)
+        public IntegrationGameDetailDao BuildIntegrationGameDetail(NewIntegrationGameModel game)
         {
-            List<IntegrationGameFeature> integrationGameFeatures = GetGameFeatures(game.Features, game.Language);
+            List<IntegrationGameFeatureDao> integrationGameFeatures = GetGameFeatures(game.Features, game.Language);
             if (integrationGameFeatures == null)
                 return null;
-            return new IntegrationGameDetail
+            return new IntegrationGameDetailDao
             {
                 Language = GetLanguage(game.Language),
                 IntegrationGameName = game.GameName,
@@ -70,16 +70,16 @@ namespace WebBellwether.API.Services.IntegrationGameService
                 IntegrationGameFeatures = integrationGameFeatures
             };
         }
-        public List<IntegrationGameFeature> GetGameFeatures(int[] features, int language)
+        public List<IntegrationGameFeatureDao> GetGameFeatures(int[] features, int language)
         {
             //its very important features == gameFeatureDetail.id not gamefeaturedetaillanguages.id i must use language to take good record 
             //first part , take feature detail
-            var result = new List<IntegrationGameFeature>();
+            var result = new List<IntegrationGameFeatureDao>();
             features.ToList().ForEach(x =>
             {
                 var entity = _repository.GameFeatureDetailLanguageRepository.Get(z => z.GameFeatureDetail.Id == x && z.Language.Id == language);
                 if (entity != null)
-                    result.Add(new IntegrationGameFeature { GameFeatureDetailLanguage = entity });
+                    result.Add(new IntegrationGameFeatureDao { GameFeatureDetailLanguage = entity });
             });
             //second part ,take feature
             result.ForEach(x =>
@@ -202,7 +202,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
         }
 
 
-        public Language GetLanguage(int id)
+        public LanguageDao GetLanguage(int id)
         {
             return _repository.LanguageRepository.Get(x => x.Id == id);
         }

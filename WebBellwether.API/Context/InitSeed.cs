@@ -8,188 +8,188 @@ namespace WebBellwether.API.Context
 {
     public static class InitSeed
     {
-        public static IEnumerable<Language> BuildLanguagesList()
+        public static IEnumerable<LanguageDao> BuildLanguagesList()
         {
-            return new List<Language>
+            return new List<LanguageDao>
             {
 
-                new Language
+                new LanguageDao
                 {
                     LanguageName = "English",
-                    LanguageShortName = "GB",
+                    LanguageShortName = "en",
                     IsPublic = true
                 },
-                new Language
+                new LanguageDao
                 {
                     LanguageName = "Polish",
-                    LanguageShortName = "PL",
+                    LanguageShortName = "pl",
                     IsPublic = true
                 },
             };
         }
 
-        public static IEnumerable<GameFeature> BuildGameFeatures(List<Language> languages)
+        public static IEnumerable<GameFeatureDao> BuildGameFeatures(List<LanguageDao> languages)
         {
             var en = languages.FirstOrDefault(x => x.LanguageName.StartsWith("English"));
             var pl = languages.FirstOrDefault(x => x.LanguageName.StartsWith("Polish"));
 
-            var newGameFeatures = new List<GameFeature>
+            var newGameFeatures = new List<GameFeatureDao>
             {
-                new GameFeature
+                new GameFeatureDao
                 {
-                    GameFeatureLanguages = new Collection<GameFeatureLanguage>
+                    GameFeatureLanguages = new Collection<GameFeatureLanguageDao>
                     {
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Category game",
                             Language = en
                         },
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Kategoria zabawy",
                             Language = pl
                         }
                     },
-                    GameFeatureDetails = new Collection<GameFeatureDetail>
+                    GameFeatureDetails = new Collection<GameFeatureDetailDao>
                     {
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Integration",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Integracja",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Concentration",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Koncentracja",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Creativity",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Kreatywność",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Gone to group",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Podział na grupy",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Let us learn to",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Poznajmy się",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Team work",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Praca w grupie",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Discharge energy",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Rozładowanie energii",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Competition",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Współzawodnictwo",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Dexterity",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Zręczność",
                                     Language = pl
@@ -198,65 +198,65 @@ namespace WebBellwether.API.Context
                         },
                     }
                 },
-                new GameFeature
+                new GameFeatureDao
                 {
-                    GameFeatureLanguages = new Collection<GameFeatureLanguage>
+                    GameFeatureLanguages = new Collection<GameFeatureLanguageDao>
                     {
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Pace of play",
                             Language = en
                         },
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Tempo zabawy",
                             Language = pl
                         }
                     },
-                    GameFeatureDetails = new Collection<GameFeatureDetail>
+                    GameFeatureDetails = new Collection<GameFeatureDetailDao>
                     {
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Dynamic",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Dynamiczne",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Static",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Statyczne",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Living",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Żywe",
                                     Language = pl
@@ -265,49 +265,49 @@ namespace WebBellwether.API.Context
                         }
                     }
                 },
-                new GameFeature
+                new GameFeatureDao
                 {
-                    GameFeatureLanguages = new Collection<GameFeatureLanguage>
+                    GameFeatureLanguages = new Collection<GameFeatureLanguageDao>
                     {
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Number of player",
                             Language = en
                         },
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Liczba graczy",
                             Language = pl
                         }
                     },
-                    GameFeatureDetails = new Collection<GameFeatureDetail>
+                    GameFeatureDetails = new Collection<GameFeatureDetailDao>
                     {
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Optional",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Dowolna",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "More than 20",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Powyżej 20",
                                     Language = pl
@@ -316,65 +316,65 @@ namespace WebBellwether.API.Context
                         }
                     }
                 },
-                new GameFeature
+                new GameFeatureDao
                 {
-                    GameFeatureLanguages = new Collection<GameFeatureLanguage>
+                    GameFeatureLanguages = new Collection<GameFeatureLanguageDao>
                     {
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Preparation fun",
                             Language = en
                         },
-                        new GameFeatureLanguage
+                        new GameFeatureLanguageDao
                         {
                             GameFeatureName = "Przygotowanie zabawy",
                             Language = pl
                         }
                     },
-                    GameFeatureDetails = new Collection<GameFeatureDetail>
+                    GameFeatureDetails = new Collection<GameFeatureDetailDao>
                     {
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Lack",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Brak",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Minimum",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Minimalne",
                                     Language = pl
                                 },
                             }
                         },
-                        new GameFeatureDetail
+                        new GameFeatureDetailDao
                         {
-                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguage>
+                            GameFeatureDetailLanguages = new Collection<GameFeatureDetailLanguageDao>
                             {
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Required",
                                     Language = en
                                 },
-                                new GameFeatureDetailLanguage
+                                new GameFeatureDetailLanguageDao
                                 {
                                     GameFeatureDetailName = "Wymagane",
                                     Language = pl

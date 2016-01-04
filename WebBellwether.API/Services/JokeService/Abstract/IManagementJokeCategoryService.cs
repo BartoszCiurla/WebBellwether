@@ -14,6 +14,6 @@ namespace WebBellwether.API.Services.JokeService.Abstract
         ResultStateContainer InsertSingleLanguageJokeCategory(JokeCategoryModel jokeCategory);
         ResultStateContainer PutJokeCategory(JokeCategoryModel jokeCategory);
         ResultStateContainer DeleteJokeCategory(JokeCategoryModel jokeCategory);
-        Language GetLanguage(int id);
+        LanguageDao GetLanguage(int id);
     }
 }

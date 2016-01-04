@@ -54,21 +54,21 @@ namespace WebBellwether.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [Route("PostEditLanguage")]
-        public IHttpActionResult PostEditLangauge(Language language)
+        public IHttpActionResult PostEditLangauge(LanguageDao language)
         {
             ResultStateContainer result = _service.PutLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize(Roles = "Admin")]
         [Route("PostPublishLanguage")]
-        public IHttpActionResult PostPublishLanguage(Language language)
+        public IHttpActionResult PostPublishLanguage(LanguageDao language)
         {
             ResultStateContainer result = _service.PublishLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultMessage.ToString()) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize(Roles = "Admin")]
         [Route("PostLanguage")]
-        public IHttpActionResult PostLanguage(Language language)
+        public IHttpActionResult PostLanguage(LanguageDao language)
         {
             ResultStateContainer result = _service.PostLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
@@ -76,7 +76,7 @@ namespace WebBellwether.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [Route("PostDeleteLanguage")]
-        public IHttpActionResult PostDeleteLanguage(Language language)
+        public IHttpActionResult PostDeleteLanguage(LanguageDao language)
         {
             ResultStateContainer result = _service.DeleteLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());

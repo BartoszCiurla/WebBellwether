@@ -20,40 +20,40 @@ namespace WebBellwether.API.Context
             
         }
         //intergration games 
-        public DbSet<IntegrationGame> IntegrationGames { get; set; }
-        public DbSet<IntegrationGameDetail> IntegrationGameDetails { get; set; }
-        public DbSet<IntegrationGameFeature> IntegrationGameFeatures { get; set; }
+        public DbSet<IntegrationGameDao> IntegrationGames { get; set; }
+        public DbSet<IntegrationGameDetailDao> IntegrationGameDetails { get; set; }
+        public DbSet<IntegrationGameFeatureDao> IntegrationGameFeatures { get; set; }
 
-        public DbSet<GameFeature> GameFeatures { get; set; }
-        public DbSet<GameFeatureLanguage> GameFeatureLanguages { get; set; }
+        public DbSet<GameFeatureDao> GameFeatures { get; set; }
+        public DbSet<GameFeatureLanguageDao> GameFeatureLanguages { get; set; }
 
-        public DbSet<GameFeatureDetail> GameFeatureDetails { get; set; }
-        public DbSet<GameFeatureDetailLanguage> GameFeatureDetailLanguages { get; set; }
+        public DbSet<GameFeatureDetailDao> GameFeatureDetails { get; set; }
+        public DbSet<GameFeatureDetailLanguageDao> GameFeatureDetailLanguages { get; set; }
 
         //intergration games 
 
 
         //jokes
-        public DbSet<Joke> Jokes { get; set; }
-        public DbSet<JokeDetail> JokeDetails { get; set; }
-        public DbSet<JokeCategory> JokeCategories { get; set; }
-        public DbSet<JokeCategoryDetail> JokeCategoryDetails { get; set; }
+        public DbSet<JokeDao> Jokes { get; set; }
+        public DbSet<JokeDetailDao> JokeDetails { get; set; }
+        public DbSet<JokeCategoryDao> JokeCategories { get; set; }
+        public DbSet<JokeCategoryDetailDao> JokeCategoryDetails { get; set; }
         //jokes
 
         //translation    
-        public DbSet<Language> Languages { get; set; }
+        public DbSet<LanguageDao> Languages { get; set; }
         //translation
 
         //authentication
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<ClientDao> Clients { get; set; }
+        public DbSet<RefreshTokenDao> RefreshTokens { get; set; }
         //authentication
 
         //version
-        public DbSet<LanguageVersion> LanguageVersions { get; set; }
-        public DbSet<IntegrationGameVersion> IntegrationGameVersions { get; set; }
-        public DbSet<JokeCategoryVersion> JokeCategoryVersions { get; set; }
-        public DbSet<JokeVersion> JokeVersions { get; set; }
+        public DbSet<LanguageVersionDao> LanguageVersions { get; set; }
+        public DbSet<IntegrationGameVersionDao> IntegrationGameVersions { get; set; }
+        public DbSet<JokeCategoryVersionDao> JokeCategoryVersions { get; set; }
+        public DbSet<JokeVersionDao> JokeVersions { get; set; }
         //version
     }
 }

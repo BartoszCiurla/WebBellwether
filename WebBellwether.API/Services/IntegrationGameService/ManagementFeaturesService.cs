@@ -100,7 +100,7 @@ namespace WebBellwether.API.Services.IntegrationGameService
             }
         }
 
-        private Language GetLanguage(int languageId)
+        private LanguageDao GetLanguage(int languageId)
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
         }
@@ -108,13 +108,13 @@ namespace WebBellwether.API.Services.IntegrationGameService
         {
             try
             {
-                Language languageForGameFeatures = GetLanguage(languageId);
+                LanguageDao languageForGameFeatures = GetLanguage(languageId);
                 if (languageForGameFeatures == null)
                     return false;
-                IEnumerable<GameFeatureLanguage> newGameFeatures = CreateGameFeaturesLanguages(languageForGameFeatures);
+                IEnumerable<GameFeatureLanguageDao> newGameFeatures = CreateGameFeaturesLanguages(languageForGameFeatures);
                 if (newGameFeatures == null)
                     return false;
-                IEnumerable<GameFeatureDetailLanguage> newGameFeatureDetails =
+                IEnumerable<GameFeatureDetailLanguageDao> newGameFeatureDetails =
                     CreateGameFeaturesDetailsLanguage(languageForGameFeatures);
                 if (newGameFeatureDetails == null)
                     return false;
@@ -137,40 +137,40 @@ namespace WebBellwether.API.Services.IntegrationGameService
            
         }
 
-        private IEnumerable<GameFeatureDetailLanguage> CreateGameFeaturesDetailsLanguage(Language language)
+        private IEnumerable<GameFeatureDetailLanguageDao> CreateGameFeaturesDetailsLanguage(LanguageDao language)
         {
             var templateGameFeaturesDetails = GetTemplateGameFeatureDetails();
             if (templateGameFeaturesDetails == null)
                 return null;
-            var newFeatureDetailsLanguages = new List<GameFeatureDetailLanguage>();
+            var newFeatureDetailsLanguages = new List<GameFeatureDetailLanguageDao>();
             templateGameFeaturesDetails.ToList().ForEach(x =>
             {
-                newFeatureDetailsLanguages.Add(new GameFeatureDetailLanguage {GameFeatureDetail = x,GameFeatureDetailName = "",Language = language});
+                newFeatureDetailsLanguages.Add(new GameFeatureDetailLanguageDao {GameFeatureDetail = x,GameFeatureDetailName = "",Language = language});
             });
             return newFeatureDetailsLanguages;
         }
 
-        private IEnumerable<GameFeatureDetail> GetTemplateGameFeatureDetails()
+        private IEnumerable<GameFeatureDetailDao> GetTemplateGameFeatureDetails()
         {
             return
                 _repository.GameFeatureDetailLanguageRepository.GetWithInclude(x => x.Language.Id == 1)
                     .Select(y => y.GameFeatureDetail);
         } 
 
-        private IEnumerable<GameFeatureLanguage> CreateGameFeaturesLanguages(Language language)
+        private IEnumerable<GameFeatureLanguageDao> CreateGameFeaturesLanguages(LanguageDao language)
         {
             var templateGameFeatures = GetTemplateGameFeatures();
             if (templateGameFeatures == null)
                 return null;
-            var newFeaturesLanguages = new List<GameFeatureLanguage>();
+            var newFeaturesLanguages = new List<GameFeatureLanguageDao>();
             templateGameFeatures.ToList().ForEach(gameFeature =>
             {
-                newFeaturesLanguages.Add(new GameFeatureLanguage {GameFeature = gameFeature,Language = language,GameFeatureName = ""});
+                newFeaturesLanguages.Add(new GameFeatureLanguageDao {GameFeature = gameFeature,Language = language,GameFeatureName = ""});
             });
             return newFeaturesLanguages;
         }
 
-        private IEnumerable<GameFeature> GetTemplateGameFeatures()
+        private IEnumerable<GameFeatureDao> GetTemplateGameFeatures()
         {
             return
                 _repository.GameFeatureLanguageRepository.GetWithInclude(x => x.Language.Id == 1)

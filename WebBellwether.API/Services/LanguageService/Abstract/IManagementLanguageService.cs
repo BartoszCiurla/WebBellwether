@@ -11,16 +11,16 @@ namespace WebBellwether.API.Services.LanguageService.Abstract
 {
     interface IManagementLanguageService
     {
-        List<Language> GetLanguages(bool getAll = false);
-        ResultStateContainer PostLanguage(Language language);
+        List<LanguageDao> GetLanguages(bool getAll = false);
+        ResultStateContainer PostLanguage(LanguageDao language);
         ResultStateContainer FillLanguageFile(IEnumerable<string> languageValues, int langaugeId);
         IEnumerable<string> GetLanguageFileValue(int languageId);
         ResultStateContainer CreateLanguageFile(int newLanguageId);
         ResultStateContainer PutLanguageKey(LanguageKeyModel languageKey);
-        ResultStateContainer PublishLanguage(Language language);
-        ResultStateContainer PutLanguage(Language language);
-        ResultStateContainer DeleteLanguage(Language language);
+        ResultStateContainer PublishLanguage(LanguageDao language);
+        ResultStateContainer PutLanguage(LanguageDao language);
+        ResultStateContainer DeleteLanguage(LanguageDao language);
         IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId);
-        Language GetLanguageById(int languageId);
+        LanguageDao GetLanguageById(int languageId);
     }
 }

@@ -21,28 +21,28 @@ namespace WebBellwether.API.Services.LanguageService
             _repository = repository;
             _destinationPlace = destPlace;
         }
-        public List<Language> GetLanguages(bool getAll = false)
+        public List<LanguageDao> GetLanguages(bool getAll = false)
         {
             return getAll ? _repository.LanguageRepository.Get().ToList() : _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).ToList();
         }
-        private Language GetLanguageByName(string languageName)
+        private LanguageDao GetLanguageByName(string languageName)
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.LanguageName.Equals(languageName)).FirstOrDefault();
         }
-        public Language GetLanguageById(int languageId)
+        public LanguageDao GetLanguageById(int languageId)
         {
             return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
         }
-        public ResultStateContainer PostLanguage(Language language)
+        public ResultStateContainer PostLanguage(LanguageDao language)
         {
             try
             {
                 //check is language exists 
-                Language entity = GetLanguageByName(language.LanguageName);
+                LanguageDao entity = GetLanguageByName(language.LanguageName);
                 if (entity != null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageExists };
                 //insert and return new id 
-                entity = new Language { IsPublic = false, LanguageName = language.LanguageName, LanguageShortName = language.LanguageShortName };
+                entity = new LanguageDao { IsPublic = false, LanguageName = language.LanguageName, LanguageShortName = language.LanguageShortName };
                 _repository.LanguageRepository.Insert(entity);
                 _repository.Save();
                 entity = GetLanguageByName(language.LanguageName);
@@ -95,7 +95,7 @@ namespace WebBellwether.API.Services.LanguageService
 
         private Dictionary<string, string> GetLanguageFileKeys()
         {
-            Language templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).FirstOrDefault();
+            LanguageDao templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).FirstOrDefault();
             if (templateLanguage == null)
                 return null;
             string templateFileLocation = _destinationPlace + templateLanguage.Id + ".json";
@@ -113,7 +113,7 @@ namespace WebBellwether.API.Services.LanguageService
 
         public IEnumerable<string> GetLanguageFileValue(int languageId)
         {
-            Language language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            LanguageDao language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
             if (language == null)
                 return null;
             string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
@@ -131,7 +131,7 @@ namespace WebBellwether.API.Services.LanguageService
 
         public IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId)
         {
-            Language language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            LanguageDao language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
             if (language == null)
                 return null;
             string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
@@ -198,7 +198,7 @@ namespace WebBellwether.API.Services.LanguageService
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
-        public ResultStateContainer PublishLanguage(Language language)
+        public ResultStateContainer PublishLanguage(LanguageDao language)
         {
             try
             {
@@ -223,7 +223,7 @@ namespace WebBellwether.API.Services.LanguageService
                     if (_repository.LanguageRepository.GetWithInclude(x => x.IsPublic).Count() == 1)  //check how many languages is public 
                         return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.OnlyOnePublicLanguage };
                 }
-                Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
+                LanguageDao entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.IsPublic = language.IsPublic;
@@ -237,11 +237,11 @@ namespace WebBellwether.API.Services.LanguageService
             }
         }
 
-        public ResultStateContainer PutLanguage(Language language)
+        public ResultStateContainer PutLanguage(LanguageDao language)
         {
             try
             {
-                Language entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
+                LanguageDao entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.LanguageName = language.LanguageName;
@@ -261,13 +261,13 @@ namespace WebBellwether.API.Services.LanguageService
             if (File.Exists(file))
                 File.Delete(file);
         }
-        public ResultStateContainer DeleteLanguage(Language language)
+        public ResultStateContainer DeleteLanguage(LanguageDao language)
         {
             try
             {
                 if (language.Id == 1 | language.Id == 2) // i need list of irremovable languages ... 
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageCanNotBeRemoved };
-                Language entity = GetLanguageById(language.Id);
+                LanguageDao entity = GetLanguageById(language.Id);
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 _repository.LanguageRepository.Delete(entity);

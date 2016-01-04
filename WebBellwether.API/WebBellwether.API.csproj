@@ -171,33 +171,33 @@
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\TranslateController.cs" />
     <Compile Include="Controllers\VersionsController.cs" />
-    <Compile Include="Entities\IntegrationGame\GameFeature.cs" />
-    <Compile Include="Entities\IntegrationGame\GameFeatureDetail.cs" />
-    <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguage.cs" />
-    <Compile Include="Entities\IntegrationGame\GameFeatureLanguage.cs" />
-    <Compile Include="Entities\IntegrationGame\IntegrationGame.cs" />
-    <Compile Include="Entities\IntegrationGame\IntegrationGameDetail.cs" />
-    <Compile Include="Entities\IntegrationGame\IntegrationGameFeature.cs" />
-    <Compile Include="Entities\Joke\Joke.cs" />
-    <Compile Include="Entities\Joke\JokeCategory.cs" />
-    <Compile Include="Entities\Joke\JokeCategoryDetail.cs" />
-    <Compile Include="Entities\Joke\JokeDetail.cs" />
-    <Compile Include="Entities\Translations\Language.cs" />
-    <Compile Include="Entities\Version\IntegrationGameVersion.cs" />
-    <Compile Include="Entities\Version\JokeCategoryVersion.cs" />
-    <Compile Include="Entities\Version\JokeVersion.cs" />
-    <Compile Include="Entities\Version\LanguageVersion.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureDao.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureDetailDao.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureDetailLanguageDao.cs" />
+    <Compile Include="Entities\IntegrationGame\GameFeatureLanguageDao.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGameDao.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGameDetailDao.cs" />
+    <Compile Include="Entities\IntegrationGame\IntegrationGameFeatureDao.cs" />
+    <Compile Include="Entities\Joke\JokeDao.cs" />
+    <Compile Include="Entities\Joke\JokeCategoryDao.cs" />
+    <Compile Include="Entities\Joke\JokeCategoryDetailDao.cs" />
+    <Compile Include="Entities\Joke\JokeDetailDao.cs" />
+    <Compile Include="Entities\Translations\LanguageDao.cs" />
+    <Compile Include="Entities\Version\IntegrationGameVersionDao.cs" />
+    <Compile Include="Entities\Version\JokeCategoryVersionDao.cs" />
+    <Compile Include="Entities\Version\JokeVersionDao.cs" />
+    <Compile Include="Entities\Version\LanguageVersionDao.cs" />
     <Compile Include="Function\Helper.cs" />
-    <Compile Include="Entities\Client.cs" />
-    <Compile Include="Migrations\201601011724518_init.cs" />
-    <Compile Include="Migrations\201601011724518_init.Designer.cs">
-      <DependentUpon>201601011724518_init.cs</DependentUpon>
+    <Compile Include="Entities\ClientDao.cs" />
+    <Compile Include="Migrations\201601042254131_initAferFirstPartReforge.cs" />
+    <Compile Include="Migrations\201601042254131_initAferFirstPartReforge.Designer.cs">
+      <DependentUpon>201601042254131_initAferFirstPartReforge.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
     <Compile Include="Models\Enums.cs" />
-    <Compile Include="Entities\RefreshToken.cs" />
+    <Compile Include="Entities\RefreshTokenDao.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureDetailModel.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureModel.cs" />
@@ -271,8 +271,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601011724518_init.resx">
-      <DependentUpon>201601011724518_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601042254131_initAferFirstPartReforge.resx">
+      <DependentUpon>201601042254131_initAferFirstPartReforge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -42,14 +42,14 @@ namespace WebBellwether.API.Repositories
             return user;
         }
 
-        public Client FindClient(string clientId)
+        public ClientDao FindClient(string clientId)
         {
             var client = _ctx.Clients.Find(clientId);
 
             return client;
         }
 
-        public async Task<bool> AddRefreshToken(RefreshToken token)
+        public async Task<bool> AddRefreshToken(RefreshTokenDao token)
         {
 
             var existingToken = _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId).SingleOrDefault();
@@ -77,20 +77,20 @@ namespace WebBellwether.API.Repositories
             return false;
         }
 
-        public async Task<bool> RemoveRefreshToken(RefreshToken refreshToken)
+        public async Task<bool> RemoveRefreshToken(RefreshTokenDao refreshToken)
         {
             _ctx.RefreshTokens.Remove(refreshToken);
             return await _ctx.SaveChangesAsync() > 0;
         }
 
-        public async Task<RefreshToken> FindRefreshToken(string refreshTokenId)
+        public async Task<RefreshTokenDao> FindRefreshToken(string refreshTokenId)
         {
             var refreshToken = await _ctx.RefreshTokens.FindAsync(refreshTokenId);
 
             return refreshToken;
         }
 
-        public List<RefreshToken> GetAllRefreshTokens()
+        public List<RefreshTokenDao> GetAllRefreshTokens()
         {
             return _ctx.RefreshTokens.ToList();
         }
