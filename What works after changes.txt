@@ -1,0 +1,10 @@
+serives wszystkie interfejsy dzialaja 
+
+versionService , version controller 
+translateservice ca³y 
+languageservice caly 
+
+managemenetFeatureService ca³y 
+
+
+

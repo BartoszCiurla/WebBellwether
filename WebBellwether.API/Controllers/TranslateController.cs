@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using WebBellwether.API.Models.Translation;
-using WebBellwether.API.Repositories;
-using WebBellwether.API.Results;
-using WebBellwether.API.Services.LanguageService;
-using WebBellwether.API.Services.TranslateService;
-using WebBellwether.API.Services.TranslateService.Abstract;
+using WebBellwether.Models.Models.Translation;
+using WebBellwether.Models.Results;
+using WebBellwether.Services.Services.LanguageService;
+using WebBellwether.Services.Services.TranslateService;
+using WebBellwether.Services.Services.TranslateService.Abstract;
 
 namespace WebBellwether.API.Controllers
 {
@@ -19,7 +17,7 @@ namespace WebBellwether.API.Controllers
         public TranslateController()
         {
             _service = new YandexTranslateService();
-            _languageService = new ManagementLanguageService(new AggregateRepositories(), @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
+            _languageService = new ManagementLanguageService(@"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
         }
 
         [Authorize(Roles = "Admin")]

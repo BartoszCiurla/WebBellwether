@@ -1,9 +1,8 @@
 ﻿using System.Web.Http;
-using WebBellwether.API.Models.IntegrationGame;
-using WebBellwether.API.Results;
-using WebBellwether.API.Services.IntegrationGameService;
-using WebBellwether.API.Services.IntegrationGameService.Abstract;
-using WebBellwether.API.Repositories;
+using WebBellwether.Models.Models.IntegrationGame;
+using WebBellwether.Models.Results;
+using WebBellwether.Services.Services.IntegrationGameService;
+using WebBellwether.Services.Services.IntegrationGameService.Abstract;
 
 namespace WebBellwether.API.Controllers
 {
@@ -13,7 +12,7 @@ namespace WebBellwether.API.Controllers
         private readonly IIntegrationGameService _service;
         public IntegrationGamesController()
         {
-            _service = new IntegrationGameService(new AggregateRepositories());
+            _service = new IntegrationGameService();
         }
 
         [AllowAnonymous]

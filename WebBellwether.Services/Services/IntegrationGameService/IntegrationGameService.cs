@@ -1,0 +1,172 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebBellwether.Models.Models.IntegrationGame;
+using WebBellwether.Models.Models.Translation;
+using WebBellwether.Models.Results;
+using WebBellwether.Repositories.Entities.Translations;
+using WebBellwether.Repositories.Repositories;
+using WebBellwether.Repositories.Repositories.Abstract;
+using IIntegrationGameService = WebBellwether.Services.Services.IntegrationGameService.Abstract.IIntegrationGameService;
+using IManagementFeaturesService = WebBellwether.Services.Services.IntegrationGameService.Abstract.IManagementFeaturesService;
+using IManagementIntegrationGamesService = WebBellwether.Services.Services.IntegrationGameService.Abstract.IManagementIntegrationGamesService;
+
+namespace WebBellwether.Services.Services.IntegrationGameService
+{
+    public class IntegrationGameService : IIntegrationGameService
+    {
+        private readonly IAggregateRepositories _repository;
+        private readonly IManagementFeaturesService _managementFeaturesService;
+        private readonly IManagementIntegrationGamesService _managementIntegrationGamesService;
+
+        public IntegrationGameService()
+        {
+            _repository = new AggregateRepositories();
+            _managementFeaturesService = new ManagementFeaturesService(_repository);
+            _managementIntegrationGamesService = new ManagementIntegrationGamesService(_repository);
+        }
+
+        public IEnumerable<DirectIntegrationGameModel> GetIntegrationGames(int language)
+        {
+            var games = new List<DirectIntegrationGameModel>();
+            var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
+            entity.ForEach(x =>
+            {
+                var gameFeatureDetailsNames = GetGameFeatureDetailName(x.Id).ToArray();
+                games.Add(new DirectIntegrationGameModel()
+                {
+                    Id = x.IntegrationGame.Id,
+                    IntegrationGameId = x.Id,
+                    GameName = x.IntegrationGameName,
+                    GameDescription = x.IntegrationGameDescription,
+                    CategoryGame = gameFeatureDetailsNames[0],
+                    PaceOfPlay = gameFeatureDetailsNames[1],
+                    NumberOfPlayer = gameFeatureDetailsNames[2],
+                    PreparationFun = gameFeatureDetailsNames[3]
+                });
+            });
+            return games;
+        }
+
+        private IEnumerable<string> GetGameFeatureDetailName(int integrationGameDetailId)
+        {
+            return _repository.IntegrationGameFeatureRepository
+                .GetWithInclude(x => x.IntegrationGameDetail.Id == integrationGameDetailId)
+                .OrderBy(x => x.GameFeatureLanguage.GameFeature.Id)
+                .Select(x => x.GameFeatureDetailLanguage.GameFeatureDetailName);
+        }
+
+        public IntegrationGameModel GetGameTranslation(int gameId, int languageId)
+        {
+            return _managementIntegrationGamesService.GetGameTranslation(gameId, languageId);
+        }
+
+        public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
+        {
+            ResultStateContainer result = _managementIntegrationGamesService.InsertIntegrationGame(game);
+            if (result.ResultState == ResultState.Success && result.ResultMessage == ResultMessage.SeveralLanguageGameAdded)
+                return result;
+            else if (result.ResultState == ResultState.Success && result.ResultMessage == ResultMessage.GameAdded)
+            {
+                List<LanguageDao> languages = _repository.LanguageRepository.GetAll().ToList();
+                //fill rest of data
+                IntegrationGameModel tempGame = (IntegrationGameModel)result.ResultValue;
+                tempGame.IntegrationGameDetailModels = FillGameDetailModel(tempGame.IntegrationGameId);
+                tempGame.GameTranslations = FillAvailableTranslation(tempGame.Id, languages);
+                result.ResultValue = tempGame;
+                return result;
+            }
+            else return result;
+        }
+
+        public List<GameFeatureModel> GetGameFeatures(int language)
+        {
+            return _managementIntegrationGamesService.GetGameFeatures(language);
+
+        }
+
+        public List<GameFeatureModel> GetGameFeatuesModelWithDetails(int language)
+        {
+            return _managementFeaturesService.GetGameFeatuesModelWithDetails(language);
+        }
+        public List<IntegrationGameModel> GetIntegrationGamesWithAvailableLanguages(int language)
+        {
+            List<LanguageDao> languages = _repository.LanguageRepository.GetAll().ToList();
+            var games = new List<IntegrationGameModel>();
+            var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == language).ToList();
+            entity.ForEach(x =>
+            {
+                games.Add(new IntegrationGameModel
+                {
+                    Id = x.IntegrationGame.Id, // this is global id 
+                    IntegrationGameId = x.Id, // id for translation
+                    Language = new Language { Id = x.Language.Id,IsPublic = x.Language.IsPublic,LanguageName = x.Language.LanguageName,LanguageShortName = x.Language.LanguageName}, 
+                    GameName = x.IntegrationGameName,
+                    GameDescription = x.IntegrationGameDescription,
+                    IntegrationGameDetailModels = FillGameDetailModel(x.Id), //i take id from integrationgamedetails
+                    GameTranslations = FillAvailableTranslation(x.IntegrationGame.Id, languages)
+                });
+            });
+            return games;
+        }
+        public ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame)
+        {
+            return _managementIntegrationGamesService.DeleteIntegratiomGame(integrationGame);
+        }
+        public ResultStateContainer PutIntegrationGame(IntegrationGameModel integrationGame)
+        {
+            integrationGame.GameTranslations = FillAvailableTranslation(integrationGame.Id, _repository.LanguageRepository.GetAll().ToList());
+            return _managementIntegrationGamesService.PutIntegrationGame(integrationGame);
+        }
+
+        public ResultMessage PutGameFeature(GameFeatureModel gameFeatureModel)
+        {
+            return _managementFeaturesService.PutGameFeature(gameFeatureModel);
+
+        }
+        public ResultMessage PutGameFeatureDetail(GameFeatureDetailModel gameFeatureDetailModel)
+        {
+            return _managementFeaturesService.PutGameFeatureDetail(gameFeatureDetailModel);
+        }
+
+        public List<GameFeatureDetailModel> GetGameFeatureDetails(int language)
+        {
+            return _managementFeaturesService.GetGameFeatureDetails(language);
+        }
+
+
+        public List<AvailableLanguage> FillAvailableTranslation(int gameId, List<LanguageDao> allLanguages)
+        {
+            var translation = new List<AvailableLanguage>();
+            _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId).ToList().ForEach(z => translation.Add(new AvailableLanguage { Language = new Language {Id = z.Language.Id,IsPublic = z.Language.IsPublic,LanguageName = z.Language.LanguageName,LanguageShortName = z.Language.LanguageShortName}, HasTranslation = true }));
+            allLanguages.ForEach(x =>
+            {
+                if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
+                    translation.Add(new AvailableLanguage { Language = new Language {Id = x.Id,IsPublic = x.IsPublic,LanguageName = x.LanguageName,LanguageShortName = x.LanguageShortName}, HasTranslation = false });
+            });
+            return translation;
+        }
+        public List<IntegrationGameDetailModel> FillGameDetailModel(int integrationGameDetailId)
+        {
+            List<IntegrationGameDetailModel> result = new List<IntegrationGameDetailModel>();
+            _repository.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.Id == integrationGameDetailId).ToList().ForEach(
+                z =>
+                {
+                    result.Add(new IntegrationGameDetailModel
+                    {
+                        Id = z.GameFeatureDetailLanguage.Id,
+                        GameFeatureId = z.GameFeatureLanguage.GameFeature.Id,
+                        GameFeatureLanguageId = z.GameFeatureLanguage.Id,
+                        GameFeatureName = z.GameFeatureLanguage.GameFeatureName,
+                        GameFeatureDetailId = z.GameFeatureDetailLanguage.GameFeatureDetail.Id,
+                        GameFeatureDetailName = z.GameFeatureDetailLanguage.GameFeatureDetailName
+                    });
+                });
+            return result;
+        }
+
+        public bool CreateGameFeatures(int languageId)
+        {
+            return _managementFeaturesService.CreateGameFeatures(languageId);
+        }
+    }
+}

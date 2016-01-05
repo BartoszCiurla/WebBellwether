@@ -1,0 +1,172 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using WebBellwether.Models.Models.Joke;
+using WebBellwether.Models.Results;
+using WebBellwether.Repositories.Entities.Joke;
+using WebBellwether.Repositories.Entities.Translations;
+using WebBellwether.Repositories.Repositories.Abstract;
+using WebBellwether.Services.Services.JokeService.Abstract;
+
+namespace WebBellwether.Services.Services.JokeService
+{
+    public class ManagementJokeCategoryService:IManagementJokeCategoryService
+    {
+        private readonly IAggregateRepositories _repository;
+        public ManagementJokeCategoryService(IAggregateRepositories repository)
+        {
+            _repository = repository;
+        }
+
+        public List<JokeCategoryModel> GetJokeCategories(int languageId)
+        {
+            List<JokeCategoryModel> result = new List<JokeCategoryModel>();
+            _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(z =>
+             {
+                 result.Add(new JokeCategoryModel { Id=z.JokeCategory.Id,JokeCategoryId =z.Id,JokeCategoryName =z.JokeCategoryName , LanguageId = z.Language.Id });
+             });
+            return result;
+        }
+        public JokeCategoryModel GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
+        {
+            var entity = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategoryId && x.Language.Id == languageId).FirstOrDefault();
+            if (entity == null)
+                return null;
+            JokeCategoryModel jokeCategory = new JokeCategoryModel { Id = jokeCategoryId, JokeCategoryName = entity.JokeCategoryName, LanguageId = entity.Language.Id, JokeCategoryId = entity.Id };
+            return jokeCategory;
+        }
+        public ResultStateContainer InsertJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            if (_repository.JokeCategoryDetailRepository.GetFirst(x => x.JokeCategoryName.Equals(jokeCategory.JokeCategoryName)) != null)
+                return new ResultStateContainer { ResultState = ResultState.Success };
+            if (jokeCategory.Id == 0)
+                return InsertSingleLanguageJokeCategory(jokeCategory);
+            return InsertSeveralLanguageJokeCategory(jokeCategory);
+        }
+        public ResultStateContainer InsertSeveralLanguageJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            try
+            {
+                if(jokeCategory.JokeCategoryId != 0)
+                {
+                    var entityToEdit = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Id == jokeCategory.JokeCategoryId).FirstOrDefault();
+                    if (entityToEdit == null)
+                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryTranslationNotExists };
+                    entityToEdit.JokeCategoryName = jokeCategory.JokeCategoryName;
+                    _repository.Save();
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.JokeCategoryTranslationEdited };
+                }
+                if (_repository.JokeCategoryDetailRepository.GetFirst(x => x.JokeCategoryName.Equals(jokeCategory.JokeCategoryName)) != null)
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.JokeCategoryExistsInDb };
+                var entity = _repository.JokeCategoryRepository.GetWithInclude(x => x.Id == jokeCategory.Id).FirstOrDefault();
+                entity?.JokeCategoryDetail.Add(new JokeCategoryDetailDao { JokeCategoryName = jokeCategory.JokeCategoryName, Language = _repository.LanguageRepository.GetFirst(x => x.Id == jokeCategory.LanguageId) });
+                _repository.Save();
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.JokeCategoryTranslationAdded };
+            }
+            catch(Exception)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
+            }
+        }
+        public ResultStateContainer InsertSingleLanguageJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            try
+            {
+                JokeCategoryDao entity = new JokeCategoryDao
+                {
+                    CreationDate = DateTime.UtcNow,
+                    JokeCategoryDetail = new List<JokeCategoryDetailDao>
+                    {
+                        new JokeCategoryDetailDao
+                        {
+                            JokeCategoryName = jokeCategory.JokeCategoryName,
+                            Language = GetLanguage(jokeCategory.LanguageId)
+                        }
+                    }
+                };
+                _repository.JokeCategoryRepository.Insert(entity);
+                _repository.Save();
+
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage= ResultMessage.JokeCategoryAdded, ResultValue = jokeCategory.JokeCategoryName };
+            }
+            catch (Exception)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
+            }
+        }
+        public ResultStateContainer PutJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            try
+            {
+                var entity = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Id == jokeCategory.JokeCategoryId).FirstOrDefault();
+                if (entity == null)
+                    return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.JokeCategoryNotExists };
+                if (_repository.JokeCategoryDetailRepository.GetFirst(x => x.JokeCategoryName.Equals(jokeCategory.JokeCategoryName)) != null)
+                    return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.ThisJokeCategoryExists };
+                entity.JokeCategoryName = jokeCategory.JokeCategoryName;
+                _repository.Save();
+                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.JokeCategoryEdited };
+            }
+            catch (Exception)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
+            }
+        }
+        public ResultStateContainer DeleteJokeCategory(JokeCategoryModel jokeCategory)
+        {
+            try
+            {
+                //all translation
+                if (jokeCategory.TemporarySeveralTranslationDelete)
+                {
+                    var jokeCategoryDetail = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.JokeCategory.Id == jokeCategory.Id);
+                    if (jokeCategoryDetail != null)
+                        jokeCategoryDetail.ToList().ForEach(x =>
+                        {
+                            _repository.JokeCategoryDetailRepository.Delete(x);
+                        });
+                    var mainJokeCategory = _repository.JokeCategoryRepository.GetWithInclude(x => x.Id == jokeCategory.Id).FirstOrDefault();
+                    if (mainJokeCategory != null)
+                        _repository.JokeCategoryRepository.Delete(mainJokeCategory);
+                    _repository.Save();
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.JokeCategoryDeleted };
+
+                }
+
+                else
+                {
+                    var jokeCategoryDetail = _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Id == jokeCategory.JokeCategoryId).FirstOrDefault();
+                    if (jokeCategoryDetail == null)
+                        return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.JokeCategoryTranslationNotExists };
+                    _repository.JokeCategoryDetailRepository.Delete(jokeCategoryDetail);
+                    int jokeCategoryTranslationCount = 0;
+                    if (jokeCategory.JokeCategoryTranslations != null)
+                        jokeCategory.JokeCategoryTranslations.ForEach(x =>
+                        {
+                            if (x.HasTranslation)
+                                jokeCategoryTranslationCount++;
+                        });
+                    if (jokeCategoryTranslationCount == 1)//have only one translation , can delete main id for jokecategory . Safe is safe ...
+                    {
+                        var mainJokeCategory = _repository.JokeCategoryRepository.GetWithInclude(x => x.Id == jokeCategory.Id).FirstOrDefault();
+                        if (mainJokeCategory != null)
+                            _repository.JokeCategoryRepository.Delete(mainJokeCategory);
+                    }
+                    _repository.Save();
+                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage= ResultMessage.JokeCategoryDeleted };
+
+                }
+            }
+            catch (Exception)
+            {
+                return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.Error };
+            }
+        }
+        //This function is often duplicated it a little disturbing . Do something with this 
+        public LanguageDao GetLanguage(int id)
+        {
+            return _repository.LanguageRepository.Get(x => x.Id == id);
+        }
+
+    }
+}

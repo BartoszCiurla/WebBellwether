@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Owin.Security.Infrastructure;
-using WebBellwether.API.Entities;
 using WebBellwether.API.Function;
-using WebBellwether.API.Models;
-using WebBellwether.API.Repositories;
+using WebBellwether.Repositories.Entities;
+using WebBellwether.Repositories.Entities.Auth;
+using WebBellwether.Repositories.Repositories;
 
 namespace WebBellwether.API.Providers
 {

@@ -1,9 +1,8 @@
 ﻿using System.Web.Http;
-using WebBellwether.API.Services.JokeService;
-using WebBellwether.API.Models.Joke;
-using WebBellwether.API.Results;
-using WebBellwether.API.Services.JokeService.Abstract;
-using WebBellwether.API.Repositories;
+using WebBellwether.Models.Models.Joke;
+using WebBellwether.Models.Results;
+using WebBellwether.Services.Services.JokeService;
+using WebBellwether.Services.Services.JokeService.Abstract;
 
 namespace WebBellwether.API.Controllers
 {
@@ -13,7 +12,7 @@ namespace WebBellwether.API.Controllers
         private readonly IJokeService _service;
         public JokesController()
         {
-            _service = new JokeService(new AggregateRepositories());
+            _service = new JokeService();
         }
         [AllowAnonymous]
         [Route("GetJokes")]

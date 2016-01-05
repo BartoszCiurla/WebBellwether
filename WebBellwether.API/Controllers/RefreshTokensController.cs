@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using WebBellwether.API.Repositories;
+using WebBellwether.Repositories.Repositories;
 
 namespace WebBellwether.API.Controllers
 {

@@ -10,10 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
-using WebBellwether.API.Context;
-using WebBellwether.API.Models.Auth;
-using WebBellwether.API.Repositories;
-using WebBellwether.API.Results;
+using WebBellwether.Models.Models.Auth;
+using WebBellwether.Repositories.Repositories;
 
 namespace WebBellwether.API.Controllers
 {
@@ -28,9 +26,9 @@ namespace WebBellwether.API.Controllers
         }
 
         public AccountController()
-        {            
+        {
             _repo = new AuthRepository();
-        }       
+        }
 
         // POST api/Account/Register
         [AllowAnonymous]
@@ -422,5 +420,4 @@ namespace WebBellwether.API.Controllers
 
         #endregion
     }
-
 }

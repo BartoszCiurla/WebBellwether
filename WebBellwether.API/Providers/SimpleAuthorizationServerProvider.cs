@@ -7,10 +7,10 @@ using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using WebBellwether.API.Entities;
 using WebBellwether.API.Function;
-using WebBellwether.API.Repositories;
-using WebBellwether.API.Models;
+using WebBellwether.Repositories.Entities;
+using WebBellwether.Repositories.Entities.Auth;
+using WebBellwether.Repositories.Repositories;
 
 namespace WebBellwether.API.Providers
 {

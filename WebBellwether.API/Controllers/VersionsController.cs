@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
-using WebBellwether.API.Models.Version;
-using WebBellwether.API.Services.VersionService;
+using WebBellwether.Models.Models.Version;
+using WebBellwether.Services.Services.VersionService;
 
 namespace WebBellwether.API.Controllers
 {

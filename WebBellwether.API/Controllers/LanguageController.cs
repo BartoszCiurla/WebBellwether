@@ -1,22 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using WebBellwether.API.Models.Translation;
-using WebBellwether.API.Services.LanguageService;
-using WebBellwether.API.Results;
-using WebBellwether.API.Entities.Translations;
-using WebBellwether.API.Repositories;
-using WebBellwether.API.Services.LanguageService.Abstract;
+﻿using System.Web.Http;
+using WebBellwether.Models.Models.Translation;
+using WebBellwether.Models.Results;
+using WebBellwether.Repositories.Entities.Translations;
+using WebBellwether.Services.Services;
+using WebBellwether.Services.Services.LanguageService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Language")]
     public class LanguageController : ApiController
     {
-        private readonly IManagementLanguageService _service;
+        private readonly ManagementLanguageService _service;
         public LanguageController()
         {
             //this route is fs must change it ...
-            _service = new ManagementLanguageService(new AggregateRepositories(), @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
+            _service = new ManagementLanguageService(@"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
         }
         
         [AllowAnonymous]
