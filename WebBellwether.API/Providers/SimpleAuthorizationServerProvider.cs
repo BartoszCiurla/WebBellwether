@@ -8,9 +8,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using WebBellwether.API.Function;
-using WebBellwether.Repositories.Entities;
-using WebBellwether.Repositories.Entities.Auth;
-using WebBellwether.Repositories.Repositories;
+using WebBellwether.API.Utility;
+using WebBellwether.Models.Models.Auth;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.API.Providers
 {
@@ -21,7 +21,7 @@ namespace WebBellwether.API.Providers
 
             string clientId = string.Empty;
             string clientSecret = string.Empty;
-            ClientDao client = null;
+            Client client = null;
 
             if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
             {
@@ -36,11 +36,8 @@ namespace WebBellwether.API.Providers
                 //context.SetError("invalid_clientId", "ClientId should be sent.");
                 return Task.FromResult<object>(null);
             }
+            client = ServiceFactory.AuthService.FindClient(context.ClientId);
 
-            using (AuthRepository _repo = new AuthRepository())
-            {
-                client = _repo.FindClient(context.ClientId);
-            }
 
             if (client == null)
             {
@@ -91,16 +88,14 @@ namespace WebBellwether.API.Providers
             //frcontext.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "*" });
             //test
 
-            using (AuthRepository _repo = new AuthRepository())
-            {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+            IdentityUser user = await ServiceFactory.AuthService.FindUser(context.UserName, context.Password);
 
-                if (user == null)
-                {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
-                }
+            if (user == null)
+            {
+                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                return;
             }
+
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));

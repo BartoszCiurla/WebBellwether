@@ -9,10 +9,17 @@ using Newtonsoft.Json.Linq;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Models.Translation.Yandex;
 using WebBellwether.Models.Results;
-using WebBellwether.Services.Services.TranslateService.Abstract;
 
 namespace WebBellwether.Services.Services.TranslateService
 {
+    public interface ITranslateService
+    {
+        List<SupportedLanguage> GetListOfSupportedLanguages();
+        string GetServiceName();
+        Task<ResultStateContainer> GetLanguageTranslation(TranslateLanguageModel languageModel);
+
+        Task<ResultStateContainer> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel);
+    }
     public class YandexTranslateService : ITranslateService
     {
         public static string ApiKey { get; } =

@@ -10,15 +10,16 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
+using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Auth;
-using WebBellwether.Repositories.Repositories;
+using WebBellwether.Services.Services.AuthService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private AuthRepository _repo = null;
+        private readonly IAuthService _authService;
 
         private IAuthenticationManager Authentication
         {
@@ -27,7 +28,7 @@ namespace WebBellwether.API.Controllers
 
         public AccountController()
         {
-            _repo = new AuthRepository();
+            _authService = ServiceFactory.AuthService;
         }
 
         // POST api/Account/Register
@@ -40,7 +41,7 @@ namespace WebBellwether.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            IdentityResult result = await _authService.RegisterUser(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -91,7 +92,7 @@ namespace WebBellwether.API.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+            IdentityUser user = await _authService.FindUser(externalLogin.LoginProvider, externalLogin.ProviderKey);
 
             bool hasRegistered = user != null;
 
@@ -123,7 +124,7 @@ namespace WebBellwether.API.Controllers
                 return BadRequest("Invalid Provider or External Access Token");
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
+            IdentityUser user = await _authService.FindUser(model.Provider, verifiedAccessToken.user_id);
 
             bool hasRegistered = user != null;
 
@@ -134,7 +135,7 @@ namespace WebBellwether.API.Controllers
 
             user = new IdentityUser() { UserName = model.UserName };
 
-            IdentityResult result = await _repo.CreateAsync(user);
+            IdentityResult result = await _authService.CreateAsync(user);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -146,7 +147,7 @@ namespace WebBellwether.API.Controllers
                 Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
             };
 
-            result = await _repo.AddLoginAsync(user.Id, info.Login);
+            result = await _authService.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -175,7 +176,7 @@ namespace WebBellwether.API.Controllers
                 return BadRequest("Invalid Provider or External Access Token");
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
+            IdentityUser user = await _authService.FindUser(provider, verifiedAccessToken.user_id);
 
             bool hasRegistered = user != null;
 
@@ -189,17 +190,7 @@ namespace WebBellwether.API.Controllers
 
             return Ok(accessTokenResponse);
 
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
+        }  
 
         #region Helpers
 
@@ -258,7 +249,7 @@ namespace WebBellwether.API.Controllers
                 return "client_Id is required";
             }
 
-            var client = _repo.FindClient(clientId);
+            var client = _authService.FindClient(clientId);
 
             if (client == null)
             {

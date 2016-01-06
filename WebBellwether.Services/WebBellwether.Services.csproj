@@ -30,11 +30,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,24 +65,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\AutoMapperConfig.cs" />
+    <Compile Include="Factories\RepositoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IntegrationGameService\Abstract\IIntegrationGameService.cs" />
-    <Compile Include="Services\IntegrationGameService\Abstract\IManagementFeaturesService.cs" />
-    <Compile Include="Services\IntegrationGameService\Abstract\IManagementIntegrationGamesService.cs" />
+    <Compile Include="Services\AuthService\AuthService.cs" />
+    <Compile Include="Services\FileService\JsonLanguageFileService.cs" />
     <Compile Include="Services\IntegrationGameService\IntegrationGameService.cs" />
     <Compile Include="Services\IntegrationGameService\ManagementFeaturesService.cs" />
     <Compile Include="Services\IntegrationGameService\ManagementIntegrationGamesService.cs" />
-    <Compile Include="Services\JokeService\Abstract\IJokeService.cs" />
-    <Compile Include="Services\JokeService\Abstract\IManagementJokeCategoryService.cs" />
-    <Compile Include="Services\JokeService\Abstract\IManagementJokeService.cs" />
     <Compile Include="Services\JokeService\JokeService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeCategoryService.cs" />
     <Compile Include="Services\JokeService\ManagementJokeService.cs" />
-    <Compile Include="Services\LanguageService\Abstract\IManagementLanguageService.cs" />
     <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
-    <Compile Include="Services\TranslateService\Abstract\ITranslateService.cs" />
     <Compile Include="Services\TranslateService\YandexTranslateService.cs" />
     <Compile Include="Services\VersionService\VersionService.cs" />
+    <Compile Include="Utility\ModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebBellwether.Models\WebBellwether.Models.csproj">
@@ -74,6 +92,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.Owin.Security.Infrastructure;
 using WebBellwether.API.Function;
-using WebBellwether.Repositories.Entities;
-using WebBellwether.Repositories.Entities.Auth;
-using WebBellwether.Repositories.Repositories;
+using WebBellwether.API.Utility;
+using WebBellwether.Models.Models.Auth;
 
 namespace WebBellwether.API.Providers
 {
-    public class SimpleRefreshTokenProvider:IAuthenticationTokenProvider
+    public class SimpleRefreshTokenProvider : IAuthenticationTokenProvider
     {
 
         public async Task CreateAsync(AuthenticationTokenCreateContext context)
@@ -24,32 +20,27 @@ namespace WebBellwether.API.Providers
             }
 
             var refreshTokenId = Guid.NewGuid().ToString("n");
+            var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
 
-            using (AuthRepository _repo = new AuthRepository())
+            var token = new RefreshToken()
             {
-                var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
+                Id = Helper.GetHash(refreshTokenId),
+                ClientId = clientid,
+                Subject = context.Ticket.Identity.Name,
+                IssuedUtc = DateTime.UtcNow,
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(Convert.ToDouble(refreshTokenLifeTime))
+            };
 
-                var token = new RefreshTokenDao()
-                {
-                    Id = Helper.GetHash(refreshTokenId),
-                    ClientId = clientid,
-                    Subject = context.Ticket.Identity.Name,
-                    IssuedUtc = DateTime.UtcNow,
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(Convert.ToDouble(refreshTokenLifeTime))
-                };
+            context.Ticket.Properties.IssuedUtc = token.IssuedUtc;
+            context.Ticket.Properties.ExpiresUtc = token.ExpiresUtc;
 
-                context.Ticket.Properties.IssuedUtc = token.IssuedUtc;
-                context.Ticket.Properties.ExpiresUtc = token.ExpiresUtc;
+            token.ProtectedTicket = context.SerializeTicket();
 
-                token.ProtectedTicket = context.SerializeTicket();
+            var result = await ServiceFactory.AuthService.AddRefreshToken(token);
 
-                var result = await _repo.AddRefreshToken(token);
-
-                if (result)
-                {
-                    context.SetToken(refreshTokenId);
-                }
-
+            if (result)
+            {
+                context.SetToken(refreshTokenId);
             }
         }
 
@@ -60,17 +51,13 @@ namespace WebBellwether.API.Providers
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             string hashedTokenId = Helper.GetHash(context.Token);
+            var refreshToken = await ServiceFactory.AuthService.FindRefreshToken(hashedTokenId);
 
-            using (AuthRepository _repo = new AuthRepository())
+            if (refreshToken != null)
             {
-                var refreshToken = await _repo.FindRefreshToken(hashedTokenId);
-
-                if (refreshToken != null)
-                {
-                    //Get protectedTicket from refreshToken class
-                    context.DeserializeTicket(refreshToken.ProtectedTicket);
-                    var result = await _repo.RemoveRefreshToken(hashedTokenId);
-                }
+                //Get protectedTicket from refreshToken class
+                context.DeserializeTicket(refreshToken.ProtectedTicket);
+                await ServiceFactory.AuthService.RemoveRefreshToken(hashedTokenId);
             }
         }
 

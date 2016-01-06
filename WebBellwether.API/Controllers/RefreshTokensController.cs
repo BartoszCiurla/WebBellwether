@@ -1,25 +1,24 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using WebBellwether.Repositories.Repositories;
+using WebBellwether.API.Utility;
+using WebBellwether.Services.Services.AuthService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/RefreshTokens")]
     public class RefreshTokensController : ApiController
     {
-
-        private AuthRepository _repo = null;
-
+        private readonly IAuthService _authService;
         public RefreshTokensController()
         {
-            _repo = new AuthRepository();
+            _authService = ServiceFactory.AuthService;
         }
 
         [Authorize(Users = "Admin")]
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Ok(_repo.GetAllRefreshTokens());
+            return Ok(_authService.GetAllRefreshTokens());
         }
 
         //[Authorize(Users = "Admin")]
@@ -27,23 +26,12 @@ namespace WebBellwether.API.Controllers
         [Route("")]
         public async Task<IHttpActionResult> Delete(string tokenId)
         {
-            var result = await _repo.RemoveRefreshToken(tokenId);
+            var result = await _authService.RemoveRefreshToken(tokenId);
             if (result)
             {
                 return Ok();
             }
             return BadRequest("Token Id does not exist");
-
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
     }
 

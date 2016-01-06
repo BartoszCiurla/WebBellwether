@@ -1,52 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Repositories.Entities.Translations;
-using WebBellwether.Repositories.Repositories;
-using WebBellwether.Repositories.Repositories.Abstract;
-using WebBellwether.Services.Services.LanguageService.Abstract;
+using WebBellwether.Services.Factories;
+using WebBellwether.Services.Services.FileService;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.LanguageService
 {
-    public class ManagementLanguageService:IManagementLanguageService
+    public interface IManagementLanguageService
     {
-        private readonly IAggregateRepositories _repository;
-        private readonly string _destinationPlace;
-        public ManagementLanguageService(string destPlace)
+        List<Language> GetLanguages(bool getAll = false);
+        ResultStateContainer PostLanguage(Language language);
+        ResultStateContainer FillLanguageFile(IEnumerable<string> languageValues, int langaugeId);
+        IEnumerable<string> GetLanguageFileValue(int languageId);
+        ResultStateContainer CreateLanguageFile(int newLanguageId);
+        ResultStateContainer PutLanguageKey(LanguageKeyModel languageKey);
+        ResultStateContainer PublishLanguage(Language language);
+        ResultStateContainer PutLanguage(Language language);
+        ResultStateContainer DeleteLanguage(Language language);
+        IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId);
+        Language GetLanguageById(int languageId);
+    }
+    public class ManagementLanguageService : IManagementLanguageService
+    {
+        private readonly ILanguageFileService _languageFileService;
+
+        public ManagementLanguageService(ILanguageFileService languageFileService)
         {
-            _repository = new AggregateRepositories();
-            _destinationPlace = destPlace;
+            _languageFileService = languageFileService;
         }
-        public List<LanguageDao> GetLanguages(bool getAll = false)
+        public List<Language> GetLanguages(bool getAll = false)
         {
-            return getAll ? _repository.LanguageRepository.Get().ToList() : _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).ToList();
+            var languages = getAll
+                ? ModelMapper.Map<Language[], LanguageDao[]>(RepositoryFactory.Context.Languages.ToArray())
+                : ModelMapper.Map<Language[], LanguageDao[]>(RepositoryFactory.Context.Languages.Where(x => x.IsPublic).ToArray());
+
+            return languages.ToList();
         }
-        private LanguageDao GetLanguageByName(string languageName)
+        private Language GetLanguageByName(string languageName)
         {
-            return _repository.LanguageRepository.GetWithInclude(x => x.LanguageName.Equals(languageName)).FirstOrDefault();
+            return ModelMapper.Map<Language,LanguageDao>(RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName.Equals(languageName)));
         }
-        public LanguageDao GetLanguageById(int languageId)
+        public Language GetLanguageById(int languageId)
         {
-            return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            return ModelMapper.Map<Language,LanguageDao>(RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId));
         }
-        public ResultStateContainer PostLanguage(LanguageDao language)
+        public ResultStateContainer PostLanguage(Language language)
         {
             try
             {
                 //check is language exists 
-                LanguageDao entity = GetLanguageByName(language.LanguageName);
+                LanguageDao entity = ModelMapper.Map<LanguageDao,Language>(GetLanguageByName(language.LanguageName));
                 if (entity != null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageExists };
                 //insert and return new id 
                 entity = new LanguageDao { IsPublic = false, LanguageName = language.LanguageName, LanguageShortName = language.LanguageShortName };
-                _repository.LanguageRepository.Insert(entity);
-                _repository.Save();
-                entity = GetLanguageByName(language.LanguageName);
+                RepositoryFactory.Context.Languages.Add(entity);
+                RepositoryFactory.Context.SaveChanges();
+                entity = ModelMapper.Map<LanguageDao,Language>(GetLanguageByName(language.LanguageName));
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageExists };
 
@@ -55,7 +69,7 @@ namespace WebBellwether.Services.Services.LanguageService
                 if (createFileLanguageResult.ResultState != ResultState.Success)
                 {
                     //delete language in db 
-                    _repository.LanguageRepository.Delete(entity);
+                    RepositoryFactory.Context.Languages.Remove(entity);
                     return createFileLanguageResult;
                 }
                 //if lang inserted must return lang id ...
@@ -71,21 +85,10 @@ namespace WebBellwether.Services.Services.LanguageService
         {
             try
             {
-                string languagefileLocation = $"{_destinationPlace}{langaugeId}{".json"}";
-                var json = File.ReadAllText(languagefileLocation);
-                Dictionary<string, string> languageFile = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-                var enumerable = languageValues as string[] ?? languageValues.ToArray();
-                if (enumerable.Count() != languageFile.Count())
-                    return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = ResultMessage.ContentLanguageFilesAreNotCompatible };
-                for (int i = 0; i < languageFile.Count; i++)
-                {
-                    languageFile[languageFile.ElementAt(i).Key] = enumerable.ElementAt(i);
-                }
-
-                var output = JsonConvert.SerializeObject(languageFile);
-                File.WriteAllText(languagefileLocation, output);
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.KeyValuesAreCorrectlyFilled };
-
+                var values = languageValues as string[] ?? languageValues.ToArray();
+                bool fillLanguageResult = _languageFileService.FillFile(values.ToArray(), langaugeId);
+                return fillLanguageResult ? new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.KeyValuesAreCorrectlyFilled } :
+                 new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = ResultMessage.ContentLanguageFilesAreNotCompatible };
             }
             catch (Exception e)
             {
@@ -93,58 +96,16 @@ namespace WebBellwether.Services.Services.LanguageService
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = e };
             }
         }
-
-        private Dictionary<string, string> GetLanguageFileKeys()
-        {
-            LanguageDao templateLanguage = _repository.LanguageRepository.GetWithInclude(x => x.IsPublic).FirstOrDefault();
-            if (templateLanguage == null)
-                return null;
-            string templateFileLocation = _destinationPlace + templateLanguage.Id + ".json";
-            string templateJson = File.ReadAllText(templateFileLocation);
-            dynamic jsonTemplateObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
-            if (jsonTemplateObj == null)
-                return null;
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (var item in jsonTemplateObj)
-            {
-                result.Add(item.Key, "");
-            }
-            return result;
-        }
-
         public IEnumerable<string> GetLanguageFileValue(int languageId)
         {
-            LanguageDao language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
-            if (language == null)
-                return null;
-            string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
-            string templateJson = File.ReadAllText(languageFileLocation);
-            dynamic valuesFromFile = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
-            if (valuesFromFile == null)
-                return null;
-            List<string> result = new List<string>();
-            foreach (var item in valuesFromFile)
-            {
-                result.Add(item.Value);
-            }
-            return result.AsEnumerable();
+            return _languageFileService.GetFileValues(languageId);
         }
 
         public IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId)
         {
-            LanguageDao language = _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
-            if (language == null)
-                return null;
-            string languageFileLocation = $"{_destinationPlace}{language.Id}{".json"}";
-            string templateJson = File.ReadAllText(languageFileLocation);
-            var dictionaryJson = JsonConvert.DeserializeObject<Dictionary<string,string>>(templateJson);
-            var result = new List<LanguageFilePosition>();
-            dictionaryJson.ToList().ForEach(x =>
-            {
-                result.Add(new LanguageFilePosition { Key = x.Key, Value = x.Value });
-            });
-            return result;
-        } 
+            var dictionaryJson = _languageFileService.GetFile(languageId);
+            return dictionaryJson.Select(x => new LanguageFilePosition {Key = x.Key, Value = x.Value});
+        }
 
         public ResultStateContainer CreateLanguageFile(int newLanguageId)
         {
@@ -152,29 +113,8 @@ namespace WebBellwether.Services.Services.LanguageService
             {
                 if (newLanguageId == 0)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
-                //take key for new file                
-                Dictionary<string, string> languageFileKeys = GetLanguageFileKeys();
-                if (languageFileKeys == null)
-                    return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageFileNotExists };
-
-                string newFileLocation = _destinationPlace + newLanguageId + ".json";
-
-                //create json object
-                JObject jsonKeys = new JObject();
-                foreach (var item in languageFileKeys)
-                {
-                    jsonKeys.Add(new JProperty(item.Key, item.Value));
-                }
-
-                //create new file
-                using (StreamWriter file = File.CreateText(newFileLocation))
-
-                //save keys to file
-                using (JsonTextWriter writer = new JsonTextWriter(file))
-                {
-                    jsonKeys.WriteTo(writer);
-                }
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageFileAdded };
+                bool createFileResult = _languageFileService.CreateFile(newLanguageId);
+                return createFileResult?new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageFileAdded }:new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageFileNotExists };             
             }
             catch (Exception)
             {
@@ -185,13 +125,14 @@ namespace WebBellwether.Services.Services.LanguageService
         {
             try
             {
-                string jsonLocation = _destinationPlace + languageKey.LanguageId + ".json";
-                string json = File.ReadAllText(jsonLocation);
-                dynamic jsonObj = JsonConvert.DeserializeObject(json);
-                jsonObj[languageKey.Key] = languageKey.Value;
-                string output = JsonConvert.SerializeObject(jsonObj);
-                File.WriteAllText(jsonLocation, output);
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageKeyValueEdited };
+                bool putLanguageKeyResult = _languageFileService.PutLanguageKey(languageKey);
+                return putLanguageKeyResult
+                    ? new ResultStateContainer
+                    {
+                        ResultState = ResultState.Success,
+                        ResultMessage = ResultMessage.LanguageKeyValueEdited
+                    }
+                    : new ResultStateContainer {ResultState = ResultState.Failure};
             }
             catch (Exception)
             {
@@ -199,36 +140,27 @@ namespace WebBellwether.Services.Services.LanguageService
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
-        public ResultStateContainer PublishLanguage(LanguageDao language)
+        public ResultStateContainer PublishLanguage(Language language)
         {
             try
             {
                 int emptyKey = 0;
                 if (language.IsPublic) //public language
                 {
-                    string jsonLocation = _destinationPlace + language.Id + ".json";
-                    string json = File.ReadAllText(jsonLocation);
-                    dynamic jsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-                    if (jsonObj == null)
-                        return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageFileNotExists };
-                    foreach (var item in jsonObj)
-                    {
-                        if (item.Value.Length < 1)
-                            emptyKey++;
-                    }
+                    emptyKey = _languageFileService.GetFileEmptyKeys(language.Id);
                     if (emptyKey > 0)
                         return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.EmptyKeysExists };
                 }
                 else //nonpublic language
                 {
-                    if (_repository.LanguageRepository.GetWithInclude(x => x.IsPublic).Count() == 1)  //check how many languages is public 
+                    if (RepositoryFactory.Context.Languages.Count(x=>x.IsPublic) == 1)
                         return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.OnlyOnePublicLanguage };
                 }
-                LanguageDao entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
+                LanguageDao entity = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == language.Id);
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.IsPublic = language.IsPublic;
-                _repository.Save();
+                RepositoryFactory.Context.SaveChanges();
                 return language.IsPublic ? new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageHasBeenPublished } : new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageHasBeenNonpublic };
             }
             catch (Exception)
@@ -238,16 +170,16 @@ namespace WebBellwether.Services.Services.LanguageService
             }
         }
 
-        public ResultStateContainer PutLanguage(LanguageDao language)
+        public ResultStateContainer PutLanguage(Language language)
         {
             try
             {
-                LanguageDao entity = _repository.LanguageRepository.GetWithInclude(x => x.Id == language.Id).FirstOrDefault();
+                LanguageDao entity = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == language.Id);
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
                 entity.LanguageName = language.LanguageName;
-                entity.LanguageShortName = language.LanguageShortName;                
-                _repository.Save();
+                entity.LanguageShortName = language.LanguageShortName;
+                RepositoryFactory.Context.SaveChanges();
                 return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageEdited };
             }
             catch (Exception)
@@ -256,30 +188,26 @@ namespace WebBellwether.Services.Services.LanguageService
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
-        private void DeleteLanguageFile(int languageId)
-        {
-            string file = _destinationPlace + languageId + ".json";
-            if (File.Exists(file))
-                File.Delete(file);
-        }
-        public ResultStateContainer DeleteLanguage(LanguageDao language)
+        public ResultStateContainer DeleteLanguage(Language language)
         {
             try
             {
                 if (language.Id == 1 | language.Id == 2) // i need list of irremovable languages ... 
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageCanNotBeRemoved };
-                LanguageDao entity = GetLanguageById(language.Id);
+                LanguageDao entity =ModelMapper.Map<LanguageDao,Language>(GetLanguageById(language.Id));
                 if (entity == null)
                     return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.LanguageNotExists };
-                _repository.LanguageRepository.Delete(entity);
-
+                RepositoryFactory.Context.Languages.Remove(entity);
                 ResultStateContainer deleteLanguageFromOtherStructure = DeleteLanguageFromOtherStructure(language.Id);
                 if (deleteLanguageFromOtherStructure.ResultState != ResultState.Success)
                     return deleteLanguageFromOtherStructure;
-                _repository.Save();
-
-                DeleteLanguageFile(language.Id);
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageRemoved };
+                bool removeLanguageFileResult = _languageFileService.RemoveFile(language.Id);
+                if (removeLanguageFileResult)
+                {
+                    RepositoryFactory.Context.SaveChanges();
+                    return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.LanguageRemoved };
+                }
+                return new ResultStateContainer {ResultState = ResultState.Failure,ResultMessage = ResultMessage.LanguageCanNotBeRemoved};                
             }
             catch (Exception)
             {
@@ -293,6 +221,7 @@ namespace WebBellwether.Services.Services.LanguageService
             {
                 DeleteLanguageFromJokes(languageId);
                 DeleteLanguageFromIntegrationGames(languageId);
+                DeleteLanguageFromVersions(languageId);
                 return new ResultStateContainer { ResultState = ResultState.Success };
             }
             catch (Exception e)
@@ -305,45 +234,48 @@ namespace WebBellwether.Services.Services.LanguageService
         private void DeleteLanguageFromIntegrationGames(int languageId)
         {
             var integrationGameDetails =
-                _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == languageId);
-            integrationGameDetails.ToList().ForEach(x =>
-            {
-                _repository.IntegrationGameDetailRepository.Delete(x);
-            });
+                RepositoryFactory.Context.IntegrationGameDetails.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.IntegrationGameDetails.RemoveRange(integrationGameDetails);
+
             var integrationGameFeatures =
-                _repository.IntegrationGameFeatureRepository.GetWithInclude(
+                RepositoryFactory.Context.IntegrationGameFeatures.Where(
                     x => x.GameFeatureLanguage.Language.Id == languageId);
-            integrationGameFeatures.ToList().ForEach(x =>
-            {
-                _repository.IntegrationGameFeatureRepository.Delete(x);
-            });
+            RepositoryFactory.Context.IntegrationGameFeatures.RemoveRange(integrationGameFeatures);
+
             var gameFeatureDetails =
-                _repository.GameFeatureDetailLanguageRepository.GetWithInclude(x => x.Language.Id == languageId);
-            gameFeatureDetails.ToList().ForEach(x =>
-            {
-                _repository.GameFeatureDetailLanguageRepository.Delete(x);
-            });
+                RepositoryFactory.Context.GameFeatureDetailLanguages.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.GameFeatureDetailLanguages.RemoveRange(gameFeatureDetails);
+
             var gameFeatureLanguages =
-                _repository.GameFeatureLanguageRepository.GetWithInclude(x => x.Language.Id == languageId);
-            gameFeatureLanguages.ToList().ForEach(x =>
-            {
-                _repository.GameFeatureLanguageRepository.Delete(x);
-            });
+                RepositoryFactory.Context.GameFeatureLanguages.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.GameFeatureLanguages.RemoveRange(gameFeatureLanguages);
         }
 
         private void DeleteLanguageFromJokes(int languageId)
         {
             var jokeCategoryDetails =
-                _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == languageId);
-            jokeCategoryDetails.ToList().ForEach(x =>
-            {
-                _repository.JokeCategoryDetailRepository.Delete(x);
-            });
-            var jokeDetails = _repository.JokeDetailRepository.GetWithInclude(x => x.Language.Id == languageId);
-            jokeDetails.ToList().ForEach(x =>
-            {
-                _repository.JokeDetailRepository.Delete(x);
-            });
+                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.JokeCategoryDetails.RemoveRange(jokeCategoryDetails);
+
+            var jokeDetails = RepositoryFactory.Context.JokeDetails.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.JokeDetails.RemoveRange(jokeDetails);                
+        }
+
+        private void DeleteLanguageFromVersions(int languageId)
+        {
+            var languageVersion = RepositoryFactory.Context.LanguageVersions.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.LanguageVersions.RemoveRange(languageVersion);
+
+            var integrationGameVersion =
+                RepositoryFactory.Context.IntegrationGameVersions.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.IntegrationGameVersions.RemoveRange(integrationGameVersion);
+
+            var jokeCategoryVersion =
+                RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.JokeCategoryVersions.RemoveRange(jokeCategoryVersion);
+
+            var jokeVersion = RepositoryFactory.Context.JokeVersions.Where(x => x.Language.Id == languageId);
+            RepositoryFactory.Context.JokeVersions.RemoveRange(jokeVersion);
         }
     }
 }

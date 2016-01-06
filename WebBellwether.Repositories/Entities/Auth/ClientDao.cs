@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebBellwether.Models;
 
 namespace WebBellwether.Repositories.Entities.Auth
 {
@@ -20,4 +19,9 @@ namespace WebBellwether.Repositories.Entities.Auth
         [MaxLength(100)]
         public string AllowedOrigin { get; set; }
     }
+    public enum ApplicationTypes
+    {
+        JavaScript = 0,
+        NativeConfidential = 1
+    };
 }

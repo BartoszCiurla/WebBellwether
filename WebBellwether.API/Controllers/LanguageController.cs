@@ -1,8 +1,7 @@
 ﻿using System.Web.Http;
+using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
-using WebBellwether.Repositories.Entities.Translations;
-using WebBellwether.Services.Services;
 using WebBellwether.Services.Services.LanguageService;
 
 namespace WebBellwether.API.Controllers
@@ -10,11 +9,10 @@ namespace WebBellwether.API.Controllers
     [RoutePrefix("api/Language")]
     public class LanguageController : ApiController
     {
-        private readonly ManagementLanguageService _service;
+        private readonly IManagementLanguageService _service;
         public LanguageController()
         {
-            //this route is fs must change it ...
-            _service = new ManagementLanguageService(@"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_");
+            _service = ServiceFactory.ManagementLanguageService;
         }
         
         [AllowAnonymous]
@@ -52,21 +50,21 @@ namespace WebBellwether.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [Route("PostEditLanguage")]
-        public IHttpActionResult PostEditLangauge(LanguageDao language)
+        public IHttpActionResult PostEditLangauge(Language language)
         {
             ResultStateContainer result = _service.PutLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize(Roles = "Admin")]
         [Route("PostPublishLanguage")]
-        public IHttpActionResult PostPublishLanguage(LanguageDao language)
+        public IHttpActionResult PostPublishLanguage(Language language)
         {
             ResultStateContainer result = _service.PublishLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultMessage.ToString()) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
         }
         [Authorize(Roles = "Admin")]
         [Route("PostLanguage")]
-        public IHttpActionResult PostLanguage(LanguageDao language)
+        public IHttpActionResult PostLanguage(Language language)
         {
             ResultStateContainer result = _service.PostLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
@@ -74,7 +72,7 @@ namespace WebBellwether.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [Route("PostDeleteLanguage")]
-        public IHttpActionResult PostDeleteLanguage(LanguageDao language)
+        public IHttpActionResult PostDeleteLanguage(Language language)
         {
             ResultStateContainer result = _service.DeleteLanguage(language);
             return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());

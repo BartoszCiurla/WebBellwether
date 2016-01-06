@@ -82,8 +82,8 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
@@ -176,6 +176,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility\ServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -199,10 +200,6 @@
     <ProjectReference Include="..\WebBellwether.Models\WebBellwether.Models.csproj">
       <Project>{b43e2011-2103-4376-9518-b7b7196f41e8}</Project>
       <Name>WebBellwether.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WebBellwether.Repositories\WebBellwether.Repositories.csproj">
-      <Project>{384be81a-1dcb-433f-ae77-9051502e2766}</Project>
-      <Name>WebBellwether.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebBellwether.Services\WebBellwether.Services.csproj">
       <Project>{f11c0724-1c02-435f-ad5d-ccf7de91fc9c}</Project>

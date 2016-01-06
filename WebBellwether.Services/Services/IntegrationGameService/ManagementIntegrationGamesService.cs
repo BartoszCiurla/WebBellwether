@@ -1,32 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using WebBellwether.Models.Models.IntegrationGame;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Repositories.Entities.IntegrationGame;
 using WebBellwether.Repositories.Entities.Translations;
-using WebBellwether.Repositories.Repositories.Abstract;
-using IManagementIntegrationGamesService = WebBellwether.Services.Services.IntegrationGameService.Abstract.IManagementIntegrationGamesService;
+using WebBellwether.Services.Factories;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.IntegrationGameService
 {
+    public interface IManagementIntegrationGamesService
+    {
+        ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game);
+        IntegrationGameDetailDao BuildIntegrationGameDetail(NewIntegrationGameModel game);
+        LanguageDao GetLanguage(int id);
+        List<GameFeatureModel> GetGameFeatures(int language);
+        void BuildFeaturesTemplate(int language, List<GameFeatureModel> gameFeatures);
+        List<IntegrationGameFeatureDao> GetGameFeatures(int[] features, int language);
+        ResultStateContainer InsertSeveralLanguageGame(NewIntegrationGameModel game);
+        ResultMessage CheckNewGameLanguage(NewIntegrationGameModel game);
+        ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game);
+        ResultStateContainer PutIntegrationGame(IntegrationGameModel integrationGame);
+        ResultStateContainer DeleteIntegratiomGame(IntegrationGameModel integrationGame);
+        IntegrationGameModel GetGameTranslation(int gameId, int languageId);
+    }
     public class ManagementIntegrationGamesService : IManagementIntegrationGamesService
     {
-        private readonly IAggregateRepositories _repository;
-        public ManagementIntegrationGamesService(IAggregateRepositories repository)
-        {
-            _repository = repository;
-        }
         public IntegrationGameModel GetGameTranslation(int gameId, int languageId)
         {
-
-            var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == gameId && x.Language.Id == languageId).FirstOrDefault();
-            if (entity == null)
-                return null;
-            IntegrationGameModel integrationGame = new IntegrationGameModel { Id = gameId, GameName = entity.IntegrationGameName, GameDescription = entity.IntegrationGameDescription, Language = new Language {Id = entity.Language.Id,IsPublic = entity.Language.IsPublic,LanguageName = entity.Language.LanguageName,LanguageShortName = entity.Language.LanguageShortName}, IntegrationGameId = entity.Id };
-            return integrationGame;
+            var entity =
+                RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                    x => x.IntegrationGame.Id == gameId && x.Language.Id == languageId);
+            if (entity != null)
+                return new IntegrationGameModel { Id = gameId, GameName = entity.IntegrationGameName, GameDescription = entity.IntegrationGameDescription, Language = new Language { Id = entity.Language.Id, IsPublic = entity.Language.IsPublic, LanguageName = entity.Language.LanguageName, LanguageShortName = entity.Language.LanguageShortName }, IntegrationGameId = entity.Id };
+            return null;
         }
+
         public ResultStateContainer InsertSingleLanguageGame(NewIntegrationGameModel game)
         {
             try
@@ -39,24 +51,26 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                    BuildIntegrationGameDetail(game)
                 }
                 };
-                _repository.IntegrationGameRepository.Insert(entity);
-                _repository.Save();
-                var integrationGameDetail = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Contains(game.GameName)).FirstOrDefault();
+                RepositoryFactory.Context.IntegrationGames.Add(entity);
+                RepositoryFactory.Context.SaveChanges();
+                IntegrationGameDetailDao integrationGameDetail =
+                    RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                        x => x.IntegrationGameName.Contains(game.GameName));
                 IntegrationGameModel returnEntity = new IntegrationGameModel
                 {
                     Id = integrationGameDetail.IntegrationGame.Id, // this is global id 
                     IntegrationGameId = integrationGameDetail.Id, // id for translation
-                    Language = new Language {Id = integrationGameDetail.Language.Id,IsPublic = integrationGameDetail.Language.IsPublic,LanguageName = integrationGameDetail.Language.LanguageName,LanguageShortName = integrationGameDetail.Language.LanguageShortName},
+                    Language =  ModelMapper.Map<Language,LanguageDao>(integrationGameDetail.Language),
                     GameName = integrationGameDetail.IntegrationGameName,
                     GameDescription = integrationGameDetail.IntegrationGameDescription,
                 };
-                return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage=ResultMessage.GameAdded, ResultValue = returnEntity };
+                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameAdded, ResultValue = returnEntity };
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
-           
+
         }
         public IntegrationGameDetailDao BuildIntegrationGameDetail(NewIntegrationGameModel game)
         {
@@ -73,24 +87,20 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         }
         public List<IntegrationGameFeatureDao> GetGameFeatures(int[] features, int language)
         {
-            //its very important features == gameFeatureDetail.id not gamefeaturedetaillanguages.id i must use language to take good record 
-            //first part , take feature detail
             var result = new List<IntegrationGameFeatureDao>();
             features.ToList().ForEach(x =>
             {
-                var entity = _repository.GameFeatureDetailLanguageRepository.Get(z => z.GameFeatureDetail.Id == x && z.Language.Id == language);
+                var entity =
+                    RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
+                        z => z.GameFeatureDetail.Id == x && z.Language.Id == language);
                 if (entity != null)
                     result.Add(new IntegrationGameFeatureDao { GameFeatureDetailLanguage = entity });
             });
-            //second part ,take feature
             result.ForEach(x =>
             {
-                var entity =
-                    _repository.GameFeatureLanguageRepository.GetWithInclude(
-                        z =>
-                            x.GameFeatureDetailLanguage.Language.Id == z.Language.Id &&
-                            x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id == z.GameFeature.Id).SingleOrDefault();
-
+                var entity = RepositoryFactory.Context.GameFeatureLanguages.FirstOrDefault(z =>
+                    x.GameFeatureDetailLanguage.Language.Id == z.Language.Id &&
+                    x.GameFeatureDetailLanguage.GameFeatureDetail.GameFeature.Id == z.GameFeature.Id);
                 x.GameFeatureLanguage = entity;
             });
             return result;
@@ -101,63 +111,66 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             {
                 if (integrationGame.TemporarySeveralTranslationDelete)
                 {
-                    var gameFeatureEntity = _repository.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.IntegrationGame.Id == integrationGame.Id);
-                    if (gameFeatureEntity != null)
-                        gameFeatureEntity.ToList().ForEach(x =>
-                        {
-                            //delete game feature
-                            _repository.IntegrationGameFeatureRepository.Delete(x);
-                        });
-                    var gameEntity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGame.Id == integrationGame.Id);
-                    if (gameEntity != null)
-                        gameEntity.ToList().ForEach(x =>
-                        {
-                            //delete game detail 
-                            _repository.IntegrationGameDetailRepository.Delete(x);
-                        });
-                    var mainGameEntity = _repository.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
-                    if (gameEntity != null)
-                        //delete main game
-                        _repository.IntegrationGameRepository.Delete(mainGameEntity);
-                    _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage=ResultMessage.GameRemoved };
+                    var gameFeatureEntity =
+                        RepositoryFactory.Context.IntegrationGameFeatures.Where(
+                            x => x.IntegrationGameDetail.IntegrationGame.Id == integrationGame.Id);
+                    gameFeatureEntity.ToList().ForEach(x =>
+                    {
+                        RepositoryFactory.Context.IntegrationGameFeatures.Remove(x);
+                    });
+                    var gameEntity =
+                        RepositoryFactory.Context.IntegrationGameDetails.Where(
+                            x => x.IntegrationGame.Id == integrationGame.Id);
+                    gameEntity.ToList().ForEach(x =>
+                    {
+                        RepositoryFactory.Context.IntegrationGameDetails.Remove(x);
+                    });
+                    var mainGameEntity =
+                        RepositoryFactory.Context.IntegrationGames.FirstOrDefault(x => x.Id == integrationGame.Id);
+                    RepositoryFactory.Context.IntegrationGames.Remove(mainGameEntity);
+                    RepositoryFactory.Context.SaveChanges();
+                    return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameRemoved };
                 }
                 else
                 {
-                    var gameEntity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
+                    var gameEntity =
+                        RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                            x => x.Id == integrationGame.IntegrationGameId);
                     if (gameEntity == null)
-                        return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage = ResultMessage.GameRemoved };
-                    var gameFeatureEntity = _repository.IntegrationGameFeatureRepository.GetWithInclude(x => x.IntegrationGameDetail.Id == gameEntity.Id);
-                    if (gameFeatureEntity == null)
-                        return new ResultStateContainer { ResultState = ResultState.Failure , ResultMessage = ResultMessage.GameFeatureTranslationNotExists };
+                        return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.GameRemoved };
+                    var gameFeatureEntity =
+                        RepositoryFactory.Context.IntegrationGameFeatures.Where(
+                            x => x.IntegrationGameDetail.Id == gameEntity.Id);
+                    if (!gameFeatureEntity.Any())
+                        return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.GameFeatureTranslationNotExists };
                     int gameTranslationCount = 0;
-                    if (integrationGame.GameTranslations != null) // when i have null here i know this is only translation
-                        integrationGame.GameTranslations.ForEach(x =>
-                        {
-                            if (x.HasTranslation)
-                                gameTranslationCount++;
-                        });
+                    integrationGame.GameTranslations?.ForEach(x =>
+                    {
+                        if (x.HasTranslation)
+                            gameTranslationCount++;
+                    });
                     //delete game feature
                     gameFeatureEntity.ToList().ForEach(x =>
                     {
-                        _repository.IntegrationGameFeatureRepository.Delete(x);
+                        RepositoryFactory.Context.IntegrationGameFeatures.Remove(x);
                     });
                     //delete game detail 
-                    _repository.IntegrationGameDetailRepository.Delete(gameEntity);
+                    RepositoryFactory.Context.IntegrationGameDetails.Remove(gameEntity);
                     if (gameTranslationCount == 1)//have only one translation , can delete main id for game . Safe is safe ...
                     {
-                        var mainGameEntity = _repository.IntegrationGameRepository.GetWithInclude(x => x.Id == integrationGame.Id).FirstOrDefault();
+                        var mainGameEntity =
+                            RepositoryFactory.Context.IntegrationGames.FirstOrDefault(x => x.Id == integrationGame.Id);
                         if (mainGameEntity != null)
                             //delete main game
-                            _repository.IntegrationGameRepository.Delete(mainGameEntity);
+                            RepositoryFactory.Context.IntegrationGames.Remove(mainGameEntity);
                     }
-                    _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.GameRemoved };
+                    RepositoryFactory.Context.SaveChanges();
+                    return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameRemoved };
                 }
             }
             catch (Exception)
             {
-                return new ResultStateContainer { ResultState = ResultState.Failure,ResultMessage=ResultMessage.Error };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
 
         }
@@ -168,51 +181,68 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             //the code below is highly complex not touch
             try
             {
-                var entity = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == integrationGame.IntegrationGameId).FirstOrDefault();
+                var entity =
+                    RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                        x => x.Id == integrationGame.IntegrationGameId);
                 if (entity != null)
                 {
                     entity.IntegrationGameName = integrationGame.GameName;
                     entity.IntegrationGameDescription = integrationGame.GameDescription;
-                    _repository.Save();
+                    RepositoryFactory.Context.SaveChanges();
                     //if (integrationGame.GameTranslations.Count() == 0)
                     //    return ResultState.GameTranslationAdded;//uwaga tutaj bede obslugiwal edycje innej translacji i tylko tyle 
                     integrationGame.GameTranslations.ForEach(x =>
                     {
                         if (x.HasTranslation)
                         {
-                            entity = _repository.IntegrationGameDetailRepository.GetWithInclude(z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id).FirstOrDefault();
+                            entity =
+                                RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                                    z => z.IntegrationGame.Id == integrationGame.Id && z.Language.Id == x.Language.Id);
                             integrationGame.IntegrationGameDetailModels.ForEach(g =>
                             {
-                                entity.IntegrationGameFeatures.FirstOrDefault(z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId)
-                                .GameFeatureDetailLanguage = _repository.GameFeatureDetailLanguageRepository
-                                .GetWithInclude(h => h.GameFeatureDetail.Id == g.GameFeatureDetailId && h.Language.Id == x.Language.Id).FirstOrDefault();
+                                var integrationGameFeatureDao = entity?.IntegrationGameFeatures.FirstOrDefault(
+                                    z => z.GameFeatureLanguage.GameFeature.Id == g.GameFeatureId);
+                                if (integrationGameFeatureDao != null)
+                                    integrationGameFeatureDao
+                                        .GameFeatureDetailLanguage =
+                                        RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
+                                            h =>
+                                                h.GameFeatureDetail.Id == g.GameFeatureDetailId &&
+                                                h.Language.Id == x.Language.Id);
                             });
-                            _repository.Save();
+                            RepositoryFactory.Context.SaveChanges();
                             entity = null;
                         }
                     });
-                    return new ResultStateContainer { ResultState = ResultState.Success,ResultMessage = ResultMessage.GameEdited };
+                    return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameEdited };
                 }
-                return new ResultStateContainer { ResultState = ResultState.Success , ResultMessage = ResultMessage.GameNotExists };
+                return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameNotExists };
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
-           
+
         }
 
 
         public LanguageDao GetLanguage(int id)
         {
-            return _repository.LanguageRepository.Get(x => x.Id == id);
+            return RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == id);
         }
         public List<GameFeatureModel> GetGameFeatures(int language)
         {
             //id for header , gamefeaturename for details
-            var gameFeatures = new List<GameFeatureModel>();
-            _repository.GameFeatureLanguageRepository.GetWithInclude(x => x.Language.Id == language).ToList().ForEach(x => gameFeatures.Add(new GameFeatureModel { Id = x.GameFeature.Id, GameFeatureName = x.GameFeatureName, LanguageId = language }));
-
+            var gameFeatures =
+            RepositoryFactory.Context.GameFeatureLanguages.Where(x => x.Language.Id == language)
+                .Select(
+                    x =>
+                        new GameFeatureModel
+                        {
+                            Id = x.GameFeature.Id,
+                            GameFeatureName = x.GameFeatureName,
+                            LanguageId = language
+                        }).ToList();
             //works for language <> en
             BuildFeaturesTemplate(language, gameFeatures);
             return gameFeatures;
@@ -220,12 +250,12 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         public void BuildFeaturesTemplate(int language, List<GameFeatureModel> gameFeatures)
         {
             //this is not good i use statis language name ... 
-            var checkIsExists = _repository.LanguageRepository.GetFirst(x => x.LanguageName == "English");
+            var checkIsExists = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == "English");
             if (checkIsExists != null)
             {
                 int enId = checkIsExists.Id;
                 if (enId != language) // then i build template features     
-                    _repository.GameFeatureLanguageRepository.GetWithInclude(x => x.Language.Id == enId).ToList().ForEach(x => gameFeatures.ForEach(z =>
+                    RepositoryFactory.Context.GameFeatureLanguages.Where(x => x.Language.Id == enId).ToList().ForEach(x => gameFeatures.ForEach(z =>
                     {
                         if (z.Id == x.GameFeature.Id)
                             z.GameFeatureTemplateName = x.GameFeatureName;
@@ -239,42 +269,42 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                 //if game have id i must check exists game for game language
                 if (game.IntegrationGameId != 0) // when i have this id i know this is edit 
                 {
-                    var entityToEdit = _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Id == game.IntegrationGameId).FirstOrDefault();
+                    var entityToEdit =
+                        RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
+                            x => x.Id == game.IntegrationGameId);
                     if (entityToEdit == null)
-                        return new ResultStateContainer { ResultMessage = ResultMessage.GameTranslationNotExists,ResultState = ResultState.Failure };
+                        return new ResultStateContainer { ResultMessage = ResultMessage.GameTranslationNotExists, ResultState = ResultState.Failure };
 
                     entityToEdit.IntegrationGameName = game.GameName;
                     entityToEdit.IntegrationGameDescription = game.GameDetails;
-                    _repository.Save();
-                    return new ResultStateContainer { ResultState = ResultState.Success ,ResultMessage=ResultMessage.GameTranslationEdited };
+                    RepositoryFactory.Context.SaveChanges();
+                    return new ResultStateContainer { ResultState = ResultState.Success, ResultMessage = ResultMessage.GameTranslationEdited };
                 }
                 if (CheckNewGameLanguage(game) != ResultMessage.GameCanBeAdded)
-                    return new ResultStateContainer (ResultState.Failure,ResultMessage.GameHaveTranslationForThisLanguage, game.Id);
-                var entity = _repository.IntegrationGameRepository.GetWithInclude(x => x.Id == game.Id).FirstOrDefault();
+                    return new ResultStateContainer(ResultState.Failure, ResultMessage.GameHaveTranslationForThisLanguage, game.Id);
+                var entity = RepositoryFactory.Context.IntegrationGames.FirstOrDefault(x => x.Id == game.Id);
                 var gameDetails = BuildIntegrationGameDetail(game);
-                if(!gameDetails.IntegrationGameFeatures.Any() )
-                    return new ResultStateContainer {ResultState = ResultState.Failure,ResultMessage = ResultMessage.GameFeatureTranslationNotExists};
+                if (!gameDetails.IntegrationGameFeatures.Any())
+                    return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.GameFeatureTranslationNotExists };
                 entity?.IntegrationGameDetails.Add(gameDetails);
-                _repository.Save();
-                return new ResultStateContainer (ResultState.Success,  ResultMessage.SeveralLanguageGameAdded, game.Id );
+                RepositoryFactory.Context.SaveChanges();
+                return new ResultStateContainer(ResultState.Success, ResultMessage.SeveralLanguageGameAdded, game.Id);
             }
             catch (Exception)
             {
-                return new ResultStateContainer {ResultState= ResultState.Failure,ResultMessage = ResultMessage.Error };
+                return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.Error };
             }
         }
         public ResultMessage CheckNewGameLanguage(NewIntegrationGameModel game)
         {
-            if (
-               _repository.IntegrationGameDetailRepository.GetWithInclude(
-                    x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language).FirstOrDefault() == null)
+            if (RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language) == null)
                 return ResultMessage.GameCanBeAdded;
             return ResultMessage.GameHaveTranslationForThisLanguage;
         }
         public ResultStateContainer InsertIntegrationGame(NewIntegrationGameModel game)
         {
             //probably i set here multiple language insert game 
-            if (_repository.IntegrationGameDetailRepository.GetWithInclude(x => x.IntegrationGameName.Equals(game.GameName)).FirstOrDefault() != null)
+            if (RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(x => x.IntegrationGameName.Equals(game.GameName)) != null)
                 return new ResultStateContainer { ResultState = ResultState.Failure, ResultMessage = ResultMessage.GameExists };
             if (game.Id == 0)
                 return InsertSingleLanguageGame(game);

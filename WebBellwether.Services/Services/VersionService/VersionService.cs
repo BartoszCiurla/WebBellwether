@@ -5,8 +5,7 @@ using Newtonsoft.Json;
 using WebBellwether.Models.Models.Version;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Repositories.Entities.Version;
-using WebBellwether.Repositories.Repositories;
-using WebBellwether.Repositories.Repositories.Abstract;
+using WebBellwether.Services.Factories;
 
 namespace WebBellwether.Services.Services.VersionService
 {
@@ -18,31 +17,17 @@ namespace WebBellwether.Services.Services.VersionService
     }
     public class VersionService : IVersionService
     {
-        private readonly IAggregateRepositories _repository;
-        public VersionService()
-        {
-            _repository = new AggregateRepositories();
-        }
-
         public ClientVersionModel GetVersion(int languageId)
         {
-            var languageVersion =
-                _repository.LanguageVersionRepository.GetWithInclude(x => x.Language.Id == languageId)
-                    .Max(x => x.Version);
-            var integrationGameVersion =
-                _repository.IntegrationGameVersionRepository.GetWithInclude(x => x.Language.Id == languageId)
-                    .Max(x => x.Version);
-            var jokeCategoryVersion =
-                _repository.JokeCategoryVersionRepository.GetWithInclude(x => x.Language.Id == languageId)
-                    .Max(x => x.Version);
-            var jokeVersion =
-                _repository.JokeVersionRepository.GetWithInclude(x => x.Language.Id == languageId).Max(x => x.Version);
             return new ClientVersionModel
             {
-                LanguageVersion = languageVersion,
-                IntegrationGameVersion = integrationGameVersion,
-                JokeCategoryVersion = jokeCategoryVersion,
-                JokeVersion = jokeVersion
+                LanguageVersion = RepositoryFactory.Context.LanguageVersions.Where(x => x.Language.Id == languageId).Max(x => x.Version),
+                IntegrationGameVersion = RepositoryFactory.Context.IntegrationGameVersions.Where(x => x.Language.Id == languageId)
+                    .Max(x => x.Version),
+                JokeCategoryVersion = RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId)
+                    .Max(x => x.Version),
+                JokeVersion = RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId)
+                    .Max(x => x.Version)
             };
         }
 
@@ -58,146 +43,180 @@ namespace WebBellwether.Services.Services.VersionService
             };
         }
 
-        public bool ChooseTargetAndFunction(VersionModel version, bool trueAddVersionFalseRemove)
+        public bool ChooseTargetAndFunction(VersionModel version, bool addOrRemove)
         {
-            if (version.VersionTarget == "language")
-                return trueAddVersionFalseRemove ? AddLanguageVersion(version):DeleteLanguageVersion(version);
-            if (version.VersionTarget == "integrationGame")
-                return trueAddVersionFalseRemove ? AddIntegrationGameVersion(version):DeleteIntegrationGameVersion(version);
-            if (version.VersionTarget == "jokeCategory")
-                return trueAddVersionFalseRemove ? AddJokeCategoryVersion(version) : DeleteJokeCategoryVersion(version);
-            if (version.VersionTarget == "joke")
-                return trueAddVersionFalseRemove ? AddJokeVersion(version) : DeleteJokeVersion(version);
+            if (version.VersionTarget.Equals("language"))
+                return addOrRemove ? AddLanguageVersion(version) : DeleteLanguageVersion(version);
+            if (version.VersionTarget.Equals("integrationGame"))
+                return addOrRemove ? AddIntegrationGameVersion(version) : DeleteIntegrationGameVersion(version);
+            if (version.VersionTarget.Equals("jokeCategory"))
+                return addOrRemove ? AddJokeCategoryVersion(version) : DeleteJokeCategoryVersion(version);
+            if (version.VersionTarget.Equals("joke"))
+                return addOrRemove ? AddJokeVersion(version) : DeleteJokeVersion(version);
             return false;
         }
 
         private bool DeleteLanguageVersion(VersionModel versionForDelete)
         {
             var entityToDelete =
-                _repository.LanguageVersionRepository.GetWithInclude(x => x.Language.Id.Equals(versionForDelete.LanguageId) && x.Version.Equals(versionForDelete.VersionNumber)).FirstOrDefault();
-            _repository.LanguageVersionRepository.Delete(entityToDelete);
-            _repository.Save();
+                RepositoryFactory.Context.LanguageVersions.FirstOrDefault(
+                    x =>
+                        x.Language.Id.Equals(versionForDelete.LanguageId) &&
+                        x.Version.Equals(versionForDelete.VersionNumber));
+            if (entityToDelete == null)
+                return false;
+            RepositoryFactory.Context.LanguageVersions.Remove(entityToDelete);
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
 
         private bool DeleteIntegrationGameVersion(VersionModel versionForDelete)
         {
             var entityToDelete =
-                _repository.IntegrationGameVersionRepository.GetWithInclude(x=>x.Language.Id.Equals(versionForDelete.LanguageId) && x.Version.Equals(versionForDelete.VersionNumber))
-                    .FirstOrDefault();
-            _repository.IntegrationGameVersionRepository.Delete(entityToDelete);
-            _repository.Save();
+                RepositoryFactory.Context.IntegrationGameVersions.FirstOrDefault(
+                    x =>
+                        x.Language.Id.Equals(versionForDelete.LanguageId) &&
+                        x.Version.Equals(versionForDelete.VersionNumber));
+            if (entityToDelete == null)
+                return false;
+            RepositoryFactory.Context.IntegrationGameVersions.Add(entityToDelete);
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
 
         private bool DeleteJokeCategoryVersion(VersionModel versionForDelete)
         {
             var entityToDelete =
-                _repository.JokeCategoryVersionRepository.GetWithInclude(x => x.Language.Id.Equals(versionForDelete.LanguageId) && x.Version.Equals(versionForDelete.VersionNumber))
-                    .FirstOrDefault();
-            _repository.JokeCategoryVersionRepository.Delete(entityToDelete);
-            _repository.Save();
+                RepositoryFactory.Context.JokeCategoryVersions.FirstOrDefault(
+                    x =>
+                        x.Language.Id.Equals(versionForDelete.LanguageId) &&
+                                             x.Version.Equals(versionForDelete.VersionNumber));
+            if (entityToDelete == null)
+                return false;
+            RepositoryFactory.Context.JokeCategoryVersions.Remove(entityToDelete);
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
 
         private bool DeleteJokeVersion(VersionModel versionForDelete)
         {
-            var entityTodelete =
-                _repository.JokeVersionRepository.GetWithInclude(x => x.Language.Id.Equals(versionForDelete.LanguageId) && x.Version.Equals(versionForDelete.VersionNumber)).FirstOrDefault();
-            _repository.JokeVersionRepository.Delete(entityTodelete);
-            _repository.Save();
+            var entityTodelete = RepositoryFactory.Context.JokeVersions.FirstOrDefault(x=>x.Language.Id.Equals(versionForDelete.LanguageId) && x.Version.Equals(versionForDelete.VersionNumber));
+            if (entityTodelete == null)
+                return false;
+            RepositoryFactory.Context.JokeVersions.Remove(entityTodelete);
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
         private LanguageDao GetLanguage(int languageId)
         {
-            return _repository.LanguageRepository.GetWithInclude(x => x.Id == languageId).FirstOrDefault();
+            return RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId);
         }
         private bool AddLanguageVersion(VersionModel languageVersion)
         {
-            _repository.LanguageVersionRepository.Insert(new LanguageVersionDao { NumberOfItemsInFileLanguage = languageVersion.NumberOf, Version = languageVersion.VersionNumber, Language = GetLanguage(languageVersion.LanguageId) });
-            _repository.Save();
+            RepositoryFactory.Context.LanguageVersions.Add(new LanguageVersionDao
+            {
+                NumberOfItemsInFileLanguage = languageVersion.NumberOf,
+                Version = languageVersion.VersionNumber,
+                Language = GetLanguage(languageVersion.LanguageId)
+            });
             return true;
         }
 
         private bool AddIntegrationGameVersion(VersionModel integrationGameVersion)
         {
-            _repository.IntegrationGameVersionRepository.Insert(new IntegrationGameVersionDao { NumberOfIntegrationGames = integrationGameVersion.NumberOf, Version = integrationGameVersion.VersionNumber, Language = GetLanguage(integrationGameVersion.LanguageId) });
-            _repository.Save();
+            RepositoryFactory.Context.IntegrationGameVersions.Add(new IntegrationGameVersionDao
+            {
+                NumberOfIntegrationGames = integrationGameVersion.NumberOf,
+                Version = integrationGameVersion.VersionNumber,
+                Language = GetLanguage(integrationGameVersion.LanguageId)
+            });
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
 
         private bool AddJokeCategoryVersion(VersionModel jokeCategoryVersion)
         {
-            _repository.JokeCategoryVersionRepository.Insert(new JokeCategoryVersionDao {NumberOfJokeCategory = jokeCategoryVersion.NumberOf,Version = jokeCategoryVersion.VersionNumber,Language = GetLanguage(jokeCategoryVersion.LanguageId)});
-            _repository.Save();
+            RepositoryFactory.Context.JokeCategoryVersions.Add(new JokeCategoryVersionDao
+            {
+                NumberOfJokeCategory = jokeCategoryVersion.NumberOf,
+                Version = jokeCategoryVersion.VersionNumber,
+                Language = GetLanguage(jokeCategoryVersion.LanguageId)
+            });
+            RepositoryFactory.Context.SaveChanges();
             return true;
         }
 
         private bool AddJokeVersion(VersionModel jokeVersion)
         {
-            _repository.JokeVersionRepository.Insert(new JokeVersionDao {NumberOfJokes = jokeVersion.NumberOf,Version = jokeVersion.VersionNumber,Language = GetLanguage(jokeVersion.LanguageId)});
-            _repository.Save();
+            RepositoryFactory.Context.JokeVersions.Add(new JokeVersionDao
+            {
+                NumberOfJokes = jokeVersion.NumberOf,
+                Version = jokeVersion.VersionNumber,
+                Language = GetLanguage(jokeVersion.LanguageId)
+            });
+            RepositoryFactory.Context.SaveChanges();           
             return true;
         }
         private CurrentVersionDetailStateModel FillCurrentVersionDetail(int languageId)
         {
-            var result = new CurrentVersionDetailStateModel();
-            //to jest chwilowe rozwiązanie jutro idzie pełen reforge 
             string _destinationPlace =
-                @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_";
+             @"E:\PRACA INŻYNIERSKA\WebBelwether New\WebBellwether\WebBellwether.Web\appData\translations\translation_";
             string languageFileLocation = $"{_destinationPlace}{languageId}{".json"}";
             string templateJson = File.ReadAllText(languageFileLocation);
             var dictionaryJson = JsonConvert.DeserializeObject<Dictionary<string, string>>(templateJson);
-            result.NumberOfItemsInFileLanguage = dictionaryJson.Count();
-            result.NumberOfIntegrationGames =
-                _repository.IntegrationGameDetailRepository.GetWithInclude(x => x.Language.Id == languageId).Count();
-            result.NumberOfJokeCategory =
-                _repository.JokeCategoryDetailRepository.GetWithInclude(x => x.Language.Id == languageId).Count();
-            result.NumberOfJokes =
-                _repository.JokeDetailRepository.GetWithInclude(x => x.Language.Id == languageId).Count();
-            return result;
+            return new CurrentVersionDetailStateModel
+            {
+                NumberOfItemsInFileLanguage = dictionaryJson.Count(),
+                NumberOfIntegrationGames =
+                    RepositoryFactory.Context.IntegrationGameDetails.Count(x => x.Language.Id == languageId),
+                NumberOfJokes = RepositoryFactory.Context.JokeCategoryDetails.Count(x => x.Language.Id == languageId),
+                NumberOfJokeCategory = RepositoryFactory.Context.JokeDetails.Count(x => x.Language.Id == languageId)
+            };
         }
 
-        private IEnumerable<VersionDetailModel> FillLanguageVersion(int languageId)
+        private VersionDetailModel[] FillLanguageVersion(int languageId)
         {
-            var result = new List<VersionDetailModel>();
-            _repository.LanguageVersionRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(x =>
-              {
-                  result.Add(new VersionDetailModel { VersionNumber = x.Version, NumberOf = x.NumberOfItemsInFileLanguage,Id = x.Id});
-              });
-            return result;
+            return
+                RepositoryFactory.Context.LanguageVersions.Where(x => x.Language.Id == languageId)
+                    .ToList()
+                    .Select(
+                        x =>
+                            new VersionDetailModel
+                            {
+                                Id = x.Id,
+                                NumberOf = x.NumberOfItemsInFileLanguage,
+                                VersionNumber = x.Version
+                            })
+                    .ToArray();
         }
 
-        private IEnumerable<VersionDetailModel> FillIntegrationGameVersion(int languageId)
+        private VersionDetailModel[] FillIntegrationGameVersion(int languageId)
         {
-            var result = new List<VersionDetailModel>();
-            _repository.IntegrationGameVersionRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(
-                x =>
-                {
-                    result.Add(new VersionDetailModel { VersionNumber = x.Version, NumberOf = x.NumberOfIntegrationGames,Id = x.Id});
-                });
-            return result;
+            return
+                RepositoryFactory.Context.IntegrationGameVersions.Where(x => x.Language.Id == languageId)
+                    .ToList()
+                    .Select(x => new VersionDetailModel { Id = x.Id, NumberOf = x.NumberOfIntegrationGames, VersionNumber = x.Version })
+                    .ToArray();
         }
 
-        private IEnumerable<VersionDetailModel> FillJokeCategoryVersion(int languageId)
+        private VersionDetailModel[] FillJokeCategoryVersion(int languageId)
         {
-            var result = new List<VersionDetailModel>();
-            _repository.JokeCategoryVersionRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(
-                x =>
-                {
-                    result.Add(new VersionDetailModel { VersionNumber = x.Version, NumberOf = x.NumberOfJokeCategory, Id = x.Id });
-                });
-            return result;
+            return
+                RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId)
+                    .ToList()
+                    .Select(x => new VersionDetailModel { Id = x.Id, NumberOf = x.NumberOfJokeCategory, VersionNumber = x.Version })
+                    .ToArray();
         }
 
-        private IEnumerable<VersionDetailModel> FillJokeVersion(int languageId)
+        private VersionDetailModel[] FillJokeVersion(int languageId)
         {
-            var result = new List<VersionDetailModel>();
-            _repository.JokeVersionRepository.GetWithInclude(x => x.Language.Id == languageId).ToList().ForEach(x =>
-              {
-                  result.Add(new VersionDetailModel { VersionNumber = x.Version, NumberOf = x.NumberOfJokes, Id = x.Id});
-              });
-            return result;
+
+            return
+                RepositoryFactory.Context.JokeVersions.Where(x => x.Language.Id == languageId)
+                    .ToList()
+                    .Select(
+                        x => new VersionDetailModel { Id = x.Id, NumberOf = x.NumberOfJokes, VersionNumber = x.Version })
+                    .ToArray();
         }
     }
 }

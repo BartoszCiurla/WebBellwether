@@ -127,6 +127,8 @@
                 });
                 console.log(integrationGame);
                 integrationGamesService.AddNewIntegrationGame(integrationGame).then(function (x) {
+                    if ($scope.integrationGames == null)
+                        $scope.integrationGames = [];
                     $scope.integrationGames.push(x.data);
                     $scope.newIntegrationGame = '';
 

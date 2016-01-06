@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.cs" />
+    <Compile Include="Models\Auth\Client.cs" />
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
+    <Compile Include="Models\Auth\RefreshToken.cs" />
     <Compile Include="Models\Auth\UserModel.cs" />
     <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
     <Compile Include="Models\IntegrationGame\GameFeatureDetailModel.cs" />
