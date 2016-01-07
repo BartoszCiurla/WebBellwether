@@ -5,44 +5,43 @@
             $scope.languageForVersion = null;
             $scope.versionDetail = {};
             $scope.getVersionDetailsForLanguage = function (language) {
-                if (language !== undefined)
-// ReSharper disable once QualifiedExpressionMaybeNull
-                    if (language.id !== undefined)
-                versionsService.GetVersionDetailsForLanguage(language.id).then(function (x) {
-                    $scope.versionDetail = x.data;
-                }, function() {
-
-                });
+                if (language.Id !== undefined)
+                    if (language.Id !== null)
+                        versionsService.GetVersionDetailsForLanguage(language.Id).then(function (x) {
+                            if (x.data.IsValid) {
+                                $scope.versionDetail = {};
+                                $scope.versionDetail = x.data.Data;
+                            }
+                                
+                        });
             };
-            $scope.addVersion = function(langVersion,versionTarget, numberOf) {
+            $scope.addVersion = function (langVersion, versionTarget, numberOf) {
                 var versionModel = {
                     VersionNumber: langVersion,
                     NumberOf: numberOf,
                     LanguageId: $scope.languageForVersion.id,
                     VersionTarget: versionTarget
                 }
-                versionsService.PostNewVersion(versionModel).then(function() {
-                    selectTableVersion(versionModel,true);
-                }, function() {
-
+                versionsService.PostNewVersion(versionModel).then(function (x) {
+                    if (x.data.IsValid)
+                        selectTableVersion(versionModel, true);
                 });
             };
-            $scope.removeVersion = function (version, target,index) {
+            $scope.removeVersion = function (version, target, index) {
                 var versionForDelete = {
-                    Id:version.id,
+                    Id: version.Id,
                     VersionTarget: target,
                     Index: index,
-                    VersionNumber:version.versionNumber,
-                    NumberOf: version.numberOf,
+                    VersionNumber: version.VersionNumber,
+                    NumberOf: version.NumberOf,
                     LanguageId: $scope.languageForVersion.id
                 }
-                versionsService.PostRemoveVersion(versionForDelete).then(function() {
-                    selectTableVersion(versionForDelete, false);
-                }, function() {
-
+                versionsService.PostRemoveVersion(versionForDelete).then(function (x) {
+                    if (x.data.IsValid)
+                        selectTableVersion(versionForDelete, false);
                 });
             };
-            function selectTableVersion(versionModel,addTrueRemoveFalse) {
+            function selectTableVersion(versionModel, addTrueRemoveFalse) {
                 if (versionModel.VersionTarget === "language")
                     addTrueRemoveFalse ? insertVersionToLanguage(versionModel) : removeVersionFromLanguage(versionModel.Index);
                 if (versionModel.VersionTarget === "integrationGame")
@@ -53,36 +52,36 @@
                     addTrueRemoveFalse ? insertVersionToJoke(versionModel) : removeVersionFromJoke(versionModel.Index);
             };
             function removeVersionFromLanguage(index) {
-                $scope.versionDetail.languageVersions.splice(index,1);
+                $scope.versionDetail.LanguageVersions.splice(index, 1);
             };
 
             function removeVersionFromIntegrationGame(index) {
-                $scope.versionDetail.integrationGameVersions.splice(index,1);
+                $scope.versionDetail.IntegrationGameVersions.splice(index, 1);
             };
 
             function removeVersionFromJokeCategory(index) {
-                $scope.versionDetail.jokeCategoryVersions.splice(index,1);
+                $scope.versionDetail.JokeCategoryVersions.splice(index, 1);
             };
             function removeVersionFromJoke(index) {
-                $scope.versionDetail.jokeVersions.splice(index,1);
+                $scope.versionDetail.JokeVersions.splice(index, 1);
             };
 
             function insertVersionToLanguage(newVersionModel) {
-                $scope.versionDetail.languageVersions.push(createVersionDetail(newVersionModel));
+                $scope.versionDetail.LanguageVersions.push(createVersionDetail(newVersionModel));
             };
             function insertVersionToIntegrationGame(newVersionModel) {
-                $scope.versionDetail.integrationGameVersions.push(createVersionDetail(newVersionModel));
+                $scope.versionDetail.IntegrationGameVersions.push(createVersionDetail(newVersionModel));
             };
             function insertVersionToJokeCategory(newVersionModel) {
-                $scope.versionDetail.jokeCategoryVersions.push(createVersionDetail(newVersionModel));
+                $scope.versionDetail.JokeCategoryVersions.push(createVersionDetail(newVersionModel));
             };
             function insertVersionToJoke(newVersionModel) {
-                $scope.versionDetail.jokeVersions.push(createVersionDetail(newVersionModel));
+                $scope.versionDetail.JokeVersions.push(createVersionDetail(newVersionModel));
             };
             function createVersionDetail(newVersionModel) {
                 var versionDetail = {
-                    versionNumber: newVersionModel.VersionNumber,
-                    numberOf:newVersionModel.NumberOf
+                    VersionNumber: newVersionModel.VersionNumber,
+                    NumberOf: newVersionModel.NumberOf
                 }
                 return versionDetail;
             }

@@ -33,7 +33,7 @@
         <div ng-hide="selectedJokeCategory == ''">
             <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedJokeCategoryAndLanguage}}</h2>
 
-            <select id="language" ng-change="getTranslationForJokeCategory()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation" data-ng-options="language.languageName + '   :   ' + language.languageShortName for language in languages | filterByIdTakeWhenNotExists : selectedLanguage">
+            <select id="language" ng-change="getTranslationForJokeCategory()" class="form-control myFormColor" required data-ng-model="languageForOtherTranslation" data-ng-options="language.LanguageName + '   :   ' + language.LanguageShortName for language in languages | filterByIdTakeWhenNotExists : selectedLanguage">
                 <option value=''>{{translation.SelectLanguageForTheJokeCategory}}</option>
             </select>
 

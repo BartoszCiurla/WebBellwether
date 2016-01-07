@@ -5,6 +5,7 @@ using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Services.Factories;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.JokeService
 {
@@ -115,25 +116,18 @@ namespace WebBellwether.Services.Services.JokeService
         public List<AvailableLanguage> FillAvailableTranslation(int jokeId, List<LanguageDao> allLanguages)
         {
             var translation =
-                RepositoryFactory.Context.JokeDetails.Where(x => x.Joke.Id == jokeId)
+                RepositoryFactory.Context.JokeDetails.Where(x => x.Joke.Id == jokeId).ToList()
                     .Select(
                         x =>
                             new AvailableLanguage
                             {
-                                Language =
-                                    new Language
-                                    {
-                                        Id = x.Language.Id,
-                                        IsPublic = x.Language.IsPublic,
-                                        LanguageName = x.Language.LanguageName,
-                                        LanguageShortName = x.Language.LanguageShortName
-                                    },
+                                Language = ModelMapper.Map<Language,LanguageDao>(x.Language),
                                 HasTranslation = true
                             }).ToList();
             allLanguages.ForEach(x =>
             {
                 if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
-                    translation.Add(new AvailableLanguage { Language = new Language { Id = x.Id, IsPublic = x.IsPublic, LanguageName = x.LanguageName, LanguageShortName = x.LanguageShortName }, HasTranslation = false });
+                    translation.Add(new AvailableLanguage { Language = ModelMapper.Map<Language,LanguageDao>(x), HasTranslation = false });
             });
             return translation;
         }
@@ -185,25 +179,18 @@ namespace WebBellwether.Services.Services.JokeService
         public List<AvailableLanguage> FillAvailableJokeCategoryTranslation(int jokeCategoryId, List<LanguageDao> allLanguages)
         {
             var translation =
-                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.JokeCategory.Id == jokeCategoryId)
+                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.JokeCategory.Id == jokeCategoryId).ToList()
                     .Select(
                         z =>
                             new AvailableLanguage
                             {
-                                Language =
-                                    new Language
-                                    {
-                                        Id = z.Language.Id,
-                                        IsPublic = z.Language.IsPublic,
-                                        LanguageName = z.Language.LanguageName,
-                                        LanguageShortName = z.Language.LanguageShortName
-                                    },
+                                Language = ModelMapper.Map<Language,LanguageDao>(z.Language),
                                 HasTranslation = true
                             }).ToList();
             allLanguages.ForEach(x =>
             {
                 if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
-                    translation.Add(new AvailableLanguage { Language = new Language { Id = x.Id, IsPublic = x.IsPublic, LanguageName = x.LanguageName, LanguageShortName = x.LanguageShortName }, HasTranslation = false });
+                    translation.Add(new AvailableLanguage { Language = ModelMapper.Map<Language,LanguageDao>(x), HasTranslation = false });
             });
             return translation;
         }

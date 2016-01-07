@@ -63,16 +63,18 @@
     <Compile Include="Models\Translation\TranslateLanguageKeysModel.cs" />
     <Compile Include="Models\Translation\TranslateLanguageModel.cs" />
     <Compile Include="Models\Translation\Yandex\YandexResponse.cs" />
-    <Compile Include="Models\Version\ClientVersionModel.cs" />
-    <Compile Include="Models\Version\CurrentVersionDetailStateModel.cs" />
-    <Compile Include="Models\Version\VersionAggregateModel.cs" />
-    <Compile Include="Models\Version\VersionDetailModel.cs" />
-    <Compile Include="Models\Version\VersionModel.cs" />
+    <Compile Include="ViewModels\Version\ClientVersionViewModel.cs" />
+    <Compile Include="ViewModels\Version\CurrentVersionDetailStateViewModel.cs" />
+    <Compile Include="ViewModels\Version\VersionAggregateViewModel.cs" />
+    <Compile Include="ViewModels\Version\VersionDetailViewModel.cs" />
+    <Compile Include="ViewModels\Version\VersionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ResultMessage.cs" />
     <Compile Include="Results\ResultState.cs" />
     <Compile Include="Results\ResultStateContainer.cs" />
+    <Compile Include="ViewModels\ResponseViewModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

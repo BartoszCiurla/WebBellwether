@@ -14,11 +14,10 @@ namespace WebBellwether.Services.Services.TranslateService
 {
     public interface ITranslateService
     {
-        List<SupportedLanguage> GetListOfSupportedLanguages();
+        SupportedLanguage[] GetListOfSupportedLanguages();
         string GetServiceName();
-        Task<ResultStateContainer> GetLanguageTranslation(TranslateLanguageModel languageModel);
-
-        Task<ResultStateContainer> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel);
+        Task<JObject> GetLanguageTranslation(TranslateLanguageModel languageModel);
+        Task<string[]> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel);
     }
     public class YandexTranslateService : ITranslateService
     {
@@ -44,7 +43,7 @@ namespace WebBellwether.Services.Services.TranslateService
         {
             _webClient = new HttpClient(new HttpClientHandler() { UseDefaultCredentials = true });
         }
-        public List<SupportedLanguage> GetListOfSupportedLanguages()
+        public SupportedLanguage[] GetListOfSupportedLanguages()
         {
             var resultDict = new Dictionary<string, string>
             {
@@ -112,7 +111,7 @@ namespace WebBellwether.Services.Services.TranslateService
             {"Estonian", "et"},
             {"Japanese", "ja"}
             };
-            return resultDict.Select(item => new SupportedLanguage(item.Key, item.Value)).ToList();
+            return resultDict.Select(item => new SupportedLanguage(item.Key, item.Value)).ToArray();
         }
 
         public string GetServiceName()
@@ -120,57 +119,35 @@ namespace WebBellwether.Services.Services.TranslateService
             return "Yandex";
         }
 
-        public async Task<ResultStateContainer> GetLanguageTranslation(TranslateLanguageModel languageModel)
+        public async Task<JObject> GetLanguageTranslation(TranslateLanguageModel languageModel)
         {
-            try
+            string requestString =
+                $"{BaseAdress}{Translate}{ApiKey}{"&lang="}{languageModel.CurrentLanguageCode}{"-"}{languageModel.TargetLanguageCode}";
+            var requestContent = new StringBuilder();
+            languageModel.ContentForTranslation.ToList().ForEach(x =>
             {
-                string requestString =
-                    $"{BaseAdress}{Translate}{ApiKey}{"&lang="}{languageModel.CurrentLanguageCode}{"-"}{languageModel.TargetLanguageCode}";
-                var requestContent = new StringBuilder();
-                languageModel.ContentForTranslation.ToList().ForEach(x =>
-                {
-                    requestContent.Append("&text=");
-                    requestContent.Append(x);
-                });
-                var result = await _webClient.GetStringAsync($"{requestString}{requestContent}").ConfigureAwait(false);
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultValue = JObject.Parse(result) };
-            }
-            catch (Exception e)
-            {
-
-                return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = e };
-            }
-
+                requestContent.Append("&text=");
+                requestContent.Append(x);
+            });
+            var result = await _webClient.GetStringAsync($"{requestString}{requestContent}");
+            return JObject.Parse(result);
         }
 
-        public async Task<ResultStateContainer> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel)
+        public async Task<string[]> GetAllLanguageKeysTranslations(TranslateLanguageModel languageModel)
         {
-            try
+            var baseRequestParameters = $"{BaseAdress}{Translate}{ApiKey}{"&lang="}{languageModel.CurrentLanguageCode}{"-"}{languageModel.TargetLanguageCode}";
+            var valuesForTranslate = new StringBuilder();
+            languageModel.ContentForTranslation.ToList().ForEach(x =>
             {
-                var baseRequestParameters = $"{BaseAdress}{Translate}{ApiKey}{"&lang="}{languageModel.CurrentLanguageCode}{"-"}{languageModel.TargetLanguageCode}";
-                var valuesForTranslate = new StringBuilder();
-                languageModel.ContentForTranslation.ToList().ForEach(x =>
-                {
-                    valuesForTranslate.Append("&text=");
-                    valuesForTranslate.Append(x);
-                });
-                //w przyszłości to nie będzie działało ... i bede musial to robic po trochu ... obecnie mam około 7k + znaków ...
-                if (valuesForTranslate.ToString().Count() > 10000)
-                    return new ResultStateContainer
-                    {
-                        ResultState = ResultState.Failure,
-                        ResultValue = ResultMessage.TooLongRequest
-                    };
-                var resultRequest = await _webClient.GetStringAsync($"{baseRequestParameters}{valuesForTranslate}").ConfigureAwait(false);
-                YandexResponse result = JsonConvert.DeserializeObject<YandexResponse>(resultRequest);                         
-
-                return new ResultStateContainer { ResultState = ResultState.Success, ResultValue = result.Text };
-            }
-            catch (Exception e)
-            {
-
-                return new ResultStateContainer { ResultState = ResultState.Failure, ResultValue = e };
-            }
+                valuesForTranslate.Append("&text=");
+                valuesForTranslate.Append(x);
+            });
+            //w przyszłości to nie będzie działało ... i bede musial to robic po trochu ... obecnie mam około 7k + znaków ...
+            if (valuesForTranslate.ToString().Count() > 10000)
+                throw new Exception(ResultMessage.TooLongRequest.ToString());
+            var resultRequest = await _webClient.GetStringAsync($"{baseRequestParameters}{valuesForTranslate}").ConfigureAwait(false);
+            YandexResponse result = JsonConvert.DeserializeObject<YandexResponse>(resultRequest);
+            return result.Text.ToArray();
         }
     }
 }

@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
+using System.Web.Services.Description;
+using Newtonsoft.Json.Linq;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
-using WebBellwether.Services.Services.LanguageService;
+using WebBellwether.Models.ViewModels;
 using WebBellwether.Services.Services.TranslateService;
 
 namespace WebBellwether.API.Controllers
@@ -12,56 +17,55 @@ namespace WebBellwether.API.Controllers
     [RoutePrefix("api/Translate")]
     public class TranslateController : ApiController
     {
-        private readonly ITranslateService _service;
-        private readonly IManagementLanguageService _languageService;
-        public TranslateController()
-        {
-            _service = ServiceFactory.TranslateService;
-            _languageService = ServiceFactory.ManagementLanguageService;
-        }
-
         [Authorize(Roles = "Admin")]
         [Route("GetSupportedLanguages")]
-        public IHttpActionResult GetSupportedLanguages()
+        public JsonResult<ResponseViewModel<SupportedLanguage[]>> GetSupportedLanguages()
         {
-            return Ok(_service.GetListOfSupportedLanguages());
+            var response = ServiceExecutor.Execute(() => ServiceFactory.TranslateService.GetListOfSupportedLanguages());
+            return Json(response);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("GetTranslateServiceName")]
-        public IHttpActionResult GetTranslateServiceName()
+        public JsonResult<ResponseViewModel<string>> GetTranslateServiceName()
         {
-            return Ok(_service.GetServiceName());
+            var response = ServiceExecutor.Execute(() => ServiceFactory.TranslateService.GetServiceName());
+            return Json(response);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("PostLanguageTranslation")]
-        public async Task<IHttpActionResult> PostLanguageTranslation(TranslateLanguageModel languageModel)
+        public async Task<JsonResult<ResponseViewModel<Task<JObject>>>> PostLanguageTranslation(TranslateLanguageModel languageModel)
         {
-            var resultStateContainer = await _service.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation));
-            return resultStateContainer.ResultState == ResultState.Success
-                ? Ok(resultStateContainer.ResultValue)
-                : (IHttpActionResult)BadRequest(resultStateContainer.ResultValue.ToString());
+            var result = await 
+                Task.Run(
+                    () =>
+                        ServiceExecutor.Execute(
+                            () => ServiceFactory.TranslateService.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation))));            
+            return Json(result);      
         }
         [Authorize(Roles = "Admin")]
         [Route("PostTranslateAllLanguageKeys")]
-        public async Task<IHttpActionResult> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
+        public async Task<JsonResult<ResponseViewModel<bool>>> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {
-            IEnumerable<string> currentLangaugeFile = _languageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId);
-            if (currentLangaugeFile == null)
-                return BadRequest(ResultMessage.LanguageFileNotExists.ToString());
-
-            var translateResultState = await _service.GetAllLanguageKeysTranslations(new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,translateLangaugeKeysModel.TargetLangaugeShortName,currentLangaugeFile));
-            if (translateResultState.ResultState == ResultState.Failure)
-                return BadRequest(translateResultState.ResultValue.ToString());
-
-            var fillLangaugeFileResultState = _languageService.FillLanguageFile(translateResultState.ResultValue as IEnumerable<string>,
-                translateLangaugeKeysModel.TargetLanguageId);
-
-            return fillLangaugeFileResultState.ResultState == ResultState.Success
-                ? Ok(fillLangaugeFileResultState.ResultMessage)
-                : (IHttpActionResult)BadRequest(fillLangaugeFileResultState.ResultValue.ToString());
+            var valuesToTranslate = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
+            if (!valuesToTranslate.IsValid)
+                return null;
+            var valuesAfterTranslation = await
+                Task.Run(() =>
+                    ServiceExecutor.Execute(
+                        () =>
+                            ServiceFactory.TranslateService.GetAllLanguageKeysTranslations(
+                                new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,
+                                    translateLangaugeKeysModel.TargetLangaugeShortName,
+                                    valuesToTranslate.Data.ToArray()))));
+            if (!valuesAfterTranslation.IsValid)
+                return null;
+            var valuesSaved =
+                ServiceExecutor.Execute(
+                    () => ServiceFactory.ManagementLanguageService.FillLanguageFile(valuesAfterTranslation.Data.Result, translateLangaugeKeysModel.TargetLanguageId));
+            return Json(valuesSaved);
         }
     }
 }
-//To step into properties, go to Tools->Options->Debugging and uncheck 'Step over properties and operators (Managed only)'.
+

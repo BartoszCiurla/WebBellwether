@@ -4,13 +4,13 @@
         <h1>{{translation.GameFeatures}}</h1>
         <div class="inline-block">
             <label for="language">{{translation.Language}}</label>
-            <select id="language" class="form-control myFormColor" ng-init="gameFeature.language = languages[selectedLanguage - 1]; getGameFeatures(gameFeature.language.id)" required data-ng-model="gameFeature.language" data-ng-change="getGameFeatures(gameFeature.language.id)" data-ng-options="language.languageName for language in languages">
+            <select id="language" class="form-control myFormColor" ng-init="gameFeature.language = languages[selectedLanguage - 1]; getGameFeatures(gameFeature.language.Id)" required data-ng-model="gameFeature.language" data-ng-change="getGameFeatures(gameFeature.language.Id)" data-ng-options="language.LanguageName for language in languages">
                 <option value=''>{{translation.ChooseLanguage}}</option>
             </select>
         </div>
         <!--GAME FEATURES-->
         <div class="margin10" ng-show="gameFeatures == ''">
-            <button ng-click="createGameFeatures(gameFeature.language.id)" class="btn btn-success"><span class="mif-checkmark"></span> {{translation.CreateFeatures}}</button>
+            <button ng-click="createGameFeatures(gameFeature.language.Id)" class="btn btn-success"><span class="mif-checkmark"></span> {{translation.CreateFeatures}}</button>
         </div>
         <div ng-hide="gameFeature.language == null || gameFeatures == ''">
             <h4 style="margin-bottom: 10px; text-align: left" ng-hide="gameFeatures[0].gameFeatureTemplateName == null">
@@ -31,7 +31,7 @@
             <div ng-repeat="gameFeature in gameFeatures" class="formAni">
                 <div class="form-inline">
                     <form style="float: left" class="form-group" novalidate ng-submit="editGameFeature(gameFeature)">
-                        <input ng-class="getClass(gameFeature.id,0)" ng-disabled=" required1.val1 == null" type="text" class="form-control myFormColor" required data-ng-model="gameFeature.gameFeatureName" />
+                        <input ng-class="getClass(gameFeature.id,0)" ng-disabled="required1.val1 == null" type="text" class="form-control myFormColor" required data-ng-model="gameFeature.gameFeatureName" />
                         <button type="submit" ng-disabled="!gameFeature.gameFeatureName.length || required1.val1 == null" class="btn btn-danger">{{translation.Save}}</button>
                         <label ng-hide="gameFeature.gameFeatureTemplateName == null">
                             {{gameFeature.gameFeatureTemplateName}}

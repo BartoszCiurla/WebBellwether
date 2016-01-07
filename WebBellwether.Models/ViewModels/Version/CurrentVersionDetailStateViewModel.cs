@@ -1,6 +1,6 @@
-﻿namespace WebBellwether.Models.Models.Version
+﻿namespace WebBellwether.Models.ViewModels.Version
 {
-    public class CurrentVersionDetailStateModel
+    public class CurrentVersionDetailStateViewModel
     {
         public int NumberOfItemsInFileLanguage { get; set; }
         public int NumberOfIntegrationGames { get; set; }

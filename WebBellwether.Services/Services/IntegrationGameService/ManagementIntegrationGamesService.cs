@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using WebBellwether.Models.Models.IntegrationGame;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
@@ -224,8 +223,6 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             }
 
         }
-
-
         public LanguageDao GetLanguage(int id)
         {
             return RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == id);

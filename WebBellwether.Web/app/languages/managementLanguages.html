@@ -10,7 +10,7 @@
         <div class="col-xs-10 col-sm-4 col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-offset-4 formAni" ng-hide="newLanguageOption == true">
             <div class="form-group">
                 <label>{{translation.Language}}</label>
-                <select id="language" class="form-control myFormColor" required data-ng-model="selectedLanguageForEdit" data-ng-change="getLanguageContent(selectedLanguageForEdit);" data-ng-options="language.languageName for language in allLanguages">
+                <select id="language" class="form-control myFormColor" required data-ng-model="selectedLanguageForEdit" data-ng-change="getLanguageContent(selectedLanguageForEdit);" data-ng-options="language.LanguageName for language in allLanguages">
                     <option value=''>{{translation.ChooseLanguage}}</option>
                 </select>
             </div>
@@ -80,7 +80,7 @@
                 <form name="basicLanguageInformationNew">
                     <div class="form-group">
                         <label>{{translation.LanguageShortName}}</label>
-                        <select class="form-control myFormColor" ng-change="translateLanguageName(newLanguage,false)" required ng-model="newLanguage.languageShortName" data-ng-options="sl.code as sl.language for sl in supportedLanguages">
+                        <select class="form-control myFormColor" ng-change="translateLanguageName(newLanguage,false)" required ng-model="newLanguage.languageShortName" data-ng-options="sl.Code as sl.Language for sl in supportedLanguages">
                             <option value=''>{{translation.ChooseLanguage}}</option>
                         </select>
                         <div class="margin10" style="text-align: left; font-weight: bold">

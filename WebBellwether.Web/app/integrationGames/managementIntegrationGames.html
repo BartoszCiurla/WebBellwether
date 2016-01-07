@@ -57,7 +57,7 @@
         <div ng-hide="selectedGame == ''" class="formAni">
             <h2 style="text-align:left">{{translation.OtherTranslationForTheCurrentlySelectedGameAndLanguage}}</h2>
 
-            <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required ng-model="languageForOtherTranslation" data-ng-options="language.languageName + '   :   ' + language.languageShortName for language in languages | filterByIdTakeWhenNotExists : selectedLanguage">
+            <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required ng-model="languageForOtherTranslation" data-ng-options="language.LanguageName + '   :   ' + language.LanguageShortName for language in languages | filterByIdTakeWhenNotExists : selectedLanguage">
                 <option value=''>{{translation.SelectLanguageForTheGame}}</option>
             </select>
             <div ng-hide="languageForOtherTranslation.id == null" class="formAni">

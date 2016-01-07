@@ -6,18 +6,17 @@
             $scope.translate = function (select) {
                 var isPublic = false;
                 $scope.languages.forEach(function(x) {
-                    if (x.id === select && x.isPublic)
+                    if (x.Id === select && x.IsPublic)
                         isPublic = true;
                 });
                 if (!isPublic) {
                     $scope.languages.forEach(function(x) {
-                        if (x.isPublic) {
-                            select = x.id;
+                        if (x.IsPublic) {
+                            select = x.Id;
                             return;
                         }
                     });
                 }
-                //this is global value ... ffs 
                 $scope.selectedLanguage = select;
 
                 translationService.getTranslation($scope, select);
@@ -26,7 +25,7 @@
             };
             
             translationService.getLanguages().then(function (results) {
-                $scope.languages = results.data;
+                $scope.languages = results.data.Data;
                 $scope.selectedLanguage = (Number)(localStorageService.get('mylanguage') != null ? localStorageService.get('mylanguage') : 1);
                 //tutaj potrzebne zabezpieczenie jak jezyk nie jest publiczny to z automatu biore anga jak go nie ma to biore jakikolwiek
                 $scope.translate($scope.selectedLanguage);

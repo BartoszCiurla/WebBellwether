@@ -216,7 +216,7 @@
             $scope.selectedLanguageForEdit = null;
             $scope.selectedLanguageContent = [];
             $scope.getLanguageFileContent = function(lang) {
-                languagesService.GetLanguageContent(lang.id).then(function (x) {
+                languagesService.GetLanguageContent(lang.Id).then(function (x) {
                     $scope.selectedLanguageContent = [];
                     for (key in x) {
                         if (x.hasOwnProperty(key)) {
@@ -234,11 +234,11 @@
                 if (lang != null) {
                     $scope.selectedLanguageForEdit = lang;
                     $scope.languageForEdit = {
-                        id: lang.id,
-                        languageName: lang.languageName,
-                        languageShortName: lang.languageShortName,
-                        isPublic: lang.isPublic,
-                        languageVersion : lang.languageVersion
+                        id: lang.Id,
+                        languageName: lang.LanguageName,
+                        languageShortName: lang.LanguageShortName,
+                        isPublic: lang.IsPublic,
+                        languageVersion : lang.LanguageVersion
                     };
                     $scope.getLanguageFileContent(lang);
                 }
@@ -249,9 +249,9 @@
             $scope.allLanguages = [];
             $scope.getAllLanguages = function () {
                 languagesService.GetAllLanguages().then(function (x) {
-                    $scope.allLanguages = x.data;
+                    $scope.allLanguages = x.data.Data;
                     $scope.allLanguages.forEach(function (z) {
-                        if (z.id === $scope.selectedLanguage)
+                        if (z.Id === $scope.selectedLanguage)
                             $scope.getLanguageContent(z);
                     });
                 });
@@ -264,12 +264,12 @@
             $scope.translateServiceName = '';
             $scope.getSupportedLanguages = function () {
                 translateService.GetLanguages().then(function (x) {
-                    $scope.supportedLanguages = x.data;
+                    $scope.supportedLanguages = x.data.Data;
                 });
             };
             $scope.getTranslateServiceName = function () {
                 translateService.GetTranslateServiceName().then(function (x) {
-                    $scope.translateServiceName = x.data;
+                    $scope.translateServiceName = x.data.Data;
                 });
             };
             // ********************
@@ -278,8 +278,8 @@
             $scope.translateLanguageKey = function (currentLangId, targetLang, content, key) {
                 var shortNameCurrentLang = '';
                 $scope.languages.forEach((function (x) {
-                    if (x.id === currentLangId)
-                        shortNameCurrentLang = x.languageShortName;
+                    if (x.Id === currentLangId)
+                        shortNameCurrentLang = x.LanguageShortName;
                 }));
                 var translateLanguageModel = {
                     CurrentLanguageCode: shortNameCurrentLang,
@@ -321,7 +321,7 @@
             $scope.translateAllLanguageKeys = function (currentLangId, targetLang) {
                 var selectedLangauge = '';
                 $scope.languages.forEach((function (x) {
-                    if (x.id === currentLangId)
+                    if (x.Id === currentLangId)
                         selectedLangauge = x;
                 }));
                 var translateLangaugeKeysModel = {
@@ -360,8 +360,8 @@
             $scope.translateLanguageName = function(language, languageEdit) {
                 var languageNameToTranslate = '';
                 $scope.supportedLanguages.forEach(function(x) {
-                    if (x.code === language.languageShortName) {
-                        languageNameToTranslate = x.language;
+                    if (x.Code === language.languageShortName) {
+                        languageNameToTranslate = x.Language;
                         return;
                     }
                 });
@@ -372,9 +372,9 @@
                 }
                 translateService.PostLanguageTranslation(languageNameModel).then(function (x) {
                     if (languageEdit) {
-                        $scope.languageForEdit.languageName = x.data.text[0];
+                        $scope.languageForEdit.languageName = x.data.Data.Result.text[0];
                     } else {
-                        $scope.newLanguage.languageName = x.data.text[0];
+                        $scope.newLanguage.languageName = x.data.Data.Result.text[0];
                     }
                 }, function() {
 

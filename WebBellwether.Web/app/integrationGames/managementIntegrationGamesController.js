@@ -158,14 +158,14 @@
             };
 
             $scope.setGameTranslationAfterLanguageChange = function () {
-                if ($scope.selectedGame != '') {
+                if ($scope.selectedGame !== '') {
                     $scope.integrationGames.forEach(function (o) {
-                        if (o.id == $scope.selectedGame.id && o.language.id == $scope.selectedLanguage) {
+                        if (o.id === $scope.selectedGame.id && o.language.id === $scope.selectedLanguage) {
                             $scope.selectedGame = o;
                             return;
                         }
                     });
-                    if ($scope.selectedGame.language.id != $scope.selectedLanguage)
+                    if ($scope.selectedGame.language.id !== $scope.selectedLanguage)
                         $scope.resetSelectedGameOrTranslation(true, false);
                 }
             }

@@ -22,7 +22,7 @@
                         <label style="text-decoration: none; color:crimson" href="" class="dropdown-toggle"><span class="mif-bubble mif-ani-float"></span>{{translation.Language}}</label>
                         <ul class="d-menu" data-role="dropdown">
                             <li ng-repeat="language in languages">
-                                <a ng-class="{true : 'mif-checkmark',false: ''}[language.id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.id==selectedLanguage]"></span> {{language.languageName}}</a>
+                                <a ng-class="{true : 'mif-checkmark',false: ''}[language.Id==selectedLanguage]" href="" ng-model="language.id" ng-click="translate(language.Id)"><span ng-class="{true : 'myMarginLeft3px',false: ''}[language.Id==selectedLanguage]"></span> {{language.LanguageName}}</a>
                             </li>
                         </ul>
                     </li>

@@ -1,6 +1,6 @@
-﻿namespace WebBellwether.Models.Models.Version
+﻿namespace WebBellwether.Models.ViewModels.Version
 {
-    public class VersionDetailModel
+    public class VersionDetailViewModel
     {
         public int Id { get; set; }
         public double VersionNumber { get; set; }

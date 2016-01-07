@@ -5,6 +5,7 @@ using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Services.Factories;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.IntegrationGameService
 {
@@ -113,7 +114,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                 {
                     Id = x.IntegrationGame.Id, // this is global id 
                     IntegrationGameId = x.Id, // id for translation
-                    Language = new Language { Id = x.Language.Id,IsPublic = x.Language.IsPublic,LanguageName = x.Language.LanguageName,LanguageShortName = x.Language.LanguageName}, 
+                    Language = ModelMapper.Map<Language,LanguageDao>(x.Language), 
                     GameName = x.IntegrationGameName,
                     GameDescription = x.IntegrationGameDescription,
                     IntegrationGameDetailModels = FillGameDetailModel(x.Id), //i take id from integrationgamedetails
@@ -152,25 +153,18 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         public List<AvailableLanguage> FillAvailableTranslation(int gameId, List<LanguageDao> allLanguages)
         {
             var translation =
-                RepositoryFactory.Context.IntegrationGameDetails.Where(x => x.IntegrationGame.Id == gameId)
+                RepositoryFactory.Context.IntegrationGameDetails.Where(x => x.IntegrationGame.Id == gameId).ToList()
                     .Select(
                         z =>
                             new AvailableLanguage
                             {
-                                Language =
-                                    new Language
-                                    {
-                                        Id = z.Language.Id,
-                                        IsPublic = z.Language.IsPublic,
-                                        LanguageName = z.Language.LanguageName,
-                                        LanguageShortName = z.Language.LanguageShortName
-                                    },
+                                Language = ModelMapper.Map<Language,LanguageDao>(z.Language),                                    
                                 HasTranslation = true
                             }).ToList();
             allLanguages.ForEach(x =>
             {
                 if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
-                    translation.Add(new AvailableLanguage { Language = new Language {Id = x.Id,IsPublic = x.IsPublic,LanguageName = x.LanguageName,LanguageShortName = x.LanguageShortName}, HasTranslation = false });
+                    translation.Add(new AvailableLanguage { Language = ModelMapper.Map<Language,LanguageDao>(x), HasTranslation = false });
             });
             return translation;
         }

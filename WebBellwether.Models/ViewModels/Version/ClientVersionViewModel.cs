@@ -1,6 +1,6 @@
-﻿namespace WebBellwether.Models.Models.Version
+﻿namespace WebBellwether.Models.ViewModels.Version
 {
-    public class ClientVersionModel
+    public class ClientVersionViewModel
     {
         public double LanguageVersion { get; set; }
         public double IntegrationGameVersion { get; set; }

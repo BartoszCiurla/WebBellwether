@@ -1,9 +1,11 @@
-﻿using WebBellwether.Services.Services.AuthService;
+﻿using WebBellwether.Services.Services;
+using WebBellwether.Services.Services.AuthService;
 using WebBellwether.Services.Services.FileService;
 using WebBellwether.Services.Services.IntegrationGameService;
 using WebBellwether.Services.Services.JokeService;
 using WebBellwether.Services.Services.LanguageService;
 using WebBellwether.Services.Services.TranslateService;
+using WebBellwether.Services.Services.VersionService;
 
 namespace WebBellwether.API.Utility
 {
@@ -50,6 +52,12 @@ namespace WebBellwether.API.Utility
 
         private static IAuthService _authService;
         public static IAuthService AuthService => _authService ?? (_authService = new AuthService());
+
+        private static IVersionService _versionService;
+        public static IVersionService VersionService
+            => _versionService ?? (_versionService = new VersionService(LanguageFileService));
+
+    
 
     }
 }

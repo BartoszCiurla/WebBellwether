@@ -1,82 +1,85 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
+using System.Web.Http.Results;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Translation;
-using WebBellwether.Models.Results;
-using WebBellwether.Services.Services.LanguageService;
+using WebBellwether.Models.ViewModels;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Language")]
     public class LanguageController : ApiController
-    {
-        private readonly IManagementLanguageService _service;
-        public LanguageController()
-        {
-            _service = ServiceFactory.ManagementLanguageService;
-        }
-        
+    {        
         [AllowAnonymous]
         [Route("")]
-        public IHttpActionResult Get()
+        public JsonResult<ResponseViewModel<Language[]>> Get()
         {
-            return Ok(_service.GetLanguages());
+            var response = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguages());
+            return Json(response);
         }  
         
         [Route("GetAllLanguages")]
-        public IHttpActionResult GetAllLanguages()
+        public JsonResult<ResponseViewModel<Language[]>> GetAllLanguages()
         {
-            return Ok(_service.GetLanguages(true));
+            var response = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguages(true));
+            return Json(response);
         }
 
         [AllowAnonymous]
         [Route("GetLanguage")]
-        public IHttpActionResult GetLanguage(int languageId)
+        public JsonResult<ResponseViewModel<Language>> GetLanguage(int languageId)
         {
-            return Ok(_service.GetLanguageById(languageId));
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageById(languageId));
+            return Json(response);
         }
 
         [AllowAnonymous]
         [Route("GetLanguageFile")]
-        public IHttpActionResult GetLanguageFile(int languageId)
+        public JsonResult<ResponseViewModel<IEnumerable<LanguageFilePosition>>> GetLanguageFile(int languageId)
         {
-            return Ok(_service.GetLanguageFile(languageId));            
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFile(languageId));
+            return Json(response);           
         }
         [Authorize(Roles = "Admin")]
         [Route("PostEditLanguageKey")]
-        public IHttpActionResult PostEditLanguageKey(LanguageKeyModel languageKey)
+        public JsonResult<ResponseViewModel<bool>> PostEditLanguageKey(LanguageKeyModel languageKey)
         {
-            ResultStateContainer result = _service.PutLanguageKey(languageKey);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());         
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.PutLanguageKey(languageKey));
+            return Json(response);            
         }
         [Authorize(Roles = "Admin")]
         [Route("PostEditLanguage")]
-        public IHttpActionResult PostEditLangauge(Language language)
+        public JsonResult<ResponseViewModel<bool>> PostEditLangauge(Language language)
         {
-            ResultStateContainer result = _service.PutLanguage(language);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            var response = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.PutLanguage(language));
+            return Json(response);
         }
         [Authorize(Roles = "Admin")]
         [Route("PostPublishLanguage")]
-        public IHttpActionResult PostPublishLanguage(Language language)
+        public JsonResult<ResponseViewModel<string>> PostPublishLanguage(Language language)
         {
-            ResultStateContainer result = _service.PublishLanguage(language);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultMessage.ToString()) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.PublishLanguage(language));
+            return Json(response);
         }
         [Authorize(Roles = "Admin")]
         [Route("PostLanguage")]
-        public IHttpActionResult PostLanguage(Language language)
+        public JsonResult<ResponseViewModel<int>> PostLanguage(Language language)
         {
-            ResultStateContainer result = _service.PostLanguage(language);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            var response = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.PostLanguage(language));
+            return Json(response);            
         }
 
         [Authorize(Roles = "Admin")]
         [Route("PostDeleteLanguage")]
-        public IHttpActionResult PostDeleteLanguage(Language language)
+        public JsonResult<ResponseViewModel<bool>> PostDeleteLanguage(Language language)
         {
-            ResultStateContainer result = _service.DeleteLanguage(language);
-            return result.ResultState == ResultState.Success ? Ok(result.ResultValue) : (IHttpActionResult)BadRequest(result.ResultMessage.ToString());
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.DeleteLanguage(language));
+            return Json(response);
         }
-
     }
 }

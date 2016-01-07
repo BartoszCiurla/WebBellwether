@@ -162,8 +162,8 @@
             $scope.getTemplateLanguageShortName = function() {
                 var templateLanguageShortName = '';
                 $scope.languages.forEach(function(x) {
-                    if (x.languageName === "English")
-                        templateLanguageShortName = x.languageShortName;
+                    if (x.LanguageName === "English")
+                        templateLanguageShortName = x.LanguageShortName;
                 });
                 return templateLanguageShortName;
             };

@@ -1,42 +1,47 @@
 ﻿using System.Web.Http;
-using WebBellwether.Models.Models.Version;
-using WebBellwether.Services.Services.VersionService;
+using System.Web.Http.Results;
+using WebBellwether.API.Utility;
+using WebBellwether.Models.ViewModels;
+using WebBellwether.Models.ViewModels.Version;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Versions")]
     public class VersionsController : ApiController
     {
-        private readonly IVersionService _service;
-        public VersionsController()
-        {
-            _service = new VersionService();
-        }
         [AllowAnonymous]
         [Route("")]
-        public IHttpActionResult Get(int languageId)
+        public JsonResult<ResponseViewModel<ClientVersionViewModel>> Get(int languageId)
         {
-            return Ok(_service.GetVersion(languageId));
+            var response = ServiceExecutor.Execute(() => ServiceFactory.VersionService.GetVersion(languageId));
+            return Json(response);
         }
         [Authorize(Roles = "Admin")]
         [Route("GetVersionDetailsForLanguage")]
-        public IHttpActionResult GetVersionDataForLanguage(int languageId)
+        public JsonResult<ResponseViewModel<VersionAggregateViewModel>> GetVersionDataForLanguage(int languageId)
         {
-            return Ok(_service.GetVersionDetailsForLanguage(languageId));
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.VersionService.GetVersionDetailsForLanguage(languageId));
+            return Json(response);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("PostNewVersion")]
-        public IHttpActionResult PostNewVersion(VersionModel newVersion)
+        public JsonResult<ResponseViewModel<bool>> PostNewVersion(VersionViewModel newVersion)
         {
-            return Ok(_service.ChooseTargetAndFunction(newVersion,true));
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.VersionService.ChooseTargetAndFunction(newVersion, true));
+            return Json(response);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("PostRemoveVersion")]
-        public IHttpActionResult PostRemoveVersion(VersionModel versionForDelete)
+        public JsonResult<ResponseViewModel<bool>> PostRemoveVersion(VersionViewModel versionForDelete)
         {
-            return Ok(_service.ChooseTargetAndFunction(versionForDelete,false));
+            var response =
+                ServiceExecutor.Execute(
+                    () => ServiceFactory.VersionService.ChooseTargetAndFunction(versionForDelete, false));
+            return Json(response);
         }
     }
 }
