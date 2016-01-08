@@ -164,6 +164,8 @@
     <Compile Include="ChallengeResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IntegrationGamesController.cs" />
+    <Compile Include="Controllers\JokeCategoryManagementController.cs" />
+    <Compile Include="Controllers\JokeManagementController.cs" />
     <Compile Include="Controllers\JokesController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />

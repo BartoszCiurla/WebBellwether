@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using WebBellwether.Models.Models.Translation;
 
-namespace WebBellwether.Models.Models.Joke
+namespace WebBellwether.Models.ViewModels.Joke
 {
-    public class JokeCategoryModel
+    public class JokeCategoryViewModel
     {
         public int Id { get; set; }//global id
         public int JokeCategoryId { get; set; } //translate id 

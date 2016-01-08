@@ -53,8 +53,8 @@
     <Compile Include="Models\IntegrationGame\IntegrationGameModel.cs" />
     <Compile Include="Models\IntegrationGame\NewIntegrationGameModel.cs" />
     <Compile Include="Models\IntegrationGame\SimpleIntegrationGame.cs" />
-    <Compile Include="Models\Joke\JokeCategoryModel.cs" />
-    <Compile Include="Models\Joke\JokeModel.cs" />
+    <Compile Include="ViewModels\Joke\JokeCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Joke\JokeViewModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
     <Compile Include="Models\Translation\Language.cs" />
     <Compile Include="Models\Translation\LanguageFilePosition.cs" />

@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Web.Services.Description;
 using Newtonsoft.Json.Linq;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Models.ViewModels;
-using WebBellwether.Services.Services.TranslateService;
 
 namespace WebBellwether.API.Controllers
 {
@@ -50,7 +46,7 @@ namespace WebBellwether.API.Controllers
         {
             var valuesToTranslate = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
             if (!valuesToTranslate.IsValid)
-                return null;
+                return Json(new ResponseViewModel<bool> {IsValid = false,ErrorMessage = ResultMessage.LanguageFileNotExists.ToString()});
             var valuesAfterTranslation = await
                 Task.Run(() =>
                     ServiceExecutor.Execute(
@@ -60,7 +56,12 @@ namespace WebBellwether.API.Controllers
                                     translateLangaugeKeysModel.TargetLangaugeShortName,
                                     valuesToTranslate.Data.ToArray()))));
             if (!valuesAfterTranslation.IsValid)
-                return null;
+                return
+                    Json(new ResponseViewModel<bool>
+                    {
+                        IsValid = false,
+                        ErrorMessage = valuesAfterTranslation.ErrorMessage
+                    });
             var valuesSaved =
                 ServiceExecutor.Execute(
                     () => ServiceFactory.ManagementLanguageService.FillLanguageFile(valuesAfterTranslation.Data.Result, translateLangaugeKeysModel.TargetLanguageId));
