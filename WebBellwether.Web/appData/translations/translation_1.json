@@ -98,6 +98,7 @@
   "JokeCategoryEdited": "Joke category was edited",
   "JokeCategoryNotExists": "Joke category not exists",
   "JokeCategoryDeleted": "Joke category was deleted",
+  "JokeCategoryNotDeleted": "Joke category was not deleted",
   "JokeCategoryAdded": "Joke category was added",
   "JokeCategoryNotAdded": "Category joke was not added, change its name",
   "ThisJokeCategoryExists": "This joke category exists , change its name",

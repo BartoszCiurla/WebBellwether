@@ -11,27 +11,27 @@ namespace WebBellwether.API.Controllers
     {
         [AllowAnonymous]
         [Route("GetJokes")]
-        public JsonResult<ResponseViewModel<JokeViewModel[]>> GetJokes(int language)
+        public JsonResult<ResponseViewModel<JokeViewModel[]>> GetJokes(int languageId)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeService.GetJokes(language));
+            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeService.GetJokes(languageId));
             return Json(response);
         }  
 
         [Authorize(Roles = "Admin")]
         [Route("GetJokeCategoriesWithAvailableLanguage")]
-        public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategoriesWithAvailableLanguage(int language)
+        public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategoriesWithAvailableLanguage(int languageId)
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.JokeService.GetJokeCategoriesWithAvailableLanguage(language));
+                    () => ServiceFactory.JokeService.GetJokeCategoriesWithAvailableLanguage(languageId));
                 return Json(response);
         }
         [Authorize(Roles = "Admin")]
         [Route("GetJokesWithAvailableLanguages")]
-        public JsonResult<ResponseViewModel<JokeViewModel[]>> GetJokesWithAvailableLanguages(int language)
+        public JsonResult<ResponseViewModel<JokeViewModel[]>> GetJokesWithAvailableLanguages(int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.JokeService.GetJokesWithAvailableLanguages(language));
+                ServiceExecutor.Execute(() => ServiceFactory.JokeService.GetJokesWithAvailableLanguages(languageId));
                 return Json(response);
         }
     }

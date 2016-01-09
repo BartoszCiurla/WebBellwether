@@ -97,11 +97,11 @@ namespace WebBellwether.Services.Services.JokeService
             RepositoryFactory.Context.SaveChanges();
             return true;
         }        
-        private JokeCategoryDetailDao GetJokeCategory(int jokeCategory, int languageId)
+        private JokeCategoryDetailDao GetJokeCategory(int jokeCategoryId, int languageId)
         {
             JokeCategoryDetailDao jokeCategoryDao = 
                 RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(
-                    x => x.JokeCategory.Id == jokeCategory && x.Language.Id == languageId);
+                    x => x.JokeCategory.Id == jokeCategoryId && x.Language.Id == languageId);
             if(jokeCategoryDao == null)
                 throw new Exception(ResultMessage.JokeCategoryNotExists + GetLanguage(languageId).LanguageName);
             return jokeCategoryDao;
@@ -144,9 +144,9 @@ namespace WebBellwether.Services.Services.JokeService
             return true;
         }
 
-        private LanguageDao GetLanguage(int id)
+        private LanguageDao GetLanguage(int languageId)
         {
-            LanguageDao languageDao = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == id);
+            LanguageDao languageDao = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId);
             if (languageDao == null)
                 throw new Exception(ResultMessage.LanguageNotExists.ToString());
             return languageDao;
@@ -183,6 +183,7 @@ namespace WebBellwether.Services.Services.JokeService
             if (!jokeDetails.Any())
                 throw new Exception(ResultMessage.JokeDetailNotExists.ToString());
             RepositoryFactory.Context.JokeDetails.RemoveRange(jokeDetails);
+            RepositoryFactory.Context.SaveChanges();
             var mainJoke = RepositoryFactory.Context.Jokes.FirstOrDefault(x => x.Id == joke.Id);
             if (mainJoke == null)
                 throw new Exception(ResultMessage.JokeNotExists.ToString());
@@ -197,12 +198,14 @@ namespace WebBellwether.Services.Services.JokeService
             if (jokeDetail != null)
                 RepositoryFactory.Context.JokeDetails.Remove(jokeDetail);
             int jokeTranslationCount = 0;
-            if (!joke.JokeTranslations.Any())
-                joke.JokeTranslations.ForEach(x =>
+            if (joke.JokeTranslations == null)
+            {
+                joke.JokeTranslations?.ForEach(x =>
                 {
                     if (x.HasTranslation)
                         jokeTranslationCount++;
                 });
+            }
             if (jokeTranslationCount == 1)//have only one translation , can delete main id for joke . Safe is safe ...
             {
                 var mainJoke = RepositoryFactory.Context.Jokes.FirstOrDefault(x => x.Id == joke.Id);

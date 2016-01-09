@@ -5,25 +5,25 @@
         <div ng-hide="selectedJokeCategory != ''" class="formAni">
             <!--NEW JOKE CATEGORY-->
             <h2 style="text-align:left">{{translation.AddJokeCategory}}</h2>
-            <input type="text" class="form-control myFormColor" required data-ng-model="newJokeCategory.categoryName" placeholder={{translation.CategoryName}} autofocus />
+            <input type="text" class="form-control myFormColor" required data-ng-model="newJokeCategory.CategoryName" placeholder={{translation.CategoryName}} autofocus />
 
             <!--INSERT JOKE CATEGORY-->
             <div style="text-align: center">
-                <button class="btn btn-default btn-block" type="submit" ng-click="addJokeCategory(newJokeCategory.categoryName,selectedLanguage)" ng-disabled="newJokeCategory.categoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
+                <button class="btn btn-default btn-block" type="submit" ng-click="addJokeCategory(newJokeCategory.CategoryName,selectedLanguage)" ng-disabled="newJokeCategory.CategoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
             </div>
         </div>
         <div ng-hide="selectedJokeCategory == ''" class="formAni">
             <h2 style="text-align:left">{{translation.EditJokeCategory}}</h2>
             <!--EDIT SELECTED JOKE CATEGORY-->
-            <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategory.jokeCategoryName" placeholder={{translation.CategoryName}} autofocus />
+            <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategory.JokeCategoryName" placeholder={{translation.CategoryName}} autofocus />
 
             <!--SAVE SELECTED JOKE CATEGORY-->
             <div style="text-align: center">
-                <button class="btn btn-success btn-block" type="submit" ng-click="editJokeCategory(selectedJokeCategory)" ng-disabled="selectedJokeCategory.jokeCategoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
+                <button class="btn btn-success btn-block" type="submit" ng-click="editJokeCategory(selectedJokeCategory)" ng-disabled="selectedJokeCategory.JokeCategoryName == null"><span class="mif-checkmark"></span> {{translation.SaveCategory}}</button>
             </div>
             <!--DELETE SELECTED JOKE CATEGORY-->
             <div style="text-align: center">
-                <button class="btn btn-danger btn-block" type="submit" ng-click="deleteDialog()" ng-disabled="selectedJokeCategory.jokeCategoryName == null"><span class="mif-checkmark"></span> {{translation.DeleteJokeCategory}}</button>
+                <button class="btn btn-danger btn-block" type="submit" ng-click="deleteDialog()" ng-disabled="selectedJokeCategory.JokeCategoryName == null"><span class="mif-checkmark"></span> {{translation.DeleteJokeCategory}}</button>
             </div>
         </div>
         
@@ -39,7 +39,7 @@
 
             <div ng-hide="languageForOtherTranslation == null" class="formAni">
                 <form name="otherJokeCategoryTranslation">
-                    <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategoryTranslation.jokeCategoryName" placeholder={{translation.CategoryName}} />                    
+                    <input type="text" class="form-control myFormColor" required data-ng-model="selectedJokeCategoryTranslation.JokeCategoryName" placeholder={{translation.CategoryName}} />                    
                 </form>
                 <div style="text-align: center">
                     <!--TRANSLATE JOKE CATEGORy-->
@@ -47,7 +47,7 @@
                     <!--SAVE TRANSLATION-->
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherJokeCategoryTranslation()" ng-disabled="otherJokeCategoryTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
                     <!--DELETE TRANSLATION-->
-                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteTranslationDialog()" ng-disabled="selectedJokeCategoryTranslation.jokeCategoryId == null"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
+                    <button class="btn btn-danger btn-block" type="submit" ng-click="deleteTranslationDialog()" ng-disabled="selectedJokeCategoryTranslation.JokeCategoryId == null"><span class="mif-checkmark"></span> {{translation.DeleteTranslation}}</button>
                 </div>
             </div>
 
@@ -57,13 +57,13 @@
     <div class="col-md-4">
         <h2 style="text-align:left">{{translation.ListOfJokeCategoryIncludesAvailableTranslation}}</h2>
         <div ng-repeat="jokeCategory in jokeCategories | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedJokeCategory.id == jokeCategory.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setJokeCategory(jokeCategory)">
-                {{jokeCategory.jokeCategoryName}}
+            <div class="myFormColor" ng-class="{selectedTransparent_hover : hover || selectedJokeCategory.Id == jokeCategory.Id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setJokeCategory(jokeCategory)">
+                {{jokeCategory.JokeCategoryName}}
                 <div>
-                    <div ng-repeat="al in jokeCategory.jokeCategoryTranslations" class="inline-block">
+                    <div ng-repeat="al in jokeCategory.JokeCategoryTranslations" class="inline-block">
                         <div>
                             <h5>
-                                <span style="margin-left: 4px" ng-class="al.hasTranslation ? 'label label-success' : 'label label-danger'">{{al.language.languageShortName}}</span>
+                                <span style="margin-left: 4px" ng-class="al.HasTranslation ? 'label label-success' : 'label label-danger'">{{al.Language.LanguageShortName}}</span>
                             </h5>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
     <!--USER NOTIFICATION--> 
     <div data-role="dialog" id="deleteDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
         <h1>{{translation.DeleteJokeCategory}} :</h1>
-        <h1>{{selectedJokeCategory.jokeCategoryName}}</h1>
+        <h1>{{selectedJokeCategory.JokeCategoryName}}</h1>
         <div>
             <button class="btn btn-warning" ng-click="deleteJokeCategory(selectedJokeCategory,false)" ng-disabled="selectedJokeCategory == ''">{{translation.RemoveMainTranslation}}</button>
             <button class="btn btn-danger" ng-click="deleteJokeCategory(selectedJokeCategory,true)" ng-hide="selectedJokeCategory == '' || countJokeCategoryTranslation(selectedJokeCategory) < 2">{{translation.RemoveAllTranslation}}</button>
@@ -93,9 +93,9 @@
     </div>
     <div data-role="dialog" id="deleteTranslationDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
         <h1>{{translation.RemoveJokeCategoryTranslation}} :</h1>
-        <h1>{{selectedJokeCategoryTranslation.jokeCategoryName}}</h1>
+        <h1>{{selectedJokeCategoryTranslation.JokeCategoryName}}</h1>
         <div>
-            <button class="btn btn-warning" ng-click="deleteTranslation(selectedJokeCategoryTranslation)" ng-disabled="selectedJokeCategoryTranslation.jokeCategoryId == ''">{{translation.Delete}}</button>
+            <button class="btn btn-warning" ng-click="deleteTranslation(selectedJokeCategoryTranslation)" ng-disabled="selectedJokeCategoryTranslation.JokeCategoryId == ''">{{translation.Delete}}</button>
         </div>
         <span class="dialog-close-button"></span>
     </div>

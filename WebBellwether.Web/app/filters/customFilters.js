@@ -14,7 +14,7 @@
         return function (input, value) {
             var result = [];
             input.forEach(function (item) {
-                if (item.id !== value) {
+                if (item.Id !== value) {
                     result.push(item);
                 }
             });

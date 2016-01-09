@@ -18,13 +18,13 @@
                 controller: "editGameFeaturesController",
                 templateUrl: "/app/integrationGames/editGameFeatures.html"
             });
-            $routeProvider.when("/managementJokes", {
-                controller: "managementJokesController",
-                templateUrl: "/app/jokes/managementJokes.html"
+            $routeProvider.when("/jokeManagement", {
+                controller: "jokeManagementController",
+                templateUrl: "/app/jokes/jokeManagement.html"
             });
-            $routeProvider.when("/managementJokeCategories", {
-                controller: "managementJokeCategoriesController",
-                templateUrl: "/app/jokes/managementJokeCategories.html"
+            $routeProvider.when("/jokeCategoryManagement", {
+                controller: "jokeCategoryManagementController",
+                templateUrl: "/app/jokes/jokeCategoryManagement.html"
             });
             $routeProvider.when("/managementLanguages", {
                 controller: "managementLanguagesController",

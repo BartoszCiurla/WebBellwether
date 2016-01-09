@@ -9,9 +9,9 @@ namespace WebBellwether.Services.Services.JokeService
 {
     public interface IJokeService
     {
-        JokeViewModel[] GetJokes(int language);
-        JokeViewModel[] GetJokesWithAvailableLanguages(int language);
-        JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int language);
+        JokeViewModel[] GetJokes(int languageId);
+        JokeViewModel[] GetJokesWithAvailableLanguages(int languageId);
+        JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int languageId);
     }
     public class JokeService : IJokeService
     {
@@ -35,10 +35,10 @@ namespace WebBellwether.Services.Services.JokeService
                 }).ToArray();
         }   
 
-        public JokeViewModel[] GetJokesWithAvailableLanguages(int language)
+        public JokeViewModel[] GetJokesWithAvailableLanguages(int languageId)
         {
             var jokes = new List<JokeViewModel>();
-            var jokesDao = RepositoryFactory.Context.JokeDetails.Where(x => x.Language.Id == language).ToList();
+            var jokesDao = RepositoryFactory.Context.JokeDetails.Where(x => x.Language.Id == languageId).ToList();
             if (!jokesDao.Any())
                 throw new Exception(ResultMessage.JokeCategoryNotExists.ToString());
             jokesDao.ForEach(x =>
@@ -58,10 +58,10 @@ namespace WebBellwether.Services.Services.JokeService
             return jokes.ToArray();
         }
               
-        public JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int language)
+        public JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int languageId)
         {
             var jokeCategoriesDao =
-                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.Language.Id == language).ToList();
+                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.Language.Id == languageId).ToList();
             if (!jokeCategoriesDao.Any())
                 return null;
             var jokeCategories = new List<JokeCategoryViewModel>();

@@ -32,9 +32,9 @@ namespace WebBellwether.API.Controllers
         }
         [AllowAnonymous]
         [Route("GetJokeTranslation")]
-        public JsonResult<ResponseViewModel<JokeViewModel>> GetJokeTranslation(int id, int languageId)
+        public JsonResult<ResponseViewModel<JokeViewModel>> GetJokeTranslation(int jokeId, int languageId)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeManagementService.GetJokeTranslation(id, languageId));
+            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeManagementService.GetJokeTranslation(jokeId, languageId));
             return Json(response);
         }
     }

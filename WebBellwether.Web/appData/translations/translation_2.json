@@ -101,6 +101,7 @@
   "JokeCategoryEdited": "Kategoria żartu została edytowana",
   "JokeCategoryNotExists": "Kategoria żartu nie istnieje",
   "JokeCategoryDeleted": "Kategoria żartu została usunięta",
+  "JokeCategoryNotDeleted": "Kategoria żartu nie została usunięta",
   "JokeCategoryAdded": "Kategoria żartu została dodana",
   "JokeCategoryNotAdded": "Kategoria żartu nie została dodana , zmień jej nazwę",
   "ThisJokeCategoryExists": "Ketegoria żartu o takiej nazwie już istnieje zmień jej nazwę",

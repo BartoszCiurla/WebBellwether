@@ -28,19 +28,19 @@ namespace WebBellwether.API.Controllers
 
         [AllowAnonymous]
         [Route("GetJokeCategories")]
-        public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategories(int language)
+        public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategories(int languageId)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategories(language));
+            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategories(languageId));
             return Json(response);
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("GetJokeCategoryTranslation")]
-        public JsonResult<ResponseViewModel<JokeCategoryViewModel>> GetJokeCategoryTranslation(int id, int languageId)
+        public JsonResult<ResponseViewModel<JokeCategoryViewModel>> GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategoryTranslation(id, languageId));
+                ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategoryTranslation(jokeCategoryId, languageId));
             return Json(response);
         }
 

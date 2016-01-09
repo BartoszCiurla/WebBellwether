@@ -8,22 +8,22 @@
 
             var getLangs = function() {
                 return $http.get(serviceBase + "api/Translate/GetSupportedLanguages/").then(function (x) {
-                    return x;
+                    return x.data;
                 });
             };
             var getTranslateServiceName = function() {
                 return $http.get(serviceBase + "api/Translate/GetTranslateServiceName/").then(function(x) {
-                    return x;
+                    return x.data;
                 });
             };
             var postLanguageTranslation = function(translateLanguageModel) {
                 return $http.post(serviceBase + "api/Translate/PostLanguageTranslation", translateLanguageModel).then(function (x) {
-                    return x;
+                    return x.data;
                 });
             };
             var postTranslateAllLanguageKeys = function (translateLangaugeKeysModel) {
                 return $http.post(serviceBase + "api/Translate/PostTranslateAllLanguageKeys",translateLangaugeKeysModel).then(function (x) {
-                    return x;
+                    return x.data;
                 });
             };        
 

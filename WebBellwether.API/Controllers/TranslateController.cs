@@ -33,12 +33,13 @@ namespace WebBellwether.API.Controllers
         [Route("PostLanguageTranslation")]
         public async Task<JsonResult<ResponseViewModel<Task<JObject>>>> PostLanguageTranslation(TranslateLanguageModel languageModel)
         {
-            var result = await 
-                Task.Run(
-                    () =>
-                        ServiceExecutor.Execute(
-                            () => ServiceFactory.TranslateService.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation))));            
-            return Json(result);      
+            //Uwaga ten mechanizm nei obsługuje wyjątkow ... co jest sporym problemem ale na ten moment nie wiem jak to obsłużyć 
+            var result = await
+            Task.Run(
+                () =>
+                    ServiceExecutor.Execute(
+                        () => ServiceFactory.TranslateService.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation))));
+            return Json(result);
         }
         [Authorize(Roles = "Admin")]
         [Route("PostTranslateAllLanguageKeys")]
@@ -46,7 +47,9 @@ namespace WebBellwether.API.Controllers
         {
             var valuesToTranslate = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
             if (!valuesToTranslate.IsValid)
-                return Json(new ResponseViewModel<bool> {IsValid = false,ErrorMessage = ResultMessage.LanguageFileNotExists.ToString()});
+                return Json(new ResponseViewModel<bool> { IsValid = false, ErrorMessage = ResultMessage.LanguageFileNotExists.ToString() });
+
+            //Uwaga ten mechanizm nei obsługuje wyjątkow ... co jest sporym problemem ale na ten moment nie wiem jak to obsłużyć 
             var valuesAfterTranslation = await
                 Task.Run(() =>
                     ServiceExecutor.Execute(
@@ -55,6 +58,7 @@ namespace WebBellwether.API.Controllers
                                 new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,
                                     translateLangaugeKeysModel.TargetLangaugeShortName,
                                     valuesToTranslate.Data.ToArray()))));
+
             if (!valuesAfterTranslation.IsValid)
                 return
                     Json(new ResponseViewModel<bool>

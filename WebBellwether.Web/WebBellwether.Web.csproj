@@ -121,10 +121,10 @@
     <Content Include="app\authorizations\loginController.js" />
     <Content Include="app\integrationGames\managementIntegrationGamesController.js" />
     <Content Include="app\jokes\jokesService.js" />
-    <Content Include="app\jokes\managementJokeCategories.html" />
-    <Content Include="app\jokes\managementJokeCategoriesController.js" />
-    <Content Include="app\jokes\managementJokes.html" />
-    <Content Include="app\jokes\managementJokesController.js" />
+    <Content Include="app\jokes\jokeCategoryManagement.html" />
+    <Content Include="app\jokes\jokeCategoryManagementController.js" />
+    <Content Include="app\jokes\jokeManagement.html" />
+    <Content Include="app\jokes\jokeManagementController.js" />
     <Content Include="app\languages\languagesService.js" />
     <Content Include="app\photoGalleries\photoGalleryController.js" />
     <Content Include="app\authorizations\refreshController.js" />

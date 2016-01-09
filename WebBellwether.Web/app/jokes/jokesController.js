@@ -28,7 +28,7 @@
             $scope.getJokes = function (languageId) {
                 jokesService.GetJokes(languageId).then(function (x) {
                     $scope.jokes = [];
-                    $scope.jokes = x.data;
+                    $scope.jokes = x.Data;
                 });
             };
 
