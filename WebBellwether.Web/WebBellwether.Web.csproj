@@ -105,6 +105,7 @@
     <Content Include="appData\images\logo\BigBLogoDarkR.png" />
     <Content Include="appData\images\logo\BigBLogoLightR.png" />
     <Content Include="appData\images\search\searchBotton.png" />
+    <Content Include="appData\translations\translation_1.json" />
     <Content Include="appData\videos\CloudFly.jpg" />
     <Content Include="appData\videos\CloudFly.mp4" />
     <Content Include="app\animations\slide-toggle.js" />
@@ -212,8 +213,6 @@
     <Content Include="scripts\angular.js" />
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\authComplete.js" />
-    <Content Include="appData\translations\translation_1.json" />
-    <Content Include="appData\translations\translation_2.json" />
     <Content Include="content\fonts\selection.json" />
     <Content Include="content\fonts\metro.woff" />
     <Content Include="content\fonts\metro.ttf" />
@@ -235,6 +234,7 @@
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
     <Content Include="content\less\backgroundAnimation.less" />
+    <Content Include="appData\translations\translation_2.json" />
     <None Include="scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="scripts\i18n\angular-locale_af-na.js" />
     <Content Include="scripts\i18n\angular-locale_af-za.js" />

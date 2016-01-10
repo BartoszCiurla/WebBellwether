@@ -284,8 +284,8 @@
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function(x) {
                     if (x.IsValid) {
                         $scope.selectedGameTranslation = {
-                            GameName: x.Data.Result.text[0],
-                            GameDescription: x.Data.Result.text[1],
+                            GameName: x.Data.text[0],
+                            GameDescription: x.Data.text[1],
                             IntegrationGameId: selectedGameTranslationIdIfExists,
                             Id: $scope.selectedGame.Id
                         };

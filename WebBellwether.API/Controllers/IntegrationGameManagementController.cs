@@ -60,7 +60,6 @@ namespace WebBellwether.API.Controllers
                 ServiceExecutor.Execute(
                     () => ServiceFactory.ManagementIntegrationGamesService.PutIntegrationGame(integrationGame));
             return Json(response);
-        }
-
+        }     
     }
 }

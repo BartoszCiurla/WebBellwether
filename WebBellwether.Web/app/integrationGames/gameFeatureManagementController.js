@@ -30,6 +30,35 @@
                 return '';
             };
 
+            $scope.saveAllGameFeatures = function () {
+                if (validateGameFeatures())
+                    integrationGameService.PutGameFeatures($scope.gameFeatures).then(function (x) {
+                        if (x.IsValid) {
+                            $.Notify({
+                                caption: $scope.translation.Success,
+                                content: $scope.translation.GameFeatureEdited,
+                                type: 'success'
+                            });
+                        } else {
+                            $.Notify({
+                                caption: $scope.translation.Failure,
+                                content: $scope.translation.GameFeatueNotEdited,
+                                type: 'warning'
+                            });
+                        }
+                    });
+            };
+            function validateGameFeatures() {
+                for (var i = 0; i < $scope.gameFeatures.length; i++) {
+                    if ($scope.gameFeatures[i].GameFeatureName === undefined)
+                        return false;
+                    if ($scope.gameFeatures[i].GameFeatureName === null)
+                        return false;
+
+                }
+                return true;
+            };
+
             $scope.editGameFeature = function (gameFeature) {
                 var gameFeatureModel = {
                     Id: gameFeature.Id,
@@ -54,6 +83,35 @@
                     }
                 });
             };
+
+            $scope.saveAllGameFeatureDetails = function () {
+                if (validateGameFeatureDetails())
+                    integrationGameService.PutGameFeatureDetails($scope.gameFeatureDetails).then(function (x) {
+                        if (x.IsValid) {
+                            $.Notify({
+                                caption: $scope.translation.Success,
+                                content: $scope.translation.GameFeatureDetailEdited,
+                                type: 'success'
+                            });
+                        } else {
+                            $.Notify({
+                                caption: $scope.translation.Failure,
+                                content: $scope.translation.GameFeatureDetailNotEdited + x.ErrorMessage,
+                                type: 'warning'
+                            });
+                        }
+                    });
+            };
+            function validateGameFeatureDetails() {
+                for (var i = 0; i < $scope.gameFeatureDetails.length; i++) {
+                    if ($scope.gameFeatureDetails[i].GameFeatureDetailName === undefined)
+                        return false;
+                    if ($scope.gameFeatureDetails[i].GameFeatureDetailName === null)
+                        return false;
+                }
+                return true;
+            };
+
 
             $scope.editGameFeatureDetail = function (gameFeatureDetail) {
                 integrationGameService.PutGameFeatureDetail(gameFeatureDetail).then(function (x) {
@@ -117,7 +175,7 @@
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     if (x.IsValid) {
                         for (var i = 0; i < gameFeatures.length; i++) {
-                            $scope.gameFeatures[i].GameFeatureName = x.Data.Result.text[i];
+                            $scope.gameFeatures[i].GameFeatureName = x.Data.text[i];
                         }
                         $.Notify({
                             caption: $scope.translation.Success,
@@ -146,7 +204,7 @@
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function (x) {
                     if (x.IsValid) {
                         for (var i = 0; i < gameFeaturesDetails.length; i++) {
-                            $scope.gameFeatureDetails[i].GameFeatureDetailName = x.Data.Result.text[i];
+                            $scope.gameFeatureDetails[i].GameFeatureDetailName = x.Data.text[i];
                         }
 
                         $.Notify({

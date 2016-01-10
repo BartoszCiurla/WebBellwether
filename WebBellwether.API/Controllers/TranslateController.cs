@@ -31,15 +31,15 @@ namespace WebBellwether.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [Route("PostLanguageTranslation")]
-        public async Task<JsonResult<ResponseViewModel<Task<JObject>>>> PostLanguageTranslation(TranslateLanguageModel languageModel)
-        {
-            //Uwaga ten mechanizm nei obsługuje wyjątkow ... co jest sporym problemem ale na ten moment nie wiem jak to obsłużyć 
-            var result = await
-            Task.Run(
-                () =>
-                    ServiceExecutor.Execute(
-                        () => ServiceFactory.TranslateService.GetLanguageTranslation(new TranslateLanguageModel(languageModel.CurrentLanguageCode, languageModel.TargetLanguageCode, languageModel.ContentForTranslation))));
-            return Json(result);
+        public async Task<JsonResult<ResponseViewModel<JObject>>> PostLanguageTranslation(TranslateLanguageModel languageModel)
+        {            
+            var result = 
+                ServiceExecutor.ExecuteAsync(
+                    () =>
+                        ServiceFactory.TranslateService.GetLanguageTranslation(
+                            new TranslateLanguageModel(languageModel.CurrentLanguageCode,
+                                languageModel.TargetLanguageCode, languageModel.ContentForTranslation)));
+            return Json(await result);
         }
         [Authorize(Roles = "Admin")]
         [Route("PostTranslateAllLanguageKeys")]
@@ -49,17 +49,14 @@ namespace WebBellwether.API.Controllers
             if (!valuesToTranslate.IsValid)
                 return Json(new ResponseViewModel<bool> { IsValid = false, ErrorMessage = ResultMessage.LanguageFileNotExists.ToString() });
 
-            //Uwaga ten mechanizm nei obsługuje wyjątkow ... co jest sporym problemem ale na ten moment nie wiem jak to obsłużyć 
-            var valuesAfterTranslation = await
-                Task.Run(() =>
-                    ServiceExecutor.Execute(
+            var valuesAfterTranslation = await ServiceExecutor.ExecuteAsync(
                         () =>
                             ServiceFactory.TranslateService.GetAllLanguageKeysTranslations(
                                 new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,
                                     translateLangaugeKeysModel.TargetLangaugeShortName,
-                                    valuesToTranslate.Data.ToArray()))));
+                                    valuesToTranslate.Data.ToArray())));
 
-            if (!valuesAfterTranslation.IsValid)
+            if(!valuesAfterTranslation.IsValid)
                 return
                     Json(new ResponseViewModel<bool>
                     {
@@ -68,7 +65,7 @@ namespace WebBellwether.API.Controllers
                     });
             var valuesSaved =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementLanguageService.FillLanguageFile(valuesAfterTranslation.Data.Result, translateLangaugeKeysModel.TargetLanguageId));
+                    () => ServiceFactory.ManagementLanguageService.FillLanguageFile(valuesAfterTranslation.Data, translateLangaugeKeysModel.TargetLanguageId));
             return Json(valuesSaved);
         }
     }

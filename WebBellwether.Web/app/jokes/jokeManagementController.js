@@ -282,7 +282,7 @@
                 translateService.PostLanguageTranslation(translateLanguageModel).then(function(x) {
                     if (x.IsValid) {
                         $scope.selectedJokeTranslation = {
-                            JokeContent: x.Data.Result.text[0],
+                            JokeContent: x.Data.text[0],
                             JokeId: selectedJokeTranslationIdIfExists
                         };
                         $.Notify({

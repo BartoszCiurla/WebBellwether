@@ -164,9 +164,13 @@
   "Success": "Succes",
   "Failure": "Failure",
   "GameFeatureEdited": "Feature game was edited",
+  "GameFeaturesEdited": "Game features have been edited",
   "GameFeatureDetailEdited": "Retail features of the game was edited",
+  "GameFeatureDetailsEdited": "Details features of the game have been edited",
   "GameFeatueNotEdited": "Feature game has not been edited",
+  "GameFeatuesNotEdited": "The game features have not been edited",
   "GameFeatureDetailNotEdited": "Retail features of the game has not been edited",
+  "GameFeatureDetailsNotEdited": "Details features of the game have not been edited",
   "SaveTranslation": "Save translation",
   "DeleteTranslation": "Delete translation",
   "TranslationAdded": "Translation added",
@@ -210,7 +214,6 @@
   "ChangeLanguage": "Change language",
   "ApplyLanguage": "Apply language",
   "ManagementVersions": "Versions management",
-  "LanguageVersion": "Language Version",
   "IntegrationGameVersion": "Integration game version",
   "JokeCategoryVersion": "Joke category version",
   "JokeVersion": "Joke version",
@@ -220,5 +223,6 @@
   "NumbersOfCategoriesJokes": "Numbers of categories jokes",
   "NumbersOfJokes": "Numbers of jokes",
   "AddVersion": "Add version",
-  "IncreasingVersionDescription": "Current version + 0.1"
+  "IncreasingVersionDescription": "Current version + 0.1",
+  "SaveAll": "Save all"
 }

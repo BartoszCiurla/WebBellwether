@@ -64,5 +64,23 @@ namespace WebBellwether.API.Controllers
                 ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.CreateGameFeatures(languageId));
             return Json(response);
         }
+        [Authorize(Roles = "Admin")]
+        [Route("PostGameFeatures")]
+        public JsonResult<ResponseViewModel<bool>> PostGameFeatures(GameFeatureViewModel[] gameFeatures)
+        {
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.PutGameFeatures(gameFeatures));
+            return Json(response);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("PostGameFeatureDetails")]
+        public JsonResult<ResponseViewModel<bool>> PostGameFeatureDetails(GameFeatureDetailViewModel[] gameFeatureDetails)
+        {
+            var response =
+                ServiceExecutor.Execute(
+                    () => ServiceFactory.ManagementFeaturesService.PutGameFeatureDetails(gameFeatureDetails));
+            return Json(response);
+        }
     }
 }

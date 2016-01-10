@@ -289,7 +289,7 @@
                     if (x.IsValid) {
                         $scope.selectedLanguageContent.forEach(function(z) {
                             if (z.Key === key) {
-                                z.Value = x.Data.Result.text[0];
+                                z.Value = x.Data.text[0];
                             }
                         });
                         $.Notify({
@@ -369,9 +369,9 @@
                 translateService.PostLanguageTranslation(languageNameModel).then(function(x) {
                     if (x.IsValid) {
                         if (languageEdit) {
-                            $scope.languageForEdit.LanguageName = x.Data.Result.text[0];
+                            $scope.languageForEdit.LanguageName = x.Data.text[0];
                         } else {
-                            $scope.newLanguage.LanguageName = x.Data.Result.text[0];
+                            $scope.newLanguage.LanguageName = x.Data.text[0];
                         }
                     } 
                 });

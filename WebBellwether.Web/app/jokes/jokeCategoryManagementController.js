@@ -266,7 +266,7 @@
                     if (x.IsValid) {
                         $scope.selectedJokeCategoryTranslation = {
                             JokeCategoryId: selectedJokeCategoryTranslationCategoryIdIfExists,
-                            JokeCategoryName: x.Data.Result.text[0]
+                            JokeCategoryName: x.Data.text[0]
                         };
                         $.Notify({
                             caption: $scope.translation.Success,

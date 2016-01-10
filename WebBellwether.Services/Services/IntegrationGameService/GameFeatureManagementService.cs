@@ -13,6 +13,8 @@ namespace WebBellwether.Services.Services.IntegrationGameService
     {
         bool PutGameFeature(GameFeatureViewModel gameFeature);
         bool PutGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail);
+        bool PutGameFeatures(GameFeatureViewModel[] gameFeatures);
+        bool PutGameFeatureDetails(GameFeatureDetailViewModel[] gameFeatureDetails);
         GameFeatureViewModel[] GetGameFeatures(int languageId);
         GameFeatureDetailViewModel[] GetGameFeatureDetails(int languageId);
         GameFeatureViewModel[] GetGameFeatuesModelWithDetails(int languageId);
@@ -21,7 +23,22 @@ namespace WebBellwether.Services.Services.IntegrationGameService
     public class GameFeatureManagementService : IManagementFeaturesService
     {
         private const string TemplateLanguageName = "English";
-        public bool PutGameFeature(GameFeatureViewModel gameFeature)
+
+        public bool PutGameFeatures(GameFeatureViewModel[] gameFeatures)
+        {
+            gameFeatures.ToList().ForEach(InsertGameFeature);
+            RepositoryFactory.Context.SaveChanges();
+            return true;
+        }
+
+        public bool PutGameFeatureDetails(GameFeatureDetailViewModel[] gameFeatureDetails)
+        {
+            gameFeatureDetails.ToList().ForEach(InsertGameFeatureDetail);
+            RepositoryFactory.Context.SaveChanges();
+            return true;
+        }
+
+        private void InsertGameFeature(GameFeatureViewModel gameFeature)
         {
             var entity =
                 RepositoryFactory.Context.GameFeatureLanguages.FirstOrDefault(
@@ -29,17 +46,38 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             if (entity == null)
                 throw new Exception(ResultMessage.GameFeatureNotExists.ToString());
             entity.GameFeatureName = gameFeature.GameFeatureName;
+        }
+        public bool PutGameFeature(GameFeatureViewModel gameFeature)
+        {
+            //var entity =
+            //    RepositoryFactory.Context.GameFeatureLanguages.FirstOrDefault(
+            //        x => x.GameFeature.Id == gameFeature.Id && x.Language.Id == gameFeature.LanguageId);
+            //if (entity == null)
+            //    throw new Exception(ResultMessage.GameFeatureNotExists.ToString());
+            //entity.GameFeatureName = gameFeature.GameFeatureName;
+            InsertGameFeature(gameFeature);
             RepositoryFactory.Context.SaveChanges();
             return true;
         }
-        public bool PutGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail)
+
+        private void InsertGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail)
         {
             var entity =
-                RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
-                    x => x.Id == gameFeatureDetail.Id && x.Language.Id == gameFeatureDetail.LanguageId);
+               RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
+                   x => x.Id == gameFeatureDetail.Id && x.Language.Id == gameFeatureDetail.LanguageId);
             if (entity == null)
                 throw new Exception(ResultMessage.GameFeatureDetailNotExists.ToString());
             entity.GameFeatureDetailName = gameFeatureDetail.GameFeatureDetailName;
+        }
+        public bool PutGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail)
+        {
+            //var entity =
+            //    RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
+            //        x => x.Id == gameFeatureDetail.Id && x.Language.Id == gameFeatureDetail.LanguageId);
+            //if (entity == null)
+            //    throw new Exception(ResultMessage.GameFeatureDetailNotExists.ToString());
+            //entity.GameFeatureDetailName = gameFeatureDetail.GameFeatureDetailName;
+            InsertGameFeatureDetail(gameFeatureDetail);
             RepositoryFactory.Context.SaveChanges();
             return true;
         }
