@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .factory('jokesService', ['$http', 'ngAuthSettings', function ($http, ngAuthSettings) {
+        .factory('jokeService', ['$http', 'ngAuthSettings', function ($http, ngAuthSettings) {
 
             var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
@@ -37,12 +37,12 @@
                 });
             };
             var getJokeCategoriesWithAvailableLanguage = function (languageid) {
-                return $http.get(serviceBase + 'api/Jokes/GetJokeCategoriesWithAvailableLanguage/?languageId=' + languageid).then(function (x) {
+                return $http.get(serviceBase + 'api/JokeCategoryManagement/GetJokeCategoriesWithAvailableLanguage/?languageId=' + languageid).then(function (x) {
                     return x.data;
                 });
             };
             var getJokeWithAvailableLanguages = function (languageid) {
-                return $http.get(serviceBase + 'api/Jokes/GetJokesWithAvailableLanguages/?languageId=' + languageid).then(function (x) {
+                return $http.get(serviceBase + 'api/JokeManagement/GetJokesWithAvailableLanguages/?languageId=' + languageid).then(function (x) {
                     return x.data;
                 });
             };

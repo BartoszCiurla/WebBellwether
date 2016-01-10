@@ -3,14 +3,14 @@
     <div class="row" style="bottom: -100px;top:50px">
         <div ng-repeat="g in filtered = (integrationGames | filter:search | startFrom:(currentPage -1)*entryLimit | limitTo:entryLimit)">
             <div class="animatedParent col-md-6">
-                <h1 class="animated bounceIn">{{g.gameName}}</h1>
-                <p class="animated lightSpeedInLeft go">{{g.gameDescription}}</p>
+                <h1 class="animated bounceIn">{{g.GameName}}</h1>
+                <p class="animated lightSpeedInLeft go">{{g.GameDescription}}</p>
                 <p></p>
                 <div class="animated fadeInRight slow go">
-                    <p>{{g.categoryGame}}</p>
-                    <p>{{g.paceOfPlay}}</p>
-                    <p>{{g.numberOfPlayer}}</p>
-                    <p>{{g.preparationFun}}</p>
+                    <p>{{g.CategoryGame}}</p>
+                    <p>{{g.PaceOfPlay}}</p>
+                    <p>{{g.NumberOfPlayer}}</p>
+                    <p>{{g.PreparationFun}}</p>
                 </div>
             </div>
         </div>

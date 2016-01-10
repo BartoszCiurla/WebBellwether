@@ -71,14 +71,12 @@
     <Compile Include="Services\AuthService\AuthService.cs" />
     <Compile Include="Services\FileService\JsonLanguageFileService.cs" />
     <Compile Include="Services\IntegrationGameService\IntegrationGameService.cs" />
-    <Compile Include="Services\IntegrationGameService\ManagementFeaturesService.cs" />
-    <Compile Include="Services\IntegrationGameService\ManagementIntegrationGamesService.cs" />
-    <Compile Include="Services\JokeService\JokeCategoryTranslationService.cs" />
+    <Compile Include="Services\IntegrationGameService\GameFeatureManagementService.cs" />
+    <Compile Include="Services\IntegrationGameService\IntegrationGameManagementService.cs" />
     <Compile Include="Services\JokeService\JokeService.cs" />
-    <Compile Include="Services\JokeService\JokeTranslationService.cs" />
     <Compile Include="Services\JokeService\JokeCategoryManagementService.cs" />
     <Compile Include="Services\JokeService\JokeManagementService.cs" />
-    <Compile Include="Services\LanguageService\ManagementLanguageService.cs" />
+    <Compile Include="Services\LanguageService\LanguageManagementService.cs" />
     <Compile Include="Services\TranslateService\YandexTranslateService.cs" />
     <Compile Include="Services\VersionService\VersionService.cs" />
     <Compile Include="Utility\ModelMapper.cs" />

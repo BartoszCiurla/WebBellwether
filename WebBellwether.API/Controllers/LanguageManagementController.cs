@@ -8,7 +8,7 @@ using WebBellwether.Models.ViewModels;
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Language")]
-    public class LanguageController : ApiController
+    public class LanguageManagementController : ApiController
     {        
         [AllowAnonymous]
         [Route("")]
@@ -67,7 +67,7 @@ namespace WebBellwether.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [Route("PostLanguage")]
-        public JsonResult<ResponseViewModel<int>> PostLanguage(Language language)
+        public JsonResult<ResponseViewModel<Language>> PostLanguage(Language language)
         {
             var response = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.PostLanguage(language));
             return Json(response);            

@@ -1,6 +1,6 @@
-﻿namespace WebBellwether.Models.Models.IntegrationGame
+﻿namespace WebBellwether.Models.ViewModels.IntegrationGame
 {
-    public class IntegrationGameDetailModel
+    public class IntegrationGameDetailViewModel
     {
         public int Id { get; set; }// id for featuredetail
         public int GameFeatureId { get; set; } // game feature id 

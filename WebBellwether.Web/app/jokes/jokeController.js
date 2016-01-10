@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('jokesController', ['$scope', 'sharedService', 'jokesService', 'startFromFilter', function ($scope, sharedService, jokesService, startFromFilter) {
+        .controller('jokeController', ['$scope', 'sharedService', 'jokeService', 'startFromFilter', function ($scope, sharedService, jokeService, startFromFilter) {
             //pagination
             $scope.search = {};
             $scope.resetFilters = function () {
@@ -26,7 +26,7 @@
             };
             //**************
             $scope.getJokes = function (languageId) {
-                jokesService.GetJokes(languageId).then(function (x) {
+                jokeService.GetJokes(languageId).then(function (x) {
                     $scope.jokes = [];
                     $scope.jokes = x.Data;
                 });

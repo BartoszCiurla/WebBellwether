@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('jokeCategoryManagementController', ['$scope', '$timeout', 'sharedService', 'jokesService', 'translateService', function ($scope, $timeout, sharedService, jokesService, translateService) {
+        .controller('jokeCategoryManagementController', ['$scope', '$timeout', 'sharedService', 'jokeService', 'translateService', function ($scope, $timeout, sharedService, jokeService, translateService) {
             var userNotification = '';
             //pagination and set other joke category translation (get from api)
             $scope.currentPage = 0;
@@ -33,7 +33,7 @@
                     $scope.selectedJokeCategory.JokeCategoryTranslations.forEach(function (x) {
                         if (x.Language.Id === $scope.languageForOtherTranslation.Id && x.HasTranslation) {
                             $scope.selectedJokeCategoryTranslation.Id = $scope.selectedJokeCategory.Id;
-                            jokesService.GetJokeCategoryTranslation($scope.selectedJokeCategory.Id, $scope.languageForOtherTranslation.Id).then(function (z) {
+                            jokeService.GetJokeCategoryTranslation($scope.selectedJokeCategory.Id, $scope.languageForOtherTranslation.Id).then(function (z) {
                                 $scope.selectedJokeCategoryTranslation = z.Data;
                             });
                             return;
@@ -44,7 +44,7 @@
             };
             //edit joke category
             $scope.editJokeCategory = function (selectedJokeCategory) {
-                jokesService.PutJokeCategory(selectedJokeCategory).then(function (x) {
+                jokeService.PutJokeCategory(selectedJokeCategory).then(function (x) {
                     if (x.IsValid)
                         $.Notify({
                             caption: $scope.translation.Success,
@@ -83,7 +83,7 @@
                 dialog.close();
                 if (removeAllTranslation)
                     selectedJokeCategory.TemporarySeveralTranslationDelete = removeAllTranslation;
-                jokesService.DeleteJokeCategory(selectedJokeCategory).then(function (x) {
+                jokeService.DeleteJokeCategory(selectedJokeCategory).then(function (x) {
                     if (x.IsValid) {
                         angular.forEach($scope.jokeCategories, function (x, index) {
                             if (x.Id === $scope.selectedJokeCategory.Id) {
@@ -114,7 +114,7 @@
             $scope.deleteTranslation = function (selectedJokeCategoryTranslation) {
                 var dialog = $('#deleteTranslationDialog').data('dialog');
                 dialog.close();
-                jokesService.DeleteJokeCategory(selectedJokeCategoryTranslation).then(function (x) {
+                jokeService.DeleteJokeCategory(selectedJokeCategoryTranslation).then(function (x) {
                     if (x.IsValid) {
                         $scope.setTranslation(false);
                         $.Notify({
@@ -144,7 +144,7 @@
                     LanguageId: selectedLanguage,
                     JokeCategoryTranslations: []
                 }
-                jokesService.PostJokeCategory(jokeCategory).then(function (x) {
+                jokeService.PostJokeCategory(jokeCategory).then(function (x) {
                     if (x.IsValid) {
                         if ($scope.jokeCategories === null)
                             $scope.jokeCategories = [];
@@ -187,7 +187,7 @@
                     JokeCategoryName: $scope.selectedJokeCategoryTranslation.JokeCategoryName,
                     LanguageId: $scope.languageForOtherTranslation.Id
                 };
-                jokesService.PostJokeCategory(jokeCategory).then(function(x) {
+                jokeService.PostJokeCategory(jokeCategory).then(function(x) {
                     if (x.IsValid) {
                         $scope.setTranslation(true);
                         $scope.getTranslationForJokeCategory();
@@ -222,7 +222,7 @@
             //joke categories
             $scope.jokeCategories = [];
             $scope.getJokeCategoriesWithAvailableLanguage = function (lang) {
-                jokesService.GetJokeCategoriesWithAvailableLanguage(lang).then(function (x) {
+                jokeService.GetJokeCategoriesWithAvailableLanguage(lang).then(function (x) {
                     $scope.jokeCategories = [];
                     $scope.jokeCategories = x.Data;
                     $scope.setJokeCategoryTranslationAfterLanguageChange();

@@ -46,13 +46,12 @@
     <Compile Include="Models\Auth\ExternalLoginModels.cs" />
     <Compile Include="Models\Auth\RefreshToken.cs" />
     <Compile Include="Models\Auth\UserModel.cs" />
-    <Compile Include="Models\IntegrationGame\DirectIntegrationGameModel.cs" />
-    <Compile Include="Models\IntegrationGame\GameFeatureDetailModel.cs" />
-    <Compile Include="Models\IntegrationGame\GameFeatureModel.cs" />
-    <Compile Include="Models\IntegrationGame\IntegrationGameDetailModel.cs" />
-    <Compile Include="Models\IntegrationGame\IntegrationGameModel.cs" />
-    <Compile Include="Models\IntegrationGame\NewIntegrationGameModel.cs" />
-    <Compile Include="Models\IntegrationGame\SimpleIntegrationGame.cs" />
+    <Compile Include="ViewModels\IntegrationGame\DirectIntegrationGameViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\GameFeatureDetailViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\GameFeatureViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\IntegrationGameDetailViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\IntegrationGameViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\NewIntegrationGameViewModel.cs" />
     <Compile Include="ViewModels\Joke\JokeCategoryViewModel.cs" />
     <Compile Include="ViewModels\Joke\JokeViewModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />
@@ -70,8 +69,6 @@
     <Compile Include="ViewModels\Version\VersionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ResultMessage.cs" />
-    <Compile Include="Results\ResultState.cs" />
-    <Compile Include="Results\ResultStateContainer.cs" />
     <Compile Include="ViewModels\ResponseViewModel.cs" />
   </ItemGroup>
   <ItemGroup />

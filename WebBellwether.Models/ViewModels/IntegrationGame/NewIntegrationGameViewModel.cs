@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebBellwether.Models.Models.IntegrationGame
+namespace WebBellwether.Models.ViewModels.IntegrationGame
 {
-    public class NewIntegrationGameModel
+    public class NewIntegrationGameViewModel
     {
         public int Id { get; set; }
         public int IntegrationGameId { get; set; }//this is id for translation not game fss 

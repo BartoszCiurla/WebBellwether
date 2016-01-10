@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('managementVersionsController', ['$scope', '$timeout', 'versionsService', function ($scope, $timeout, versionsService) {
+        .controller('versionManagementController', ['$scope', '$timeout', 'versionsService', function ($scope, $timeout, versionsService) {
             $scope.languageForVersion = null;
             $scope.versionDetail = {};
             $scope.getVersionDetailsForLanguage = function (language) {

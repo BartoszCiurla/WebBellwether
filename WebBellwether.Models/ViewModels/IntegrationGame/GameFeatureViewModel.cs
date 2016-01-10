@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebBellwether.Models.Models.IntegrationGame
+namespace WebBellwether.Models.ViewModels.IntegrationGame
 {
-    public class GameFeatureModel
+    public class GameFeatureViewModel
     {
-        public GameFeatureModel()
+        public GameFeatureViewModel()
         {
-            GameFeatureDetailModels = new List<GameFeatureDetailModel>();
+            GameFeatureDetailModels = new List<GameFeatureDetailViewModel>();
         }
         [Required]
         public int Id { get; set; }//robi jako gamefeatureid czyli ten glowny 
@@ -16,6 +16,6 @@ namespace WebBellwether.Models.Models.IntegrationGame
         public string GameFeatureName { get; set; }
         [Required]
         public int LanguageId { get; set; }
-        public List<GameFeatureDetailModel> GameFeatureDetailModels { get; set; } 
+        public List<GameFeatureDetailViewModel> GameFeatureDetailModels { get; set; } 
     }
 }

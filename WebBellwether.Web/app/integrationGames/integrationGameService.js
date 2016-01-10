@@ -1,75 +1,75 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .factory('integrationGamesService', ['$http', 'ngAuthSettings', function ($http, ngAuthSettings) {
+        .factory('integrationGameService', ['$http', 'ngAuthSettings', function ($http, ngAuthSettings) {
 
             var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
             var postIntegrationGame = function (gameModel) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostIntegrationGame', gameModel).then(function (x) {
-                    return x;
+                return $http.post(serviceBase + 'api/IntegrationGameManagement/PostIntegrationGame', gameModel).then(function (x) {
+                    return x.data;
                 });
             };
             var postCreateGameFeatures = function(languageid) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostCreateGameFeatures/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.post(serviceBase + 'api/GameFeatureManagement/PostCreateGameFeatures/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             }
 
             var putGameFeature = function (gameFeature) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeature', gameFeature).then(function (x) {
-                    return x;
+                return $http.post(serviceBase + 'api/GameFeatureManagement/PostGameFeature', gameFeature).then(function (x) {
+                    return x.data;
                 });
             };
 
             var putGameFeatureDetail = function (gameFeatureDetail) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostGameFeatureDetail/', gameFeatureDetail).then(function (x) {
-                    return x;
+                return $http.post(serviceBase + 'api/GameFeatureManagement/PostGameFeatureDetail/', gameFeatureDetail).then(function (x) {
+                    return x.data;
                 });
 
             };
             var deleteIntegrationGame = function (integrationGame) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostDeleteIntegrationGame/', integrationGame).then(function(x) {
-                    return x;
+                return $http.post(serviceBase + 'api/IntegrationGameManagement/PostDeleteIntegrationGame/', integrationGame).then(function (x) {
+                    return x.data;
                 });
             };
 
             var putIntegrationGame = function (integrationGame) {
-                return $http.post(serviceBase + 'api/IntegrationGames/PostEditIntegrationGame/', integrationGame).then(function (x) {
-                    return x;
+                return $http.post(serviceBase + 'api/IntegrationGameManagement/PostEditIntegrationGame/', integrationGame).then(function (x) {
+                    return x.data;
                 });
             };
 
             var getIntegrationGamesWithAvailableLanguages = function(languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGamesWithAvailableLanguage/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/IntegrationGameManagement/GetIntegrationGamesWithAvailableLanguage/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             };
             var getIntegrationGames = function (languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGames/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/IntegrationGame/GetIntegrationGames/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             };
 
             var getGameFeatureDetails = function (languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatureDetails/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/GameFeatureManagement/GetGameFeatureDetails/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             };
 
             var getGameFeatures = function (languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatures/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/GameFeatureManagement/GetGameFeatures/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             };
             var getGameFeatuesModelWithDetails = function (languageid) {
-                return $http.get(serviceBase + 'api/IntegrationGames/GetGameFeatuesModelWithDetails/?language=' + languageid).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/GameFeatureManagement/GetGameFeatuesModelWithDetails/?languageId=' + languageid).then(function (x) {
+                    return x.data;
                 });
             };
             var getIntegrationGameTranslation = function (id, language) {                
-                return $http.get(serviceBase + 'api/IntegrationGames/GetIntegrationGameTranslation', { params: { id: id, languageId :language} }).then(function (x) {
-                    return x;
+                return $http.get(serviceBase + 'api/IntegrationGameManagement/GetIntegrationGameTranslation', { params: { gameId: id, languageId: language } }).then(function (x) {
+                    return x.data;
                 });
             };
             var integrationGamesServiceFactory = {};

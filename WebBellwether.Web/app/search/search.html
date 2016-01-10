@@ -5,10 +5,10 @@
         <div ng-show="filterDependingOnLocation == 'showGamesFilter'">
             <a ng-class="{hoverCrimson : hover4}" ng-mouseenter="hover4=true" ng-mouseleave="hover4=false" style="text-decoration: none; color:black" ng-click="changeLocation('/home')"><span class="mif-zoom-out"></span></a>
             <h2 style="clear: both; display: inline-block; white-space: nowrap;">{{translation.SearchGame}}</h2>
-            <input type="text" class="form-control form-group" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.gameName" placeholder={{translation.SearchByName}}>
+            <input type="text" class="form-control form-group" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.GameName" placeholder={{translation.SearchByName}}>
             <div ng-repeat="feature in gameFeatures">
-                <select class="form-control form-group" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.integrationGameDetailModels[$index]" data-ng-options="gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
-                    <option value="">{{feature.gameFeatureName}}</option>
+                <select class="form-control form-group" ng-change="applyIntegrationGamesFilter()" data-ng-model="integrationGamesSearchParams.IntegrationGameDetailModels[$index]" data-ng-options="gfdm.GameFeatureDetailName for gfdm in feature.GameFeatureDetailModels">
+                    <option value="">{{feature.GameFeatureName}}</option>
                 </select>
             </div>
             <button ng-click="resetIntegrationGamesFilter()" class="btn btn-primary form-control form-group">{{translation.SearchResetAllFilters}}</button>
@@ -18,8 +18,8 @@
         <div ng-show="filterDependingOnLocation == 'showJokesFilter'">
             <a ng-class="{hoverCrimson : hover3}" ng-mouseenter="hover3=true" ng-mouseleave="hover3=false" style="text-decoration: none; color:black" ng-click="changeLocation('/home')"><span class="mif-zoom-out"></span></a>
             <h1 style="clear: both; display: inline-block; white-space: nowrap;">{{translation.SearchJoke}}</h1>
-            <input type="text" class="form-control form-group" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeContent" placeholder={{translation.SearchByContent}}>
-            <select class="form-control form-group" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.jokeCategoryId" data-ng-options="jk.id as jk.jokeCategoryName for jk in jokeCategories">
+            <input type="text" class="form-control form-group" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.JokeContent" placeholder={{translation.SearchByContent}}>
+            <select class="form-control form-group" ng-change="applyJokesFilter()" data-ng-model="jokesSearchParams.JokeCategoryId" data-ng-options="jk.Id as jk.JokeCategoryName for jk in jokeCategories">
                 <option value="">{{translation.SearchJokeCategory}}</option>
             </select>
             <button ng-click="resetJokesFilter()" class="btn btn-primary form-control form-group">{{translation.SearchResetAllFilters}}</button>
@@ -28,10 +28,10 @@
         <!--DEFAULT SEARCH-->
         <div ng-show="filterDependingOnLocation == ''">
             <h3 style="clear: both; display: inline-block; white-space: nowrap;">
-                <a ng-class="{hoverCrimson : hover1}" ng-mouseenter="hover1=true" ng-mouseleave="hover1=false" style="text-decoration: none; color: black;" ng-click="changeLocation('/games')" href=""><span class="mif-zoom-in"></span> {{translation.SearchGame}}</a>
+                <a ng-class="{hoverCrimson : hover1}" ng-mouseenter="hover1=true" ng-mouseleave="hover1=false" style="text-decoration: none; color: black;" ng-click="changeLocation('/game')" href=""><span class="mif-zoom-in"></span> {{translation.SearchGame}}</a>
             </h3>
             <h3 style="clear: both; display: inline-block; white-space: nowrap;">
-                <a ng-class="{hoverCrimson : hover2}" ng-mouseenter="hover2=true" ng-mouseleave="hover2=false" style="text-decoration: none; color:black" ng-click="changeLocation('/jokes')" href=""><span class="mif-zoom-in"></span> {{translation.SearchJoke}}</a>
+                <a ng-class="{hoverCrimson : hover2}" ng-mouseenter="hover2=true" ng-mouseleave="hover2=false" style="text-decoration: none; color:black" ng-click="changeLocation('/joke')" href=""><span class="mif-zoom-in"></span> {{translation.SearchJoke}}</a>
             </h3>
         </div>
     </div>

@@ -37,5 +37,13 @@ namespace WebBellwether.API.Controllers
             var response = ServiceExecutor.Execute(() => ServiceFactory.JokeManagementService.GetJokeTranslation(jokeId, languageId));
             return Json(response);
         }
+        [Authorize(Roles = "Admin")]
+        [Route("GetJokesWithAvailableLanguages")]
+        public JsonResult<ResponseViewModel<JokeViewModel[]>> GetJokesWithAvailableLanguages(int languageId)
+        {
+            var response =
+                ServiceExecutor.Execute(() => ServiceFactory.JokeManagementService.GetJokesWithAvailableLanguages(languageId));
+            return Json(response);
+        }
     }
 }

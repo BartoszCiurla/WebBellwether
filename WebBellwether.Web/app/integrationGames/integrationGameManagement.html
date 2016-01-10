@@ -6,13 +6,13 @@
         <form name="newGame" ng-hide="selectedGame != ''" class="formAni">
             <div>
                 <h2 style="text-align:left">{{translation.AddIntegrationGame}}</h2>
-                <input type="text" class="form-control myFormColor" required data-ng-model="newIntegrationGame.gameName" placeholder={{translation.GameName}} />
-                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="newIntegrationGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+                <input type="text" class="form-control myFormColor" required data-ng-model="newIntegrationGame.GameName" placeholder={{translation.GameName}} />
+                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="newIntegrationGame.GameDescription" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
-                    <label>{{feature.gameFeatureName}}</label>
-                    <select class="form-control myFormColor" required data-ng-model="newIntegrationGame.features[$index].gameFeatureDetailId" data-ng-options="gfdm.gameFeatureDetailId as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                    <label>{{feature.GameFeatureName}}</label>
+                    <select class="form-control myFormColor" required data-ng-model="newIntegrationGame.Features[$index].GameFeatureDetailId" data-ng-options="gfdm.GameFeatureDetailId as gfdm.GameFeatureDetailName for gfdm in feature.GameFeatureDetailModels">
                         <option value=''>{{translation.PleaseSelectGame}}</option>
                     </select>
                 </div>
@@ -27,13 +27,13 @@
         <form name="saveGame" ng-hide="selectedGame == ''" class="formAni">
             <div>
                 <h2 style="text-align:left">{{translation.HomeTranslationBasedOnTheCurrentlySelectedLanguagePortal}}</h2>
-                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.gameName" placeholder={{translation.GameName}} />
-                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGame.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+                <input type="text" class="form-control myFormColor" required data-ng-model="selectedGame.GameName" placeholder={{translation.GameName}} />
+                <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required data-ng-model="selectedGame.GameDescription" placeholder={{translation.GameDetails}}></textarea>
 
                 <!--GAME FEATURES-->
                 <div ng-repeat="feature in gameFeatures">
-                    <label>{{feature.gameFeatureName}}</label>
-                    <select class="form-control myFormColor" required data-ng-model="selectedGame.integrationGameDetailModels[$index].gameFeatureDetailId" data-ng-options="gfdm.gameFeatureDetailId as gfdm.gameFeatureDetailName for gfdm in feature.gameFeatureDetailModels">
+                    <label>{{feature.GameFeatureName}}</label>
+                    <select class="form-control myFormColor" required data-ng-model="selectedGame.IntegrationGameDetailModels[$index].GameFeatureDetailId" data-ng-options="gfdm.GameFeatureDetailId as gfdm.GameFeatureDetailName for gfdm in feature.GameFeatureDetailModels">
                         <option value=''>{{translation.PleaseSelectGame}}</option>
                     </select>
                 </div>
@@ -60,15 +60,15 @@
             <select id="language"ng-change="getTranslationForGame()" class="form-control myFormColor" required ng-model="languageForOtherTranslation" data-ng-options="language.LanguageName + '   :   ' + language.LanguageShortName for language in languages | filterByIdTakeWhenNotExists : selectedLanguage">
                 <option value=''>{{translation.SelectLanguageForTheGame}}</option>
             </select>
-            <div ng-hide="languageForOtherTranslation.id == null" class="formAni">
+            <div ng-hide="languageForOtherTranslation.Id == null" class="formAni">
                 <form name="otherGameTranslation">
-                    <input type="text" class="form-control myFormColor" required ng-model="selectedGameTranslation.gameName" placeholder={{translation.GameName}} />
-                    <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required ng-model="selectedGameTranslation.gameDescription" placeholder={{translation.GameDetails}}></textarea>
+                    <input type="text" class="form-control myFormColor" required ng-model="selectedGameTranslation.GameName" placeholder={{translation.GameName}} />
+                    <textarea style="margin-top: 20px" class="form-control myFormColor" rows="16" required ng-model="selectedGameTranslation.GameDescription" placeholder={{translation.GameDetails}}></textarea>
                     <label style="margin-top:20px;margin-bottom:20px;text-align:left">{{translation.AutoCompleteGameFeaturesForLanguage}}</label>
                 </form>
                 <div style="text-align: center">
                     <!--TRANSLATE GAME-->
-                    <button class="btn btn-primary btn-block" ng-click="translateGame(selectedGame.language,languageForOtherTranslation,selectedGame.gameName,selectedGame.gameDescription)"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
+                    <button class="btn btn-primary btn-block" ng-click="translateGame(selectedGame.Language,languageForOtherTranslation,selectedGame.GameName,selectedGame.GameDescription)"><span class="mif-cloud-download mif-2x">{{translation.Translate}}</span></button>
                     <!--SAVE TRANSLATION-->
                     <button class="btn btn-success btn-block" type="submit" ng-click="saveOtherTranslation()" ng-disabled="otherGameTranslation.$invalid"><span class="mif-checkmark"></span> {{translation.SaveTranslation}}</button>
                     <!--DELETE TRANSLATION-->
@@ -83,13 +83,13 @@
     <div class="col-md-4">
         <h2 style="text-align:left">{{translation.ListOfGameIncludesAvailableTranslation}}</h2>
         <div ng-repeat="integrationGame in integrationGames | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <div class="myFormColor"  ng-class="{selectedTransparent_hover : hover || selectedGame.id == integrationGame.id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
-                {{integrationGame.gameName}}
+            <div class="myFormColor"  ng-class="{selectedTransparent_hover : hover || selectedGame.Id == integrationGame.Id}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" ng-click="setSelectGame(integrationGame)">
+                {{integrationGame.GameName}}
                 <div>
-                    <div ng-repeat="al in integrationGame.gameTranslations" class="inline-block">
+                    <div ng-repeat="al in integrationGame.GameTranslations" class="inline-block">
                         <div>
                             <h5>
-                                <span style="margin-left: 4px" ng-class="al.hasTranslation ? 'label label-success' : 'label label-danger'">{{al.language.languageShortName}}</span>
+                                <span style="margin-left: 4px" ng-class="al.HasTranslation ? 'label label-success' : 'label label-danger'">{{al.Language.LanguageShortName}}</span>
                             </h5>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
  
     <div data-role="dialog" id="deleteDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
         <h1>{{translation.DeleteTheGame}} :</h1>
-        <h1>{{selectedGame.gameName}}</h1>
+        <h1>{{selectedGame.GameName}}</h1>
         <div>
             <button class="btn btn-warning" ng-click="deleteGame(selectedGame,false)" ng-disabled="selectedGame == ''">{{translation.RemoveMainTranslation}}</button>
             <button class="btn btn-danger" ng-click="deleteGame(selectedGame,true)" ng-hide="selectedGame == '' || countGameTranslation(selectedGame) < 2">{{translation.RemoveAllTranslation}}</button>
@@ -120,7 +120,7 @@
     </div>
     <div data-role="dialog" id="deleteTranslationDialog" class="text-center dialog alert" data-close-button="true" data-type="alert">
         <h1>{{translation.RemoveGameTranslation}} :</h1>
-        <h1>{{selectedGameTranslation.gameName}}</h1>
+        <h1>{{selectedGameTranslation.GameName}}</h1>
         <div>
             <button class="btn btn-warning" ng-click="deleteTranslation(selectedGameTranslation)" ng-disabled="selectedGameTranslation == ''">{{translation.Delete}}</button>
         </div>

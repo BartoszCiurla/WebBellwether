@@ -13,7 +13,7 @@ namespace WebBellwether.Services.Services.LanguageService
     public interface IManagementLanguageService
     {
         Language[] GetLanguages(bool getNotPublicLanguages = false);
-        int PostLanguage(Language language);
+        Language PostLanguage(Language language);
         bool FillLanguageFile(IEnumerable<string> languageValues, int langaugeId);
         IEnumerable<string> GetLanguageFileValue(int languageId);
         bool CreateLanguageFile(int newLanguageId);
@@ -24,11 +24,11 @@ namespace WebBellwether.Services.Services.LanguageService
         IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId);
         Language GetLanguageById(int languageId);
     }
-    public class ManagementLanguageService : IManagementLanguageService
+    public class LanguageManagementService : IManagementLanguageService
     {
         private readonly ILanguageFileService _languageFileService;
 
-        public ManagementLanguageService(ILanguageFileService languageFileService)
+        public LanguageManagementService(ILanguageFileService languageFileService)
         {
             _languageFileService = languageFileService;
         }
@@ -46,19 +46,15 @@ namespace WebBellwether.Services.Services.LanguageService
                 ModelMapper.Map<Language, LanguageDao>(
                     RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId));
         }
-        public int PostLanguage(Language language)
+        public Language PostLanguage(Language language)
         {
-            LanguageDao entity = GetLanguageDaoByName(language.LanguageName);
-            if (entity != null)
-                throw new Exception(ResultMessage.LanguageExists.ToString());
-            entity = ModelMapper.Map<LanguageDao, Language>(language);
+            ValidateGetLanguageDaoByName(language.LanguageName);            
+            var entity = ModelMapper.Map<LanguageDao, Language>(language);
             RepositoryFactory.Context.Languages.Add(entity);
             RepositoryFactory.Context.SaveChanges();
-            entity = ModelMapper.Map<LanguageDao, Language>(GetLanguageByName(language.LanguageName));
-            if (entity == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+            entity = ModelMapper.Map<LanguageDao, Language>(ValidateGetLanguageByName(language.LanguageName));
             if (CreateLanguageFile(entity.Id))
-                return entity.Id;
+                return ModelMapper.Map<Language, LanguageDao>(entity);
             RepositoryFactory.Context.Languages.Remove(entity);
             throw new Exception(ResultMessage.LanguageFileNotExists.ToString());
         }
@@ -92,8 +88,42 @@ namespace WebBellwether.Services.Services.LanguageService
         {
             return _languageFileService.PutLanguageKey(languageKey);
         }
+      
+        public string PublishLanguage(Language language)
+        {
+            CheckLanguageExistsOnIrremovableList(language.Id);
+            VerifyLanguageToPublish(language);
+            LanguageDao entity = ValidateGetLanguageDaoById(language.Id);
+            entity.IsPublic = language.IsPublic;
+            RepositoryFactory.Context.SaveChanges();
+            return language.IsPublic ? ResultMessage.LanguageHasBeenPublished.ToString() : ResultMessage.LanguageHasBeenNonpublic.ToString();
+        }
 
-        public void VerifyLanguageToPublish(Language language)
+        public bool PutLanguage(Language language)
+        {
+            LanguageDao entity = ValidateGetLanguageDaoById(language.Id);            
+            entity.LanguageName = language.LanguageName;
+            entity.LanguageShortName = language.LanguageShortName;
+            RepositoryFactory.Context.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteLanguage(Language language)
+        {
+            CheckLanguageExistsOnIrremovableList(language.Id);
+            LanguageDao entity = ValidateGetLanguageDaoById(language.Id);            
+            RepositoryFactory.Context.Languages.Remove(entity);
+            DeleteLanguageFromOtherStructure(language.Id);
+            bool removeLanguageFileResult = _languageFileService.RemoveFile(language.Id);
+            if (removeLanguageFileResult)
+            {
+                RepositoryFactory.Context.SaveChanges();
+                return true;
+            }
+            throw new Exception(ResultMessage.LanguageCanNotBeRemoved.ToString());
+        }
+
+        private void VerifyLanguageToPublish(Language language)
         {
             if (language.IsPublic)
             {
@@ -106,64 +136,39 @@ namespace WebBellwether.Services.Services.LanguageService
                     throw new Exception(ResultMessage.OnlyOnePublicLanguage.ToString());
             }
         }
-        public string PublishLanguage(Language language)
-        {
-            VerifyLanguageToPublish(language);
-            LanguageDao entity = GetLanguageDaoById(language.Id);
-            if (entity == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
-            entity.IsPublic = language.IsPublic;
-            RepositoryFactory.Context.SaveChanges();
-            return language.IsPublic ? ResultMessage.LanguageHasBeenPublished.ToString() : ResultMessage.LanguageHasBeenNonpublic.ToString();
-        }
 
-        public bool PutLanguage(Language language)
-        {
-            LanguageDao entity = GetLanguageDaoById(language.Id);
-            if (entity == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
-            entity.LanguageName = language.LanguageName;
-            entity.LanguageShortName = language.LanguageShortName;
-            RepositoryFactory.Context.SaveChanges();
-            return true;
-        }
-
-        public bool DeleteLanguage(Language language)
-        {
-            CheckLanguageExistsOnIrremovableList(language.Id);
-            LanguageDao entity = GetLanguageDaoById(language.Id);
-            if (entity == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
-            RepositoryFactory.Context.Languages.Remove(entity);
-            DeleteLanguageFromOtherStructure(language.Id);
-            bool removeLanguageFileResult = _languageFileService.RemoveFile(language.Id);
-            if (removeLanguageFileResult)
-            {
-                RepositoryFactory.Context.SaveChanges();
-                return true;
-            }
-            throw new Exception(ResultMessage.LanguageCanNotBeRemoved.ToString());
-        }
         private void CheckLanguageExistsOnIrremovableList(int languageId)
         {
-            if (languageId == 1 | languageId == 2)
-                throw new Exception(ResultMessage.LanguageCanNotBeRemoved.ToString());
+            if (languageId <= 2) throw new ArgumentOutOfRangeException(ResultMessage.LanguageCanNotBeRemoved.ToString());
         }
-        private Language GetLanguageByName(string languageName)
+
+        private Language ValidateGetLanguageByName(string languageName)
         {
-            return
-                ModelMapper.Map<Language, LanguageDao>(
+            var language = ModelMapper.Map<Language, LanguageDao>(
                     RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == languageName));
+            if(language == null)
+                ThrowLanguageNotExists();
+            return language;
+
         }
 
-        private LanguageDao GetLanguageDaoById(int languageid)
+        private LanguageDao ValidateGetLanguageDaoById(int languageid)
         {
-            return RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageid);
+            var language = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageid);
+            if (language == null)
+                ThrowLanguageNotExists();
+            return language;
         }
 
-        private LanguageDao GetLanguageDaoByName(string languageName)
+        private void ValidateGetLanguageDaoByName(string languageName)
         {
-            return RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == languageName);
+            if (RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == languageName) != null)
+                throw new Exception(ResultMessage.LanguageExists.ToString());
+        }
+
+        private void ThrowLanguageNotExists()
+        {
+            throw new Exception(ResultMessage.LanguageNotExists.ToString());
         }
         private void DeleteLanguageFromOtherStructure(int languageId)
         {

@@ -1,7 +1,7 @@
 ﻿
-namespace WebBellwether.Models.Models.IntegrationGame
+namespace WebBellwether.Models.ViewModels.IntegrationGame
 {
-    public class DirectIntegrationGameModel
+    public class DirectIntegrationGameViewModel
     {
         public int Id { get; set; }
         public int IntegrationGameId { get; set; }

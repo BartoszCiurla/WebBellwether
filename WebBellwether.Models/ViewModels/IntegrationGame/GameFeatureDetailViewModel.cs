@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebBellwether.Models.Models.IntegrationGame
+namespace WebBellwether.Models.ViewModels.IntegrationGame
 {
-    public class GameFeatureDetailModel
+    public class GameFeatureDetailViewModel
     {
         [Required]
         public int Id { get; set; }//gamefeaturedetaillanguageid

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Models.ViewModels.Joke;
 using WebBellwether.Repositories.Entities.Joke;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Services.Factories;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.JokeService
 {
@@ -14,17 +16,12 @@ namespace WebBellwether.Services.Services.JokeService
         JokeCategoryViewModel[] GetJokeCategories(int languageId);
         JokeCategoryViewModel GetJokeCategoryTranslation(int jokeCategoryId, int languageId);
         JokeCategoryViewModel InsertJokeCategory(JokeCategoryViewModel jokeCategory);
+        JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int languageId);
         bool PutJokeCategory(JokeCategoryViewModel jokeCategory);
         bool RemoveJokeCategory(JokeCategoryViewModel jokeCategory);
     }
     public class JokeCategoryManagementService : IJokeCategoryManagementService
-    {
-        private readonly IJokeCategoryTranslationService _jokeCategoryTranslationService;
-
-        public JokeCategoryManagementService(IJokeCategoryTranslationService jokeCategoryTranslationService)
-        {
-            _jokeCategoryTranslationService = jokeCategoryTranslationService;
-        }
+    {     
         public JokeCategoryViewModel[] GetJokeCategories(int languageId)
         {
             var result =
@@ -38,6 +35,29 @@ namespace WebBellwether.Services.Services.JokeService
                     }).ToArray();
             return result;
         }
+
+        public JokeCategoryViewModel[] GetJokeCategoriesWithAvailableLanguage(int languageId)
+        {
+            var jokeCategoriesDao =
+                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.Language.Id == languageId).ToList();
+            if (!jokeCategoriesDao.Any())
+                return null;
+            var jokeCategories = new List<JokeCategoryViewModel>();
+            jokeCategoriesDao.ForEach(
+                x =>
+                {
+                    jokeCategories.Add(new JokeCategoryViewModel
+                    {
+                        Id = x.JokeCategory.Id,
+                        JokeCategoryId = x.Id,
+                        JokeCategoryName = x.JokeCategoryName,
+                        LanguageId = x.Language.Id,
+                        JokeCategoryTranslations = FillAvailableJokeCategoryTranslation(x.JokeCategory.Id)
+                    });
+                });
+            return jokeCategories.ToArray();
+        }
+
         public JokeCategoryViewModel GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
         {
             var entity =
@@ -71,6 +91,26 @@ namespace WebBellwether.Services.Services.JokeService
                 : RemoveSelectedJokeCategoryTranslation(jokeCategory);
         }
 
+        private List<AvailableLanguage> FillAvailableJokeCategoryTranslation(int jokeCategoryId)
+        {
+            List<LanguageDao> allLanguages = RepositoryFactory.Context.Languages.ToList();
+            var translation =
+                RepositoryFactory.Context.JokeCategoryDetails.Where(x => x.JokeCategory.Id == jokeCategoryId).ToList()
+                    .Select(
+                        z =>
+                            new AvailableLanguage
+                            {
+                                Language = ModelMapper.Map<Language, LanguageDao>(z.Language),
+                                HasTranslation = true
+                            }).ToList();
+            allLanguages.ForEach(x =>
+            {
+                if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
+                    translation.Add(new AvailableLanguage { Language = ModelMapper.Map<Language, LanguageDao>(x), HasTranslation = false });
+            });
+            return translation;
+        }
+
         private JokeCategoryViewModel ValidateGetInsertedJokeCategory(JokeCategoryViewModel jokeCategory)
         {
             var insertedJokeCategory =
@@ -80,8 +120,7 @@ namespace WebBellwether.Services.Services.JokeService
                 throw new Exception(ResultMessage.JokeCategoryNotAdded.ToString());
             jokeCategory.Id = insertedJokeCategory.JokeCategory.Id;
             jokeCategory.JokeCategoryId = insertedJokeCategory.Id;
-            jokeCategory.JokeCategoryTranslations =
-                _jokeCategoryTranslationService.FillAvailableJokeCategoryTranslation(jokeCategory.Id);
+            jokeCategory.JokeCategoryTranslations =FillAvailableJokeCategoryTranslation(jokeCategory.Id);
             return jokeCategory;
         }
         private bool ValidateInsertJokeCategory(JokeCategoryViewModel jokeCategory)

@@ -1,39 +1,39 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('searchController', ['$scope', '$location', 'sharedService', 'jokesService', 'integrationGamesService', function ($scope, $location, sharedService, jokesService, integrationGamesService) {
+        .controller('searchController', ['$scope', '$location', 'sharedService', 'jokeService', 'integrationGameService', function ($scope, $location, sharedService, jokeService, integrationGameService) {
             //integration games            
             $scope.integrationGamesSearchParams = {};
             $scope.gameFeatures = [];
             $scope.getGameFeatuesModelWithDetails = function (lang) {
-                integrationGamesService.GameFeatuesModelWithDetails(lang).then(function (x) {
-                    $scope.gameFeatures = x.data;
+                integrationGameService.GameFeatuesModelWithDetails(lang).then(function (x) {
+                    $scope.gameFeatures = x.Data;
                 });
             };
 
             function validateIntegrationGameDetailModelsParam(integrationGamesSearchParams) {
-                if (integrationGamesSearchParams.integrationGameDetailModels === undefined)
+                if (integrationGamesSearchParams.IntegrationGameDetailModels === undefined)
                     return false;
-                if (integrationGamesSearchParams.integrationGameDetailModels === null)
+                if (integrationGamesSearchParams.IntegrationGameDetailModels === null)
                     return false;
                 return true;
             };
 
             function validateGameNameParam(integrationGamesSearchParams) {
-                if (integrationGamesSearchParams.gameName === undefined)
+                if (integrationGamesSearchParams.GameName === undefined)
                     return false;
-                if (integrationGamesSearchParams.gameName === null)
+                if (integrationGamesSearchParams.GameName === null)
                     return false;
                 return true;
             }
 
             function getDetailSearchParam(integrationGamesSearchParams,gameFeatureId) {
                 var applyParam = "";
-                if (integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId] === undefined)
+                if (integrationGamesSearchParams.IntegrationGameDetailModels[gameFeatureId] === undefined)
                     return applyParam;
-                if (integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId] === null)
+                if (integrationGamesSearchParams.IntegrationGameDetailModels[gameFeatureId] === null)
                     return applyParam;
-                return integrationGamesSearchParams.integrationGameDetailModels[gameFeatureId].gameFeatureDetailName;
+                return integrationGamesSearchParams.IntegrationGameDetailModels[gameFeatureId].GameFeatureDetailName;
             }
 
             function validateIntegrationGamesFiltersParams(integrationGamesSearchParams) {
@@ -41,30 +41,24 @@
 
                 var applyGameName = validateGameNameParam(integrationGamesSearchParams);
                 if (applyGameName)
-                    searchParams.gameName = integrationGamesSearchParams.gameName;
+                    searchParams.GameName = integrationGamesSearchParams.GameName;
 
                 var applyIntegrationGameDetailsModel = validateIntegrationGameDetailModelsParam(integrationGamesSearchParams);
                 if (!applyIntegrationGameDetailsModel)
                     return searchParams;
 
-                //              TAK WIEM MAM PEŁNĄ ŚWIADOMOŚĆ JAK BARDZO PONIŻSZY KOD JEST SPIERDOLONY 
-                //  ZOSTAWIAM GO W TAKIEJ FORMIE BO BRAKUJE MI CZASU ALE Z PEWNOŚCIĄ BEDZIE TO NAUCZKA NA PRZYSZŁOŚĆ 
-                //              WYDAJE MI SIĘ ŻE ANALIZUJĄC GO DOKŁADNIE MOŻNA ODNALEŚĆ PEWNE WADY ANGULARA ... 
-                //                                  LUB MÓJ POMYSŁ BYŁ ZJEBANY ...
-                //   Z DRUGIEJ STRONY MOGLEM ULEPSZYĆ FILTR ALE TO TRWAŁO BY TYLE SAMO I PEWNIE MOGLO BY NIE DZIALAĆ
-
                 var categoryGame = getDetailSearchParam(integrationGamesSearchParams, 0);
                 if (categoryGame !== "")
-                    searchParams.categoryGame = categoryGame;
+                    searchParams.CategoryGame = categoryGame;
                 var paceOfPlay = getDetailSearchParam(integrationGamesSearchParams, 1);
                 if (paceOfPlay !== "")
-                    searchParams.paceOfPlay = paceOfPlay;
+                    searchParams.PaceOfPlay = paceOfPlay;
                 var numberOfPlayer = getDetailSearchParam(integrationGamesSearchParams, 2);
                 if (numberOfPlayer !== "")
-                    searchParams.numberOfPlayer = numberOfPlayer;
+                    searchParams.NumberOfPlayer = numberOfPlayer;
                 var preparationFun = getDetailSearchParam(integrationGamesSearchParams, 3);
                 if (preparationFun !== "")
-                    searchParams.preparationFun = preparationFun;
+                    searchParams.PreparationFun = preparationFun;
                 return searchParams;
             };
 
@@ -80,9 +74,9 @@
 
 
             function applyFilterDependingOnLocation(locationPath) {
-                if (locationPath === '/games')
+                if (locationPath === '/game')
                     return "showGamesFilter";
-                if (locationPath === '/jokes')
+                if (locationPath === '/joke')
                     return "showJokesFilter";
                 return '';
             };
@@ -98,24 +92,24 @@
             $scope.jokesSearchParams = {};
             $scope.jokeCategories = [];
             $scope.getJokeCategories = function (lang) {
-                jokesService.GetJokeCategories(lang).then(function (x) {
+                jokeService.GetJokeCategories(lang).then(function (x) {
                     $scope.jokeCategories = [];
-                    $scope.jokeCategories = x.data;
+                    $scope.jokeCategories = x.Data;
                 });
             };
 
             function validateJokeCategoryIdParam(jokeSearchParams) {
-                if (jokeSearchParams.jokeCategoryId === undefined)
+                if (jokeSearchParams.JokeCategoryId === undefined)
                     return false;
 
-                if (jokeSearchParams.jokeCategoryId === null)
+                if (jokeSearchParams.JokeCategoryId === null)
                     return false;
                 return true;
             }
             function validateJokeContentParam(jokeSearchParams) {
-                if (jokeSearchParams.jokeContent === undefined)
+                if (jokeSearchParams.JokeContent === undefined)
                     return false;
-                if (jokeSearchParams.jokeContent === null)
+                if (jokeSearchParams.JokeContent === null)
                     return false;
                 return true;
             };
@@ -124,9 +118,9 @@
                 var applyJokeCategoryId = validateJokeCategoryIdParam(jokeSearchParams);
                 var applyJokeContent = validateJokeContentParam(jokeSearchParams);
                 if (applyJokeCategoryId)
-                    searchParams.jokeCategoryId = jokeSearchParams.jokeCategoryId;
+                    searchParams.JokeCategoryId = jokeSearchParams.JokeCategoryId;
                 if (applyJokeContent)
-                    searchParams.jokeContent = jokeSearchParams.jokeContent;
+                    searchParams.JokeContent = jokeSearchParams.JokeContent;
                 return searchParams;
             };
 

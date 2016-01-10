@@ -51,5 +51,14 @@ namespace WebBellwether.API.Controllers
             var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.RemoveJokeCategory(jokeCategory));
             return Json(response);
         }
+        [Authorize(Roles = "Admin")]
+        [Route("GetJokeCategoriesWithAvailableLanguage")]
+        public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategoriesWithAvailableLanguage(int languageId)
+        {
+            var response =
+                ServiceExecutor.Execute(
+                    () => ServiceFactory.JokeCategoryManagementService.GetJokeCategoriesWithAvailableLanguage(languageId));
+            return Json(response);
+        }
     }
 }

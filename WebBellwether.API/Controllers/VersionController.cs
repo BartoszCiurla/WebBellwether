@@ -7,7 +7,7 @@ using WebBellwether.Models.ViewModels.Version;
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Versions")]
-    public class VersionsController : ApiController
+    public class VersionController : ApiController
     {
         [AllowAnonymous]
         [Route("")]

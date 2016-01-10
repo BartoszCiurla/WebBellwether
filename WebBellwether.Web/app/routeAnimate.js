@@ -6,17 +6,17 @@
                 controller: "homeController",
                 templateUrl: "/app/home/home.html"                    
             });
-            $routeProvider.when("/games", {
-                controller: "integrationGamesController",
-                templateUrl:"/app/integrationGames/integrationGames.html"
+            $routeProvider.when("/game", {
+                controller: "integrationGameController",
+                templateUrl:"/app/integrationGames/integrationGame.html"
             });
-            $routeProvider.when("/managementIntegrationGames", {
-                controller: "managementIntegrationGamesController",
-                templateUrl: "/app/integrationGames/managementIntegrationGames.html"
+            $routeProvider.when("/managementIntegrationGame", {
+                controller: "integrationGameManagementController",
+                templateUrl: "/app/integrationGames/integrationGameManagement.html"
             });
-            $routeProvider.when("/editGameFeatures", {
-                controller: "editGameFeaturesController",
-                templateUrl: "/app/integrationGames/editGameFeatures.html"
+            $routeProvider.when("/gameFeatureManagement", {
+                controller: "gameFeatureManagementController",
+                templateUrl: "/app/integrationGames/gameFeatureManagement.html"
             });
             $routeProvider.when("/jokeManagement", {
                 controller: "jokeManagementController",
@@ -26,21 +26,21 @@
                 controller: "jokeCategoryManagementController",
                 templateUrl: "/app/jokes/jokeCategoryManagement.html"
             });
-            $routeProvider.when("/managementLanguages", {
-                controller: "managementLanguagesController",
-                templateUrl: "/app/languages/managementLanguages.html"
+            $routeProvider.when("/languageManagement", {
+                controller: "languageManagementController",
+                templateUrl: "/app/languages/languageManagement.html"
             });
-            $routeProvider.when("/managementVersions", {
-                controller: "managementVersionsController",
-                templateUrl: "/app/versions/managementVersions.html"
+            $routeProvider.when("/versionManagement", {
+                controller: "versionManagementController",
+                templateUrl: "/app/versions/versionManagement.html"
             });
             $routeProvider.when("/bellwether", {
                 controller: "bellwetherController",
                 templateUrl: "/app/bellwether/bellwether.html"
             });
-            $routeProvider.when("/jokes", {
-                controller:"jokesController",
-                templateUrl: "/app/jokes/jokes.html"
+            $routeProvider.when("/joke", {
+                controller:"jokeController",
+                templateUrl: "/app/jokes/joke.html"
             });
             $routeProvider.when("/photoGallery", {
                 controller:"photoGalleryController",

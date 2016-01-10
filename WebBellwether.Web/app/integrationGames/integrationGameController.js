@@ -1,7 +1,7 @@
 ﻿(function () {
     angular
         .module('webBellwether')
-        .controller('integrationGamesController', ['$scope', '$timeout', 'integrationGamesService', 'sharedService', 'startFromFilter', function ($scope, $timeout, integrationGamesService, sharedService, startFromFilter) {
+        .controller('integrationGameController', ['$scope', '$timeout', 'integrationGameService', 'sharedService', 'startFromFilter', function ($scope, $timeout, integrationGameService, sharedService, startFromFilter) {
             //pagination
             $scope.search = {};
             $scope.resetFilters = function () {
@@ -24,9 +24,9 @@
             //**************
 
             $scope.getIntegrationGames = function (lang) {
-                integrationGamesService.IntegrationGames(lang).then(function (x) {
+                integrationGameService.IntegrationGames(lang).then(function (x) {
                     $scope.integrationGames = [];
-                    $scope.integrationGames = x.data; 
+                    $scope.integrationGames = x.Data;
                 });
             };
            

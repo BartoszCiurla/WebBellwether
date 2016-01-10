@@ -7,6 +7,7 @@ using WebBellwether.Models.ViewModels.Joke;
 using WebBellwether.Repositories.Entities.Joke;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Services.Factories;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.JokeService
 {
@@ -16,40 +17,17 @@ namespace WebBellwether.Services.Services.JokeService
         bool RemoveJoke(JokeViewModel joke);
         JokeViewModel GetJokeTranslation(int jokeId, int languageId);
         bool PutJoke(JokeViewModel joke);
+        JokeViewModel[] GetJokesWithAvailableLanguages(int languageId);
     }
     public class JokeManagementService : IJokeManagementService
-    {
-        private readonly IJokeTranslationService _jokeTranslationService;
-
-        public JokeManagementService(IJokeTranslationService jokeTranslationService)
-        {
-            _jokeTranslationService = jokeTranslationService;
-        }
+    {    
         public JokeViewModel InsertJoke(JokeViewModel joke)
         {
            if(!ValidateInsertJoke(joke))
                 throw new Exception(ResultMessage.JokeNotAdded.ToString());
             return ValidateGetInsertedJoke(joke);
         }
-
-        private JokeViewModel ValidateGetInsertedJoke(JokeViewModel joke)
-        {
-            var insertedJoke = RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.JokeContent.Equals(joke.JokeContent));
-            if (insertedJoke == null)
-                throw new Exception(ResultMessage.JokeNotAdded.ToString());
-            joke.Id = insertedJoke.Joke.Id;
-            joke.JokeId = insertedJoke.Id;
-            joke.JokeTranslations = _jokeTranslationService.FillAvailableTranslation(joke.Id);
-            return joke;
-        }
-        private bool ValidateInsertJoke(JokeViewModel joke)
-        {
-            if (IsJokeContentExists(joke))
-                throw new Exception(ResultMessage.JokeExists.ToString());
-            return IsMainJokeTranslation(joke)
-                ? InsertMainJokeTranslation(joke)
-                : InsertAnotherJokeTranslation(joke);
-        }
+     
         public bool RemoveJoke(JokeViewModel joke)
         {
             return joke.TemporarySeveralTranslationDelete
@@ -96,7 +74,70 @@ namespace WebBellwether.Services.Services.JokeService
             entity.JokeContent = joke.JokeContent;
             RepositoryFactory.Context.SaveChanges();
             return true;
-        }        
+        }
+
+        public JokeViewModel[] GetJokesWithAvailableLanguages(int languageId)
+        {
+            var jokes = new List<JokeViewModel>();
+            var jokesDao = RepositoryFactory.Context.JokeDetails.Where(x => x.Language.Id == languageId).ToList();
+            if (!jokesDao.Any())
+                throw new Exception(ResultMessage.JokeCategoryNotExists.ToString());
+            jokesDao.ForEach(x =>
+            {
+                jokes.Add(new JokeViewModel
+                {
+                    Id = x.Joke.Id,
+                    JokeId = x.Id,
+                    LanguageId = x.Language.Id,
+                    JokeContent = x.JokeContent,
+                    JokeCategoryName = x.JokeCategoryDetail.JokeCategoryName,
+                    JokeCategoryId = x.JokeCategoryDetail.JokeCategory.Id,
+                    JokeCategoryDetailId = x.JokeCategoryDetail.Id,
+                    JokeTranslations = FillAvailableTranslation(x.Joke.Id)
+                });
+            });
+            return jokes.ToArray();
+        }
+
+        private List<AvailableLanguage> FillAvailableTranslation(int jokeId)
+        {
+            List<LanguageDao> allLanguages = RepositoryFactory.Context.Languages.ToList();
+            var translation =
+                RepositoryFactory.Context.JokeDetails.Where(x => x.Joke.Id == jokeId).ToList()
+                    .Select(
+                        x =>
+                            new AvailableLanguage
+                            {
+                                Language = ModelMapper.Map<Language, LanguageDao>(x.Language),
+                                HasTranslation = true
+                            }).ToList();
+            allLanguages.ForEach(x =>
+            {
+                if (translation.FirstOrDefault(y => y.Language.Id == x.Id) == null)
+                    translation.Add(new AvailableLanguage { Language = ModelMapper.Map<Language, LanguageDao>(x), HasTranslation = false });
+            });
+            return translation;
+        }
+
+        private JokeViewModel ValidateGetInsertedJoke(JokeViewModel joke)
+        {
+            var insertedJoke = RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.JokeContent.Equals(joke.JokeContent));
+            if (insertedJoke == null)
+                throw new Exception(ResultMessage.JokeNotAdded.ToString());
+            joke.Id = insertedJoke.Joke.Id;
+            joke.JokeId = insertedJoke.Id;
+            joke.JokeTranslations = FillAvailableTranslation(joke.Id);
+            return joke;
+        }
+        private bool ValidateInsertJoke(JokeViewModel joke)
+        {
+            if (IsJokeContentExists(joke))
+                throw new Exception(ResultMessage.JokeExists.ToString());
+            return IsMainJokeTranslation(joke)
+                ? InsertMainJokeTranslation(joke)
+                : InsertAnotherJokeTranslation(joke);
+        }
+
         private JokeCategoryDetailDao GetJokeCategory(int jokeCategoryId, int languageId)
         {
             JokeCategoryDetailDao jokeCategoryDao = 

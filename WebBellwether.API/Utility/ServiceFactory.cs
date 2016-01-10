@@ -18,11 +18,11 @@ namespace WebBellwether.API.Utility
         public static IManagementIntegrationGamesService ManagementIntegrationGamesService
             =>
                 _managementIntegrationGamesService ??
-                (_managementIntegrationGamesService = new ManagementIntegrationGamesService());
+                (_managementIntegrationGamesService = new IntegrationGameManagementService());
 
         private static IManagementFeaturesService _managementFeaturesService;
         public static IManagementFeaturesService ManagementFeaturesService
-            => _managementFeaturesService ?? (_managementFeaturesService = new ManagementFeaturesService());
+            => _managementFeaturesService ?? (_managementFeaturesService = new GameFeatureManagementService());
 
         private static IIntegrationGameService _integrationGameService;
         public static IIntegrationGameService IntegrationGameService
@@ -32,7 +32,7 @@ namespace WebBellwether.API.Utility
         public static IManagementLanguageService ManagementLanguageService
             =>
                 _managementLanguageService ??
-                (_managementLanguageService = new ManagementLanguageService(LanguageFileService));
+                (_managementLanguageService = new LanguageManagementService(LanguageFileService));
 
         private static ITranslateService _translateService;
         public static ITranslateService TranslateService
@@ -45,26 +45,16 @@ namespace WebBellwether.API.Utility
         public static IVersionService VersionService
             => _versionService ?? (_versionService = new VersionService(LanguageFileService));
 
-        private static IJokeTranslationService _jokeTranslationService;
-        private static IJokeTranslationService JokeTranslationService
-            => _jokeTranslationService ?? (_jokeTranslationService = new JokeTranslationService());
-
-        private static IJokeCategoryTranslationService _jokeCategoryTranslationService;
-        private static IJokeCategoryTranslationService JokeCategoryTranslationService
-            =>
-                _jokeCategoryTranslationService ??
-                (_jokeCategoryTranslationService = new JokeCategoryTranslationService());
-
         private static IJokeManagementService _jokeManagementService;
         public static IJokeManagementService JokeManagementService
-            => _jokeManagementService ?? (_jokeManagementService = new JokeManagementService(JokeTranslationService));
+            => _jokeManagementService ?? (_jokeManagementService = new JokeManagementService());
 
         private static IJokeCategoryManagementService _jokeCategoryManagementService;
         public static IJokeCategoryManagementService JokeCategoryManagementService
-            => _jokeCategoryManagementService ?? (_jokeCategoryManagementService = new JokeCategoryManagementService(JokeCategoryTranslationService));
+            => _jokeCategoryManagementService ?? (_jokeCategoryManagementService = new JokeCategoryManagementService());
 
         private static IJokeService _jokeService;
-        public static IJokeService JokeService => _jokeService ?? (_jokeService = new JokeService(JokeTranslationService,JokeCategoryTranslationService));
+        public static IJokeService JokeService => _jokeService ?? (_jokeService = new JokeService());
 
     }
 }
