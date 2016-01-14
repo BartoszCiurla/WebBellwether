@@ -56,7 +56,7 @@ namespace WebBellwether.Services.Services.LanguageService
             if (CreateLanguageFile(entity.Id))
                 return ModelMapper.Map<Language, LanguageDao>(entity);
             RepositoryFactory.Context.Languages.Remove(entity);
-            throw new Exception(ResultMessage.LanguageFileNotExists.ToString());
+            throw new Exception(ThrowMessage.LanguageFileNotExists.ToString());
         }
 
         public bool FillLanguageFile(IEnumerable<string> languageValues, int langaugeId)
@@ -64,7 +64,7 @@ namespace WebBellwether.Services.Services.LanguageService
             var values = languageValues as string[] ?? languageValues.ToArray();
             bool fillLanguageResult = _languageFileService.FillFile(values.ToArray(), langaugeId);
             if (!fillLanguageResult)
-                throw new Exception(ResultMessage.ContentLanguageFilesAreNotCompatible.ToString());
+                throw new Exception(ThrowMessage.ContentLanguageFilesAreNotCompatible.ToString());
             return true;
         }
         public IEnumerable<string> GetLanguageFileValue(int languageId)
@@ -81,7 +81,7 @@ namespace WebBellwether.Services.Services.LanguageService
         public bool CreateLanguageFile(int newLanguageId)
         {
             if (newLanguageId == 0)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+                throw new Exception(ThrowMessage.LanguageNotExists.ToString());
             return _languageFileService.CreateFile(newLanguageId);
         }
         public bool PutLanguageKey(LanguageKeyModel languageKey)
@@ -96,7 +96,7 @@ namespace WebBellwether.Services.Services.LanguageService
             LanguageDao entity = ValidateGetLanguageDaoById(language.Id);
             entity.IsPublic = language.IsPublic;
             RepositoryFactory.Context.SaveChanges();
-            return language.IsPublic ? ResultMessage.LanguageHasBeenPublished.ToString() : ResultMessage.LanguageHasBeenNonpublic.ToString();
+            return language.IsPublic ? ThrowMessage.LanguageHasBeenPublished.ToString() : ThrowMessage.LanguageHasBeenNonpublic.ToString();
         }
 
         public bool PutLanguage(Language language)
@@ -120,7 +120,7 @@ namespace WebBellwether.Services.Services.LanguageService
                 RepositoryFactory.Context.SaveChanges();
                 return true;
             }
-            throw new Exception(ResultMessage.LanguageCanNotBeRemoved.ToString());
+            throw new Exception(ThrowMessage.LanguageCanNotBeRemoved.ToString());
         }
 
         private void VerifyLanguageToPublish(Language language)
@@ -128,18 +128,18 @@ namespace WebBellwether.Services.Services.LanguageService
             if (language.IsPublic)
             {
                 if (_languageFileService.GetFileEmptyKeys(language.Id) > 0)
-                    throw new Exception(ResultMessage.EmptyKeysExists.ToString());
+                    throw new Exception(ThrowMessage.EmptyKeysExists.ToString());
             }
             else
             {
                 if (RepositoryFactory.Context.Languages.Count(x => x.IsPublic) == 1)
-                    throw new Exception(ResultMessage.OnlyOnePublicLanguage.ToString());
+                    throw new Exception(ThrowMessage.OnlyOnePublicLanguage.ToString());
             }
         }
 
         private void CheckLanguageExistsOnIrremovableList(int languageId)
         {
-            if (languageId <= 2) throw new ArgumentOutOfRangeException(ResultMessage.LanguageCanNotBeRemoved.ToString());
+            if (languageId <= 2) throw new ArgumentOutOfRangeException(ThrowMessage.LanguageCanNotBeRemoved.ToString());
         }
 
         private Language ValidateGetLanguageByName(string languageName)
@@ -163,12 +163,12 @@ namespace WebBellwether.Services.Services.LanguageService
         private void ValidateGetLanguageDaoByName(string languageName)
         {
             if (RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == languageName) != null)
-                throw new Exception(ResultMessage.LanguageExists.ToString());
+                throw new Exception(ThrowMessage.LanguageExists.ToString());
         }
 
         private void ThrowLanguageNotExists()
         {
-            throw new Exception(ResultMessage.LanguageNotExists.ToString());
+            throw new Exception(ThrowMessage.LanguageNotExists.ToString());
         }
         private void DeleteLanguageFromOtherStructure(int languageId)
         {

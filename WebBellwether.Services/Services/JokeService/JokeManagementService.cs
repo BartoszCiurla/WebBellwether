@@ -24,7 +24,7 @@ namespace WebBellwether.Services.Services.JokeService
         public JokeViewModel InsertJoke(JokeViewModel joke)
         {
            if(!ValidateInsertJoke(joke))
-                throw new Exception(ResultMessage.JokeNotAdded.ToString());
+                throw new Exception(ThrowMessage.JokeNotAdded.ToString());
             return ValidateGetInsertedJoke(joke);
         }
      
@@ -41,7 +41,7 @@ namespace WebBellwether.Services.Services.JokeService
                 RepositoryFactory.Context.JokeDetails.FirstOrDefault(
                     x => x.Joke.Id == jokeId && x.Language.Id == languageId);
             if (entity == null)
-                throw new Exception(ResultMessage.JokeTranslationNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeTranslationNotExists.ToString());
             JokeViewModel joke = new JokeViewModel { Id = jokeId, JokeContent = entity.JokeContent, LanguageId = entity.Language.Id, JokeId = entity.Id };
             return joke;
         }
@@ -50,7 +50,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             var entity = RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.Id == joke.JokeId);
             if (entity == null)
-                throw new Exception(ResultMessage.JokeNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeNotExists.ToString());
             if (entity.JokeCategoryDetail.JokeCategory.Id != joke.JokeCategoryId) // in edit i change category 
             {
                 JokeCategoryDetailDao categoryDetail = GetJokeCategory(joke.JokeCategoryId, joke.LanguageId);
@@ -70,7 +70,7 @@ namespace WebBellwether.Services.Services.JokeService
             else if (!entity.JokeContent.Equals(joke.JokeContent))
                 if (RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.JokeContent.Equals(joke.JokeContent)) !=
                     null)
-                    throw new Exception(ResultMessage.JokeExists.ToString());
+                    throw new Exception(ThrowMessage.JokeExists.ToString());
             entity.JokeContent = joke.JokeContent;
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -81,7 +81,7 @@ namespace WebBellwether.Services.Services.JokeService
             var jokes = new List<JokeViewModel>();
             var jokesDao = RepositoryFactory.Context.JokeDetails.Where(x => x.Language.Id == languageId).ToList();
             if (!jokesDao.Any())
-                throw new Exception(ResultMessage.JokeCategoryNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeCategoryNotExists.ToString());
             jokesDao.ForEach(x =>
             {
                 jokes.Add(new JokeViewModel
@@ -123,7 +123,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             var insertedJoke = RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.JokeContent.Equals(joke.JokeContent));
             if (insertedJoke == null)
-                throw new Exception(ResultMessage.JokeNotAdded.ToString());
+                throw new Exception(ThrowMessage.JokeNotAdded.ToString());
             joke.Id = insertedJoke.Joke.Id;
             joke.JokeId = insertedJoke.Id;
             joke.JokeTranslations = FillAvailableTranslation(joke.Id);
@@ -132,7 +132,7 @@ namespace WebBellwether.Services.Services.JokeService
         private bool ValidateInsertJoke(JokeViewModel joke)
         {
             if (IsJokeContentExists(joke))
-                throw new Exception(ResultMessage.JokeExists.ToString());
+                throw new Exception(ThrowMessage.JokeExists.ToString());
             return IsMainJokeTranslation(joke)
                 ? InsertMainJokeTranslation(joke)
                 : InsertAnotherJokeTranslation(joke);
@@ -144,7 +144,7 @@ namespace WebBellwether.Services.Services.JokeService
                 RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(
                     x => x.JokeCategory.Id == jokeCategoryId && x.Language.Id == languageId);
             if(jokeCategoryDao == null)
-                throw new Exception(ResultMessage.JokeCategoryNotExists + GetLanguage(languageId).LanguageName);
+                throw new Exception(ThrowMessage.JokeCategoryNotExists + GetLanguage(languageId).LanguageName);
             return jokeCategoryDao;
         }
 
@@ -189,7 +189,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             LanguageDao languageDao = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId);
             if (languageDao == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+                throw new Exception(ThrowMessage.LanguageNotExists.ToString());
             return languageDao;
         }
 
@@ -202,7 +202,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             var jokeToEdit = RepositoryFactory.Context.JokeDetails.FirstOrDefault(x => x.Id == joke.JokeId);
             if (jokeToEdit == null)
-                throw new Exception(ResultMessage.JokeTranslationNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeTranslationNotExists.ToString());
             jokeToEdit.JokeContent = joke.JokeContent;
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -222,12 +222,12 @@ namespace WebBellwether.Services.Services.JokeService
         {
             var jokeDetails = RepositoryFactory.Context.JokeDetails.Where(x => x.Joke.Id == joke.Id);
             if (!jokeDetails.Any())
-                throw new Exception(ResultMessage.JokeDetailNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeDetailNotExists.ToString());
             RepositoryFactory.Context.JokeDetails.RemoveRange(jokeDetails);
             RepositoryFactory.Context.SaveChanges();
             var mainJoke = RepositoryFactory.Context.Jokes.FirstOrDefault(x => x.Id == joke.Id);
             if (mainJoke == null)
-                throw new Exception(ResultMessage.JokeNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeNotExists.ToString());
             RepositoryFactory.Context.Jokes.Remove(mainJoke);
             RepositoryFactory.Context.SaveChanges();
             return true;

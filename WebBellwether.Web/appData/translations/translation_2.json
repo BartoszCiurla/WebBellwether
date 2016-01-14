@@ -1,5 +1,5 @@
-﻿{
-  "IntegrationGamesHeader": "Gry integracyjne",
+{
+  "IntegrationGamesHeader": "Gry integracyjne test",
   "IntegrationGamesContent": "Szukasz sposobu na swietna zabawe , wyeliminowanie nudy , poznanie sie , tutaj znajdziesz to wszystko .",
   "BellwetherHeader": "Wodzirej",
   "BellwetherContent": " Alkohol jeszcze nie dziala , nikt nie chce dzialac , pozostale opcje sa nie atrakcyjne .Aplikacja przygotuje dla Was cos ekstra ;)",
@@ -215,6 +215,7 @@
   "ApplyLanguage": "Zastosuj język",
   "ManagementVersions": "Zarządzanie wersjami",
   "IntegrationGameVersion": "Wersja gier integracyjnych",
+  "GameFeatureVersion": "Wersja cech gier",
   "JokeCategoryVersion": "Wersja kategori kawałów",
   "JokeVersion": "Wersja kawałów",
   "Version": "Wersja",

@@ -19,7 +19,7 @@
                 var versionModel = {
                     VersionNumber: langVersion,
                     NumberOf: numberOf,
-                    LanguageId: $scope.languageForVersion.id,
+                    LanguageId: $scope.languageForVersion.Id,
                     VersionTarget: versionTarget
                 }
                 versionsService.PostNewVersion(versionModel).then(function (x) {
@@ -34,7 +34,7 @@
                     Index: index,
                     VersionNumber: version.VersionNumber,
                     NumberOf: version.NumberOf,
-                    LanguageId: $scope.languageForVersion.id
+                    LanguageId: $scope.languageForVersion.Id
                 }
                 versionsService.PostRemoveVersion(versionForDelete).then(function (x) {
                     if (x.data.IsValid)
@@ -50,7 +50,14 @@
                     addTrueRemoveFalse ? insertVersionToJokeCategory(versionModel) : removeVersionFromJokeCategory(versionModel.Index);
                 if (versionModel.VersionTarget === "joke")
                     addTrueRemoveFalse ? insertVersionToJoke(versionModel) : removeVersionFromJoke(versionModel.Index);
+                if (versionModel.VersionTarget === "gameFeature")
+                    addTrueRemoveFalse ? insertVersionToGameFeature(versionModel) : removeVersionFromGameFeature(versionModel.Index);
             };
+
+            function removeVersionFromGameFeature(index) {
+                $scope.versionDetail.GameFeatureVersions.splice(index, 1);
+            }
+
             function removeVersionFromLanguage(index) {
                 $scope.versionDetail.LanguageVersions.splice(index, 1);
             };
@@ -65,6 +72,10 @@
             function removeVersionFromJoke(index) {
                 $scope.versionDetail.JokeVersions.splice(index, 1);
             };
+
+            function insertVersionToGameFeature(newVersionModel) {
+                $scope.versionDetail.GameFeatureVersions.push(createVersionDetail(newVersionModel));
+            }
 
             function insertVersionToLanguage(newVersionModel) {
                 $scope.versionDetail.LanguageVersions.push(createVersionDetail(newVersionModel));

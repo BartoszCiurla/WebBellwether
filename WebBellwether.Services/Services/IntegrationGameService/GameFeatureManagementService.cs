@@ -44,7 +44,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                 RepositoryFactory.Context.GameFeatureLanguages.FirstOrDefault(
                     x => x.GameFeature.Id == gameFeature.Id && x.Language.Id == gameFeature.LanguageId);
             if (entity == null)
-                throw new Exception(ResultMessage.GameFeatureNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureNotExists.ToString());
             entity.GameFeatureName = gameFeature.GameFeatureName;
         }
         public bool PutGameFeature(GameFeatureViewModel gameFeature)
@@ -66,7 +66,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                RepositoryFactory.Context.GameFeatureDetailLanguages.FirstOrDefault(
                    x => x.Id == gameFeatureDetail.Id && x.Language.Id == gameFeatureDetail.LanguageId);
             if (entity == null)
-                throw new Exception(ResultMessage.GameFeatureDetailNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureDetailNotExists.ToString());
             entity.GameFeatureDetailName = gameFeatureDetail.GameFeatureDetailName;
         }
         public bool PutGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail)
@@ -147,7 +147,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         {
             if (ValidateCreateGameFeature(languageId))
                 return GetGameFeatures(languageId);
-            throw new Exception(ResultMessage.GameFeatureNotExists.ToString());
+            throw new Exception(ThrowMessage.GameFeatureNotExists.ToString());
         }
 
         private void BuildFeaturesDetailsTemplate(int languageId, List<GameFeatureDetailViewModel> gameFeatureDetails)
@@ -170,7 +170,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         {
             var templateLanguage = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.LanguageName == TemplateLanguageName);
             if (templateLanguage == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+                throw new Exception(ThrowMessage.LanguageNotExists.ToString());
             return templateLanguage;
         }
 
@@ -183,12 +183,12 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         {
             LanguageDao languageForGameFeatures = GetLanguage(languageId);
             if (languageForGameFeatures == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+                throw new Exception(ThrowMessage.LanguageNotExists.ToString());
             IEnumerable<GameFeatureLanguageDao> newGameFeatures = CreateGameFeaturesLanguages(languageForGameFeatures);
             IEnumerable<GameFeatureDetailLanguageDao> newGameFeatureDetails =
                 CreateGameFeaturesDetailsLanguage(languageForGameFeatures);
             if (newGameFeatureDetails == null)
-                throw new Exception(ResultMessage.GameFeatureDetailNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureDetailNotExists.ToString());
             RepositoryFactory.Context.GameFeatureLanguages.AddRange(newGameFeatures);
             RepositoryFactory.Context.GameFeatureDetailLanguages.AddRange(newGameFeatureDetails);
             RepositoryFactory.Context.SaveChanges();
@@ -232,7 +232,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         {
             var templateGameFeatures = GetTemplateGameFeatures();
             if (templateGameFeatures == null)
-                throw new Exception(ResultMessage.GameFeatureNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureNotExists.ToString());
             var newFeaturesLanguages = new List<GameFeatureLanguageDao>();
             templateGameFeatures.ToList().ForEach(gameFeature =>
             {

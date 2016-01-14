@@ -130,4 +130,30 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6 formAni">
+        <div class="formAni" style="margin-top: 20px; margin-bottom: 20px" ng-hide="languageForVersion == null">
+            <div style="border: solid black" class="margin5">
+                <div class="margin20">
+                    <h2>{{translation.GameFeatureVersion}}</h2>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{translation.Version}}</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="gfv in versionDetail.GameFeatureVersions">
+                            <td>{{gfv.VersionNumber}}</td>
+                            <td><button ng-click="removeVersion(gfv,'gameFeature',$index)" class="btn btn-danger">{{translation.Delete}}</button></td>
+                        </tr>
+                    </table>
+                    <form name="gameFeatureVer">
+                        <div class="form-group">
+                            <label for="gameFeatureVer">{{translation.Version}}</label>
+                            <input data-ng-model="gameFeatureVersion" required type="text" class="form-control myFormColor" id="gameFeatureVer" placeholder={{translation.IncreasingVersionDescription}}>
+                        </div>
+                        <button ng-click="addVersion(gameFeatureVersion,'gameFeature',0)" ng-disabled="gameFeatureVer.$invalid || versionDetail.GameFeatureVersions[versionDetail.GameFeatureVersions.length -1].VersionNumber >= gameFeatureVersion" type="submit" class="btn btn-primary">{{translation.AddVersion}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

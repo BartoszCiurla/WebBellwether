@@ -144,7 +144,7 @@ namespace WebBellwether.Services.Services.TranslateService
             });
             //w przyszłości to nie będzie działało ... i bede musial to robic po trochu ... obecnie mam około 7k + znaków ...
             if (valuesForTranslate.ToString().Count() > 10000)
-                throw new Exception(ResultMessage.TooLongRequest.ToString());
+                throw new Exception(ThrowMessage.TooLongRequest.ToString());
             var resultRequest = await _webClient.GetStringAsync($"{baseRequestParameters}{valuesForTranslate}").ConfigureAwait(false);
             YandexResponse result = JsonConvert.DeserializeObject<YandexResponse>(resultRequest);
             return result.Text.ToArray();

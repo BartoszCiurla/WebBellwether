@@ -28,6 +28,7 @@ namespace WebBellwether.Repositories.Context
         public DbSet<IntegrationGameVersionDao> IntegrationGameVersions { get; set; }
         public DbSet<JokeCategoryVersionDao> JokeCategoryVersions { get; set; }
         public DbSet<JokeVersionDao> JokeVersions { get; set; }
+        public DbSet<GameFeatureVersionDao> GameFeatureVersions { get; set; }
         public WebBellwetherDbContext()
            : base("WebBellwether")
         {

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.ViewModels.Version;
 using WebBellwether.Repositories.Entities.Translations;
 using WebBellwether.Repositories.Entities.Version;
 using WebBellwether.Services.Factories;
 using WebBellwether.Services.Services.FileService;
+using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.VersionService
 {
@@ -25,13 +27,15 @@ namespace WebBellwether.Services.Services.VersionService
         {
             return new ClientVersionViewModel
             {
+                Language = ModelMapper.Map<Language, LanguageDao>(RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == languageId)),
                 LanguageVersion = RepositoryFactory.Context.LanguageVersions.Where(x => x.Language.Id == languageId).Max(x => x.Version),
                 IntegrationGameVersion = RepositoryFactory.Context.IntegrationGameVersions.Where(x => x.Language.Id == languageId)
                     .Max(x => x.Version),
                 JokeCategoryVersion = RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId)
                     .Max(x => x.Version),
                 JokeVersion = RepositoryFactory.Context.JokeCategoryVersions.Where(x => x.Language.Id == languageId)
-                    .Max(x => x.Version)
+                    .Max(x => x.Version),
+                GameFeatureVersion = RepositoryFactory.Context.GameFeatureVersions.Where(x => x.Language.Id == languageId).Max(x => x.Version)
             };
         }
 
@@ -43,7 +47,8 @@ namespace WebBellwether.Services.Services.VersionService
                 IntegrationGameVersions = FillIntegrationGameVersion(languageId),
                 JokeCategoryVersions = FillJokeCategoryVersion(languageId),
                 JokeVersions = FillJokeVersion(languageId),
-                CurrentVersionStateModel = FillCurrentVersionDetail(languageId)
+                CurrentVersionStateModel = FillCurrentVersionDetail(languageId),
+                GameFeatureVersions = FillGameFeatureVersion(languageId)
             };
         }
 
@@ -57,6 +62,8 @@ namespace WebBellwether.Services.Services.VersionService
                 return addOrRemove ? AddJokeCategoryVersion(version) : DeleteJokeCategoryVersion(version);
             if (version.VersionTarget.Equals("joke"))
                 return addOrRemove ? AddJokeVersion(version) : DeleteJokeVersion(version);
+            if (version.VersionTarget.Equals("gameFeature"))
+                return addOrRemove ? AddGameFeatureVersion(version) : DeleteGameFeatureVersion(version);
             return false;
         }
 
@@ -75,6 +82,20 @@ namespace WebBellwether.Services.Services.VersionService
             if (entityToDelete == null)
                 return false;
             RepositoryFactory.Context.LanguageVersions.Remove(entityToDelete);
+            RepositoryFactory.Context.SaveChanges();
+            return true;
+        }
+
+        private bool DeleteGameFeatureVersion(VersionViewModel versionForDelete)
+        {
+            var entityToDelete =
+                RepositoryFactory.Context.GameFeatureVersions.FirstOrDefault(
+                    x =>
+                        x.Language.Id.Equals(versionForDelete.LanguageId) &&
+                        x.Version.Equals(versionForDelete.VersionNumber));
+            if (entityToDelete == null)
+                return false;
+            RepositoryFactory.Context.GameFeatureVersions.Remove(entityToDelete);
             RepositoryFactory.Context.SaveChanges();
             return true;
         }
@@ -123,6 +144,17 @@ namespace WebBellwether.Services.Services.VersionService
                 NumberOfItemsInFileLanguage = languageVersion.NumberOf,
                 Version = languageVersion.VersionNumber,
                 Language = GetLanguageById(languageVersion.LanguageId)
+            });
+            RepositoryFactory.Context.SaveChanges();
+            return true;
+        }
+
+        private bool AddGameFeatureVersion(VersionViewModel gameFeatureVersion)
+        {
+            RepositoryFactory.Context.GameFeatureVersions.Add(new GameFeatureVersionDao
+            {
+                Version = gameFeatureVersion.VersionNumber,
+                Language = GetLanguageById(gameFeatureVersion.LanguageId)
             });
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -217,6 +249,15 @@ namespace WebBellwether.Services.Services.VersionService
                     .ToList()
                     .Select(
                         x => new VersionDetailViewModel { Id = x.Id, NumberOf = x.NumberOfJokes, VersionNumber = x.Version })
+                    .ToList();
+        }
+
+        private List<VersionDetailViewModel> FillGameFeatureVersion(int languageId)
+        {
+            return
+                RepositoryFactory.Context.GameFeatureVersions.Where(x => x.Language.Id == languageId)
+                    .ToList()
+                    .Select(x => new VersionDetailViewModel { Id = x.Id, VersionNumber = x.Version })
                     .ToList();
         }
     }

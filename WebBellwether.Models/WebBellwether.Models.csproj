@@ -68,7 +68,7 @@
     <Compile Include="ViewModels\Version\VersionDetailViewModel.cs" />
     <Compile Include="ViewModels\Version\VersionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\ResultMessage.cs" />
+    <Compile Include="Results\ThrowMessage.cs" />
     <Compile Include="ViewModels\ResponseViewModel.cs" />
   </ItemGroup>
   <ItemGroup />

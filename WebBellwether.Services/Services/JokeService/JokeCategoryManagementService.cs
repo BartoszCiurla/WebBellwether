@@ -70,7 +70,7 @@ namespace WebBellwether.Services.Services.JokeService
         public JokeCategoryViewModel InsertJokeCategory(JokeCategoryViewModel jokeCategory)
         {
             if (!ValidateInsertJokeCategory(jokeCategory))
-                throw new Exception(ResultMessage.JokeCategoryNotAdded.ToString());
+                throw new Exception(ThrowMessage.JokeCategoryNotAdded.ToString());
             return ValidateGetInsertedJokeCategory(jokeCategory);
         }
       
@@ -78,7 +78,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             var entity = GetJokeCategoryDetail(jokeCategory.JokeCategoryId);
             if (IsJokeCategoryContentExists(jokeCategory))
-                throw new Exception(ResultMessage.ThisJokeCategoryExists.ToString());
+                throw new Exception(ThrowMessage.ThisJokeCategoryExists.ToString());
             entity.JokeCategoryName = jokeCategory.JokeCategoryName;
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -117,7 +117,7 @@ namespace WebBellwether.Services.Services.JokeService
                    RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(
                        x => x.JokeCategoryName == jokeCategory.JokeCategoryName);
             if (insertedJokeCategory == null)
-                throw new Exception(ResultMessage.JokeCategoryNotAdded.ToString());
+                throw new Exception(ThrowMessage.JokeCategoryNotAdded.ToString());
             jokeCategory.Id = insertedJokeCategory.JokeCategory.Id;
             jokeCategory.JokeCategoryId = insertedJokeCategory.Id;
             jokeCategory.JokeCategoryTranslations =FillAvailableJokeCategoryTranslation(jokeCategory.Id);
@@ -126,7 +126,7 @@ namespace WebBellwether.Services.Services.JokeService
         private bool ValidateInsertJokeCategory(JokeCategoryViewModel jokeCategory)
         {
             if (IsJokeCategoryContentExists(jokeCategory))
-                throw new Exception(ResultMessage.ThisJokeCategoryExists.ToString());
+                throw new Exception(ThrowMessage.ThisJokeCategoryExists.ToString());
             return IsMainJokeCategoryTranslation(jokeCategory) ?
                 InsertMainJokeCategoryTranslation(jokeCategory) :
             InsertAnotherJokeCategoryTranslation(jokeCategory);
@@ -154,7 +154,7 @@ namespace WebBellwether.Services.Services.JokeService
                         RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(
                             x => x.Id == jokeCategory.JokeCategoryId);
             if (jokeCategoryToEdit == null)
-                throw new Exception(ResultMessage.JokeCategoryTranslationNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeCategoryTranslationNotExists.ToString());
             jokeCategoryToEdit.JokeCategoryName = jokeCategory.JokeCategoryName;
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -179,7 +179,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             JokeCategoryDetailDao jokeCategoryDetail = RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(x => x.Id == jokeCategoryId);
             if (jokeCategoryDetail == null)
-                throw new Exception(ResultMessage.JokeCategoryNotExists.ToString());
+                throw new Exception(ThrowMessage.JokeCategoryNotExists.ToString());
             return jokeCategoryDetail;
         }
         private bool InsertMainJokeCategoryTranslation(JokeCategoryViewModel jokeCategory)
@@ -237,7 +237,7 @@ namespace WebBellwether.Services.Services.JokeService
         {
             LanguageDao languageDao = RepositoryFactory.Context.Languages.FirstOrDefault(x => x.Id == id);
             if (languageDao == null)
-                throw new Exception(ResultMessage.LanguageNotExists.ToString());
+                throw new Exception(ThrowMessage.LanguageNotExists.ToString());
             return languageDao;
         }
     }

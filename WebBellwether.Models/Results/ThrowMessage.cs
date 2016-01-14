@@ -1,6 +1,6 @@
 ﻿namespace WebBellwether.Models.Results
 {
-    public enum ResultMessage
+    public enum ThrowMessage
     {
         GameAdded,
         GameAddFailure,

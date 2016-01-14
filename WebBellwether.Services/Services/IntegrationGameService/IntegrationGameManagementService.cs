@@ -100,7 +100,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         public IntegrationGameViewModel InsertIntegrationGame(NewIntegrationGameViewModel game)
         {
             if (!ValidateInsertIntegrationGame(game))
-                throw new Exception(ResultMessage.JokeNotAdded.ToString());
+                throw new Exception(ThrowMessage.JokeNotAdded.ToString());
             return ValidateGetInsertedGame(game);
         }
 
@@ -108,7 +108,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         {
             var game = RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(x => x.Id == integrationGameId);
             if (game == null)
-                throw new Exception(ResultMessage.GameNotExists.ToString());
+                throw new Exception(ThrowMessage.GameNotExists.ToString());
             return game;
         }
 
@@ -157,7 +157,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                 RepositoryFactory.Context.IntegrationGameFeatures.Where(
                     x => x.IntegrationGameDetail.Id == gameEntity.Id);
             if (!gameFeatureEntity.Any())
-                throw new Exception(ResultMessage.GameFeatureTranslationNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureTranslationNotExists.ToString());
             int gameTranslationCount = 0;
             game.GameTranslations?.ForEach(x =>
             {
@@ -221,7 +221,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             var entity = RepositoryFactory.Context.IntegrationGames.FirstOrDefault(x => x.Id == game.Id);
             var gameDetails = BuildIntegrationGameDetail(game);
             if (!gameDetails.IntegrationGameFeatures.Any())
-                throw new Exception(ResultMessage.GameFeatureTranslationNotExists.ToString());
+                throw new Exception(ThrowMessage.GameFeatureTranslationNotExists.ToString());
             entity?.IntegrationGameDetails.Add(gameDetails);
             RepositoryFactory.Context.SaveChanges();
             return true;
@@ -247,7 +247,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             if (
                 RepositoryFactory.Context.IntegrationGameDetails.Any(
                     x => x.IntegrationGame.Id == game.Id && x.Language.Id == game.Language))
-                throw new Exception(ResultMessage.GameHaveTranslationForThisLanguage.ToString());
+                throw new Exception(ThrowMessage.GameHaveTranslationForThisLanguage.ToString());
         }
 
         private bool InsertMainGameTranslation(NewIntegrationGameViewModel game)
@@ -268,7 +268,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             var insertedGame = RepositoryFactory.Context.IntegrationGameDetails.FirstOrDefault(
                         x => x.IntegrationGameName.Equals(game.GameName));
             if (insertedGame == null)
-                throw new Exception(ResultMessage.GameNotExists.ToString());
+                throw new Exception(ThrowMessage.GameNotExists.ToString());
             return IsMainGameTranslation(game)
                 ? GetInsertedMainGame(insertedGame)
                 : GetInsertedAnotherGame(insertedGame);
@@ -317,7 +317,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         private bool ValidateInsertIntegrationGame(NewIntegrationGameViewModel game)
         {
             if (IsGameExists(game))
-                throw new Exception(ResultMessage.GameExists.ToString());
+                throw new Exception(ThrowMessage.GameExists.ToString());
             return IsMainGameTranslation(game) ? InsertMainGameTranslation(game) : InsertAnotherGameTranslation(game);
         }
 

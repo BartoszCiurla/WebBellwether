@@ -47,7 +47,7 @@ namespace WebBellwether.API.Controllers
         {
             var valuesToTranslate = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
             if (!valuesToTranslate.IsValid)
-                return Json(new ResponseViewModel<bool> { IsValid = false, ErrorMessage = ResultMessage.LanguageFileNotExists.ToString() });
+                return Json(new ResponseViewModel<bool> { IsValid = false, ErrorMessage = ThrowMessage.LanguageFileNotExists.ToString() });
 
             var valuesAfterTranslation = await ServiceExecutor.ExecuteAsync(
                         () =>
