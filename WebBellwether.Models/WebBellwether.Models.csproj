@@ -52,6 +52,7 @@
     <Compile Include="ViewModels\IntegrationGame\IntegrationGameDetailViewModel.cs" />
     <Compile Include="ViewModels\IntegrationGame\IntegrationGameViewModel.cs" />
     <Compile Include="ViewModels\IntegrationGame\NewIntegrationGameViewModel.cs" />
+    <Compile Include="ViewModels\IntegrationGame\SimpleIntegrationGameViewModel.cs" />
     <Compile Include="ViewModels\Joke\JokeCategoryViewModel.cs" />
     <Compile Include="ViewModels\Joke\JokeViewModel.cs" />
     <Compile Include="Models\Translation\AvailableLanguage.cs" />

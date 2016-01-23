@@ -8,6 +8,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
     public interface IIntegrationGameService
     {
         DirectIntegrationGameViewModel[] GetIntegrationGames(int languageId);
+        SimpleIntegrationGameViewModel[] GetSimpleIntegrationGames(int languageId);
     }
     public class IntegrationGameService : IIntegrationGameService
     {        
@@ -26,11 +27,31 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                     CategoryGame = gameFeatureDetailsNames[0],
                     PaceOfPlay = gameFeatureDetailsNames[1],
                     NumberOfPlayer = gameFeatureDetailsNames[2],
-                    PreparationFun = gameFeatureDetailsNames[3]
+                    PreparationFun = gameFeatureDetailsNames[3],
+                    LanguageId = x.Language.Id
                 });
             });
             return games.ToArray();
         }
+
+        public SimpleIntegrationGameViewModel[] GetSimpleIntegrationGames(int languageId)
+        {
+            var games = new List<SimpleIntegrationGameViewModel>();
+            RepositoryFactory.Context.IntegrationGameDetails.Where(x=>x.Language.Id == languageId).ToList().ForEach(
+                x =>
+                {
+                    games.Add(new SimpleIntegrationGameViewModel
+                    {
+                        Id = x.IntegrationGame.Id,
+                        GameName =  x.IntegrationGameName,
+                        GameDescription = x.IntegrationGameDescription,
+                        LanguageId = x.Language.Id,
+                        GameFeatures = GetGameFeatureDetailId(x.Id)
+                    });
+                });
+            return games.ToArray();
+        }
+
         private IEnumerable<string> GetGameFeatureDetailName(int integrationGameDetailId)
         {
             return
@@ -39,5 +60,14 @@ namespace WebBellwether.Services.Services.IntegrationGameService
                     .OrderBy(x => x.GameFeatureLanguage.GameFeature.Id)
                     .Select(x => x.GameFeatureDetailLanguage.GameFeatureDetailName);                
         }
+
+        private int[] GetGameFeatureDetailId(int integrationGameDetailId)
+        {
+            return
+                RepositoryFactory.Context.IntegrationGameFeatures.Where(
+                    x => x.IntegrationGameDetail.Id == integrationGameDetailId)
+                    .OrderBy(x => x.GameFeatureLanguage.GameFeature.Id)
+                    .Select(x => x.GameFeatureDetailLanguage.GameFeatureDetail.Id).ToArray();
+        } 
     }
 }

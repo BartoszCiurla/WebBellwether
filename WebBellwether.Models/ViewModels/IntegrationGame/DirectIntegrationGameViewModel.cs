@@ -11,6 +11,7 @@ namespace WebBellwether.Models.ViewModels.IntegrationGame
         public string PaceOfPlay { get; set; }
         public string NumberOfPlayer { get; set; }
         public string PreparationFun { get; set; }
+        public int LanguageId { get; set; }
         //some day here be a like ...
     }
 }

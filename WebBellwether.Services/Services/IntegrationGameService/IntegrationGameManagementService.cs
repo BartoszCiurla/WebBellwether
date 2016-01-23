@@ -45,6 +45,26 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             return games;
         }
 
+        public List<IntegrationGameViewModel> GetIntegrationGamesWithDetails(int languageId)
+        {
+            var gameDetailsDao =
+                RepositoryFactory.Context.IntegrationGameDetails.Where(x => x.Language.Id == languageId).ToList();
+            if (!gameDetailsDao.Any())
+                return null;
+            var games = new List<IntegrationGameViewModel>();
+            gameDetailsDao.ForEach(x =>
+            {
+                games.Add(new IntegrationGameViewModel
+                {
+                    Id = x.IntegrationGame.Id, // this is global id 
+                    Language = ModelMapper.Map<Language, LanguageDao>(x.Language),
+                    GameName = x.IntegrationGameName,
+                    GameDescription = x.IntegrationGameDescription,
+                    IntegrationGameDetailModels = FillGameDetailModel(x.Id), //i take id from integrationgamedetails
+                });
+            });
+            return games;
+        } 
 
         public IntegrationGameViewModel GetGameTranslation(int gameId, int languageId)
         {

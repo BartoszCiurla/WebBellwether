@@ -16,6 +16,16 @@ namespace WebBellwether.API.Controllers
             var response =
                 ServiceExecutor.Execute(() => ServiceFactory.IntegrationGameService.GetIntegrationGames(languageId));
             return Json(response);
-        }  
+        }
+
+        [AllowAnonymous]
+        [Route("GetSimpleIntegrationGames")]
+        public JsonResult<ResponseViewModel<SimpleIntegrationGameViewModel[]>> GetSimpleIntegrationGames(int languageId)
+        {
+            var response =
+                ServiceExecutor.Execute(
+                    () => ServiceFactory.IntegrationGameService.GetSimpleIntegrationGames(languageId));
+            return Json(response);
+        }
     }
 }

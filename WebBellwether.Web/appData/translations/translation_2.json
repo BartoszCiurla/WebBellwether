@@ -225,5 +225,7 @@
   "NumbersOfJokes": "Liczba kawałów",
   "AddVersion": "Dodaj wersję",
   "IncreasingVersionDescription": "Obecna wersja + 0.1",
-  "SaveAll": "Zapisz wszystkie"
+  "SaveAll": "Zapisz wszystkie",
+  "DataSynchronization": "Synchronizacja danych",
+  "DataSynchronizationSecurityDescription": "Synchornizacja danych jest wyłaczona , nie mogę pobrać wymaganych danych"
 }

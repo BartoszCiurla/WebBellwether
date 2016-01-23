@@ -225,5 +225,7 @@
   "NumbersOfJokes": "Numbers of jokes",
   "AddVersion": "Add version",
   "IncreasingVersionDescription": "Current version + 0.1",
-  "SaveAll": "Save all"
+  "SaveAll": "Save all",
+  "DataSynchronization": "Data synchronization",
+  "DataSynchronizationSecurityDescription": "Data synchronization is off, I can't get the required data"
 }
