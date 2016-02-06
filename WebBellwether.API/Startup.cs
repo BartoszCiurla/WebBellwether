@@ -5,6 +5,7 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using WebBellwether.API.DependencyInjection;
 using WebBellwether.API.Providers;
 
 [assembly: OwinStartup(typeof(WebBellwether.API.Startup))]
@@ -18,7 +19,10 @@ namespace WebBellwether.API
 
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            HttpConfiguration config = new HttpConfiguration
+            {
+                DependencyResolver = new NinjectResolver(NinjectConfig.CreateKernel())
+            };
 
             ConfigureOAuth(app);
 

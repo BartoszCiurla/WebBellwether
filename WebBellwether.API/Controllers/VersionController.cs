@@ -3,17 +3,24 @@ using System.Web.Http.Results;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.ViewModels;
 using WebBellwether.Models.ViewModels.Version;
+using WebBellwether.Services.Services.VersionService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Version")]
     public class VersionController : ApiController
     {
+        private readonly IVersionService _versionService;
+
+        public VersionController(IVersionService versionService)
+        {
+            _versionService = versionService;
+        }
         [AllowAnonymous]
         [Route("")]
         public JsonResult<ResponseViewModel<ClientVersionViewModel>> Get(int languageId)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.VersionService.GetVersion(languageId));
+            var response = ServiceExecutor.Execute(() => _versionService.GetVersion(languageId));
             return Json(response);
         }
         [Authorize(Roles = "Admin")]
@@ -21,7 +28,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<VersionAggregateViewModel>> GetVersionDataForLanguage(int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.VersionService.GetVersionDetailsForLanguage(languageId));
+                ServiceExecutor.Execute(() => _versionService.GetVersionDetailsForLanguage(languageId));
             return Json(response);
         }
 
@@ -30,7 +37,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<bool>> PostNewVersion(VersionViewModel newVersion)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.VersionService.ChooseTargetAndFunction(newVersion, true));
+                ServiceExecutor.Execute(() => _versionService.ChooseTargetAndFunction(newVersion, true));
             return Json(response);
         }
 
@@ -40,7 +47,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.VersionService.ChooseTargetAndFunction(versionForDelete, false));
+                    () => _versionService.ChooseTargetAndFunction(versionForDelete, false));
             return Json(response);
         }
     }

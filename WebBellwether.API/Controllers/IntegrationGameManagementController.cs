@@ -4,19 +4,26 @@ using System.Web.Http.Results;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.ViewModels;
 using WebBellwether.Models.ViewModels.IntegrationGame;
+using WebBellwether.Services.Services.IntegrationGameService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/IntegrationGameManagement")]
     public class IntegrationGameManagementController : ApiController
     {
+        private readonly IIntegrationGameManagementService _managementIntegrationGamesService;
+
+        public IntegrationGameManagementController(IIntegrationGameManagementService managementIntegrationGamesService)
+        {
+            _managementIntegrationGamesService = managementIntegrationGamesService;
+        }
         [Authorize(Roles = "Admin")]
         [Route("PostIntegrationGame")]
         public JsonResult<ResponseViewModel<IntegrationGameViewModel>> PostIntegrationGame(NewIntegrationGameViewModel game)
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementIntegrationGamesService.InsertIntegrationGame(game));
+                    () => _managementIntegrationGamesService.InsertIntegrationGame(game));
             return Json(response);
         }
 
@@ -27,7 +34,7 @@ namespace WebBellwether.API.Controllers
             var response =
                 ServiceExecutor.Execute(
                     () =>
-                        ServiceFactory.ManagementIntegrationGamesService.GetIntegrationGamesWithAvailableLanguages(
+                        _managementIntegrationGamesService.GetIntegrationGamesWithAvailableLanguages(
                             languageId));
             return Json(response);
         }
@@ -39,7 +46,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementIntegrationGamesService.GetGameTranslation(gameId, languageId));
+                    () => _managementIntegrationGamesService.GetGameTranslation(gameId, languageId));
             return Json(response);
         }
 
@@ -49,7 +56,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementIntegrationGamesService.RemoveIntegratiomGame(integrationGame));
+                    () => _managementIntegrationGamesService.RemoveIntegratiomGame(integrationGame));
             return Json(response);
         }
         [Authorize(Roles = "Admin")]
@@ -58,7 +65,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementIntegrationGamesService.PutIntegrationGame(integrationGame));
+                    () => _managementIntegrationGamesService.PutIntegrationGame(integrationGame));
             return Json(response);
         }     
     }

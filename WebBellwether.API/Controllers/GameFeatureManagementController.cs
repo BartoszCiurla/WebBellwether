@@ -3,18 +3,25 @@ using System.Web.Http.Results;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.ViewModels;
 using WebBellwether.Models.ViewModels.IntegrationGame;
+using WebBellwether.Services.Services.IntegrationGameService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/GameFeatureManagement")]
     public class GameFeatureManagementController : ApiController
     {
+        private readonly IGameFeatureManagementService _gameFeatureManagementService;
+
+        public GameFeatureManagementController(IGameFeatureManagementService gameFeatureManagementService)
+        {
+            _gameFeatureManagementService = gameFeatureManagementService;
+        }
         [AllowAnonymous]
         [Route("GetGameFeatureDetails")]
         public JsonResult<ResponseViewModel<GameFeatureDetailViewModel[]>> GetGameFeatureDetails(int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.GetGameFeatureDetails(languageId));
+                ServiceExecutor.Execute(() => _gameFeatureManagementService.GetGameFeatureDetails(languageId));
             return Json(response);
         }
 
@@ -24,7 +31,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementFeaturesService.GetGameFeatuesModelWithDetails(languageId));
+                    () => _gameFeatureManagementService.GetGameFeatuesModelWithDetails(languageId));
             return Json(response);
         }
 
@@ -34,7 +41,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementFeaturesService.GetGameFeatures(languageId));
+                    () => _gameFeatureManagementService.GetGameFeatures(languageId));
             return Json(response);
         }
 
@@ -43,7 +50,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<bool>> PostGameFeature(GameFeatureViewModel gameFeature)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.PutGameFeature(gameFeature));
+                ServiceExecutor.Execute(() => _gameFeatureManagementService.PutGameFeature(gameFeature));
             return Json(response);
         }
 
@@ -53,7 +60,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementFeaturesService.PutGameFeatureDetail(gameFeatureDetail));
+                    () => _gameFeatureManagementService.PutGameFeatureDetail(gameFeatureDetail));
             return Json(response);
         }
         [Authorize(Roles = "Admin")]
@@ -61,7 +68,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<GameFeatureViewModel[]>> PostCreateGameFeatures(int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.CreateGameFeatures(languageId));
+                ServiceExecutor.Execute(() => _gameFeatureManagementService.CreateGameFeatures(languageId));
             return Json(response);
         }
         [Authorize(Roles = "Admin")]
@@ -69,7 +76,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<bool>> PostGameFeatures(GameFeatureViewModel[] gameFeatures)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.ManagementFeaturesService.PutGameFeatures(gameFeatures));
+                ServiceExecutor.Execute(() => _gameFeatureManagementService.PutGameFeatures(gameFeatures));
             return Json(response);
         }
 
@@ -79,7 +86,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementFeaturesService.PutGameFeatureDetails(gameFeatureDetails));
+                    () => _gameFeatureManagementService.PutGameFeatureDetails(gameFeatureDetails));
             return Json(response);
         }
     }

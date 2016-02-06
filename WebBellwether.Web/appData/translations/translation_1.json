@@ -227,5 +227,9 @@
   "IncreasingVersionDescription": "Current version + 0.1",
   "SaveAll": "Save all",
   "DataSynchronization": "Data synchronization",
-  "DataSynchronizationSecurityDescription": "Data synchronization is off, I can't get the required data"
+  "DataSynchronizationSecurityDescription": "Data synchronization is off, I can't get the required data",
+  "AvailableGames": "Available games",
+  "AvailableJokes": "Available jokes",
+  "Read": "Read",
+  "Stop": "Stop"
 }

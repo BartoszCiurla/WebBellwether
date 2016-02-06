@@ -3,18 +3,25 @@ using System.Web.Http.Results;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.ViewModels;
 using WebBellwether.Models.ViewModels.Joke;
+using WebBellwether.Services.Services.JokeService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/JokeCategoryManagement")]
     public class JokeCategoryManagementController : ApiController
     {
+        private readonly IJokeCategoryManagementService _jokeCategoryManagementService;
+
+        public JokeCategoryManagementController(IJokeCategoryManagementService jokeCategoryManagementService)
+        {
+            _jokeCategoryManagementService = jokeCategoryManagementService;
+        }
         [Authorize(Roles = "Admin")]
         [Route("PostEditJokeCategory")]
 
         public JsonResult<ResponseViewModel<bool>> PostEditJokeCategory(JokeCategoryViewModel jokeCategory)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.PutJokeCategory(jokeCategory));
+            var response = ServiceExecutor.Execute(() => _jokeCategoryManagementService.PutJokeCategory(jokeCategory));
             return Json(response);
         }
 
@@ -22,7 +29,7 @@ namespace WebBellwether.API.Controllers
         [Route("PostJokeCategory")]
         public JsonResult<ResponseViewModel<JokeCategoryViewModel>> PostJokeCategory(JokeCategoryViewModel jokeCategory)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.InsertJokeCategory(jokeCategory));
+            var response = ServiceExecutor.Execute(() => _jokeCategoryManagementService.InsertJokeCategory(jokeCategory));
             return Json(response);
         }
 
@@ -30,7 +37,7 @@ namespace WebBellwether.API.Controllers
         [Route("GetJokeCategories")]
         public JsonResult<ResponseViewModel<JokeCategoryViewModel[]>> GetJokeCategories(int languageId)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategories(languageId));
+            var response = ServiceExecutor.Execute(() => _jokeCategoryManagementService.GetJokeCategories(languageId));
             return Json(response);
         }
 
@@ -40,7 +47,7 @@ namespace WebBellwether.API.Controllers
         public JsonResult<ResponseViewModel<JokeCategoryViewModel>> GetJokeCategoryTranslation(int jokeCategoryId, int languageId)
         {
             var response =
-                ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.GetJokeCategoryTranslation(jokeCategoryId, languageId));
+                ServiceExecutor.Execute(() => _jokeCategoryManagementService.GetJokeCategoryTranslation(jokeCategoryId, languageId));
             return Json(response);
         }
 
@@ -48,7 +55,7 @@ namespace WebBellwether.API.Controllers
         [Route("PostDeleteJokeCategory")]
         public JsonResult<ResponseViewModel<bool>> PostDeleteJokeCategory(JokeCategoryViewModel jokeCategory)
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.JokeCategoryManagementService.RemoveJokeCategory(jokeCategory));
+            var response = ServiceExecutor.Execute(() => _jokeCategoryManagementService.RemoveJokeCategory(jokeCategory));
             return Json(response);
         }
         [Authorize(Roles = "Admin")]
@@ -57,7 +64,7 @@ namespace WebBellwether.API.Controllers
         {
             var response =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.JokeCategoryManagementService.GetJokeCategoriesWithAvailableLanguage(languageId));
+                    () => _jokeCategoryManagementService.GetJokeCategoriesWithAvailableLanguage(languageId));
             return Json(response);
         }
     }

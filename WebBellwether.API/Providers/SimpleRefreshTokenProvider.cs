@@ -4,12 +4,17 @@ using Microsoft.Owin.Security.Infrastructure;
 using WebBellwether.API.Function;
 using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Auth;
+using WebBellwether.Services.Services.AuthService;
 
 namespace WebBellwether.API.Providers
 {
     public class SimpleRefreshTokenProvider : IAuthenticationTokenProvider
     {
-
+        private readonly IAuthService _authService;
+        public SimpleRefreshTokenProvider()
+        {
+            _authService = new AuthService();
+        }
         public async Task CreateAsync(AuthenticationTokenCreateContext context)
         {
             var clientid = context.Ticket.Properties.Dictionary["as:client_id"];
@@ -36,7 +41,7 @@ namespace WebBellwether.API.Providers
 
             token.ProtectedTicket = context.SerializeTicket();
 
-            var result = await ServiceFactory.AuthService.AddRefreshToken(token);
+            var result = await _authService.AddRefreshToken(token);
 
             if (result)
             {
@@ -51,13 +56,13 @@ namespace WebBellwether.API.Providers
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             string hashedTokenId = Helper.GetHash(context.Token);
-            var refreshToken = await ServiceFactory.AuthService.FindRefreshToken(hashedTokenId);
+            var refreshToken = await _authService.FindRefreshToken(hashedTokenId);
 
             if (refreshToken != null)
             {
                 //Get protectedTicket from refreshToken class
                 context.DeserializeTicket(refreshToken.ProtectedTicket);
-                await ServiceFactory.AuthService.RemoveRefreshToken(hashedTokenId);
+                await _authService.RemoveRefreshToken(hashedTokenId);
             }
         }
 

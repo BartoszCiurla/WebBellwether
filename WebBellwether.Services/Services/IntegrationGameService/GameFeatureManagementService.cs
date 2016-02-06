@@ -9,7 +9,7 @@ using WebBellwether.Services.Factories;
 
 namespace WebBellwether.Services.Services.IntegrationGameService
 {
-    public interface IManagementFeaturesService
+    public interface IGameFeatureManagementService
     {
         bool PutGameFeature(GameFeatureViewModel gameFeature);
         bool PutGameFeatureDetail(GameFeatureDetailViewModel gameFeatureDetail);
@@ -20,7 +20,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         GameFeatureViewModel[] GetGameFeatuesModelWithDetails(int languageId);
         GameFeatureViewModel[] CreateGameFeatures(int languageId);
     }
-    public class GameFeatureManagementService : IManagementFeaturesService
+    public class GameFeatureManagementService : IGameFeatureManagementService
     {
         private const string TemplateLanguageName = "English";
 

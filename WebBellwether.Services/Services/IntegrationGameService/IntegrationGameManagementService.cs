@@ -11,7 +11,7 @@ using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.IntegrationGameService
 {
-    public interface IManagementIntegrationGamesService
+    public interface IIntegrationGameManagementService
     {
         List<IntegrationGameViewModel> GetIntegrationGamesWithAvailableLanguages(int languageId);       
         IntegrationGameViewModel InsertIntegrationGame(NewIntegrationGameViewModel game);
@@ -20,7 +20,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
         IntegrationGameViewModel GetGameTranslation(int gameId, int languageId);
 
     }
-    public class IntegrationGameManagementService : IManagementIntegrationGamesService
+    public class IntegrationGameManagementService : IIntegrationGameManagementService
     {
         public List<IntegrationGameViewModel> GetIntegrationGamesWithAvailableLanguages(int languageId)
         {

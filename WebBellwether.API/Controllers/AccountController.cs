@@ -26,9 +26,9 @@ namespace WebBellwether.API.Controllers
             get { return Request.GetOwinContext().Authentication; }
         }
 
-        public AccountController()
+        public AccountController(IAuthService authService)
         {
-            _authService = ServiceFactory.AuthService;
+            _authService = authService;
         }
 
         // POST api/Account/Register

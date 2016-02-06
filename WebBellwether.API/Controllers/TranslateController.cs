@@ -7,17 +7,27 @@ using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Translation;
 using WebBellwether.Models.Results;
 using WebBellwether.Models.ViewModels;
+using WebBellwether.Services.Services.LanguageService;
+using WebBellwether.Services.Services.TranslateService;
 
 namespace WebBellwether.API.Controllers
 {
     [RoutePrefix("api/Translate")]
     public class TranslateController : ApiController
     {
+        private readonly ITranslateService _translateService;
+        private readonly ILanguageManagementService _managementLanguageService;
+
+        public TranslateController(ITranslateService translateService,ILanguageManagementService managementLanguageService)
+        {
+            _translateService = translateService;
+            _managementLanguageService = managementLanguageService;
+        }
         [Authorize(Roles = "Admin")]
         [Route("GetSupportedLanguages")]
         public JsonResult<ResponseViewModel<SupportedLanguage[]>> GetSupportedLanguages()
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.TranslateService.GetListOfSupportedLanguages());
+            var response = ServiceExecutor.Execute(() => _translateService.GetListOfSupportedLanguages());
             return Json(response);
         }
 
@@ -25,7 +35,7 @@ namespace WebBellwether.API.Controllers
         [Route("GetTranslateServiceName")]
         public JsonResult<ResponseViewModel<string>> GetTranslateServiceName()
         {
-            var response = ServiceExecutor.Execute(() => ServiceFactory.TranslateService.GetServiceName());
+            var response = ServiceExecutor.Execute(() => _translateService.GetServiceName());
             return Json(response);
         }
 
@@ -36,7 +46,7 @@ namespace WebBellwether.API.Controllers
             var result = 
                 ServiceExecutor.ExecuteAsync(
                     () =>
-                        ServiceFactory.TranslateService.GetLanguageTranslation(
+                        _translateService.GetLanguageTranslation(
                             new TranslateLanguageModel(languageModel.CurrentLanguageCode,
                                 languageModel.TargetLanguageCode, languageModel.ContentForTranslation)));
             return Json(await result);
@@ -45,13 +55,13 @@ namespace WebBellwether.API.Controllers
         [Route("PostTranslateAllLanguageKeys")]
         public async Task<JsonResult<ResponseViewModel<bool>>> PostTranslateAllLanguageKeys(TranslateLanguageKeysModel translateLangaugeKeysModel)
         {
-            var valuesToTranslate = ServiceExecutor.Execute(() => ServiceFactory.ManagementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
+            var valuesToTranslate = ServiceExecutor.Execute(() => _managementLanguageService.GetLanguageFileValue(translateLangaugeKeysModel.CurrentLanguageId));
             if (!valuesToTranslate.IsValid)
                 return Json(new ResponseViewModel<bool> { IsValid = false, ErrorMessage = ThrowMessage.LanguageFileNotExists.ToString() });
 
             var valuesAfterTranslation = await ServiceExecutor.ExecuteAsync(
                         () =>
-                            ServiceFactory.TranslateService.GetAllLanguageKeysTranslations(
+                            _translateService.GetAllLanguageKeysTranslations(
                                 new TranslateLanguageModel(translateLangaugeKeysModel.CurrentLanguageShortName,
                                     translateLangaugeKeysModel.TargetLangaugeShortName,
                                     valuesToTranslate.Data.ToArray())));
@@ -65,7 +75,7 @@ namespace WebBellwether.API.Controllers
                     });
             var valuesSaved =
                 ServiceExecutor.Execute(
-                    () => ServiceFactory.ManagementLanguageService.FillLanguageFile(valuesAfterTranslation.Data, translateLangaugeKeysModel.TargetLanguageId));
+                    () => _managementLanguageService.FillLanguageFile(valuesAfterTranslation.Data, translateLangaugeKeysModel.TargetLanguageId));
             return Json(valuesSaved);
         }
     }

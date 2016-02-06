@@ -10,7 +10,7 @@ using WebBellwether.Services.Utility;
 
 namespace WebBellwether.Services.Services.LanguageService
 {
-    public interface IManagementLanguageService
+    public interface ILanguageManagementService
     {
         Language[] GetLanguages(bool getNotPublicLanguages = false);
         Language PostLanguage(Language language);
@@ -24,7 +24,7 @@ namespace WebBellwether.Services.Services.LanguageService
         IEnumerable<LanguageFilePosition> GetLanguageFile(int languageId);
         Language GetLanguageById(int languageId);
     }
-    public class LanguageManagementService : IManagementLanguageService
+    public class LanguageManagementService : ILanguageManagementService
     {
         private readonly ILanguageFileService _languageFileService;
 

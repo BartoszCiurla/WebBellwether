@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using WebBellwether.API.Utility;
 using WebBellwether.Services.Services.AuthService;
 
 namespace WebBellwether.API.Controllers
@@ -9,9 +8,9 @@ namespace WebBellwether.API.Controllers
     public class RefreshTokensController : ApiController
     {
         private readonly IAuthService _authService;
-        public RefreshTokensController()
+        public RefreshTokensController(IAuthService authService)
         {
-            _authService = ServiceFactory.AuthService;
+            _authService = authService;
         }
 
         [Authorize(Users = "Admin")]

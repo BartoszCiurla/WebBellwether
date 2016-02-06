@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using WebBellwether.API.Function;
-using WebBellwether.API.Utility;
 using WebBellwether.Models.Models.Auth;
-using WebBellwether.Services.Utility;
+using WebBellwether.Services.Services.AuthService;
 
 namespace WebBellwether.API.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private readonly IAuthService _authService;
+
+        public SimpleAuthorizationServerProvider()
+        {
+            _authService = new AuthService();
+        }
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
 
@@ -36,7 +39,7 @@ namespace WebBellwether.API.Providers
                 //context.SetError("invalid_clientId", "ClientId should be sent.");
                 return Task.FromResult<object>(null);
             }
-            client = ServiceFactory.AuthService.FindClient(context.ClientId);
+            client = _authService.FindClient(context.ClientId);
 
 
             if (client == null)
@@ -88,7 +91,7 @@ namespace WebBellwether.API.Providers
             //frcontext.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "*" });
             //test
 
-            IdentityUser user = await ServiceFactory.AuthService.FindUser(context.UserName, context.Password);
+            IdentityUser user = await _authService.FindUser(context.UserName, context.Password);
 
             if (user == null)
             {
