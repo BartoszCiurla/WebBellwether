@@ -179,13 +179,10 @@
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\ui-bootstrap-csp.css" />
-    <Content Include="cssGuide.txt" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="GoodLink.txt" />
     <Content Include="index.html" />
     <Content Include="content\css\bootstrap-theme.css.map" />
     <Content Include="content\css\bootstrap.css.map" />
-    <Content Include="PlanPracy.txt" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-cookies.js" />

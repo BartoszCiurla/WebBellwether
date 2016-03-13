@@ -8,10 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBellwether.Web", "WebBellwether.Web\WebBellwether.Web.csproj", "{4E2DA8E8-D0E9-40AF-956C-6A57E4970529}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Important Notes", "Important Notes", "{B2F4E879-EF48-4A53-A0E1-12764DC44EE0}"
-	ProjectSection(SolutionItems) = preProject
-		Errors.txt = Errors.txt
-		What i must change.txt = What i must change.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBellwether.Repositories", "WebBellwether.Repositories\WebBellwether.Repositories.csproj", "{384BE81A-1DCB-433F-AE77-9051502E2766}"
 EndProject

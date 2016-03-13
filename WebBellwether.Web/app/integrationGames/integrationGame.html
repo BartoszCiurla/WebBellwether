@@ -2,15 +2,25 @@
     <h1>{{translation.IntegrationGamesHeader}}</h1>
     <div class="row" style="bottom: -100px;top:50px">
         <div ng-repeat="g in filtered = (integrationGames | filter:search | startFrom:(currentPage -1)*entryLimit | limitTo:entryLimit)">
-            <div class="animatedParent col-md-6">
+            <div class="animatedParent col-md-12">
                 <h1 class="animated bounceIn">{{g.GameName}}</h1>
-                <p class="animated lightSpeedInLeft go">{{g.GameDescription}}</p>
+                <p class="animated lightSpeedInLeft go" style="text-align:justify">{{g.GameDescription}}</p>
                 <p></p>
                 <div class="animated fadeInRight slow go">
-                    <p>{{g.CategoryGame}}</p>
-                    <p>{{g.PaceOfPlay}}</p>
-                    <p>{{g.NumberOfPlayer}}</p>
-                    <p>{{g.PreparationFun}}</p>
+                    <div class="align-center">
+                        <p>
+                            <b>{{translation.GameCategory}}</b> : {{g.CategoryGame}}
+                        </p>
+                        <p>
+                            <b>{{translation.PaceOfPlay}}</b> : {{g.PaceOfPlay}}
+                        </p>
+                        <p>
+                            <b>{{translation.NumberOfPlayer}}</b> : {{g.NumberOfPlayer}}
+                        </p>
+                        <p>
+                            <b>{{translation.PreparationFun}}</b> : {{g.PreparationFun}}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,6 +28,6 @@
     <!--PAGER CONTROL-->
     <div class="row" ng-show="(integrationGames |filter:search).length / entryLimit > 1">
         <uib-pagination ng-change="pageChanged()" style="display: inline-block; position: relative; top: 71px;z-index: 3" direction-links="false" max-size="maxSize" ng-model="currentPage" total-items="(integrationGames |filter:search).length" items-per-page="entryLimit" num-pages="noOfPages" rotate="false"></uib-pagination>        
-            <uib-pager ng-change="pageChanged()" style="position: relative;" total-items="(integrationGames |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages" ></uib-pager>
+            <uib-pager ng-change="pageChanged()" previous-text="<-" next-text="->" style="position: relative;" total-items="(integrationGames |filter:search).length" max-size="maxSize" ng-model="currentPage" items-per-page="entryLimit" num-pages="noOfPages" ></uib-pager>
     </div>
 </div>

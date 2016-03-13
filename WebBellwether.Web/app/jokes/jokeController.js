@@ -8,7 +8,7 @@
                 $scope.search = {};
             };
             $scope.currentPage = 1;
-            $scope.entryLimit = 12;
+            $scope.entryLimit = 6;
             $scope.noOfPages = 0;
             $scope.maxSize = 5; //max size in pager 
 

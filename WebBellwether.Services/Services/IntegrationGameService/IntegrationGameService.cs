@@ -18,6 +18,7 @@ namespace WebBellwether.Services.Services.IntegrationGameService
             RepositoryFactory.Context.IntegrationGameDetails.Where(x => x.Language.Id == languageId).ToList().ForEach(x =>
             {
                 var gameFeatureDetailsNames = GetGameFeatureDetailName(x.Id).ToArray();
+                if (gameFeatureDetailsNames.Length == 4)
                 games.Add(new DirectIntegrationGameViewModel()
                 {
                     Id = x.IntegrationGame.Id,

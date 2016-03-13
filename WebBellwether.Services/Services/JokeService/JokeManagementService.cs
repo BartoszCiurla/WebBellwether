@@ -144,7 +144,7 @@ namespace WebBellwether.Services.Services.JokeService
                 RepositoryFactory.Context.JokeCategoryDetails.FirstOrDefault(
                     x => x.JokeCategory.Id == jokeCategoryId && x.Language.Id == languageId);
             if(jokeCategoryDao == null)
-                throw new Exception(ThrowMessage.JokeCategoryNotExists + GetLanguage(languageId).LanguageName);
+                throw new Exception(ThrowMessage.JokeCategoryNotExists + "," + GetLanguage(languageId).LanguageName);
             return jokeCategoryDao;
         }
 
